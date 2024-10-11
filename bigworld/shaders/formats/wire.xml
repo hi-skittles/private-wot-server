@@ -1,0 +1,9 @@
+<xyznuv.xml>
+	<elements>
+		<POSITION/> 
+		<TEXCOORD>
+			<type> FLOAT3 </type>
+		</TEXCOORD>
+		<NORMAL/>
+	</elements>
+</xyznuv.xml>

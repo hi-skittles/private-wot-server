@@ -1,0 +1,34 @@
+<tutorial-lobby-gui.xml>
+  <scene-aliases>
+    <hangar>	Hangar	  <go-to>	hangar	</go-to>
+    </hangar>
+    <inventory>	Inventory	  <go-to>	inventory	</go-to>
+    </inventory>
+    <shop>	Shop	  <go-to>	shop	</go-to>
+    </shop>
+    <battleQueue>	BattleQueue	  <go-to></go-to>
+    </battleQueue>
+    <profile>	Profile	  <go-to>	profile	</go-to>
+    </profile>
+    <customization>	Customization	  <go-to>	customization	</go-to>
+    </customization>
+    <trainings>	Training	  <go-to>	trainings	</go-to>
+    </trainings>
+    <barracks>
+      <go-to>	barracks	</go-to>
+    </barracks>
+    <techtree>	Techtree	  <go-to>	techtree	</go-to>
+    </techtree>
+    <research>	Research	  <go-to>	research	</go-to>
+    </research>
+    <FortificationsView>	Fortification	  <go-to>	FortificationsView	</go-to>
+    </FortificationsView>
+  </scene-aliases>
+  <gui-items>
+    <gui-item>	GuiRoot	  <path>	_root	</path>
+    </gui-item>
+    <gui-item>	Dialog	  <path>	dialog	</path>
+    </gui-item>
+  </gui-items>
+  <gui-commands></gui-commands>
+</tutorial-lobby-gui.xml>

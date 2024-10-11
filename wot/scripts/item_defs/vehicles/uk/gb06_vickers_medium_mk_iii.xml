@@ -1,0 +1,779 @@
+<gb06_vickers_medium_mk_iii.xml>
+  <crew>
+    <commander></commander>
+    <gunner></gunner>
+    <driver></driver>
+    <radioman></radioman>
+    <radioman></radioman>
+    <loader></loader>
+  </crew>
+  <speedLimits>
+    <forward>	48	</forward>
+    <backward>	16	</backward>
+  </speedLimits>
+  <repairCost>	3.15	</repairCost>
+  <crewXpFactor>	1.0	</crewXpFactor>
+  <effects>
+    <collision></collision>
+    <damagedStateGroup>	medium	</damagedStateGroup>
+  </effects>
+  <camouflage>
+    <priceFactor>	0.6	</priceFactor>
+    <tiling>	1 1 0 0	</tiling>
+    <exclusionMask>	vehicles/british/GB06_Vickers_Medium_Mk_III/Vickers_Medium_Mk_III_CM.dds	</exclusionMask>
+  </camouflage>
+  <emblems>
+    <default>	britain_color	</default>
+    <lodDist>	MEDIUM	</lodDist>
+    <alpha>	0.88	</alpha>
+  </emblems>
+  <horns>
+    <priceFactor>	1	</priceFactor>
+    <distanceFactor>	1	</distanceFactor>
+    <volumeFactor>	1	</volumeFactor>
+  </horns>
+  <hull>
+    <models>
+      <undamaged>	vehicles/british/GB06_Vickers_Medium_Mk_III/normal/lod0/Hull.model	</undamaged>
+      <destroyed>	vehicles/british/GB06_Vickers_Medium_Mk_III/crash/lod0/Hull.model	</destroyed>
+      <exploded>	vehicles/british/GB06_Vickers_Medium_Mk_III/crash/lod0/Hull.model	</exploded>
+    </models>
+    <swinging>
+      <lodDist>	FAR	</lodDist>
+      <pitchParams>	0.28 37.00 0.34 1.00 0.05 0.33	</pitchParams>
+      <rollParams>	1.00 0.28 37.00 0.34 1.00 0.05 0.33	</rollParams>
+      <sensitivityToImpulse>	0.76	</sensitivityToImpulse>
+    </swinging>
+    <exhaust>
+      <pixie>	gas_medium	</pixie>
+      <nodes>	HP_Track_Exhaus_1 HP_Track_Exhaus_2	</nodes>
+    </exhaust>
+    <turretPositions>
+      <turret>	0.000000 0.942064 0.985706	</turret>
+    </turretPositions>
+    <hitTester>
+      <collisionModel>	vehicles/british/GB06_Vickers_Medium_Mk_III/collision/Hull.model	</collisionModel>
+    </hitTester>
+    <armor>
+      <armor_1>	14	</armor_1>
+      <armor_2>	14	</armor_2>
+      <armor_3>	9	</armor_3>
+      <armor_4>	9	</armor_4>
+      <armor_5>	14	</armor_5>
+      <armor_6>	14	</armor_6>
+      <armor_7>	4	</armor_7>
+      <armor_8>	4	</armor_8>
+      <armor_9>	9	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+      </armor_9>
+      <armor_10>	4	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+      </armor_10>
+      <armor_11>	0	</armor_11>
+      <armor_12>	9	</armor_12>
+    </armor>
+    <primaryArmor>	armor_1 armor_3 armor_4	</primaryArmor>
+    <weight>	11310	</weight>
+    <maxHealth>	200	</maxHealth>
+    <ammoBayHealth>
+      <maxHealth>	110	</maxHealth>
+      <maxRegenHealth>	70	</maxRegenHealth>
+      <repairCost>	1.0	</repairCost>
+    </ammoBayHealth>
+    <emblemSlots>
+      <clan>
+        <rayStart>	-1.35937 0.933779 2.52022	</rayStart>
+        <rayEnd>	-0.890277 0.933779 2.14613	</rayEnd>
+        <rayUp>	0.000000 1 0.000000	</rayUp>
+        <size>	0.28	</size>
+        <hideIfDamaged>	true	</hideIfDamaged>
+      </clan>
+      <inscription>
+        <rayStart>	-1.34986 0.79722 0.848161	</rayStart>
+        <rayEnd>	-0.999422 0.79722 0.655306	</rayEnd>
+        <rayUp>	0.000000 1 0.000000	</rayUp>
+        <size>	0.54	</size>
+        <hideIfDamaged>	true	</hideIfDamaged>
+      </inscription>
+    </emblemSlots>
+  </hull>
+  <chassis>
+    <Chassis_GB06_Vickers_Medium_Mk_III>
+      <userString>	#gb_vehicles:Chassis_GB06_Vickers_Medium_Mk_III	</userString>
+      <tags></tags>
+      <level>	2	</level>
+      <price>	670.0	</price>
+      <unlocks>
+        <chassis>	Chassis_GB06_Vickers_Medium_Mk_III_2	  <cost>	350	</cost>
+        </chassis>
+      </unlocks>
+      <models>
+        <undamaged>	vehicles/british/GB06_Vickers_Medium_Mk_III/normal/lod0/Chassis.model	</undamaged>
+        <destroyed>	vehicles/british/GB06_Vickers_Medium_Mk_III/crash/lod0/Chassis.model	</destroyed>
+        <exploded>	vehicles/british/GB06_Vickers_Medium_Mk_III/crash/lod0/Chassis.model	</exploded>
+      </models>
+      <traces>
+        <lodDist>	FAR	</lodDist>
+        <bufferPrefs>	mediumTank	</bufferPrefs>
+        <textureSet>	usa_02	</textureSet>
+        <size>	0.44 0.38	</size>
+      </traces>
+      <tracks>
+        <lodDist>	MEDIUM_TRACK	</lodDist>
+        <leftMaterial>	track_mat_L_skinned	</leftMaterial>
+        <rightMaterial>	track_mat_R_skinned	</rightMaterial>
+        <textureScale>	-0.91	</textureScale>
+      </tracks>
+      <wheels>
+        <lodDist>	MEDIUM	</lodDist>
+        <group>
+          <isLeft>	false	</isLeft>
+          <template>	WD_R	</template>
+          <radius>	0.143784	</radius>
+          <startIndex>	4	</startIndex>
+          <count>	3	</count>
+        </group>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_R9	</name>
+          <radius>	0.251155	</radius>
+        </wheel>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_R10	</name>
+          <radius>	0.34839	</radius>
+        </wheel>
+        <group>
+          <isLeft>	false	</isLeft>
+          <template>	W_R	</template>
+          <radius>	0.154443	</radius>
+          <startIndex>	4	</startIndex>
+          <count>	4	</count>
+        </group>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_R0	</name>
+          <radius>	0.33608	</radius>
+        </wheel>
+        <group>
+          <isLeft>	false	</isLeft>
+          <template>	WD_R	</template>
+          <radius>	0.143784	</radius>
+          <startIndex>	1	</startIndex>
+          <count>	3	</count>
+        </group>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_R7	</name>
+          <radius>	0.166562	</radius>
+        </wheel>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_R8	</name>
+          <radius>	0.154443	</radius>
+        </wheel>
+        <group>
+          <isLeft>	false	</isLeft>
+          <template>	W_R	</template>
+          <radius>	0.154443	</radius>
+          <startIndex>	0	</startIndex>
+          <count>	4	</count>
+        </group>
+        <group>
+          <isLeft>	true	</isLeft>
+          <template>	WD_L	</template>
+          <radius>	0.143784	</radius>
+          <startIndex>	4	</startIndex>
+          <count>	3	</count>
+        </group>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_L9	</name>
+          <radius>	0.251155	</radius>
+        </wheel>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_L10	</name>
+          <radius>	0.34839	</radius>
+        </wheel>
+        <group>
+          <isLeft>	true	</isLeft>
+          <template>	W_L	</template>
+          <radius>	0.154443	</radius>
+          <startIndex>	4	</startIndex>
+          <count>	4	</count>
+        </group>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_L0	</name>
+          <radius>	0.33608	</radius>
+        </wheel>
+        <group>
+          <isLeft>	true	</isLeft>
+          <template>	WD_L	</template>
+          <radius>	0.143784	</radius>
+          <startIndex>	1	</startIndex>
+          <count>	3	</count>
+        </group>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_L7	</name>
+          <radius>	0.166562	</radius>
+        </wheel>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_L8	</name>
+          <radius>	0.154443	</radius>
+        </wheel>
+        <group>
+          <isLeft>	true	</isLeft>
+          <template>	W_L	</template>
+          <radius>	0.154443	</radius>
+          <startIndex>	0	</startIndex>
+          <count>	4	</count>
+        </group>
+      </wheels>
+      <drivingWheels>	WD_L0 WD_L10	</drivingWheels>
+      <effects>
+        <lodDist>	MEDIUM	</lodDist>
+        <dust>	mediumTankDust	</dust>
+        <mud>	mediumTankMud	</mud>
+      </effects>
+      <soundPC>	/vehicles/tanks_pc/treads/treads_2	</soundPC>
+      <soundNPC>	/vehicles/tanks_npc/treads/treads_2	</soundNPC>
+      <hullPosition>	0.000000 0.9 0.000000	</hullPosition>
+      <hitTester>
+        <collisionModel>	vehicles/british/GB06_Vickers_Medium_Mk_III/collision/Chassis.model	</collisionModel>
+      </hitTester>
+      <armor>
+        <leftTrack>	15	</leftTrack>
+        <rightTrack>	15	</rightTrack>
+      </armor>
+      <topRightCarryingPoint>	1.1019 1.60304	</topRightCarryingPoint>
+      <maxClimbAngle>	25	</maxClimbAngle>
+      <navmeshGirth>	6.0	</navmeshGirth>
+      <weight>	4000	</weight>
+      <maxLoad>	18000	</maxLoad>
+      <terrainResistance>	1.1 1.3 2.2	</terrainResistance>
+      <brakeForce>	16000	</brakeForce>
+      <rotationIsAroundCenter>	false	</rotationIsAroundCenter>
+      <rotationSpeed>	30	</rotationSpeed>
+      <shotDispersionFactors>
+        <vehicleMovement>	0.22	</vehicleMovement>
+        <vehicleRotation>	0.22	</vehicleRotation>
+      </shotDispersionFactors>
+      <bulkHealthFactor>	3.0	</bulkHealthFactor>
+      <maxHealth>	60	</maxHealth>
+      <maxRegenHealth>	45	</maxRegenHealth>
+      <repairCost>	1.0	</repairCost>
+      <AODecals>
+        <decal>
+          <transform>
+            <row0>	3.726890 0.000000 0.000000	</row0>
+            <row1>	0.000000 1.350000 0.000000	</row1>
+            <row2>	0.000000 0.000000 6.091550	</row2>
+            <row3>	0.000000 0.000000 0.000000	</row3>
+          </transform>
+        </decal>
+      </AODecals>
+    </Chassis_GB06_Vickers_Medium_Mk_III>
+    <Chassis_GB06_Vickers_Medium_Mk_III_2>
+      <userString>	#gb_vehicles:Chassis_GB06_Vickers_Medium_Mk_III_2	</userString>
+      <tags></tags>
+      <level>	3	</level>
+      <price>	1800	</price>
+      <models>
+        <undamaged>	vehicles/british/GB06_Vickers_Medium_Mk_III/normal/lod0/Chassis.model	</undamaged>
+        <destroyed>	vehicles/british/GB06_Vickers_Medium_Mk_III/crash/lod0/Chassis.model	</destroyed>
+        <exploded>	vehicles/british/GB06_Vickers_Medium_Mk_III/crash/lod0/Chassis.model	</exploded>
+      </models>
+      <traces>
+        <lodDist>	FAR	</lodDist>
+        <bufferPrefs>	mediumTank	</bufferPrefs>
+        <textureSet>	usa_02	</textureSet>
+        <size>	0.44 0.38	</size>
+      </traces>
+      <tracks>
+        <lodDist>	MEDIUM_TRACK	</lodDist>
+        <leftMaterial>	track_mat_L_skinned	</leftMaterial>
+        <rightMaterial>	track_mat_R_skinned	</rightMaterial>
+        <textureScale>	-0.91	</textureScale>
+      </tracks>
+      <wheels>
+        <lodDist>	MEDIUM	</lodDist>
+        <group>
+          <isLeft>	false	</isLeft>
+          <template>	WD_R	</template>
+          <radius>	0.143784	</radius>
+          <startIndex>	4	</startIndex>
+          <count>	3	</count>
+        </group>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_R9	</name>
+          <radius>	0.251155	</radius>
+        </wheel>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_R10	</name>
+          <radius>	0.34839	</radius>
+        </wheel>
+        <group>
+          <isLeft>	false	</isLeft>
+          <template>	W_R	</template>
+          <radius>	0.154443	</radius>
+          <startIndex>	4	</startIndex>
+          <count>	4	</count>
+        </group>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_R0	</name>
+          <radius>	0.33608	</radius>
+        </wheel>
+        <group>
+          <isLeft>	false	</isLeft>
+          <template>	WD_R	</template>
+          <radius>	0.143784	</radius>
+          <startIndex>	1	</startIndex>
+          <count>	3	</count>
+        </group>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_R7	</name>
+          <radius>	0.166562	</radius>
+        </wheel>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_R8	</name>
+          <radius>	0.154443	</radius>
+        </wheel>
+        <group>
+          <isLeft>	false	</isLeft>
+          <template>	W_R	</template>
+          <radius>	0.154443	</radius>
+          <startIndex>	0	</startIndex>
+          <count>	4	</count>
+        </group>
+        <group>
+          <isLeft>	true	</isLeft>
+          <template>	WD_L	</template>
+          <radius>	0.143784	</radius>
+          <startIndex>	4	</startIndex>
+          <count>	3	</count>
+        </group>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_L9	</name>
+          <radius>	0.251155	</radius>
+        </wheel>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_L10	</name>
+          <radius>	0.34839	</radius>
+        </wheel>
+        <group>
+          <isLeft>	true	</isLeft>
+          <template>	W_L	</template>
+          <radius>	0.154443	</radius>
+          <startIndex>	4	</startIndex>
+          <count>	4	</count>
+        </group>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_L0	</name>
+          <radius>	0.33608	</radius>
+        </wheel>
+        <group>
+          <isLeft>	true	</isLeft>
+          <template>	WD_L	</template>
+          <radius>	0.143784	</radius>
+          <startIndex>	1	</startIndex>
+          <count>	3	</count>
+        </group>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_L7	</name>
+          <radius>	0.166562	</radius>
+        </wheel>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_L8	</name>
+          <radius>	0.154443	</radius>
+        </wheel>
+        <group>
+          <isLeft>	true	</isLeft>
+          <template>	W_L	</template>
+          <radius>	0.154443	</radius>
+          <startIndex>	0	</startIndex>
+          <count>	4	</count>
+        </group>
+      </wheels>
+      <drivingWheels>	WD_L0 WD_L10	</drivingWheels>
+      <effects>
+        <lodDist>	MEDIUM	</lodDist>
+        <dust>	mediumTankDust	</dust>
+        <mud>	mediumTankMud	</mud>
+      </effects>
+      <soundPC>	/vehicles/tanks_pc/treads/treads_2	</soundPC>
+      <soundNPC>	/vehicles/tanks_npc/treads/treads_2	</soundNPC>
+      <hullPosition>	0.000000 0.9 0.000000	</hullPosition>
+      <hitTester>
+        <collisionModel>	vehicles/british/GB06_Vickers_Medium_Mk_III/collision/Chassis.model	</collisionModel>
+      </hitTester>
+      <armor>
+        <leftTrack>	15	</leftTrack>
+        <rightTrack>	15	</rightTrack>
+      </armor>
+      <topRightCarryingPoint>	1.1019 1.60304	</topRightCarryingPoint>
+      <maxClimbAngle>	25	</maxClimbAngle>
+      <navmeshGirth>	6.0	</navmeshGirth>
+      <weight>	4000	</weight>
+      <maxLoad>	19500	</maxLoad>
+      <terrainResistance>	1 1.1 2	</terrainResistance>
+      <brakeForce>	18000	</brakeForce>
+      <rotationIsAroundCenter>	false	</rotationIsAroundCenter>
+      <rotationSpeed>	32	</rotationSpeed>
+      <shotDispersionFactors>
+        <vehicleMovement>	0.2	</vehicleMovement>
+        <vehicleRotation>	0.2	</vehicleRotation>
+      </shotDispersionFactors>
+      <bulkHealthFactor>	3.0	</bulkHealthFactor>
+      <maxHealth>	70	</maxHealth>
+      <maxRegenHealth>	55	</maxRegenHealth>
+      <repairCost>	1.0	</repairCost>
+      <AODecals>
+        <decal>
+          <transform>
+            <row0>	3.715570 0.000000 0.000000	</row0>
+            <row1>	0.000000 1.350000 0.000000	</row1>
+            <row2>	0.000000 0.000000 6.091550	</row2>
+            <row3>	0.000000 0.000000 0.000000	</row3>
+          </transform>
+        </decal>
+      </AODecals>
+    </Chassis_GB06_Vickers_Medium_Mk_III_2>
+  </chassis>
+  <turrets0>
+    <Turret_1_GB06_Vickers_Medium_Mk_III>
+      <userString>	#gb_vehicles:Turret_1_GB06_Vickers_Medium_Mk_III	</userString>
+      <tags></tags>
+      <level>	2	</level>
+      <price>	730	</price>
+      <unlocks>
+        <turret>	Turret_2_GB06_Vickers_Medium_Mk_III	  <cost>	340	</cost>
+        </turret>
+      </unlocks>
+      <models>
+        <undamaged>	vehicles/british/GB06_Vickers_Medium_Mk_III/normal/lod0/Turret_01.model	</undamaged>
+        <destroyed>	vehicles/british/GB06_Vickers_Medium_Mk_III/crash/lod0/Turret_01.model	</destroyed>
+        <exploded>	vehicles/british/GB06_Vickers_Medium_Mk_III/crash/lod0/Turret_01.model	</exploded>
+      </models>
+      <hitTester>
+        <collisionModel>	vehicles/british/GB06_Vickers_Medium_Mk_III/collision/Turret_01.model	</collisionModel>
+      </hitTester>
+      <gunPosition>	0.000000 0.374404 0.522859	</gunPosition>
+      <armor>
+        <armor_1>	14	</armor_1>
+        <armor_2>	14	</armor_2>
+        <armor_3>	14	</armor_3>
+        <armor_4>	14	</armor_4>
+        <armor_5>	14	</armor_5>
+        <armor_6>	4	</armor_6>
+        <armor_7>	0	</armor_7>
+        <armor_8>	14	</armor_8>
+        <armor_9>	14	</armor_9>
+      </armor>
+      <primaryArmor>	armor_1 armor_3 armor_4	</primaryArmor>
+      <weight>	1250	</weight>
+      <maxHealth>	50	</maxHealth>
+      <rotationSpeed>	40	</rotationSpeed>
+      <turretRotatorHealth>
+        <maxHealth>	70	</maxHealth>
+        <maxRegenHealth>	35	</maxRegenHealth>
+        <repairCost>	1.0	</repairCost>
+      </turretRotatorHealth>
+      <circularVisionRadius>	310	</circularVisionRadius>
+      <surveyingDeviceHealth>
+        <maxHealth>	50	</maxHealth>
+        <maxRegenHealth>	25	</maxRegenHealth>
+        <repairCost>	2.0	</repairCost>
+      </surveyingDeviceHealth>
+      <guns>
+        <OQF_3pdr_Gun>	shared	  <maxAmmo>	111	</maxAmmo>
+          <pitchLimits>	-16 8	</pitchLimits>
+          <unlocks>
+            <gun>	QF_6_pounder_8cwt_Mk_I	  <cost>	1200	</cost>
+            </gun>
+          </unlocks>
+          <models>
+            <undamaged>	vehicles/british/GB06_Vickers_Medium_Mk_III/normal/lod0/Gun_01.model	</undamaged>
+            <destroyed>	vehicles/british/GB06_Vickers_Medium_Mk_III/crash/lod0/Gun_01.model	</destroyed>
+            <exploded>	vehicles/british/GB06_Vickers_Medium_Mk_III/crash/lod0/Gun_01.model	</exploded>
+          </models>
+          <hitTester>
+            <collisionModel>	vehicles/british/GB06_Vickers_Medium_Mk_III/collision/Gun_01.model	</collisionModel>
+          </hitTester>
+          <armor>
+            <armor_1>	14	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_1>
+            <gun>	10	</gun>
+          </armor>
+          <shotDispersionRadius>	0.41	</shotDispersionRadius>
+          <reloadTime>	3	</reloadTime>
+          <shotDispersionFactors>
+            <turretRotation>	0.1	</turretRotation>
+            <afterShot>	3.5	</afterShot>
+            <whileGunDamaged>	2.0	</whileGunDamaged>
+          </shotDispersionFactors>
+          <aimingTime>	2.1	</aimingTime>
+        </OQF_3pdr_Gun>
+        <QF_6_pounder_8cwt_Mk_I>	shared	  <maxAmmo>	80	</maxAmmo>
+          <pitchLimits>	-16 8	</pitchLimits>
+          <models>
+            <undamaged>	vehicles/british/GB06_Vickers_Medium_Mk_III/normal/lod0/Gun_02.model	</undamaged>
+            <destroyed>	vehicles/british/GB06_Vickers_Medium_Mk_III/crash/lod0/Gun_02.model	</destroyed>
+            <exploded>	vehicles/british/GB06_Vickers_Medium_Mk_III/crash/lod0/Gun_02.model	</exploded>
+          </models>
+          <hitTester>
+            <collisionModel>	vehicles/british/GB06_Vickers_Medium_Mk_III/collision/Gun_02.model	</collisionModel>
+          </hitTester>
+          <armor>
+            <armor_1>	14	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_1>
+            <gun>	10	</gun>
+          </armor>
+          <shotDispersionRadius>	0.44	</shotDispersionRadius>
+          <reloadTime>	3.3	</reloadTime>
+          <shotDispersionFactors>
+            <turretRotation>	0.12	</turretRotation>
+            <afterShot>	4.0	</afterShot>
+            <whileGunDamaged>	2.0	</whileGunDamaged>
+          </shotDispersionFactors>
+          <aimingTime>	2.1	</aimingTime>
+          <camouflage>
+            <tiling>	0.565 0.565 0.000000 0.000000	</tiling>
+          </camouflage>
+        </QF_6_pounder_8cwt_Mk_I>
+      </guns>
+      <emblemSlots>
+        <player>
+          <rayStart>	0.940814 0.655533 0.278496	</rayStart>
+          <rayEnd>	0.356229 0.568151 0.175434	</rayEnd>
+          <rayUp>	0.000000 1 0.000000	</rayUp>
+          <size>	0.3	</size>
+          <hideIfDamaged>	true	</hideIfDamaged>
+        </player>
+        <player>
+          <rayStart>	-0.940814 0.655533 0.278496	</rayStart>
+          <rayEnd>	-0.356229 0.568151 0.175434	</rayEnd>
+          <rayUp>	0.000000 1 0.000000	</rayUp>
+          <size>	0.3	</size>
+          <hideIfDamaged>	false	</hideIfDamaged>
+        </player>
+      </emblemSlots>
+      <showEmblemsOnGun>	false	</showEmblemsOnGun>
+      <physicsShape>	1.000 0.000 1.000 0.000 0.583 0.112 0.577 0.500 0.500 0.500 0.216 0.500 0.140 0.350 0.000	</physicsShape>
+      <turretRotatorSoundManual>	/turret/turret/turret_manual_traverse/turret_manual_traverse_800-1999	</turretRotatorSoundManual>
+      <turretRotatorSoundGear></turretRotatorSoundGear>
+    </Turret_1_GB06_Vickers_Medium_Mk_III>
+    <Turret_2_GB06_Vickers_Medium_Mk_III>
+      <userString>	#gb_vehicles:Turret_2_GB06_Vickers_Medium_Mk_III	</userString>
+      <tags></tags>
+      <level>	3	</level>
+      <price>	1800	</price>
+      <unlocks>
+        <gun>	_2pdr_Gun_Mk_IX	  <cost>	300	</cost>
+        </gun>
+      </unlocks>
+      <models>
+        <undamaged>	vehicles/british/GB06_Vickers_Medium_Mk_III/normal/lod0/Turret_02.model	</undamaged>
+        <destroyed>	vehicles/british/GB06_Vickers_Medium_Mk_III/crash/lod0/Turret_02.model	</destroyed>
+        <exploded>	vehicles/british/GB06_Vickers_Medium_Mk_III/crash/lod0/Turret_02.model	</exploded>
+      </models>
+      <hitTester>
+        <collisionModel>	vehicles/british/GB06_Vickers_Medium_Mk_III/collision/Turret_02.model	</collisionModel>
+      </hitTester>
+      <gunPosition>	0.000000 0.374404 0.522859	</gunPosition>
+      <armor>
+        <armor_1>	14	</armor_1>
+        <armor_2>	14	</armor_2>
+        <armor_3>	14	</armor_3>
+        <armor_4>	14	</armor_4>
+        <armor_5>	14	</armor_5>
+        <armor_6>	4	</armor_6>
+        <armor_7>	14	</armor_7>
+        <armor_8>	0	</armor_8>
+        <armor_9>	14	</armor_9>
+        <armor_10>	14	</armor_10>
+      </armor>
+      <primaryArmor>	armor_1 armor_3 armor_4	</primaryArmor>
+      <weight>	1750	</weight>
+      <maxHealth>	80	</maxHealth>
+      <rotationSpeed>	40	</rotationSpeed>
+      <turretRotatorHealth>
+        <maxHealth>	70	</maxHealth>
+        <maxRegenHealth>	35	</maxRegenHealth>
+        <repairCost>	1.0	</repairCost>
+      </turretRotatorHealth>
+      <circularVisionRadius>	330	</circularVisionRadius>
+      <surveyingDeviceHealth>
+        <maxHealth>	50	</maxHealth>
+        <maxRegenHealth>	25	</maxRegenHealth>
+        <repairCost>	2.0	</repairCost>
+      </surveyingDeviceHealth>
+      <guns>
+        <OQF_3pdr_Gun>	shared	  <maxAmmo>	111	</maxAmmo>
+          <pitchLimits>	-16 8	</pitchLimits>
+          <models>
+            <undamaged>	vehicles/british/GB06_Vickers_Medium_Mk_III/normal/lod0/Gun_01.model	</undamaged>
+            <destroyed>	vehicles/british/GB06_Vickers_Medium_Mk_III/crash/lod0/Gun_01.model	</destroyed>
+            <exploded>	vehicles/british/GB06_Vickers_Medium_Mk_III/crash/lod0/Gun_01.model	</exploded>
+          </models>
+          <hitTester>
+            <collisionModel>	vehicles/british/GB06_Vickers_Medium_Mk_III/collision/Gun_01.model	</collisionModel>
+          </hitTester>
+          <armor>
+            <armor_1>	14	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_1>
+            <gun>	10	</gun>
+          </armor>
+          <shotDispersionRadius>	0.41	</shotDispersionRadius>
+          <reloadTime>	2.7	</reloadTime>
+          <shotDispersionFactors>
+            <turretRotation>	0.08	</turretRotation>
+            <afterShot>	3.5	</afterShot>
+            <whileGunDamaged>	2.0	</whileGunDamaged>
+          </shotDispersionFactors>
+          <aimingTime>	1.7	</aimingTime>
+        </OQF_3pdr_Gun>
+        <QF_6_pounder_8cwt_Mk_I>	shared	  <maxAmmo>	80	</maxAmmo>
+          <pitchLimits>	-16 8	</pitchLimits>
+          <models>
+            <undamaged>	vehicles/british/GB06_Vickers_Medium_Mk_III/normal/lod0/Gun_02.model	</undamaged>
+            <destroyed>	vehicles/british/GB06_Vickers_Medium_Mk_III/crash/lod0/Gun_02.model	</destroyed>
+            <exploded>	vehicles/british/GB06_Vickers_Medium_Mk_III/crash/lod0/Gun_02.model	</exploded>
+          </models>
+          <hitTester>
+            <collisionModel>	vehicles/british/GB06_Vickers_Medium_Mk_III/collision/Gun_02.model	</collisionModel>
+          </hitTester>
+          <armor>
+            <armor_1>	14	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_1>
+            <gun>	10	</gun>
+          </armor>
+          <shotDispersionRadius>	0.44	</shotDispersionRadius>
+          <reloadTime>	3	</reloadTime>
+          <shotDispersionFactors>
+            <turretRotation>	0.1	</turretRotation>
+            <afterShot>	4.0	</afterShot>
+            <whileGunDamaged>	2.0	</whileGunDamaged>
+          </shotDispersionFactors>
+          <aimingTime>	1.7	</aimingTime>
+        </QF_6_pounder_8cwt_Mk_I>
+        <_2pdr_Gun_Mk_IX>	shared	  <maxAmmo>	130	</maxAmmo>
+          <pitchLimits>	-16 8	</pitchLimits>
+          <unlocks>
+            <vehicle>	GB07_Matilda	  <cost>	3900	</cost>
+            </vehicle>
+          </unlocks>
+          <models>
+            <undamaged>	vehicles/british/GB06_Vickers_Medium_Mk_III/normal/lod0/Gun_05.model	</undamaged>
+            <destroyed>	vehicles/british/GB06_Vickers_Medium_Mk_III/crash/lod0/Gun_05.model	</destroyed>
+            <exploded>	vehicles/british/GB06_Vickers_Medium_Mk_III/crash/lod0/Gun_05.model	</exploded>
+          </models>
+          <hitTester>
+            <collisionModel>	vehicles/british/GB06_Vickers_Medium_Mk_III/collision/Gun_05.model	</collisionModel>
+          </hitTester>
+          <armor>
+            <armor_1>	14	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_1>
+            <gun>	10	</gun>
+          </armor>
+          <shotDispersionRadius>	0.36	</shotDispersionRadius>
+          <reloadTime>	2.1	</reloadTime>
+          <aimingTime>	1.7	</aimingTime>
+          <shotDispersionFactors>
+            <turretRotation>	0.08	</turretRotation>
+            <afterShot>	3	</afterShot>
+            <whileGunDamaged>	2.0	</whileGunDamaged>
+          </shotDispersionFactors>
+          <camouflage>
+            <tiling>	0.88 0.88 0.000000 0.000000	</tiling>
+          </camouflage>
+        </_2pdr_Gun_Mk_IX>
+      </guns>
+      <emblemSlots>
+        <player>
+          <rayStart>	-0.890132 0.616062 -0.309441	</rayStart>
+          <rayEnd>	-0.49453 0.556928 -0.309441	</rayEnd>
+          <rayUp>	0.000000 1 0.000000	</rayUp>
+          <size>	0.32	</size>
+          <hideIfDamaged>	true	</hideIfDamaged>
+        </player>
+        <player>
+          <rayStart>	0.84695 0.641645 0.240522	</rayStart>
+          <rayEnd>	0.457229 0.58339 0.171804	</rayEnd>
+          <rayUp>	0.000000 1 0.000000	</rayUp>
+          <size>	0.28	</size>
+          <hideIfDamaged>	true	</hideIfDamaged>
+        </player>
+        <inscription>
+          <rayStart>	0.992854 0.605287 -0.638683	</rayStart>
+          <rayEnd>	0.399449 0.516586 -0.638683	</rayEnd>
+          <rayUp>	0.000000 1 0.000000	</rayUp>
+          <size>	0.68	</size>
+          <hideIfDamaged>	false	</hideIfDamaged>
+        </inscription>
+      </emblemSlots>
+      <showEmblemsOnGun>	false	</showEmblemsOnGun>
+      <physicsShape>	1.015 0.000 1.000 0.000 0.545 0.031 0.277 0.000 0.500 0.500 0.136 0.500 0.086 0.100 0.000	</physicsShape>
+      <turretRotatorSoundManual>	/turret/turret/turret_manual_traverse/turret_manual_traverse_800-1999	</turretRotatorSoundManual>
+      <turretRotatorSoundGear></turretRotatorSoundGear>
+      <camouflage>
+        <tiling>	1.06 1.06 0.000000 0.000000	</tiling>
+      </camouflage>
+    </Turret_2_GB06_Vickers_Medium_Mk_III>
+  </turrets0>
+  <engines>
+    <Armstrong-Siddeley>	shared	  <unlocks>
+        <engine>	Rolls_Royse_Phantom_II	  <cost>	850	</cost>
+        </engine>
+      </unlocks>
+    </Armstrong-Siddeley>
+    <Rolls_Royse_Phantom_II>	shared	</Rolls_Royse_Phantom_II>
+  </engines>
+  <fuelTanks>
+    <Medium>	shared	</Medium>
+  </fuelTanks>
+  <radios>
+    <N14>	shared	  <unlocks>
+        <radio>	N11	  <cost>	100	</cost>
+        </radio>
+      </unlocks>
+    </N14>
+    <N11>	shared	  <unlocks>
+        <radio>	N9	  <cost>	610	</cost>
+        </radio>
+      </unlocks>
+    </N11>
+    <N9>	shared	</N9>
+  </radios>
+</gb06_vickers_medium_mk_iii.xml>

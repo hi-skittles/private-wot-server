@@ -1,0 +1,346 @@
+<t62a.xml>
+  <crew>
+    <commander>	radioman	</commander>
+    <gunner></gunner>
+    <driver></driver>
+    <loader></loader>
+  </crew>
+  <speedLimits>
+    <forward>	50	</forward>
+    <backward>	20	</backward>
+  </speedLimits>
+  <repairCost>	12.309	</repairCost>
+  <crewXpFactor>	1.0	</crewXpFactor>
+  <effects>
+    <collision></collision>
+    <damagedStateGroup>	large	</damagedStateGroup>
+  </effects>
+  <camouflage>
+    <priceFactor>	2.0	</priceFactor>
+    <tiling>	1 1 0 0	</tiling>
+    <exclusionMask>	vehicles/russian/R87_T62A/T62A_CM.dds	</exclusionMask>
+  </camouflage>
+  <emblems>
+    <default>	ussr_star	</default>
+    <lodDist>	MEDIUM	</lodDist>
+    <alpha>	0.96	</alpha>
+  </emblems>
+  <horns>
+    <priceFactor>	1	</priceFactor>
+    <distanceFactor>	1	</distanceFactor>
+    <volumeFactor>	1	</volumeFactor>
+  </horns>
+  <hull>
+    <models>
+      <undamaged>	vehicles/russian/R87_T62A/normal/lod0/Hull.model	</undamaged>
+      <destroyed>	vehicles/russian/R87_T62A/crash/lod0/Hull.model	</destroyed>
+      <exploded>	vehicles/russian/R87_T62A/crash/lod0/Hull.model	</exploded>
+    </models>
+    <swinging>
+      <lodDist>	FAR	</lodDist>
+      <pitchParams>	0.26 36.00 0.42 1.00 0.05 0.32	</pitchParams>
+      <rollParams>	1.00 0.26 36.00 0.42 1.00 0.05 0.32	</rollParams>
+      <sensitivityToImpulse>	0.36	</sensitivityToImpulse>
+    </swinging>
+    <exhaust>
+      <pixie>	diesel_large	</pixie>
+      <nodes>	HP_Track_Exhaus_1	</nodes>
+    </exhaust>
+    <turretPositions>
+      <turret>	0.000000 0.468913 0.1989	</turret>
+    </turretPositions>
+    <hitTester>
+      <collisionModel>	vehicles/russian/R87_T62A/collision/Hull.model	</collisionModel>
+    </hitTester>
+    <armor>
+      <armor_1>	102	</armor_1>
+      <armor_2>	102	</armor_2>
+      <armor_3>	75	</armor_3>
+      <armor_4>	45	</armor_4>
+      <armor_5>	60	</armor_5>
+      <armor_6>	25	</armor_6>
+      <armor_7>	20	</armor_7>
+      <armor_8>	31	</armor_8>
+      <armor_9>	16	</armor_9>
+      <armor_10>	20	</armor_10>
+      <armor_11>	0	</armor_11>
+      <armor_12>	70	</armor_12>
+    </armor>
+    <primaryArmor>	armor_1 armor_3 armor_4	</primaryArmor>
+    <weight>	17320	</weight>
+    <maxHealth>	1560	</maxHealth>
+    <ammoBayHealth>
+      <maxHealth>	210	</maxHealth>
+      <maxRegenHealth>	140	</maxRegenHealth>
+      <repairCost>	1.0	</repairCost>
+    </ammoBayHealth>
+    <emblemSlots>
+      <clan>
+        <rayStart>	0.823866 0.710731 2.2656	</rayStart>
+        <rayEnd>	0.823867 0.354261 2.08415	</rayEnd>
+        <rayUp>	0.000000 0.000000 -1	</rayUp>
+        <size>	0.2	</size>
+        <hideIfDamaged>	false	</hideIfDamaged>
+      </clan>
+    </emblemSlots>
+  </hull>
+  <chassis>
+    <Chassis_T62A>
+      <userString>	#ussr_vehicles:Chassis_T62A	</userString>
+      <tags></tags>
+      <level>	10	</level>
+      <price>	82500	</price>
+      <notInShop>	true	</notInShop>
+      <models>
+        <undamaged>	vehicles/russian/R87_T62A/normal/lod0/Chassis.model	</undamaged>
+        <destroyed>	vehicles/russian/R87_T62A/crash/lod0/Chassis.model	</destroyed>
+        <exploded>	vehicles/russian/R87_T62A/crash/lod0/Chassis.model	</exploded>
+      </models>
+      <traces>
+        <lodDist>	FAR	</lodDist>
+        <bufferPrefs>	mediumTank	</bufferPrefs>
+        <textureSet>	ussr_01	</textureSet>
+        <size>	0.46 0.6	</size>
+      </traces>
+      <tracks>
+        <lodDist>	MEDIUM_TRACK	</lodDist>
+        <leftMaterial>	track_mat_L_skinned	</leftMaterial>
+        <rightMaterial>	track_mat_R_skinned	</rightMaterial>
+        <textureScale>	-0.64	</textureScale>
+      </tracks>
+      <wheels>
+        <lodDist>	MEDIUM	</lodDist>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	true	</isLeading>
+          <name>	WD_L0	</name>
+          <radius>	0.283017	</radius>
+        </wheel>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	true	</isLeading>
+          <name>	WD_L1	</name>
+          <radius>	0.32299	</radius>
+        </wheel>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	true	</isLeading>
+          <name>	WD_R0	</name>
+          <radius>	0.283017	</radius>
+        </wheel>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	true	</isLeading>
+          <name>	WD_R1	</name>
+          <radius>	0.32299	</radius>
+        </wheel>
+        <group>
+          <isLeft>	true	</isLeft>
+          <template>	W_L	</template>
+          <radius>	0.424389	</radius>
+          <startIndex>	0	</startIndex>
+          <count>	4	</count>
+        </group>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	true	</isLeading>
+          <name>	W_L4	</name>
+          <radius>	0.426399	</radius>
+        </wheel>
+        <group>
+          <isLeft>	false	</isLeft>
+          <template>	W_R	</template>
+          <radius>	0.424389	</radius>
+          <startIndex>	0	</startIndex>
+          <count>	4	</count>
+        </group>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	true	</isLeading>
+          <name>	W_R4	</name>
+          <radius>	0.426399	</radius>
+        </wheel>
+      </wheels>
+      <drivingWheels>	WD_L0 WD_L1	</drivingWheels>
+      <effects>
+        <lodDist>	MEDIUM	</lodDist>
+        <dust>	mediumTankDust	</dust>
+        <mud>	mediumTankMud	</mud>
+      </effects>
+      <soundPC>	/vehicles/tanks_pc/treads/treads_2	</soundPC>
+      <soundNPC>	/vehicles/tanks_npc/treads/treads_2	</soundNPC>
+      <hullPosition>	0.000000 1.06189 0.000000	</hullPosition>
+      <hitTester>
+        <collisionModel>	vehicles/russian/R87_T62A/collision/Chassis.model	</collisionModel>
+      </hitTester>
+      <armor>
+        <leftTrack>	20	</leftTrack>
+        <rightTrack>	20	</rightTrack>
+      </armor>
+      <topRightCarryingPoint>	1.31335 2.0568	</topRightCarryingPoint>
+      <maxClimbAngle>	25	</maxClimbAngle>
+      <navmeshGirth>	6.0	</navmeshGirth>
+      <weight>	7800	</weight>
+      <maxLoad>	39800	</maxLoad>
+      <terrainResistance>	0.5 0.6 1.4	</terrainResistance>
+      <brakeForce>	50000	</brakeForce>
+      <rotationIsAroundCenter>	true	</rotationIsAroundCenter>
+      <rotationSpeed>	56	</rotationSpeed>
+      <shotDispersionFactors>
+        <vehicleMovement>	0.1	</vehicleMovement>
+        <vehicleRotation>	0.1	</vehicleRotation>
+      </shotDispersionFactors>
+      <bulkHealthFactor>	3.0	</bulkHealthFactor>
+      <maxHealth>	250	</maxHealth>
+      <maxRegenHealth>	190	</maxRegenHealth>
+      <repairCost>	5.0	</repairCost>
+      <AODecals>
+        <decal>
+          <transform>
+            <row0>	4.595650 0.000000 0.000000	</row0>
+            <row1>	0.000000 1.592830 0.000000	</row1>
+            <row2>	0.000000 0.000000 7.815840	</row2>
+            <row3>	0.000000 0.000000 0.000000	</row3>
+          </transform>
+        </decal>
+      </AODecals>
+    </Chassis_T62A>
+  </chassis>
+  <turrets0>
+    <Turret_1_T62A>
+      <userString>	#ussr_vehicles:Turret_1_T62A	</userString>
+      <tags></tags>
+      <level>	10	</level>
+      <price>	66000	</price>
+      <notInShop>	true	</notInShop>
+      <models>
+        <undamaged>	vehicles/russian/R87_T62A/normal/lod0/Turret_01.model	</undamaged>
+        <destroyed>	vehicles/russian/R87_T62A/crash/lod0/Turret_01.model	</destroyed>
+        <exploded>	vehicles/russian/R87_T62A/crash/lod0/Turret_01.model	</exploded>
+      </models>
+      <hitTester>
+        <collisionModel>	vehicles/russian/R87_T62A/collision/Turret_01.model	</collisionModel>
+      </hitTester>
+      <gunPosition>	-0.000000 0.223016 1.07949	</gunPosition>
+      <armor>
+        <armor_1>	240	</armor_1>
+        <armor_2>	214	</armor_2>
+        <armor_3>	161	</armor_3>
+        <armor_4>	65	</armor_4>
+        <armor_5>	153	</armor_5>
+        <armor_6>	48	</armor_6>
+        <armor_7>	95	</armor_7>
+        <armor_8>	58	</armor_8>
+        <armor_9>	55	</armor_9>
+        <armor_10>	30	</armor_10>
+        <armor_11>	20	</armor_11>
+        <armor_12>	0	</armor_12>
+        <armor_13>	20	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+        </armor_13>
+        <armor_14>	50	</armor_14>
+      </armor>
+      <primaryArmor>	armor_1 armor_3 armor_4	</primaryArmor>
+      <weight>	8000	</weight>
+      <maxHealth>	390	</maxHealth>
+      <rotationSpeed>	48	</rotationSpeed>
+      <turretRotatorHealth>
+        <maxHealth>	170	</maxHealth>
+        <maxRegenHealth>	85	</maxRegenHealth>
+        <repairCost>	1.0	</repairCost>
+      </turretRotatorHealth>
+      <circularVisionRadius>	400	</circularVisionRadius>
+      <surveyingDeviceHealth>
+        <maxHealth>	120	</maxHealth>
+        <maxRegenHealth>	60	</maxRegenHealth>
+        <repairCost>	1.0	</repairCost>
+      </surveyingDeviceHealth>
+      <guns>
+        <_100mm_D54_TS>	shared	  <maxAmmo>	50	</maxAmmo>
+          <pitchLimits>	-17 5	</pitchLimits>
+          <models>
+            <undamaged>	vehicles/russian/R87_T62A/normal/lod0/Gun_01.model	</undamaged>
+            <destroyed>	vehicles/russian/R87_T62A/crash/lod0/Gun_01.model	</destroyed>
+            <exploded>	vehicles/russian/R87_T62A/crash/lod0/Gun_01.model	</exploded>
+          </models>
+          <hitTester>
+            <collisionModel>	vehicles/russian/R87_T62A/collision/Gun_01.model	</collisionModel>
+          </hitTester>
+          <armor>
+            <armor_1>	214	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_1>
+            <armor_2>	95	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_2>
+            <armor_3>	30	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_3>
+            <gun>	40	</gun>
+          </armor>
+          <shotDispersionRadius>	0.34	</shotDispersionRadius>
+          <reloadTime>	6.6	</reloadTime>
+          <shotDispersionFactors>
+            <turretRotation>	0.08	</turretRotation>
+            <afterShot>	3.5	</afterShot>
+            <whileGunDamaged>	2.0	</whileGunDamaged>
+          </shotDispersionFactors>
+          <aimingTime>	2	</aimingTime>
+          <extraPitchLimits>
+            <back>	-17 4 5	</back>
+            <transition>	5	</transition>
+          </extraPitchLimits>
+          <emblemSlots>
+            <insigniaOnGun>
+              <rayStart>	0.00100022 -0.00597603 1.19	</rayStart>
+              <rayEnd>	0.28771 -0.11183 0.95482	</rayEnd>
+              <rayUp>	0.096 0.092 2	</rayUp>
+              <size>	0.733	</size>
+              <hideIfDamaged>	false	</hideIfDamaged>
+            </insigniaOnGun>
+          </emblemSlots>
+          <animateEmblemSlots>	true	</animateEmblemSlots>
+        </_100mm_D54_TS>
+      </guns>
+      <emblemSlots>
+        <player>
+          <rayStart>	-1.34928 0.351959 0.631487	</rayStart>
+          <rayEnd>	-0.994656 0.188023 0.545669	</rayEnd>
+          <rayUp>	0.000000 1 0.000000	</rayUp>
+          <size>	0.28	</size>
+          <hideIfDamaged>	false	</hideIfDamaged>
+        </player>
+        <inscription>
+          <rayStart>	-1.47267 0.312322 0.0693779	</rayStart>
+          <rayEnd>	-1.11018 0.143764 0.0557554	</rayEnd>
+          <rayUp>	0.000000 1 0.000000	</rayUp>
+          <size>	0.68	</size>
+          <hideIfDamaged>	true	</hideIfDamaged>
+        </inscription>
+        <player>
+          <rayStart>	1.34928 0.351959 0.631487	</rayStart>
+          <rayEnd>	0.994656 0.188023 0.545669	</rayEnd>
+          <rayUp>	0.000000 1 0.000000	</rayUp>
+          <size>	0.28	</size>
+          <hideIfDamaged>	true	</hideIfDamaged>
+        </player>
+        <inscription>
+          <rayStart>	1.47267 0.312322 0.0693779	</rayStart>
+          <rayEnd>	1.11018 0.143764 0.0557554	</rayEnd>
+          <rayUp>	0.000000 1 0.000000	</rayUp>
+          <size>	0.68	</size>
+          <hideIfDamaged>	true	</hideIfDamaged>
+        </inscription>
+      </emblemSlots>
+      <showEmblemsOnGun>	false	</showEmblemsOnGun>
+      <physicsShape>	1.000 0.000 1.000 0.000 0.545 0.238 0.560 0.401 0.589 0.500 0.307 0.500 0.188 0.400 0.274	</physicsShape>
+      <turretRotatorSoundManual>	/turret/turret/turret_manual_traverse/turret_manual_traverse_8000-11999	</turretRotatorSoundManual>
+      <turretRotatorSoundGear>	/turret/turret/turret_electric_traverse/turret_electric_traverse_8000-11999	</turretRotatorSoundGear>
+    </Turret_1_T62A>
+  </turrets0>
+  <engines>
+    <V-55>	shared	</V-55>
+  </engines>
+  <fuelTanks>
+    <Large>	shared	</Large>
+  </fuelTanks>
+  <radios>
+    <R123>	shared	</R123>
+  </radios>
+</t62a.xml>

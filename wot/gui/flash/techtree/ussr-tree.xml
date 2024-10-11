@@ -1,0 +1,562 @@
+<ussr-tree.xml>
+  <settings>	normal	</settings>
+  <grid>	grid_1	  <rows>	11	</rows>
+    <columns>	11	</columns>
+  </grid>
+  <nodes>
+    <MS-1>
+      <row>	1	</row>
+      <column>	1	</column>
+      <lines>
+        <AT-1></AT-1>
+        <BT-2></BT-2>
+        <T-26></T-26>
+        <SU-18></SU-18>
+        <T-60></T-60>
+      </lines>
+    </MS-1>
+    <AT-1>
+      <row>	2	</row>
+      <column>	2	</column>
+      <lines>
+        <SU-76></SU-76>
+      </lines>
+    </AT-1>
+    <T-60>
+      <row>	3	</row>
+      <column>	2	</column>
+      <lines>
+        <T-70></T-70>
+      </lines>
+    </T-60>
+    <BT-2>
+      <row>	4	</row>
+      <column>	2	</column>
+      <lines>
+        <BT-7></BT-7>
+      </lines>
+    </BT-2>
+    <Tetrarch_LL>
+      <row>	5	</row>
+      <column>	2	</column>
+    </Tetrarch_LL>
+    <T-26>
+      <row>	6	</row>
+      <column>	2	</column>
+      <lines>
+        <T-46></T-46>
+      </lines>
+    </T-26>
+    <SU-18>
+      <row>	10	</row>
+      <column>	2	</column>
+      <lines>
+        <SU-26></SU-26>
+      </lines>
+    </SU-18>
+    <SU-76>
+      <row>	2	</row>
+      <column>	3	</column>
+      <lines>
+        <GAZ-74b></GAZ-74b>
+      </lines>
+    </SU-76>
+    <T-70>
+      <row>	3	</row>
+      <column>	3	</column>
+      <lines>
+        <T80></T80>
+        <SU-76>
+          <line>	vertical	</line>
+        </SU-76>
+      </lines>
+    </T-70>
+    <BT-7>
+      <row>	4	</row>
+      <column>	3	</column>
+      <lines>
+        <A-20></A-20>
+      </lines>
+    </BT-7>
+    <T-127>
+      <row>	9	</row>
+      <column>	3	</column>
+    </T-127>
+    <SU76I>
+      <row>	5	</row>
+      <column>	3	</column>
+    </SU76I>
+    <T-46>
+      <row>	6	</row>
+      <column>	3	</column>
+      <lines>
+        <T-50>
+          <line>	H_Diag	</line>
+          <inPin>	BL	</inPin>
+        </T-50>
+        <T-28>
+          <line>	H_Diag	</line>
+        </T-28>
+      </lines>
+    </T-46>
+    <LTP>
+      <row>	8	</row>
+      <column>	3	</column>
+    </LTP>
+    <SU-26>
+      <row>	10	</row>
+      <column>	3	</column>
+      <lines>
+        <SU-5></SU-5>
+      </lines>
+    </SU-26>
+    <GAZ-74b>
+      <row>	2	</row>
+      <column>	4	</column>
+      <lines>
+        <SU-85>
+          <line>	H_Diag	</line>
+        </SU-85>
+      </lines>
+    </GAZ-74b>
+    <T80>
+      <row>	3	</row>
+      <column>	4	</column>
+      <lines>
+        <R04_T-34>
+          <line>	H_Diag	</line>
+        </R04_T-34>
+      </lines>
+    </T80>
+    <A-20>
+      <row>	4	</row>
+      <column>	4	</column>
+      <lines>
+        <R04_T-34></R04_T-34>
+      </lines>
+    </A-20>
+    <Valentine_LL>
+      <row>	9	</row>
+      <column>	4	</column>
+    </Valentine_LL>
+    <T-50>
+      <row>	5	</row>
+      <column>	4	</column>
+      <lines>
+        <R04_T-34>
+          <line>	H_Diag	</line>
+          <inPin>	BL	</inPin>
+        </R04_T-34>
+      </lines>
+    </T-50>
+    <T-28>
+      <row>	7	</row>
+      <column>	4	</column>
+      <lines>
+        <KV1>
+          <line>	H_Diag	</line>
+        </KV1>
+      </lines>
+    </T-28>
+    <SU-5>
+      <row>	10	</row>
+      <column>	4	</column>
+      <lines>
+        <SU122A></SU122A>
+      </lines>
+    </SU-5>
+    <SU_85I>
+      <row>	1	</row>
+      <column>	5	</column>
+    </SU_85I>
+    <SU-85>
+      <row>	3	</row>
+      <column>	5	</column>
+      <lines>
+        <SU-100>
+          <line>	H_Diag	</line>
+          <inPin>	BL	</inPin>
+        </SU-100>
+      </lines>
+    </SU-85>
+    <R04_T-34>
+      <row>	4	</row>
+      <column>	5	</column>
+      <lines>
+        <SU-85>
+          <line>	vertical	</line>
+        </SU-85>
+        <T-34-85>
+          <line>	H_Diag	</line>
+        </T-34-85>
+        <A43>
+          <line>	H_Diag	</line>
+          <inPin>	BL	</inPin>
+        </A43>
+        <MT25></MT25>
+      </lines>
+    </R04_T-34>
+    <Matilda_II_LL>
+      <row>	5	</row>
+      <column>	5	</column>
+    </Matilda_II_LL>
+    <T_50_2>
+      <row>	7	</row>
+      <column>	5	</column>
+    </T_50_2>
+    <KV-1s>
+      <row>	7	</row>
+      <column>	5	</column>
+      <lines>
+        <R106_KV85></R106_KV85>
+      </lines>
+    </KV-1s>
+    <KV1>
+      <row>	8	</row>
+      <column>	5	</column>
+      <lines>
+        <KV-1s>
+          <line>	vertical	</line>
+        </KV-1s>
+        <T150></T150>
+        <KV2>
+          <line>	H_Diag	</line>
+        </KV2>
+      </lines>
+    </KV1>
+    <Churchill_LL>
+      <row>	9	</row>
+      <column>	5	</column>
+    </Churchill_LL>
+    <SU122A>
+      <row>	10	</row>
+      <column>	5	</column>
+      <lines>
+        <SU-8></SU-8>
+      </lines>
+    </SU122A>
+    <SU100Y>
+      <row>	1	</row>
+      <column>	6	</column>
+    </SU100Y>
+    <SU-100>
+      <row>	2	</row>
+      <column>	6	</column>
+      <lines>
+        <SU-152>
+          <line>	H_Diag_2C	</line>
+          <inPin>	BL	</inPin>
+        </SU-152>
+        <SU100M1></SU100M1>
+      </lines>
+    </SU-100>
+    <A43>
+      <row>	3	</row>
+      <column>	6	</column>
+      <lines>
+        <A44></A44>
+      </lines>
+    </A43>
+    <T-34-85>
+      <row>	5	</row>
+      <column>	6	</column>
+      <lines>
+        <T-43></T-43>
+        <KV-13>
+          <line>	H_Diag	</line>
+        </KV-13>
+      </lines>
+    </T-34-85>
+    <R108_T34_85M>
+      <row>	6	</row>
+      <column>	6	</column>
+    </R108_T34_85M>
+    <R106_KV85>
+      <row>	7	</row>
+      <column>	6	</column>
+      <lines>
+        <IS></IS>
+        <KV-13>
+          <line>	H_Diag	</line>
+          <inPin>	BL	</inPin>
+        </KV-13>
+      </lines>
+    </R106_KV85>
+    <MT25>
+      <row>	4	</row>
+      <column>	6	</column>
+      <lines>
+        <R107_LTB></R107_LTB>
+      </lines>
+    </MT25>
+    <T150>
+      <row>	8	</row>
+      <column>	6	</column>
+      <lines>
+        <KV-3></KV-3>
+      </lines>
+    </T150>
+    <KV2>
+      <row>	9	</row>
+      <column>	6	</column>
+      <lines>
+        <S-51></S-51>
+        <T150>
+          <line>	vertical	</line>
+        </T150>
+      </lines>
+    </KV2>
+    <SU-8>
+      <row>	10	</row>
+      <column>	6	</column>
+      <lines>
+        <SU14_1></SU14_1>
+      </lines>
+    </SU-8>
+    <SU-152>
+      <row>	1	</row>
+      <column>	8	</column>
+      <lines>
+        <ISU-152></ISU-152>
+      </lines>
+    </SU-152>
+    <SU100M1>
+      <row>	2	</row>
+      <column>	8	</column>
+      <lines>
+        <SU-101></SU-101>
+      </lines>
+    </SU100M1>
+    <SU122_44>
+      <row>	3	</row>
+      <column>	8	</column>
+    </SU122_44>
+    <A44>
+      <row>	3	</row>
+      <column>	7	</column>
+      <lines>
+        <Object416>
+          <line>	H_UD_H	</line>
+        </Object416>
+      </lines>
+    </A44>
+    <R107_LTB>
+      <row>	4	</row>
+      <column>	7	</column>
+      <lines>
+        <R109_T54S>
+          <line>	H_UD_H	</line>
+        </R109_T54S>
+      </lines>
+    </R107_LTB>
+    <T-43>
+      <row>	5	</row>
+      <column>	7	</column>
+      <lines>
+        <T-44>
+          <line>	H_UD_H	</line>
+        </T-44>
+      </lines>
+    </T-43>
+    <KV-13>
+      <row>	6	</row>
+      <column>	7	</column>
+      <lines>
+        <T-43>
+          <line>	vertical	</line>
+        </T-43>
+        <IS>
+          <line>	H_Diag	</line>
+        </IS>
+      </lines>
+    </KV-13>
+    <KV-3>
+      <row>	8	</row>
+      <column>	8	</column>
+      <lines>
+        <KV4></KV4>
+      </lines>
+    </KV-3>
+    <IS>
+      <row>	7	</row>
+      <column>	8	</column>
+      <lines>
+        <IS-3></IS-3>
+      </lines>
+    </IS>
+    <S-51>
+      <row>	9	</row>
+      <column>	7	</column>
+      <lines>
+        <SU-14>
+          <line>	H_UD_H	</line>
+        </SU-14>
+      </lines>
+    </S-51>
+    <T44_85>
+      <row>	9	</row>
+      <column>	8	</column>
+    </T44_85>
+    <SU14_1>
+      <row>	10	</row>
+      <column>	7	</column>
+      <lines>
+        <SU-14></SU-14>
+      </lines>
+    </SU14_1>
+    <ISU-152>
+      <row>	1	</row>
+      <column>	9	</column>
+      <lines>
+        <R53_Object_704></R53_Object_704>
+      </lines>
+    </ISU-152>
+    <SU-101>
+      <row>	2	</row>
+      <column>	9	</column>
+      <lines>
+        <SU122_54></SU122_54>
+      </lines>
+    </SU-101>
+    <R112_T54_45>
+      <row>	3	</row>
+      <column>	9	</column>
+    </R112_T54_45>
+    <R109_T54S>
+      <row>	5	</row>
+      <column>	9	</column>
+      <lines>
+        <T-54></T-54>
+      </lines>
+    </R109_T54S>
+    <Object416>
+      <row>	4	</row>
+      <column>	9	</column>
+      <lines>
+        <R104_Object_430_II></R104_Object_430_II>
+        <T-54>
+          <line>	H_Diag	</line>
+        </T-54>
+      </lines>
+    </Object416>
+    <T-44>
+      <row>	6	</row>
+      <column>	9	</column>
+      <lines>
+        <T-54>
+          <line>	H_Diag	</line>
+          <inPin>	BL	</inPin>
+        </T-54>
+      </lines>
+    </T-44>
+    <Object252>
+      <row>	9	</row>
+      <column>	9	</column>
+    </Object252>
+    <IS-3>
+      <row>	7	</row>
+      <column>	9	</column>
+      <lines>
+        <IS8></IS8>
+      </lines>
+    </IS-3>
+    <KV4>
+      <row>	8	</row>
+      <column>	9	</column>
+      <lines>
+        <ST_I></ST_I>
+      </lines>
+    </KV4>
+    <SU-14>
+      <row>	10	</row>
+      <column>	9	</column>
+      <lines>
+        <Object_212></Object_212>
+      </lines>
+    </SU-14>
+    <R53_Object_704>
+      <row>	1	</row>
+      <column>	10	</column>
+      <lines>
+        <Object268></Object268>
+      </lines>
+    </R53_Object_704>
+    <SU122_54>
+      <row>	2	</row>
+      <column>	10	</column>
+      <lines>
+        <Object263></Object263>
+      </lines>
+    </SU122_54>
+    <R104_Object_430_II>
+      <row>	4	</row>
+      <column>	10	</column>
+      <lines>
+        <Object_430></Object_430>
+      </lines>
+    </R104_Object_430_II>
+    <T-54>
+      <row>	5	</row>
+      <column>	10	</column>
+      <lines>
+        <T62A></T62A>
+        <Object_140>
+          <line>	H_Diag	</line>
+        </Object_140>
+      </lines>
+    </T-54>
+    <IS8>
+      <row>	7	</row>
+      <column>	10	</column>
+      <lines>
+        <IS-7></IS-7>
+      </lines>
+    </IS8>
+    <ST_I>
+      <row>	8	</row>
+      <column>	10	</column>
+      <lines>
+        <R90_IS_4M></R90_IS_4M>
+      </lines>
+    </ST_I>
+    <Object_212>
+      <row>	10	</row>
+      <column>	10	</column>
+      <lines>
+        <Object_261></Object_261>
+      </lines>
+    </Object_212>
+    <Object268>
+      <row>	1	</row>
+      <column>	11	</column>
+    </Object268>
+    <Object263>
+      <row>	2	</row>
+      <column>	11	</column>
+    </Object263>
+    <Object_430>
+      <row>	4	</row>
+      <column>	11	</column>
+    </Object_430>
+    <T62A>
+      <row>	5	</row>
+      <column>	11	</column>
+    </T62A>
+    <Object_140>
+      <row>	6	</row>
+      <column>	11	</column>
+    </Object_140>
+    <IS-7>
+      <row>	7	</row>
+      <column>	11	</column>
+    </IS-7>
+    <R90_IS_4M>
+      <row>	8	</row>
+      <column>	11	</column>
+    </R90_IS_4M>
+    <Object_261>
+      <row>	10	</row>
+      <column>	11	</column>
+    </Object_261>
+  </nodes>
+</ussr-tree.xml>

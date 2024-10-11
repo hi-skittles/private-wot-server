@@ -1,0 +1,29 @@
+<bigworld>
+  <rule pattern=".*">
+    <format> DXT1 </format>
+  </rule>
+  <rule pattern=".*(\.tga)$">
+    <format> DXT3 </format>
+  </rule>
+  <rule pattern=".*(\.bmp)$">
+    <format> DXT1 </format>
+  </rule>
+  
+  <rule pattern=".*(flora).*">
+    <format> DXT3	</format>
+    <reduceDim>	0	</reduceDim>
+  </rule>
+  <!-- If you change this pattern, remember to also change the code -->
+  <!-- in method addChunkStaticDecal in WorldEditorDirector.py -->
+  <rule pattern=".*(_norms|_normal|_normals|_Normals|_NM|_NM2|_N|_n)\..*">
+    <format> A8R8G8B8 </format>
+	<normalMap> true </normalMap>
+  </rule>
+  <rule pattern=".*(_cloud).*">
+    <format> A8R8G8B8 </format>
+  </rule>
+  <rule pattern=".*(\.thumbnail\.).*">
+    <streamable>	false	</streamable>
+    <lodMode>	0	</lodMode>
+  </rule>
+</bigworld>

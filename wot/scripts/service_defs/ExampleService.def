@@ -1,0 +1,26 @@
+<root>
+	<Methods>
+		<myTest>
+			<Args>
+				<name>	UNICODE_STRING	</name>	<!-- character name -->
+			</Args>
+		</myTest>
+
+		<twoWay>
+			<Args>
+				<arg1>		STRING		</arg1>
+				<arg2>		STRING		</arg2>
+				<arg3>		STRING		</arg3>
+				<arg4>		STRING		</arg4>
+			</Args>
+
+			<ReturnValues>
+				<result1> STRING </result1>
+				<result2> STRING </result2>
+				<result3> STRING </result3>
+				<result4> STRING </result4>
+			</ReturnValues>
+		</twoWay>
+
+	</Methods>
+</root>

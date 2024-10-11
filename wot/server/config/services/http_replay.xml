@@ -1,0 +1,26 @@
+<root>
+    <!-- Configuration for HTTPReplayService -->
+
+    <!-- 
+    CIDR netmask that specifies which network interfaces this service
+    is allowed to listen to. If not defined, this service will attempt to
+    bind to BigWorld's internal interface (as given by BigWorld.address()).
+    -->
+    <!--<interface>0.0.0.0</interface>-->
+
+    <!--
+    List of ports to bind to. Each service fragment will try binding to the
+    ports listed here, until a port is found that can be bound.
+    -->
+    <ports> 
+        <port>14500</port>
+        <port>0</port> <!--Random port-->
+    </ports>
+
+
+    <!--
+    Resource path to where recordings are to be served from.
+    -->
+    <documentRoot> recordings </documentRoot>
+
+</root>

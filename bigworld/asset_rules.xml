@@ -1,0 +1,65 @@
+<root>
+  <!--source rules-->
+  <rule pattern="^system/data/texture_detail_levels.config$">
+    <root>true</root>
+    <converter>HierarchicalConfigConverter</converter>
+    <converterParams>-f texture_details.xml -o system/data/texture_detail_levels.xml</converterParams>
+  </rule>
+  <rule pattern=".*(\.(bmp|tga|jpg|png|hdr|pfm|dib|ppm))$">
+    <root>true</root>
+    <converter>TextureConverter</converter>
+  </rule>
+  <rule pattern=".*(\.fx)$">
+    <root>true</root>
+    <converter>EffectConverter</converter>
+  </rule>
+  <rule pattern=".*(/space\.settings)$">
+    <root>true</root>
+    <converter>SpaceConverter</converter>
+  </rule>
+  <rule pattern=".*(\.visual)$">
+    <root>true</root>
+    <converter>VisualProcessor</converter>
+  </rule>
+  <rule pattern=".*(\.primitives)$">
+    <converter>PrimitiveProcessor</converter>
+	<converterParams>-target D3D9</converterParams>
+  </rule>
+  <rule pattern=".*(\.thumbnail\.jpg)$">
+    <noConversion>true</noConversion>
+  </rule>
+
+  <!--destination rules-->
+  <rule pattern="^system/data/texture_detail_levels.xml$">
+    <sourcePattern>(\.xml)$</sourcePattern>
+    <sourceFormat>.config</sourceFormat>
+  </rule>
+  <rule pattern=".*(\.dds)$">
+    <sourcePattern>(\.dds)$</sourcePattern>
+    <sourceFormat>.bmp|.tga|.jpg|.png|.hdr|.pfm|.dib|.ppm</sourceFormat>
+  </rule>
+  <rule pattern=".*(\.c\.dds)$">
+    <sourcePattern>(\.c\.dds)$</sourcePattern>
+    <sourceFormat>.bmp|.tga|.jpg|.png|.hdr|.pfm|.dib|.ppm</sourceFormat>
+  </rule>
+  <rule pattern=".*(\.fxo)$">
+    <sourcePattern>(\.[0-1]+)?(\.fxo)$</sourcePattern>
+    <sourceFormat>.fx</sourceFormat>
+  </rule>
+  <rule pattern=".*/(space\.bin)$">
+    <sourcePattern>(space\.bin)$</sourcePattern>
+    <sourceFormat>space.settings</sourceFormat>
+  </rule>
+  <rule pattern=".*(\.visual\.processed)$">
+    <sourcePattern>(\.visual\.processed)$</sourcePattern>
+    <sourceFormat>.visual</sourceFormat>
+  </rule>
+  <rule pattern=".*(\.primitives\.processed)$">
+    <sourcePattern>(\.primitives\.processed)$</sourcePattern>
+    <sourceFormat>.primitives</sourceFormat>
+  </rule>
+  <!-- ignore navgen temporary files -->
+  <rule pattern="(.*/)?[0-9a-f]{8}o-[0-9]{9}-(filtering|postfilter|prefilter)\.tga$">
+    <noConversion>true</noConversion>
+  </rule>
+</root>

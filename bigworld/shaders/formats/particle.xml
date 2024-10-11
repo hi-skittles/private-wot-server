@@ -1,0 +1,11 @@
+<particle.xml>
+	<elements>
+		<POSITION/>
+		<COLOR>
+			<type> COLOR </type>
+		</COLOR>
+		<PSIZE>
+			<type> FLOAT1 </type>
+		</PSIZE>
+	</elements>
+</particle.xml>

@@ -1,0 +1,472 @@
+<sound_notifications.xml>
+  <gun_reloaded>
+    <fx>
+      <sound>	/GUI/notifications_FX/gun_reloaded	</sound>
+      <playRules>	0	</playRules>
+    </fx>
+  </gun_reloaded>
+  <target_captured>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/target_captured	</sound>
+      <playRules>	2	</playRules>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+    </voice>
+  </target_captured>
+  <target_lost>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/target_lost	</sound>
+      <playRules>	2	</playRules>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+    </voice>
+  </target_lost>
+  <target_unlocked>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/target_unlocked	</sound>
+      <playRules>	2	</playRules>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+    </voice>
+  </target_unlocked>
+  <enemy_hp_damaged_by_projectile_by_player>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/enemy_hp_damaged_by_projectile_by_player	</sound>
+      <playRules>	2	</playRules>
+    </voice>
+  </enemy_hp_damaged_by_projectile_by_player>
+  <enemy_hp_damaged_by_projectile_and_chassis_damaged_by_player>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/enemy_hp_damaged_by_projectile_and_chassis_damaged_by_player	</sound>
+      <playRules>	2	</playRules>
+    </voice>
+  </enemy_hp_damaged_by_projectile_and_chassis_damaged_by_player>
+  <enemy_hp_damaged_by_projectile_and_gun_damaged_by_player>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/enemy_hp_damaged_by_projectile_and_gun_damaged_by_player	</sound>
+      <playRules>	2	</playRules>
+    </voice>
+  </enemy_hp_damaged_by_projectile_and_gun_damaged_by_player>
+  <enemy_hp_damaged_by_explosion_at_direct_hit_by_player>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/enemy_hp_damaged_by_explosion_at_direct_hit_by_player	</sound>
+      <playRules>	2	</playRules>
+    </voice>
+  </enemy_hp_damaged_by_explosion_at_direct_hit_by_player>
+  <enemy_no_hp_damage_at_attempt_by_player>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/armor_not_pierced_by_player	</sound>
+      <playRules>	2	</playRules>
+    </voice>
+  </enemy_no_hp_damage_at_attempt_by_player>
+  <enemy_no_hp_damage_at_attempt_and_chassis_damaged_by_player>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/enemy_no_hp_damage_at_attempt_and_chassis_damaged_by_player	</sound>
+      <playRules>	2	</playRules>
+    </voice>
+  </enemy_no_hp_damage_at_attempt_and_chassis_damaged_by_player>
+  <enemy_no_hp_damage_at_attempt_and_gun_damaged_by_player>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/enemy_no_hp_damage_at_attempt_and_gun_damaged_by_player	</sound>
+      <playRules>	2	</playRules>
+    </voice>
+  </enemy_no_hp_damage_at_attempt_and_gun_damaged_by_player>
+  <enemy_no_hp_damage_at_no_attempt_by_player>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/enemy_no_hp_damage_at_no_attempt_by_player	</sound>
+      <playRules>	2	</playRules>
+    </voice>
+  </enemy_no_hp_damage_at_no_attempt_by_player>
+  <enemy_no_piercing_by_player>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/armor_not_pierced_by_player	</sound>
+      <playRules>	2	</playRules>
+    </voice>
+  </enemy_no_piercing_by_player>
+  <enemy_no_hp_damage_at_no_attempt_and_chassis_damaged_by_player>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/enemy_no_hp_damage_at_no_attempt_and_chassis_damaged_by_player	</sound>
+      <playRules>	2	</playRules>
+    </voice>
+  </enemy_no_hp_damage_at_no_attempt_and_chassis_damaged_by_player>
+  <enemy_no_hp_damage_at_no_attempt_and_gun_damaged_by_player>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/enemy_no_hp_damage_at_no_attempt_and_gun_damaged_by_player	</sound>
+      <playRules>	2	</playRules>
+    </voice>
+  </enemy_no_hp_damage_at_no_attempt_and_gun_damaged_by_player>
+  <enemy_ricochet_by_player>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/armor_ricochet_by_player	</sound>
+      <playRules>	2	</playRules>
+    </voice>
+  </enemy_ricochet_by_player>
+  <enemy_hp_damaged_by_near_explosion_by_player>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/damage_by_near_explosion_by_player	</sound>
+      <playRules>	2	</playRules>
+    </voice>
+  </enemy_hp_damaged_by_near_explosion_by_player>
+  <enemy_no_hp_damage_by_near_explosion_by_player>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/damage_by_near_explosion_by_player	</sound>
+      <playRules>	2	</playRules>
+    </voice>
+  </enemy_no_hp_damage_by_near_explosion_by_player>
+  <enemy_fire_started_by_player>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/enemy_fire_started_by_player	</sound>
+      <playRules>	3	</playRules>
+    </voice>
+  </enemy_fire_started_by_player>
+  <damage_by_near_explosion_by_enemy>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/damage_by_near_explosion_by_enemy	</sound>
+      <playRules>	2	</playRules>
+    </voice>
+  </damage_by_near_explosion_by_enemy>
+  <enemy_killed_by_player>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/enemy_killed_by_player	</sound>
+      <playRules>	1	</playRules>
+    </voice>
+  </enemy_killed_by_player>
+  <enemy_killed>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/enemy_killed	</sound>
+      <playRules>	1	</playRules>
+    </voice>
+  </enemy_killed>
+  <enemy_sighted>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/enemy_sighted	</sound>
+      <playRules>	2	</playRules>
+      <minTimeBetweenEvents>	2	</minTimeBetweenEvents>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+    </voice>
+  </enemy_sighted>
+  <enemies_sighted>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/enemies_sighted	</sound>
+      <playRules>	2	</playRules>
+      <minTimeBetweenEvents>	2	</minTimeBetweenEvents>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+    </voice>
+  </enemies_sighted>
+  <enemy_sighted_for_team>
+    <fx>
+      <sound>	/GUI/notifications_FX/enemy_sighted_for_team	</sound>
+      <playRules>	2	</playRules>
+      <shouldBindToPlayer>	False	</shouldBindToPlayer>
+    </fx>
+  </enemy_sighted_for_team>
+  <ally_killed>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/ally_killed	</sound>
+      <playRules>	1	</playRules>
+    </voice>
+  </ally_killed>
+  <ally_killed_by_player>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/ally_killed_by_player	</sound>
+      <playRules>	1	</playRules>
+    </voice>
+  </ally_killed_by_player>
+  <vehicle_destroyed>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/vehicle_destroyed	</sound>
+      <playRules>	1	</playRules>
+    </voice>
+  </vehicle_destroyed>
+  <crew_deactivated>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/crew_deactivated	</sound>
+      <playRules>	1	</playRules>
+    </voice>
+  </crew_deactivated>
+  <engine_damaged>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/engine_damaged	</sound>
+      <playRules>	3	</playRules>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+      <timeout>	9	</timeout>
+    </voice>
+  </engine_damaged>
+  <engine_destroyed>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/engine_destroyed	</sound>
+      <playRules>	3	</playRules>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+      <timeout>	9	</timeout>
+    </voice>
+  </engine_destroyed>
+  <engine_functional>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/engine_functional	</sound>
+      <playRules>	3	</playRules>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+      <timeout>	9	</timeout>
+    </voice>
+  </engine_functional>
+  <ammo_bay_damaged>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/ammo_bay_damaged	</sound>
+      <playRules>	3	</playRules>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+      <timeout>	9	</timeout>
+    </voice>
+  </ammo_bay_damaged>
+  <fuel_tank_damaged>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/fuel_tank_damaged	</sound>
+      <playRules>	3	</playRules>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+      <timeout>	9	</timeout>
+    </voice>
+  </fuel_tank_damaged>
+  <radio_damaged>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/radio_damaged	</sound>
+      <playRules>	3	</playRules>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+      <timeout>	9	</timeout>
+    </voice>
+  </radio_damaged>
+  <track_damaged>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/track_damaged	</sound>
+      <playRules>	3	</playRules>
+      <minTimeBetweenEvents>	1.0	</minTimeBetweenEvents>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+      <timeout>	9	</timeout>
+    </voice>
+  </track_damaged>
+  <track_destroyed>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/track_destroyed	</sound>
+      <playRules>	3	</playRules>
+      <minTimeBetweenEvents>	1.0	</minTimeBetweenEvents>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+      <timeout>	9	</timeout>
+    </voice>
+  </track_destroyed>
+  <track_functional>
+    <fx>
+      <sound>	/tanks/tank_repair/track_functional	</sound>
+      <playRules>	3	</playRules>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+      <timeout>	9	</timeout>
+    </fx>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/track_functional	</sound>
+      <playRules>	3	</playRules>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+      <timeout>	9	</timeout>
+    </voice>
+  </track_functional>
+  <track_functional_can_move>
+    <fx>
+      <sound>	/tanks/tank_repair/track_functional	</sound>
+      <playRules>	3	</playRules>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+      <timeout>	9	</timeout>
+    </fx>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/track_functional_can_move	</sound>
+      <playRules>	3	</playRules>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+      <timeout>	9	</timeout>
+    </voice>
+  </track_functional_can_move>
+  <gun_damaged>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/gun_damaged	</sound>
+      <playRules>	3	</playRules>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+      <timeout>	9	</timeout>
+    </voice>
+  </gun_damaged>
+  <gun_destroyed>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/gun_destroyed	</sound>
+      <playRules>	3	</playRules>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+      <timeout>	9	</timeout>
+    </voice>
+  </gun_destroyed>
+  <gun_functional>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/gun_functional	</sound>
+      <playRules>	3	</playRules>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+      <timeout>	9	</timeout>
+    </voice>
+  </gun_functional>
+  <turret_rotator_damaged>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/turret_rotator_damaged	</sound>
+      <playRules>	3	</playRules>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+      <timeout>	9	</timeout>
+    </voice>
+  </turret_rotator_damaged>
+  <turret_rotator_destroyed>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/turret_rotator_destroyed	</sound>
+      <playRules>	3	</playRules>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+      <timeout>	9	</timeout>
+    </voice>
+  </turret_rotator_destroyed>
+  <turret_rotator_functional>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/turret_rotator_functional	</sound>
+      <playRules>	3	</playRules>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+      <timeout>	9	</timeout>
+    </voice>
+  </turret_rotator_functional>
+  <surveying_devices_damaged>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/surveying_devices_damaged	</sound>
+      <playRules>	3	</playRules>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+      <timeout>	9	</timeout>
+    </voice>
+  </surveying_devices_damaged>
+  <surveying_devices_destroyed>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/surveying_devices_destroyed	</sound>
+      <playRules>	3	</playRules>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+      <timeout>	9	</timeout>
+    </voice>
+  </surveying_devices_destroyed>
+  <surveying_devices_functional>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/surveying_devices_functional	</sound>
+      <playRules>	3	</playRules>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+      <timeout>	9	</timeout>
+    </voice>
+  </surveying_devices_functional>
+  <commander_killed>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/commander_killed	</sound>
+      <playRules>	3	</playRules>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+      <timeout>	9	</timeout>
+    </voice>
+  </commander_killed>
+  <driver_killed>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/driver_killed	</sound>
+      <playRules>	3	</playRules>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+      <timeout>	9	</timeout>
+    </voice>
+  </driver_killed>
+  <radioman_killed>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/radioman_killed	</sound>
+      <playRules>	3	</playRules>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+      <timeout>	9	</timeout>
+    </voice>
+  </radioman_killed>
+  <gunner_killed>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/gunner_killed	</sound>
+      <playRules>	3	</playRules>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+      <timeout>	9	</timeout>
+    </voice>
+  </gunner_killed>
+  <loader_killed>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/loader_killed	</sound>
+      <playRules>	3	</playRules>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+      <timeout>	9	</timeout>
+    </voice>
+  </loader_killed>
+  <fire_started>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/fire_started	</sound>
+      <timeout>	10	</timeout>
+      <playRules>	2	</playRules>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+    </voice>
+  </fire_started>
+  <fire_stopped>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/fire_stopped	</sound>
+      <playRules>	3	</playRules>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+    </voice>
+  </fire_stopped>
+  <attack>
+    <voice>
+      <sound>	/ingame_voice/chat_shotcuts/attack	</sound>
+      <playRules>	3	</playRules>
+    </voice>
+  </attack>
+  <back_to_base>
+    <voice>
+      <sound>	/ingame_voice/chat_shotcuts/to_the_base	</sound>
+      <playRules>	3	</playRules>
+    </voice>
+  </back_to_base>
+  <follow_me>
+    <voice>
+      <sound>	/ingame_voice/chat_shotcuts/follow_me	</sound>
+      <playRules>	3	</playRules>
+    </voice>
+  </follow_me>
+  <help_me>
+    <voice>
+      <sound>	/ingame_voice/chat_shotcuts/need_help	</sound>
+      <playRules>	3	</playRules>
+    </voice>
+  </help_me>
+  <attack_the_enemy>
+    <voice>
+      <sound>	/ingame_voice/chat_shotcuts/attacking_the_enemy	</sound>
+      <playRules>	3	</playRules>
+    </voice>
+  </attack_the_enemy>
+  <positive>
+    <voice>
+      <sound>	/ingame_voice/chat_shotcuts/yes	</sound>
+      <playRules>	3	</playRules>
+    </voice>
+  </positive>
+  <negative>
+    <voice>
+      <sound>	/ingame_voice/chat_shotcuts/no	</sound>
+      <playRules>	3	</playRules>
+    </voice>
+  </negative>
+  <chat_shortcut_common_fx>
+    <voice>
+      <sound>	/GUI/notifications_FX/minimap_attention	</sound>
+      <playRules>	0	</playRules>
+    </voice>
+  </chat_shortcut_common_fx>
+  <start_battle>
+    <voice>
+      <sound>	/ingame_voice/notifications_VO/start_battle	</sound>
+      <playRules>	0	</playRules>
+    </voice>
+  </start_battle>
+  <sight_convergence>
+    <fx>
+      <sound>	/GUI/notifications_FX/sight_convergence	</sound>
+      <playRules>	0	</playRules>
+      <shouldBindToPlayer>	True	</shouldBindToPlayer>
+    </fx>
+  </sight_convergence>
+  <gun_intuition>
+    <fx>
+      <sound>	/GUI/notifications_FX/gun_intuition	</sound>
+      <playRules>	0	</playRules>
+    </fx>
+  </gun_intuition>
+</sound_notifications.xml>

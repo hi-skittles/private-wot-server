@@ -1,0 +1,815 @@
+<t-28.xml>
+  <crew>
+    <commander></commander>
+    <gunner></gunner>
+    <radioman></radioman>
+    <driver></driver>
+    <loader></loader>
+    <radioman></radioman>
+  </crew>
+  <speedLimits>
+    <forward>	45	</forward>
+    <backward>	20	</backward>
+  </speedLimits>
+  <repairCost>	3.80	</repairCost>
+  <crewXpFactor>	1.0	</crewXpFactor>
+  <effects>
+    <collision></collision>
+    <damagedStateGroup>	large	</damagedStateGroup>
+  </effects>
+  <camouflage>
+    <priceFactor>	0.8	</priceFactor>
+    <tiling>	1 1 0 0	</tiling>
+    <exclusionMask>	vehicles/russian/R06_T-28/T-28_CM.dds	</exclusionMask>
+  </camouflage>
+  <emblems>
+    <default>	ussr_star	</default>
+    <lodDist>	MEDIUM	</lodDist>
+    <alpha>	0.86	</alpha>
+  </emblems>
+  <horns>
+    <priceFactor>	1	</priceFactor>
+    <distanceFactor>	1	</distanceFactor>
+    <volumeFactor>	1	</volumeFactor>
+  </horns>
+  <hull>
+    <models>
+      <undamaged>	vehicles/russian/R06_T-28/normal/lod0/Hull.model	</undamaged>
+      <destroyed>	vehicles/russian/R06_T-28/crash/lod0/Hull.model	</destroyed>
+      <exploded>	vehicles/russian/R06_T-28/crash/lod0/Hull.model	</exploded>
+    </models>
+    <swinging>
+      <lodDist>	FAR	</lodDist>
+      <pitchParams>	0.30 32.00 0.38 1.00 0.06 0.34	</pitchParams>
+      <rollParams>	1.00 0.30 32.00 0.38 1.00 0.06 0.34	</rollParams>
+      <sensitivityToImpulse>	0.78	</sensitivityToImpulse>
+    </swinging>
+    <exhaust>
+      <pixie>	gas_large	</pixie>
+      <nodes>	HP_Track_Exhaus_1 HP_Track_Exhaus_2	</nodes>
+    </exhaust>
+    <turretPositions>
+      <turret>	0.000000 0.724309 0.669102	</turret>
+    </turretPositions>
+    <hitTester>
+      <collisionModel>	vehicles/russian/R06_T-28/collision/Hull.model	</collisionModel>
+    </hitTester>
+    <armor>
+      <armor_1>	30	</armor_1>
+      <armor_2>	15	</armor_2>
+      <armor_3>	20	</armor_3>
+      <armor_4>	20	</armor_4>
+      <armor_5>	30	</armor_5>
+      <armor_6>	50	</armor_6>
+      <armor_7>	20	</armor_7>
+      <armor_8>	0	</armor_8>
+      <armor_9>	10	</armor_9>
+      <armor_10>	18	</armor_10>
+      <armor_11>	15	</armor_11>
+      <armor_12>	20	</armor_12>
+      <armor_13>	30	</armor_13>
+      <armor_14>	15	</armor_14>
+      <armor_15>	20	</armor_15>
+      <armor_16>	20	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+      </armor_16>
+    </armor>
+    <primaryArmor>	armor_1 armor_3 armor_4	</primaryArmor>
+    <weight>	7580	</weight>
+    <maxHealth>	256	</maxHealth>
+    <ammoBayHealth>
+      <maxHealth>	110	</maxHealth>
+      <maxRegenHealth>	75	</maxRegenHealth>
+      <repairCost>	1.0	</repairCost>
+    </ammoBayHealth>
+    <emblemSlots>
+      <clan>
+        <rayStart>	-0.0158645 0.380051 2.91442	</rayStart>
+        <rayEnd>	-0.0158645 0.0126044 2.75636	</rayEnd>
+        <rayUp>	0.000000 0.000000 -1	</rayUp>
+        <size>	0.28	</size>
+        <hideIfDamaged>	false	</hideIfDamaged>
+      </clan>
+      <inscription>
+        <rayStart>	-1.54164 0.475278 -1.47852	</rayStart>
+        <rayEnd>	-1.14164 0.475275 -1.47852	</rayEnd>
+        <rayUp>	-0.000000 0.999391 -0.0348991	</rayUp>
+        <size>	0.74	</size>
+        <hideIfDamaged>	true	</hideIfDamaged>
+      </inscription>
+    </emblemSlots>
+  </hull>
+  <chassis>
+    <T-28_0>
+      <userString>	#ussr_vehicles:T-28_0	</userString>
+      <tags></tags>
+      <level>	3	</level>
+      <price>	2270.0	</price>
+      <unlocks>
+        <chassis>	T-28_A	  <cost>	1220	</cost>
+        </chassis>
+      </unlocks>
+      <models>
+        <undamaged>	vehicles/russian/R06_T-28/normal/lod0/Chassis.model	</undamaged>
+        <destroyed>	vehicles/russian/R06_T-28/crash/lod0/Chassis.model	</destroyed>
+        <exploded>	vehicles/russian/R06_T-28/crash/lod0/Chassis.model	</exploded>
+      </models>
+      <traces>
+        <lodDist>	FAR	</lodDist>
+        <bufferPrefs>	mediumTank	</bufferPrefs>
+        <textureSet>	ussr_01	</textureSet>
+        <size>	0.36 0.4	</size>
+      </traces>
+      <tracks>
+        <lodDist>	MEDIUM_TRACK	</lodDist>
+        <leftMaterial>	track_mat_L_skinned	</leftMaterial>
+        <rightMaterial>	track_mat_R_skinned	</rightMaterial>
+        <textureScale>	-0.865	</textureScale>
+      </tracks>
+      <wheels>
+        <lodDist>	MEDIUM	</lodDist>
+        <group>
+          <isLeft>	true	</isLeft>
+          <template>	W_L	</template>
+          <radius>	0.19	</radius>
+          <startIndex>	0	</startIndex>
+          <count>	12	</count>
+        </group>
+        <group>
+          <isLeft>	false	</isLeft>
+          <template>	W_R	</template>
+          <radius>	0.19	</radius>
+          <startIndex>	0	</startIndex>
+          <count>	12	</count>
+        </group>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_L0	</name>
+          <radius>	0.42	</radius>
+        </wheel>
+        <group>
+          <isLeft>	true	</isLeft>
+          <template>	WD_L	</template>
+          <radius>	0.16	</radius>
+          <startIndex>	1	</startIndex>
+          <count>	4	</count>
+        </group>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_L5	</name>
+          <radius>	0.425	</radius>
+        </wheel>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_R0	</name>
+          <radius>	0.42	</radius>
+        </wheel>
+        <group>
+          <isLeft>	false	</isLeft>
+          <template>	WD_R	</template>
+          <radius>	0.16	</radius>
+          <startIndex>	1	</startIndex>
+          <count>	4	</count>
+        </group>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_R5	</name>
+          <radius>	0.425	</radius>
+        </wheel>
+      </wheels>
+      <drivingWheels>	WD_L0 WD_L5	</drivingWheels>
+      <effects>
+        <lodDist>	MEDIUM	</lodDist>
+        <dust>	mediumTankDust	</dust>
+        <mud>	mediumTankMud	</mud>
+      </effects>
+      <soundPC>	/vehicles/tanks_pc/treads/treads_2	</soundPC>
+      <soundNPC>	/vehicles/tanks_npc/treads/treads_2	</soundNPC>
+      <hullPosition>	0.000000 1.1726 0.0207	</hullPosition>
+      <hitTester>
+        <collisionModel>	vehicles/russian/R06_T-28/collision/Chassis.model	</collisionModel>
+      </hitTester>
+      <armor>
+        <leftTrack>	20	</leftTrack>
+        <rightTrack>	20	</rightTrack>
+      </armor>
+      <topRightCarryingPoint>	1.16615 2.53349	</topRightCarryingPoint>
+      <maxClimbAngle>	25	</maxClimbAngle>
+      <navmeshGirth>	6.0	</navmeshGirth>
+      <weight>	5160	</weight>
+      <maxLoad>	18900	</maxLoad>
+      <terrainResistance>	1.2 1.5 2.3	</terrainResistance>
+      <brakeForce>	34500	</brakeForce>
+      <rotationIsAroundCenter>	false	</rotationIsAroundCenter>
+      <rotationSpeed>	35	</rotationSpeed>
+      <shotDispersionFactors>
+        <vehicleMovement>	0.25	</vehicleMovement>
+        <vehicleRotation>	0.25	</vehicleRotation>
+      </shotDispersionFactors>
+      <bulkHealthFactor>	3.0	</bulkHealthFactor>
+      <maxHealth>	70	</maxHealth>
+      <maxRegenHealth>	55	</maxRegenHealth>
+      <repairCost>	5.0	</repairCost>
+      <AODecals>
+        <decal>
+          <transform>
+            <row0>	3.935060 0.000000 0.000000	</row0>
+            <row1>	0.000000 1.758900 0.000000	</row1>
+            <row2>	0.000000 0.000000 9.627260	</row2>
+            <row3>	0.000000 0.000000 0.000000	</row3>
+          </transform>
+        </decal>
+      </AODecals>
+    </T-28_0>
+    <T-28_A>
+      <userString>	#ussr_vehicles:T-28_A	</userString>
+      <tags></tags>
+      <level>	4	</level>
+      <price>	5250.0	</price>
+      <models>
+        <undamaged>	vehicles/russian/R06_T-28/normal/lod0/Chassis.model	</undamaged>
+        <destroyed>	vehicles/russian/R06_T-28/crash/lod0/Chassis.model	</destroyed>
+        <exploded>	vehicles/russian/R06_T-28/crash/lod0/Chassis.model	</exploded>
+      </models>
+      <traces>
+        <lodDist>	FAR	</lodDist>
+        <bufferPrefs>	mediumTank	</bufferPrefs>
+        <textureSet>	ussr_01	</textureSet>
+        <size>	0.36 0.4	</size>
+      </traces>
+      <tracks>
+        <lodDist>	MEDIUM_TRACK	</lodDist>
+        <leftMaterial>	track_mat_L_skinned	</leftMaterial>
+        <rightMaterial>	track_mat_R_skinned	</rightMaterial>
+        <textureScale>	-0.865	</textureScale>
+      </tracks>
+      <wheels>
+        <lodDist>	MEDIUM	</lodDist>
+        <group>
+          <isLeft>	true	</isLeft>
+          <template>	W_L	</template>
+          <radius>	0.19	</radius>
+          <startIndex>	0	</startIndex>
+          <count>	12	</count>
+        </group>
+        <group>
+          <isLeft>	false	</isLeft>
+          <template>	W_R	</template>
+          <radius>	0.19	</radius>
+          <startIndex>	0	</startIndex>
+          <count>	12	</count>
+        </group>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_L0	</name>
+          <radius>	0.42	</radius>
+        </wheel>
+        <group>
+          <isLeft>	true	</isLeft>
+          <template>	WD_L	</template>
+          <radius>	0.16	</radius>
+          <startIndex>	1	</startIndex>
+          <count>	4	</count>
+        </group>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_L5	</name>
+          <radius>	0.425	</radius>
+        </wheel>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_R0	</name>
+          <radius>	0.42	</radius>
+        </wheel>
+        <group>
+          <isLeft>	false	</isLeft>
+          <template>	WD_R	</template>
+          <radius>	0.16	</radius>
+          <startIndex>	1	</startIndex>
+          <count>	4	</count>
+        </group>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_R5	</name>
+          <radius>	0.425	</radius>
+        </wheel>
+      </wheels>
+      <drivingWheels>	WD_L0 WD_L5	</drivingWheels>
+      <effects>
+        <lodDist>	MEDIUM	</lodDist>
+        <dust>	mediumTankDust	</dust>
+        <mud>	mediumTankMud	</mud>
+      </effects>
+      <soundPC>	/vehicles/tanks_pc/treads/treads_2	</soundPC>
+      <soundNPC>	/vehicles/tanks_npc/treads/treads_2	</soundNPC>
+      <hullPosition>	0.000000 1.1726 0.0207	</hullPosition>
+      <hitTester>
+        <collisionModel>	vehicles/russian/R06_T-28/collision/Chassis.model	</collisionModel>
+      </hitTester>
+      <armor>
+        <leftTrack>	20	</leftTrack>
+        <rightTrack>	20	</rightTrack>
+      </armor>
+      <topRightCarryingPoint>	1.16615 2.53349	</topRightCarryingPoint>
+      <maxClimbAngle>	25	</maxClimbAngle>
+      <navmeshGirth>	6.0	</navmeshGirth>
+      <weight>	5300	</weight>
+      <maxLoad>	32300	</maxLoad>
+      <terrainResistance>	1.1 1.3 2.1	</terrainResistance>
+      <brakeForce>	35500	</brakeForce>
+      <rotationIsAroundCenter>	false	</rotationIsAroundCenter>
+      <rotationSpeed>	40	</rotationSpeed>
+      <shotDispersionFactors>
+        <vehicleMovement>	0.23	</vehicleMovement>
+        <vehicleRotation>	0.23	</vehicleRotation>
+      </shotDispersionFactors>
+      <bulkHealthFactor>	3.0	</bulkHealthFactor>
+      <maxHealth>	80	</maxHealth>
+      <maxRegenHealth>	60	</maxRegenHealth>
+      <repairCost>	5.0	</repairCost>
+      <AODecals>
+        <decal>
+          <transform>
+            <row0>	3.921320 0.000000 0.000000	</row0>
+            <row1>	0.000000 1.758900 0.000000	</row1>
+            <row2>	0.000000 0.000000 9.627260	</row2>
+            <row3>	0.000000 0.000000 0.000000	</row3>
+          </transform>
+        </decal>
+      </AODecals>
+    </T-28_A>
+  </chassis>
+  <turrets0>
+    <T-28_cylindrical>
+      <userString>	#ussr_vehicles:T-28_cylindrical	</userString>
+      <shortUserString>	#ussr_vehicles:T-28_cylindrical_short	</shortUserString>
+      <tags></tags>
+      <level>	3	</level>
+      <price>	2160.0	</price>
+      <unlocks>
+        <turret>	T-28_conic	  <cost>	1025	</cost>
+        </turret>
+      </unlocks>
+      <models>
+        <undamaged>	vehicles/russian/R06_T-28/normal/lod0/Turret_01.model	</undamaged>
+        <destroyed>	vehicles/russian/R06_T-28/crash/lod0/Turret_01.model	</destroyed>
+        <exploded>	vehicles/russian/R06_T-28/crash/lod0/Turret_01.model	</exploded>
+      </models>
+      <hitTester>
+        <collisionModel>	vehicles/russian/R06_T-28/collision/Turret_01.model	</collisionModel>
+      </hitTester>
+      <gunPosition>	-0.0193 0.4839 0.8759	</gunPosition>
+      <armor>
+        <armor_1>	20	</armor_1>
+        <armor_2>	20	</armor_2>
+        <armor_3>	20	</armor_3>
+        <armor_4>	20	</armor_4>
+        <armor_5>	16	</armor_5>
+        <armor_6>	16	</armor_6>
+        <armor_7>	20	</armor_7>
+        <armor_8>	0	</armor_8>
+        <armor_9>	16	</armor_9>
+        <armor_10>	20	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+        </armor_10>
+      </armor>
+      <primaryArmor>	armor_1 armor_3 armor_4	</primaryArmor>
+      <weight>	2000	</weight>
+      <maxHealth>	64	</maxHealth>
+      <rotationSpeed>	46	</rotationSpeed>
+      <turretRotatorHealth>
+        <maxHealth>	80	</maxHealth>
+        <maxRegenHealth>	40	</maxRegenHealth>
+        <repairCost>	1.0	</repairCost>
+      </turretRotatorHealth>
+      <circularVisionRadius>	320	</circularVisionRadius>
+      <surveyingDeviceHealth>
+        <maxHealth>	60	</maxHealth>
+        <maxRegenHealth>	30	</maxRegenHealth>
+        <repairCost>	1.0	</repairCost>
+      </surveyingDeviceHealth>
+      <guns>
+        <_76mm_KT-28>	shared	  <maxAmmo>	69	</maxAmmo>
+          <unlocks>
+            <gun>	_76mm_L-10	  <cost>	400.0	</cost>
+            </gun>
+            <gun>	_57mm_ZiS-8	  <cost>	550	</cost>
+            </gun>
+          </unlocks>
+          <models>
+            <undamaged>	vehicles/russian/R06_T-28/normal/lod0/Gun_02.model	</undamaged>
+            <destroyed>	vehicles/russian/R06_T-28/crash/lod0/Gun_02.model	</destroyed>
+            <exploded>	vehicles/russian/R06_T-28/crash/lod0/Gun_02.model	</exploded>
+          </models>
+          <hitTester>
+            <collisionModel>	vehicles/russian/R06_T-28/collision/Gun_02.model	</collisionModel>
+          </hitTester>
+          <armor>
+            <armor_1>	20	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_1>
+            <armor_2>	15	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_2>
+            <gun>	20	</gun>
+          </armor>
+          <shotDispersionRadius>	0.6	</shotDispersionRadius>
+          <reloadTime>	4.6	</reloadTime>
+          <shotDispersionFactors>
+            <turretRotation>	0.18	</turretRotation>
+            <afterShot>	4.0	</afterShot>
+            <whileGunDamaged>	2.0	</whileGunDamaged>
+          </shotDispersionFactors>
+          <aimingTime>	2.3	</aimingTime>
+          <pitchLimits>	-25 6	</pitchLimits>
+          <extraPitchLimits>
+            <back>	-25 3 30	</back>
+          </extraPitchLimits>
+        </_76mm_KT-28>
+        <_57mm_ZiS-8>	shared	  <maxAmmo>	78	</maxAmmo>
+          <pitchLimits>	-25 6	</pitchLimits>
+          <unlocks>
+            <gun>	_57mm_ZiS-4	  <cost>	2200.0	</cost>
+            </gun>
+          </unlocks>
+          <models>
+            <undamaged>	vehicles/russian/R06_T-28/normal/lod0/Gun_04.model	</undamaged>
+            <destroyed>	vehicles/russian/R06_T-28/crash/lod0/Gun_04.model	</destroyed>
+            <exploded>	vehicles/russian/R06_T-28/crash/lod0/Gun_04.model	</exploded>
+          </models>
+          <hitTester>
+            <collisionModel>	vehicles/russian/R06_T-28/collision/Gun_04.model	</collisionModel>
+          </hitTester>
+          <armor>
+            <armor_1>	20	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_1>
+            <armor_2>	15	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_2>
+            <gun>	10	</gun>
+          </armor>
+          <shotDispersionRadius>	0.45	</shotDispersionRadius>
+          <reloadTime>	2.9	</reloadTime>
+          <shotDispersionFactors>
+            <turretRotation>	0.18	</turretRotation>
+            <afterShot>	4.0	</afterShot>
+            <whileGunDamaged>	2.0	</whileGunDamaged>
+          </shotDispersionFactors>
+          <aimingTime>	2.3	</aimingTime>
+          <extraPitchLimits>
+            <back>	-25 5 35	</back>
+          </extraPitchLimits>
+          <camouflage>
+            <tiling>	1.3 1.3 0.000000 0.000000	</tiling>
+          </camouflage>
+        </_57mm_ZiS-8>
+        <_76mm_L-10>	shared	  <maxAmmo>	69	</maxAmmo>
+          <unlocks>
+            <gun>	_76mm_F-32	  <cost>	500	</cost>
+            </gun>
+          </unlocks>
+          <models>
+            <undamaged>	vehicles/russian/R06_T-28/normal/lod0/Gun_03.model	</undamaged>
+            <destroyed>	vehicles/russian/R06_T-28/crash/lod0/Gun_03.model	</destroyed>
+            <exploded>	vehicles/russian/R06_T-28/crash/lod0/Gun_03.model	</exploded>
+          </models>
+          <hitTester>
+            <collisionModel>	vehicles/russian/R06_T-28/collision/Gun_03.model	</collisionModel>
+          </hitTester>
+          <armor>
+            <armor_1>	20	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_1>
+            <armor_2>	15	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_2>
+            <gun>	20	</gun>
+          </armor>
+          <shotDispersionRadius>	0.57	</shotDispersionRadius>
+          <reloadTime>	4.6	</reloadTime>
+          <shotDispersionFactors>
+            <turretRotation>	0.18	</turretRotation>
+            <afterShot>	4.0	</afterShot>
+            <whileGunDamaged>	2.0	</whileGunDamaged>
+          </shotDispersionFactors>
+          <aimingTime>	2.9	</aimingTime>
+          <pitchLimits>	-25 6	</pitchLimits>
+          <extraPitchLimits>
+            <back>	-25 2 35	</back>
+          </extraPitchLimits>
+          <camouflage>
+            <tiling>	0.94 0.94 0.000000 0.000000	</tiling>
+          </camouflage>
+        </_76mm_L-10>
+        <_76mm_F-32>	shared	  <maxAmmo>	69	</maxAmmo>
+          <models>
+            <undamaged>	vehicles/russian/R06_T-28/normal/lod0/Gun_05.model	</undamaged>
+            <destroyed>	vehicles/russian/R06_T-28/crash/lod0/Gun_05.model	</destroyed>
+            <exploded>	vehicles/russian/R06_T-28/crash/lod0/Gun_05.model	</exploded>
+          </models>
+          <hitTester>
+            <collisionModel>	vehicles/russian/R06_T-28/collision/Gun_05.model	</collisionModel>
+          </hitTester>
+          <armor>
+            <armor_1>	20	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_1>
+            <armor_2>	15	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_2>
+            <gun>	20	</gun>
+          </armor>
+          <shotDispersionRadius>	0.51	</shotDispersionRadius>
+          <reloadTime>	3.9	</reloadTime>
+          <shotDispersionFactors>
+            <turretRotation>	0.18	</turretRotation>
+            <afterShot>	4.0	</afterShot>
+            <whileGunDamaged>	2.0	</whileGunDamaged>
+          </shotDispersionFactors>
+          <aimingTime>	2.9	</aimingTime>
+          <pitchLimits>	-25 6	</pitchLimits>
+          <extraPitchLimits>
+            <back>	-25 -2 42	</back>
+          </extraPitchLimits>
+          <camouflage>
+            <tiling>	1.54 1.54 0.000000 0.000000	</tiling>
+          </camouflage>
+        </_76mm_F-32>
+        <_57mm_ZiS-4>	shared	  <maxAmmo>	78	</maxAmmo>
+          <pitchLimits>	-25 6	</pitchLimits>
+          <reloadTime>	2.7	</reloadTime>
+          <models>
+            <undamaged>	vehicles/russian/R06_T-28/normal/lod0/Gun_06.model	</undamaged>
+            <destroyed>	vehicles/russian/R06_T-28/crash/lod0/Gun_06.model	</destroyed>
+            <exploded>	vehicles/russian/R06_T-28/crash/lod0/Gun_06.model	</exploded>
+          </models>
+          <hitTester>
+            <collisionModel>	vehicles/russian/R06_T-28/collision/Gun_06.model	</collisionModel>
+          </hitTester>
+          <armor>
+            <armor_1>	20	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_1>
+            <armor_2>	15	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_2>
+            <gun>	10	</gun>
+          </armor>
+          <shotDispersionRadius>	0.34	</shotDispersionRadius>
+          <shotDispersionFactors>
+            <turretRotation>	0.18	</turretRotation>
+            <afterShot>	4.0	</afterShot>
+            <whileGunDamaged>	2.0	</whileGunDamaged>
+          </shotDispersionFactors>
+          <aimingTime>	2.3	</aimingTime>
+          <extraPitchLimits>
+            <back>	-25 5 35	</back>
+          </extraPitchLimits>
+          <camouflage>
+            <tiling>	1.24 1.24 0.000000 0.000000	</tiling>
+          </camouflage>
+        </_57mm_ZiS-4>
+      </guns>
+      <emblemSlots>
+        <player>
+          <rayStart>	0.902606 0.481054 -0.767914	</rayStart>
+          <rayEnd>	0.524427 0.481054 -0.637607	</rayEnd>
+          <rayUp>	0.000000 1 0.000000	</rayUp>
+          <size>	0.32	</size>
+          <hideIfDamaged>	false	</hideIfDamaged>
+        </player>
+        <player>
+          <rayStart>	-0.902606 0.481054 -0.767914	</rayStart>
+          <rayEnd>	-0.524427 0.481054 -0.637607	</rayEnd>
+          <rayUp>	0.000000 1 0.000000	</rayUp>
+          <size>	0.32	</size>
+          <hideIfDamaged>	false	</hideIfDamaged>
+        </player>
+      </emblemSlots>
+      <showEmblemsOnGun>	false	</showEmblemsOnGun>
+      <physicsShape>	0.952 0.000 1.000 0.000 0.571 0.085 0.714 0.614 0.542 0.500 0.000 0.500 0.000 0.100 0.000	</physicsShape>
+      <turretRotatorSoundManual>	/turret/turret/turret_manual_traverse/turret_manual_traverse_2000-3999	</turretRotatorSoundManual>
+      <turretRotatorSoundGear>	/turret/turret/turret_electric_traverse/turret_electric_traverse_2000-3999	</turretRotatorSoundGear>
+    </T-28_cylindrical>
+    <T-28_conic>
+      <userString>	#ussr_vehicles:T-28_conic	</userString>
+      <shortUserString>	#ussr_vehicles:T-28_conic_short	</shortUserString>
+      <tags></tags>
+      <level>	4	</level>
+      <price>	4370.0	</price>
+      <models>
+        <undamaged>	vehicles/russian/R06_T-28/normal/lod0/Turret_02.model	</undamaged>
+        <destroyed>	vehicles/russian/R06_T-28/crash/lod0/Turret_02.model	</destroyed>
+        <exploded>	vehicles/russian/R06_T-28/crash/lod0/Turret_02.model	</exploded>
+      </models>
+      <hitTester>
+        <collisionModel>	vehicles/russian/R06_T-28/collision/Turret_02.model	</collisionModel>
+      </hitTester>
+      <gunPosition>	-0.0193 0.4839 0.8759	</gunPosition>
+      <armor>
+        <armor_1>	20	</armor_1>
+        <armor_2>	20	</armor_2>
+        <armor_3>	20	</armor_3>
+        <armor_4>	20	</armor_4>
+        <armor_5>	16	</armor_5>
+        <armor_6>	16	</armor_6>
+        <armor_7>	20	</armor_7>
+        <armor_8>	0	</armor_8>
+        <armor_9>	16	</armor_9>
+        <armor_10>	20	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+        </armor_10>
+      </armor>
+      <primaryArmor>	armor_1 armor_3 armor_4	</primaryArmor>
+      <weight>	2500	</weight>
+      <maxHealth>	94	</maxHealth>
+      <rotationSpeed>	44	</rotationSpeed>
+      <turretRotatorHealth>
+        <maxHealth>	80	</maxHealth>
+        <maxRegenHealth>	40	</maxRegenHealth>
+        <repairCost>	1.0	</repairCost>
+      </turretRotatorHealth>
+      <circularVisionRadius>	340	</circularVisionRadius>
+      <surveyingDeviceHealth>
+        <maxHealth>	60	</maxHealth>
+        <maxRegenHealth>	30	</maxRegenHealth>
+        <repairCost>	1.0	</repairCost>
+      </surveyingDeviceHealth>
+      <guns>
+        <_76mm_KT-28>	shared	  <maxAmmo>	69	</maxAmmo>
+          <models>
+            <undamaged>	vehicles/russian/R06_T-28/normal/lod0/Gun_02.model	</undamaged>
+            <destroyed>	vehicles/russian/R06_T-28/crash/lod0/Gun_02.model	</destroyed>
+            <exploded>	vehicles/russian/R06_T-28/crash/lod0/Gun_02.model	</exploded>
+          </models>
+          <hitTester>
+            <collisionModel>	vehicles/russian/R06_T-28/collision/Gun_02.model	</collisionModel>
+          </hitTester>
+          <armor>
+            <armor_1>	20	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_1>
+            <armor_2>	15	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_2>
+            <gun>	20	</gun>
+          </armor>
+          <shotDispersionRadius>	0.6	</shotDispersionRadius>
+          <reloadTime>	4.6	</reloadTime>
+          <aimingTime>	2.3	</aimingTime>
+          <pitchLimits>	-25 6	</pitchLimits>
+          <extraPitchLimits>
+            <back>	-25 3 30	</back>
+          </extraPitchLimits>
+        </_76mm_KT-28>
+        <_57mm_ZiS-8>	shared	  <maxAmmo>	78	</maxAmmo>
+          <pitchLimits>	-25 6	</pitchLimits>
+          <models>
+            <undamaged>	vehicles/russian/R06_T-28/normal/lod0/Gun_04.model	</undamaged>
+            <destroyed>	vehicles/russian/R06_T-28/crash/lod0/Gun_04.model	</destroyed>
+            <exploded>	vehicles/russian/R06_T-28/crash/lod0/Gun_04.model	</exploded>
+          </models>
+          <hitTester>
+            <collisionModel>	vehicles/russian/R06_T-28/collision/Gun_04.model	</collisionModel>
+          </hitTester>
+          <armor>
+            <armor_1>	20	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_1>
+            <armor_2>	15	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_2>
+            <gun>	10	</gun>
+          </armor>
+          <shotDispersionRadius>	0.45	</shotDispersionRadius>
+          <reloadTime>	2.9	</reloadTime>
+          <aimingTime>	2.3	</aimingTime>
+          <extraPitchLimits>
+            <back>	-25 5 35	</back>
+          </extraPitchLimits>
+          <camouflage>
+            <tiling>	0.94 0.94 0.000000 0.000000	</tiling>
+          </camouflage>
+        </_57mm_ZiS-8>
+        <_76mm_L-10>	shared	  <maxAmmo>	69	</maxAmmo>
+          <models>
+            <undamaged>	vehicles/russian/R06_T-28/normal/lod0/Gun_03.model	</undamaged>
+            <destroyed>	vehicles/russian/R06_T-28/crash/lod0/Gun_03.model	</destroyed>
+            <exploded>	vehicles/russian/R06_T-28/crash/lod0/Gun_03.model	</exploded>
+          </models>
+          <hitTester>
+            <collisionModel>	vehicles/russian/R06_T-28/collision/Gun_03.model	</collisionModel>
+          </hitTester>
+          <armor>
+            <armor_1>	20	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_1>
+            <armor_2>	15	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_2>
+            <gun>	20	</gun>
+          </armor>
+          <shotDispersionRadius>	0.57	</shotDispersionRadius>
+          <reloadTime>	4.6	</reloadTime>
+          <aimingTime>	2.9	</aimingTime>
+          <pitchLimits>	-25 6	</pitchLimits>
+          <extraPitchLimits>
+            <back>	-25 2 35	</back>
+          </extraPitchLimits>
+        </_76mm_L-10>
+        <_76mm_F-32>	shared	  <maxAmmo>	69	</maxAmmo>
+          <models>
+            <undamaged>	vehicles/russian/R06_T-28/normal/lod0/Gun_05.model	</undamaged>
+            <destroyed>	vehicles/russian/R06_T-28/crash/lod0/Gun_05.model	</destroyed>
+            <exploded>	vehicles/russian/R06_T-28/crash/lod0/Gun_05.model	</exploded>
+          </models>
+          <hitTester>
+            <collisionModel>	vehicles/russian/R06_T-28/collision/Gun_05.model	</collisionModel>
+          </hitTester>
+          <armor>
+            <armor_1>	20	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_1>
+            <armor_2>	15	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_2>
+            <gun>	20	</gun>
+          </armor>
+          <shotDispersionRadius>	0.51	</shotDispersionRadius>
+          <reloadTime>	3.9	</reloadTime>
+          <aimingTime>	2.9	</aimingTime>
+          <pitchLimits>	-25 6	</pitchLimits>
+          <extraPitchLimits>
+            <back>	-25 -2 42	</back>
+          </extraPitchLimits>
+        </_76mm_F-32>
+        <_57mm_ZiS-4>	shared	  <maxAmmo>	78	</maxAmmo>
+          <reloadTime>	2.7	</reloadTime>
+          <pitchLimits>	-25 6	</pitchLimits>
+          <models>
+            <undamaged>	vehicles/russian/R06_T-28/normal/lod0/Gun_06.model	</undamaged>
+            <destroyed>	vehicles/russian/R06_T-28/crash/lod0/Gun_06.model	</destroyed>
+            <exploded>	vehicles/russian/R06_T-28/crash/lod0/Gun_06.model	</exploded>
+          </models>
+          <hitTester>
+            <collisionModel>	vehicles/russian/R06_T-28/collision/Gun_06.model	</collisionModel>
+          </hitTester>
+          <armor>
+            <armor_1>	20	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_1>
+            <armor_2>	15	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_2>
+            <gun>	10	</gun>
+          </armor>
+          <shotDispersionRadius>	0.34	</shotDispersionRadius>
+          <aimingTime>	2.3	</aimingTime>
+          <extraPitchLimits>
+            <back>	-25 5 35	</back>
+          </extraPitchLimits>
+          <camouflage>
+            <tiling>	1.24 1.24 0.000000 0.000000	</tiling>
+          </camouflage>
+        </_57mm_ZiS-4>
+      </guns>
+      <emblemSlots>
+        <player>
+          <rayStart>	0.873789 0.620401 -0.486927	</rayStart>
+          <rayEnd>	0.490951 0.515314 -0.438018	</rayEnd>
+          <rayUp>	0.000000 1 0.000000	</rayUp>
+          <size>	0.32	</size>
+          <hideIfDamaged>	false	</hideIfDamaged>
+        </player>
+        <player>
+          <rayStart>	-0.873789 0.620401 -0.486927	</rayStart>
+          <rayEnd>	-0.490951 0.515314 -0.438018	</rayEnd>
+          <rayUp>	0.000000 1 0.000000	</rayUp>
+          <size>	0.32	</size>
+          <hideIfDamaged>	false	</hideIfDamaged>
+        </player>
+      </emblemSlots>
+      <showEmblemsOnGun>	false	</showEmblemsOnGun>
+      <physicsShape>	0.958 -0.042 1.000 0.000 0.554 0.080 0.754 0.632 0.444 0.500 0.241 0.500 0.106 0.743 0.000	</physicsShape>
+      <turretRotatorSoundManual>	/turret/turret/turret_manual_traverse/turret_manual_traverse_2000-3999	</turretRotatorSoundManual>
+      <turretRotatorSoundGear>	/turret/turret/turret_electric_traverse/turret_electric_traverse_2000-3999	</turretRotatorSoundGear>
+      <camouflage>
+        <tiling>	0.94 0.94 0.000000 0.000000	</tiling>
+      </camouflage>
+    </T-28_conic>
+  </turrets0>
+  <engines>
+    <M-5-400>	shared	  <unlocks>
+        <engine>	M-17T	  <cost>	200	</cost>
+        </engine>
+      </unlocks>
+    </M-5-400>
+    <M-17T>	shared	  <unlocks>
+        <engine>	M-17F	  <cost>	850.0	</cost>
+        </engine>
+      </unlocks>
+    </M-17T>
+    <M-17F>	shared	  <unlocks>
+        <vehicle>	KV1	  <cost>	13500	</cost>
+        </vehicle>
+      </unlocks>
+    </M-17F>
+  </engines>
+  <fuelTanks>
+    <Average>	shared	</Average>
+  </fuelTanks>
+  <radios>
+    <_71-TK-3>	shared	  <unlocks>
+        <radio>	_10R	  <cost>	610.0	</cost>
+        </radio>
+      </unlocks>
+    </_71-TK-3>
+    <_10R>	shared	</_10R>
+  </radios>
+</t-28.xml>

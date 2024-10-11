@@ -1,0 +1,9 @@
+<colour.xml>
+	<elements>
+		<COLOR>
+			<stream> 11 </stream>
+			<offset> 0 </offset>
+			<type> COLOR </type>
+		</COLOR>
+	</elements>
+</colour.xml>

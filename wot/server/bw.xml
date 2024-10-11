@@ -1,0 +1,89 @@
+<root>
+	<!-- See the Server Operations Guide for options that can be specified in
+		this file. -->
+	<debugConfigOptions> 2 </debugConfigOptions>
+	<hasDevelopmentAssertions> true </hasDevelopmentAssertions>
+	<gameUpdateHertz> 10 </gameUpdateHertz>
+
+	<baseApp>
+<!--		<warnOnNoDef> true </warnOnNoDef>-->
+		<shouldResolveMailBoxes> true </shouldResolveMailBoxes>
+		<verboseExternalInterface> false </verboseExternalInterface>
+<!--		<packetLog>-->
+<!--			<enable> false </enable> &lt;!&ndash; true &ndash;&gt;-->
+<!--			<flushMode> false </flushMode>-->
+<!--		</packetLog>-->
+<!--		<clientUpstreamLimits>-->
+<!--			<warnMessagesPerSecond> 2 </warnMessagesPerSecond>-->
+<!--			<maxMessagesPerSecond> 5 </maxMessagesPerSecond>-->
+<!--			<warnMessagesBuffered> 50 </warnMessagesBuffered>-->
+<!--			<maxMessagesBuffered> 200 </maxMessagesBuffered>-->
+<!--		</clientUpstreamLimits>-->
+	</baseApp>
+
+	<loginApp>
+		<allowLogin> true </allowLogin>
+		<logProbes> true </logProbes>
+		<verboseExternalInterface> false </verboseExternalInterface>
+	</loginApp>
+
+	<bots></bots>
+
+	<personality> wot </personality>
+
+	<parentFile> server/development_defaults.xml </parentFile>
+
+	<billingSystem>
+		<shouldAcceptUnknownUsers> true </shouldAcceptUnknownUsers>
+		<shouldRememberUnknownUsers> true </shouldRememberUnknownUsers>
+		<entityTypeForUnknownUsers> Account </entityTypeForUnknownUsers>
+		<authenticateViaBaseEntity> true </authenticateViaBaseEntity>
+	</billingSystem>
+
+	<db>
+		<type> mysql </type> <!-- Type: String -->
+
+		<mysql>
+			<host> localhost </host> <!-- Type: String -->
+			<port> 3306 </port> <!-- Type: Integer -->
+			<databaseName> wot_dev1 </databaseName> <!-- Type: String -->
+			<username> bigworld </username> <!-- Type: String -->
+			<password> bigworld </password> <!-- Type: String -->
+
+			<maxSpaceDataSize> 2048 </maxSpaceDataSize> <!-- Type: Integer -->
+			<numConnections> 5 </numConnections> <!-- Type: Integer -->
+			<secureAuth> false </secureAuth> <!-- Type: Boolean -->
+			<syncTablesToDefs> true </syncTablesToDefs>
+			<unicodeString>
+				<characterSet> utf8 </characterSet> <!-- Type: String -->
+				<collation> utf8_bin </collation> <!-- Type: String -->
+			</unicodeString>
+		</mysql>
+
+		<secondaryDB>
+			<enable> false </enable> <!-- Type: Boolean -->
+			<maxCommitPeriod> 5 </maxCommitPeriod> <!-- Type: Float -->
+			<directory> server/db/secondary </directory> <!-- Type: String -->
+
+			<consolidation>
+				<directory> /tmp/ </directory> <!-- Type: String -->
+			</consolidation>
+		</secondaryDB>
+
+		<xml>
+			<archivePeriod> 3600 </archivePeriod> <!-- Type: Float -->
+			<numArchives> 5 </numArchives> <!-- Type: Integer -->
+			<savePeriod> 900 </savePeriod> <!-- Type: Float -->
+		</xml>
+
+	</db>
+
+	<dbApp>
+		<dumpEntityDescription> 0 </dumpEntityDescription> <!-- Type: Integer -->
+		<maxConcurrentEntityLoaders> 5 </maxConcurrentEntityLoaders> <!-- Type: Int -->
+		<numDBLockRetries> 30 </numDBLockRetries> <!-- Type: Integer -->
+		<shouldCacheLogOnRecords> false </shouldCacheLogOnRecords>
+		<shouldDelayLookUpSend> false </shouldDelayLookUpSend> <!-- Type: Boolean -->
+	</dbApp>
+
+</root>

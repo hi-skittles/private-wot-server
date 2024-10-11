@@ -1,0 +1,111 @@
+<root>
+	<rain_splashes>
+		<serialiseVersionData>	2	</serialiseVersionData>
+		<windFactor_>	0.000000	</windFactor_>
+		<explicitTransform_>	false	</explicitTransform_>
+		<explicitPosition_>	0.000000 0.000000 0.000000	</explicitPosition_>
+		<explicitDirection_>	0.000000 0.000000 1.000000	</explicitDirection_>
+		<localOffset_>	0.000000 0.000000 0.000000	</localOffset_>
+		<maxLod_>	0.000000	</maxLod_>
+		<fixedFrameRate_>	-1.000000	</fixedFrameRate_>
+		<Actions>
+			<Source>
+				<delay_>	0.000000	</delay_>
+				<minimumAge_>	0.000000	</minimumAge_>
+				<name_>	Source 1	</name_>
+				<pPositionSrc>
+					<CylinderVectorGenerator>
+						<nameID_>	CylinderVectorGenerator	</nameID_>
+						<origin_>	0.000000 20.000000 0.000000	</origin_>
+						<direction_>	0.000000 -0.100000 0.000000	</direction_>
+						<maxRadius_>	18.806692	</maxRadius_>
+						<minRadius_>	0.000000	</minRadius_>
+						<basisU_>	0.000000 0.000000 -1.000000	</basisU_>
+						<basisV_>	1.000000 0.000000 0.000000	</basisV_>
+					</CylinderVectorGenerator>
+				</pPositionSrc>
+				<pVelocitySrc>
+					<PointVectorGenerator>
+						<nameID_>	PointVectorGenerator	</nameID_>
+						<position_>	0.000000 0.000000 0.000000	</position_>
+					</PointVectorGenerator>
+				</pVelocitySrc>
+				<motionTriggered_>	false	</motionTriggered_>
+				<timeTriggered_>	true	</timeTriggered_>
+				<grounded_>	true	</grounded_>
+				<dropDistance_>	40.000000	</dropDistance_>
+				<rate_>	750.000000	</rate_>
+				<sensitivity_>	100000.000000	</sensitivity_>
+				<maxSpeed_>	0.000000	</maxSpeed_>
+				<activePeriod_>	1.000000	</activePeriod_>
+				<sleepPeriod_>	-1.000000	</sleepPeriod_>
+				<sleepPeriodMax_>	0.000000	</sleepPeriodMax_>
+				<minimumSize_>	0.010000	</minimumSize_>
+				<maximumSize_>	0.010000	</maximumSize_>
+				<forcedUnitSize_>	1	</forcedUnitSize_>
+				<allowedTimeInSeconds_>	0.002000	</allowedTimeInSeconds_>
+				<initialRotation_>	0.000000 0.000000	</initialRotation_>
+				<randomInitialRotation_>	0.000000 0.000000	</randomInitialRotation_>
+				<initialColour_>	0.500000 0.500000 0.500000 1.000000	</initialColour_>
+				<randomSpin_>	false	</randomSpin_>
+				<minSpin_>	0.000000	</minSpin_>
+				<maxSpin_>	0.000000	</maxSpin_>
+				<ignoreRotation_>	false	</ignoreRotation_>
+				<inheritVelocity_>	0.000000	</inheritVelocity_>
+			</Source>
+			<TintShader>
+				<delay_>	0.000000	</delay_>
+				<minimumAge_>	0.000000	</minimumAge_>
+				<name_>	TintShader 1	</name_>
+				<repeat_>	false	</repeat_>
+				<period_>	0.130000	</period_>
+				<fogAmount_>	0.000000	</fogAmount_>
+				<tints_>
+					<Tint>
+						<time>	0.000000	</time>
+						<color>	0.117647 0.117647 0.117647 0.700000	</color>
+					</Tint>
+					<Tint>
+						<time>	0.017132	</time>
+						<color>	0.729412 0.729412 0.729412 0.700000	</color>
+					</Tint>
+					<Tint>
+						<time>	0.130000	</time>
+						<color>	0.200000 0.200000 0.200000 0.700000	</color>
+					</Tint>
+				</tints_>
+			</TintShader>
+			<Scaler>
+				<delay_>	0.000000	</delay_>
+				<minimumAge_>	0.000000	</minimumAge_>
+				<name_>	Scaler 1	</name_>
+				<size_>	1.000000	</size_>
+				<rate_>	2.000000	</rate_>
+			</Scaler>
+			<Sink>
+				<delay_>	0.000000	</delay_>
+				<minimumAge_>	0.000000	</minimumAge_>
+				<name_>	Sink 1	</name_>
+				<maximumAge_>	0.130000	</maximumAge_>
+				<minimumSpeed_>	-1.000000	</minimumSpeed_>
+				<outsideOnly_>	true	</outsideOnly_>
+			</Sink>
+		</Actions>
+		<Renderer>
+			<SpriteParticleRenderer>
+				<viewDependent_>	false	</viewDependent_>
+				<local_>	false	</local_>
+				<textureName_>	system/maps/rain_splat_alpha.tga	</textureName_>
+				<materialFX_>	0	</materialFX_>
+				<frameCount_>	0	</frameCount_>
+				<frameRate_>	0.000000	</frameRate_>
+				<explicitOrientation_>	0.000000 0.000000 0.000000	</explicitOrientation_>
+			</SpriteParticleRenderer>
+		</Renderer>
+		<capacity>	105	</capacity>
+		<boundingBox>
+			<min>	-19.058802 -0.330439 -19.110817	</min>
+			<max>	19.016121 0.330439 19.032648	</max>
+		</boundingBox>
+	</rain_splashes>
+</root>

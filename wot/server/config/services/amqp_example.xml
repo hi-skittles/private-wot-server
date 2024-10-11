@@ -1,0 +1,11 @@
+<account_admin.xml>
+	<enabled> False </enabled>
+	<!--
+	<host> localhost </host>
+	<port> 5672 </port>
+	<virtual_host> / </virtual_host>
+	<username> guest </username>
+	<password> guest </password>
+	-->
+	<!-- for more AMQP options, see source in services/AMQPExample.py -->
+</account_admin.xml>

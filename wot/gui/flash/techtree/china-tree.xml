@@ -1,0 +1,143 @@
+<china-tree.xml>
+  <settings>	normal	</settings>
+  <grid>	grid_1	  <rows>	10	</rows>
+    <columns>	11	</columns>
+  </grid>
+  <nodes>
+    <Ch06_Renault_NC31>
+      <row>	1	</row>
+      <column>	1	</column>
+      <lines>
+        <Ch07_Vickers_MkE_Type_BT26></Ch07_Vickers_MkE_Type_BT26>
+      </lines>
+    </Ch06_Renault_NC31>
+    <Ch07_Vickers_MkE_Type_BT26>
+      <row>	4	</row>
+      <column>	2	</column>
+      <lines>
+        <Ch08_Type97_Chi_Ha></Ch08_Type97_Chi_Ha>
+      </lines>
+    </Ch07_Vickers_MkE_Type_BT26>
+    <Ch08_Type97_Chi_Ha>
+      <row>	4	</row>
+      <column>	3	</column>
+      <lines>
+        <Ch09_M5></Ch09_M5>
+      </lines>
+    </Ch08_Type97_Chi_Ha>
+    <Ch09_M5>
+      <row>	4	</row>
+      <column>	4	</column>
+      <lines>
+        <Ch21_T34></Ch21_T34>
+      </lines>
+    </Ch09_M5>
+    <Ch21_T34>
+      <row>	4	</row>
+      <column>	5	</column>
+      <lines>
+        <Ch15_59_16>
+          <line>	H_Diag	</line>
+          <inPin>	BL	</inPin>
+        </Ch15_59_16>
+        <Ch20_Type58></Ch20_Type58>
+      </lines>
+    </Ch21_T34>
+    <Ch15_59_16>
+      <row>	3	</row>
+      <column>	6	</column>
+      <lines>
+        <Ch16_WZ_131></Ch16_WZ_131>
+      </lines>
+    </Ch15_59_16>
+    <Ch20_Type58>
+      <row>	4	</row>
+      <column>	6	</column>
+      <lines>
+        <Ch04_T34_1></Ch04_T34_1>
+        <Ch10_IS2>
+          <line>	H_Diag	</line>
+        </Ch10_IS2>
+      </lines>
+    </Ch20_Type58>
+    <Ch24_Type64>
+      <row>	6	</row>
+      <column>	6	</column>
+    </Ch24_Type64>
+    <Ch16_WZ_131>
+      <row>	3	</row>
+      <column>	7	</column>
+      <lines>
+        <Ch17_WZ131_1_WZ132></Ch17_WZ131_1_WZ132>
+      </lines>
+    </Ch16_WZ_131>
+    <Ch04_T34_1>
+      <row>	4	</row>
+      <column>	7	</column>
+      <lines>
+        <Ch05_T34_2></Ch05_T34_2>
+      </lines>
+    </Ch04_T34_1>
+    <Ch10_IS2>
+      <row>	5	</row>
+      <column>	7	</column>
+      <lines>
+        <Ch11_110></Ch11_110>
+      </lines>
+    </Ch10_IS2>
+    <Ch17_WZ131_1_WZ132>
+      <row>	3	</row>
+      <column>	8	</column>
+      <lines>
+        <Ch18_WZ-120></Ch18_WZ-120>
+      </lines>
+    </Ch17_WZ131_1_WZ132>
+    <Ch05_T34_2>
+      <row>	4	</row>
+      <column>	8	</column>
+      <lines>
+        <Ch18_WZ-120>
+          <line>	H_Diag	</line>
+          <inPin>	BL	</inPin>
+        </Ch18_WZ-120>
+      </lines>
+    </Ch05_T34_2>
+    <Ch11_110>
+      <row>	5	</row>
+      <column>	8	</column>
+      <lines>
+        <Ch12_111_1_2_3></Ch12_111_1_2_3>
+      </lines>
+    </Ch11_110>
+    <Ch23_112>
+      <row>	6	</row>
+      <column>	8	</column>
+    </Ch23_112>
+    <Ch14_T34_3>
+      <row>	7	</row>
+      <column>	8	</column>
+    </Ch14_T34_3>
+    <Ch18_WZ-120>
+      <row>	3	</row>
+      <column>	9	</column>
+      <lines>
+        <Ch19_121></Ch19_121>
+      </lines>
+    </Ch18_WZ-120>
+    <Ch12_111_1_2_3>
+      <row>	5	</row>
+      <column>	9	</column>
+      <lines>
+        <Ch22_113></Ch22_113>
+      </lines>
+    </Ch12_111_1_2_3>
+    <Ch19_121>
+      <row>	3	</row>
+      <column>	10	</column>
+    </Ch19_121>
+    <Ch22_113>
+      <row>	5	</row>
+      <column>	10	</column>
+    </Ch22_113>
+  </nodes>
+</china-tree.xml>

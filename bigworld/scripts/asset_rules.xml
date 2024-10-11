@@ -1,0 +1,5 @@
+<root>
+  <rule pattern=".*">
+    <noConversion>true</noConversion>
+  </rule>	
+</root>

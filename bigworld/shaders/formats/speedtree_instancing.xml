@@ -1,0 +1,24 @@
+<speedtree_instancing.xml>
+	<elements>
+		<TEXCOORD>
+			<semanticIndex> 3 </semanticIndex>
+		<stream> 9 </stream>
+		<type> FLOAT4 </type>
+		</TEXCOORD>
+		<TEXCOORD>
+			<semanticIndex> 4 </semanticIndex>
+		<stream> 9 </stream>
+			<type> FLOAT3 </type>
+		</TEXCOORD>
+		<TEXCOORD>
+			<semanticIndex> 5 </semanticIndex>
+			<stream> 9 </stream>
+			<type> SHORT4 </type>
+		</TEXCOORD>
+		<TEXCOORD>
+			<semanticIndex> 6 </semanticIndex>
+			<stream> 9 </stream>
+			<type> UBYTE4 </type>
+		</TEXCOORD>
+	</elements>
+</speedtree_instancing.xml>

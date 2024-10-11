@@ -1,0 +1,59 @@
+<95_lost_city.xml>
+  <name>	#arenas:95_lost_city/name	</name>
+  <description>	#arenas:95_lost_city/description	</description>
+  <geometry>	spaces/95_lost_city	</geometry>
+  <roundLength>	900	</roundLength>
+  <boundingBox>
+    <bottomLeft>	-400.0 -400.0	</bottomLeft>
+    <upperRight>	400.0 400.0	</upperRight>
+  </boundingBox>
+  <minimap>	spaces/95_lost_city/mmap.dds	</minimap>
+  <vehicleCamouflageKind>	summer	</vehicleCamouflageKind>
+  <umbraEnabled>	1	</umbraEnabled>
+  <loadingMusic>	/music/intro/rus_city	</loadingMusic>
+  <ambientSound>	/wind/wind/wind_desert_01	</ambientSound>
+  <water>
+    <texScale>	0	</texScale>
+    <freqX>	0	</freqX>
+    <freqZ>	0	</freqZ>
+  </water>
+  <gameplayTypes>
+    <ctf>
+      <teamSpawnPoints>
+        <team1>
+          <position>	0 -350	</position>
+        </team1>
+        <team2>
+          <position>	0 350	</position>
+        </team2>
+      </teamSpawnPoints>
+      <teamBasePositions>
+        <team1>
+          <position1>	291 -100.311127	</position1>
+        </team1>
+        <team2>
+          <position1>	-291 100.009995	</position1>
+        </team2>
+      </teamBasePositions>
+    </ctf>
+    <assault2>
+      <winnerIfTimeout>	2	</winnerIfTimeout>
+      <winnerIfExtermination>	2	</winnerIfExtermination>
+      <teamSpawnPoints>
+        <team1>
+          <position>	315.682 -121.161	</position>
+        </team1>
+        <team2>
+          <position>	-315.682 121.161	</position>
+        </team2>
+      </teamSpawnPoints>
+      <teamBasePositions>
+        <team1></team1>
+        <team2>
+          <position1>	-120 288	</position1>
+          <position2>	0 0	</position2>
+        </team2>
+      </teamBasePositions>
+    </assault2>
+  </gameplayTypes>
+</95_lost_city.xml>

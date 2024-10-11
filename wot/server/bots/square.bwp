@@ -1,0 +1,33 @@
+<waypoints>
+
+    <nodeDefaults>
+        <minStay> 5 </minStay>
+        <maxStay> 20 </maxStay>
+        <radius> 20 </radius>
+    </nodeDefaults>
+
+    <nodes>
+        
+        <node>
+            <pos> -400 0 -400 </pos>
+            <edges> <edge> 1 </edge> </edges>
+        </node>
+        
+        <node>
+            <pos> -400 0 1600 </pos>
+            <edges> <edge> 2 </edge> </edges>
+        </node>
+        
+        <node>
+            <pos> 1200 0 1600 </pos>
+            <edges> <edge> 3 </edge> </edges>
+        </node>
+        
+        <node>
+            <pos> 1200 0 -400 </pos>
+            <edges> <edge> 0 </edge> </edges>
+        </node>
+        
+    </nodes>
+    
+</waypoints>

@@ -1,0 +1,16 @@
+<speedtree_billboard.xml>
+	<elements>
+		<POSITION/>
+		<NORMAL/>
+		<TEXCOORD>
+			<semanticIndex> 0 </semanticIndex>
+			<type> FLOAT3 </type>
+		</TEXCOORD>
+		<TEXCOORD>
+			<semanticIndex> 1 </semanticIndex>
+			<type> FLOAT2 </type>
+		</TEXCOORD>
+		<BINORMAL/>
+		<TANGENT/>
+	</elements>
+</speedtree_billboard.xml>

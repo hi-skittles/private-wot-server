@@ -1,0 +1,5 @@
+<loading_screen.gui>
+  <SimpleGUIComponent>
+    <script>	"GameLoading"	</script>
+  </SimpleGUIComponent>
+</loading_screen.gui>

@@ -1,0 +1,112 @@
+<root>
+	<cold_breath>
+		<serialiseVersionData>	2	</serialiseVersionData>
+		<windFactor_>	0.000000	</windFactor_>
+		<explicitTransform_>	false	</explicitTransform_>
+		<explicitPosition_>	0.000000 0.000000 0.000000	</explicitPosition_>
+		<explicitDirection_>	0.000000 0.000000 1.000000	</explicitDirection_>
+		<localOffset_>	0.000000 0.000000 0.000000	</localOffset_>
+		<maxLod_>	0.000000	</maxLod_>
+		<fixedFrameRate_>	-1.000000	</fixedFrameRate_>
+		<Actions>
+			<Source>
+				<delay_>	0.000000	</delay_>
+				<minimumAge_>	0.000000	</minimumAge_>
+				<name_>	Source 1	</name_>
+				<pPositionSrc>
+					<PointVectorGenerator>
+						<nameID_>	PointVectorGenerator	</nameID_>
+						<position_>	0.019211 0.014776 0.000000	</position_>
+					</PointVectorGenerator>
+				</pPositionSrc>
+				<pVelocitySrc>
+					<LineVectorGenerator>
+						<nameID_>	LineVectorGenerator	</nameID_>
+						<origin_>	-0.400000 0.000000 0.600000	</origin_>
+						<direction_>	-0.200000 0.000000 0.200000	</direction_>
+					</LineVectorGenerator>
+				</pVelocitySrc>
+				<motionTriggered_>	false	</motionTriggered_>
+				<timeTriggered_>	true	</timeTriggered_>
+				<grounded_>	false	</grounded_>
+				<dropDistance_>	15.000000	</dropDistance_>
+				<rate_>	150.000000	</rate_>
+				<sensitivity_>	0.100000	</sensitivity_>
+				<maxSpeed_>	0.000000	</maxSpeed_>
+				<activePeriod_>	0.350000	</activePeriod_>
+				<sleepPeriod_>	-1.000000	</sleepPeriod_>
+				<sleepPeriodMax_>	2.000000	</sleepPeriodMax_>
+				<minimumSize_>	0.005000	</minimumSize_>
+				<maximumSize_>	0.025000	</maximumSize_>
+				<forcedUnitSize_>	1	</forcedUnitSize_>
+				<allowedTimeInSeconds_>	1.000000	</allowedTimeInSeconds_>
+				<initialRotation_>	0.000000 0.000000	</initialRotation_>
+				<randomInitialRotation_>	0.000000 0.000000	</randomInitialRotation_>
+				<initialColour_>	0.500000 0.500000 0.500000 1.000000	</initialColour_>
+				<randomSpin_>	false	</randomSpin_>
+				<minSpin_>	0.000000	</minSpin_>
+				<maxSpin_>	0.000000	</maxSpin_>
+				<ignoreRotation_>	false	</ignoreRotation_>
+				<inheritVelocity_>	1.000000	</inheritVelocity_>
+			</Source>
+			<Sink>
+				<delay_>	0.000000	</delay_>
+				<minimumAge_>	0.000000	</minimumAge_>
+				<name_>	Sink 1	</name_>
+				<maximumAge_>	1.000000	</maximumAge_>
+				<minimumSpeed_>	-1.000000	</minimumSpeed_>
+			</Sink>
+			<TintShader>
+				<delay_>	0.000000	</delay_>
+				<minimumAge_>	0.000000	</minimumAge_>
+				<name_>	TintShader 1	</name_>
+				<repeat_>	false	</repeat_>
+				<period_>	1.000000	</period_>
+				<fogAmount_>	0.500000	</fogAmount_>
+				<tints_>
+					<Tint>
+						<time>	0.000000	</time>
+						<color>	1.000000 1.000000 1.000000 0.000000	</color>
+					</Tint>
+					<Tint>
+						<time>	0.399194	</time>
+						<color>	1.000000 1.000000 1.000000 0.299145	</color>
+					</Tint>
+					<Tint>
+						<time>	0.800000	</time>
+						<color>	1.000000 1.000000 1.000000 0.000000	</color>
+					</Tint>
+				</tints_>
+			</TintShader>
+			<Scaler>
+				<delay_>	0.000000	</delay_>
+				<minimumAge_>	0.000000	</minimumAge_>
+				<name_>	Scaler 1	</name_>
+				<size_>	0.500000	</size_>
+				<rate_>	0.130000	</rate_>
+			</Scaler>
+			<Force>
+				<delay_>	0.000000	</delay_>
+				<minimumAge_>	0.000000	</minimumAge_>
+				<name_>	Force 1	</name_>
+				<vector_>	0.000000 0.500000 0.000000	</vector_>
+			</Force>
+		</Actions>
+		<Renderer>
+			<PointSpriteParticleRenderer>
+				<viewDependent_>	false	</viewDependent_>
+				<local_>	false	</local_>
+				<textureName_>	system/maps/fx_puff.tga	</textureName_>
+				<materialFX_>	2	</materialFX_>
+				<frameCount_>	0	</frameCount_>
+				<frameRate_>	0.000000	</frameRate_>
+				<explicitOrientation_>	0.000000 0.000000 0.000000	</explicitOrientation_>
+			</PointSpriteParticleRenderer>
+		</Renderer>
+		<capacity>	60	</capacity>
+		<boundingBox>
+			<min>	-0.712407 -0.129020 -0.129020	</min>
+			<max>	0.129020 0.387996 0.935817	</max>
+		</boundingBox>
+	</cold_breath>
+</root>

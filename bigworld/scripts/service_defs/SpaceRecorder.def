@@ -1,0 +1,72 @@
+<root>
+	<TempProperties>
+		<writers/>
+		<backups/>
+	</TempProperties>
+
+	<Methods>
+		<startRecording>
+			<Args>
+				<spaceID> 	INT32 	</spaceID>
+				<name> 		STRING 	</name>
+				<metaData>	ARRAY
+					<of> TUPLE
+						<of> STRING </of>
+						<size> 2 </size>
+					</of>
+				</metaData>
+				<recorder> 	MAILBOX </recorder>
+			</Args>
+			<ReturnValues/>
+		</startRecording>
+
+		<updateBackups>
+			<Args>
+				<spaceID>	INT32 </spaceID>
+				<backups> 	ARRAY <of> MAILBOX </of> </backups>
+			</Args>
+		</updateBackups>
+
+		<startBackup>
+			<Args>
+				<spaceID>	INT32 	</spaceID>
+				<name>		STRING 	</name>
+				<recorder> MAILBOX </recorder>
+			</Args>
+			<ReturnValues/>
+		</startBackup>
+
+		<cellTickData>
+			<Args>
+				<spaceID> 	INT32 	</spaceID>
+				<gameTime> 	UINT32 	</gameTime>
+				<numCells> 	INT16 	</numCells>
+				<data> 		BLOB 	</data>
+			</Args>
+		</cellTickData>
+
+		<cellTickDataWritten>
+			<Args>
+				<spaceID> 	INT32 	</spaceID>
+				<gameTime>	UINT32 	</gameTime>
+				<recoveryData>  STRING </recoveryData>
+			</Args>
+		</cellTickDataWritten>
+
+		<promote>
+			<Args>
+				<spaceID>	INT32 	</spaceID>
+			</Args>
+
+			<ReturnValues/>
+		</promote>
+
+		<stopRecording>
+			<Args>
+				<spaceID> 	INT32 	</spaceID>
+			</Args>
+
+			<ReturnValues/>
+		</stopRecording>
+	</Methods>
+</root>

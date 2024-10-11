@@ -1,0 +1,11 @@
+<root>
+
+	<enabled> true </enabled>
+
+	<!-- XMPP Chat example -->
+	<xmppServer>
+		<host> eval.bigworldtech.com </host>
+		<port> 5222 </port>
+		<resourceName> FantasyDemo </resourceName>
+	</xmppServer>
+</root>

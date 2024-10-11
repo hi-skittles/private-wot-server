@@ -1,0 +1,526 @@
+<root>
+
+	<!-- This file contains the default production options for
+		configuring the server.
+		These are documented in the Server Operations Guide
+		(bigworld/doc/server_operations_guide.pdf). -->
+
+	<production> true </production> <!-- Type: Boolean -->
+	<bitsPerSecondToClient> 20000 </bitsPerSecondToClient> <!-- Type: Integer -->
+	<debugConfigOptions> 0 </debugConfigOptions> <!-- Type: Integer -->
+	<gameUpdateHertz> 10 </gameUpdateHertz> <!-- Type: Integer -->
+	<hasDevelopmentAssertions> false </hasDevelopmentAssertions> <!-- Type: Boolean -->
+	<allowInteractiveDebugging> false </allowInteractiveDebugging> <!-- Type: Boolean -->
+	<serverMode> standalone </serverMode> <!-- Type: String -->
+
+	<internalLossRatio> 0.0 </internalLossRatio> <!-- Type: Float -->
+	<internalLatencyMin> 0.0 </internalLatencyMin> <!-- Type: Float -->
+	<internalLatencyMax> 0.0 </internalLatencyMax> <!-- Type: Float -->
+
+	<externalLossRatio> 0.0 </externalLossRatio> <!-- Type: Float -->
+	<externalLatencyMax> 0.0 </externalLatencyMax> <!-- Type: Float -->
+	<externalLatencyMin> 0.0 </externalLatencyMin> <!-- Type: Float -->
+
+	<tcpServerBacklog> 511 </tcpServerBacklog> <!-- Type: Integer -->
+
+	<hitchDetection>
+		<enabled> False </enabled> <!-- Type: Boolean -->
+		<threshold> 1.5 </threshold> <!-- Type: Float -->
+	</hitchDetection>
+
+	<pydevd>
+		<host></host> <!-- Type: String -->
+		<ide> eclipse </ide> <!-- Type: String -->
+		<suspend> False </suspend> <!-- Type: Boolean -->
+		<traceOnlyCurrentThread> False </traceOnlyCurrentThread> <!-- Type: Boolean -->
+		<autoConnect>
+			<cell> False </cell> <!-- Type: Boolean -->
+			<base> False </base> <!-- Type: Boolean -->
+			<service> False </service> <!-- Type: Boolean -->
+			<database> False </database> <!-- Type: Boolean -->
+		</autoConnect>
+	</pydevd>
+  
+	<networkCompression>
+		<internal> NONE </internal>
+		<external> NONE </external>
+
+		<!-- Example of setting to zip with a higher compression level -->
+		<!-- <internal> ZIP <level> 6 </level> /internal> -->
+	</networkCompression>
+
+	<loggerID> </loggerID> <!-- Type: String -->
+
+	<shouldFilterLogSpam> true </shouldFilterLogSpam> <!-- Type: Boolean -->
+
+	<logSpamPatterns>
+		<pattern> Channel:: </pattern> <!-- Type: String -->
+		<pattern> UDPChannel:: </pattern> <!-- Type: String -->
+	</logSpamPatterns>
+
+	<logSpamThreshold> 10 </logSpamThreshold> <!-- Type: Integer -->
+
+	<logSpamFilterSummaries> true </logSpamFilterSummaries> <!-- Type: Boolean -->
+
+	<numStartupRetries> 60 </numStartupRetries> <!-- Type: Integer -->
+	<outputFilterThreshold> 0 </outputFilterThreshold> <!-- Type: Integer -->
+	<personality> BWPersonality </personality> <!-- Type: String -->
+
+	<useDefaultSpace> false </useDefaultSpace> <!-- Type: Boolean -->
+
+	<channelTimeoutPeriod> 60.0 </channelTimeoutPeriod> <!-- Type: Float -->
+
+	<desiredBaseApps> 1 </desiredBaseApps> <!-- Type: Integer -->
+	<desiredCellApps> 1 </desiredCellApps> <!-- Type: Integer -->
+	<desiredServiceApps> 1 </desiredServiceApps> <!-- Type: Integer -->
+
+	<shuttingDownDelay> 1.0 </shuttingDownDelay> <!-- Type: Float -->
+
+	<tickStatsPeriod> 2.0 </tickStatsPeriod> <!-- Type: Float -->
+	<timeSyncPeriod> 60.0 </timeSyncPeriod> <!-- Type: Float -->
+
+	<maxChannelOverflow>
+		<external> 1024 </external>  <!-- Type: Integer -->
+		<internal> 8192 </internal>  <!-- Type: Integer -->
+		<indexed>  4096 </indexed>   <!-- Type: Integer -->
+		<isAssert> false </isAssert> <!-- Type: Boolean -->
+	</maxChannelOverflow>
+
+	<maxInternalSocketProcessingTime> -1.0 </maxInternalSocketProcessingTime> <!-- Type: Float -->
+<!--
+	<externalChannelMaxOverflow> 1024 </externalChannelMaxOverflow>
+	<internalChannelMaxOverflow> 8192 </internalChannelMaxOverflow>
+	<internalEntityChannelMaxOverflow> 4096 </internalEntityChannelMaxOverflow>
+-->
+
+	<!-- -1 means don't try to raise the maximum file descriptor -->
+	<maxOpenFileDescriptors> -1 </maxOpenFileDescriptors> <!-- Type: Integer -->
+	<maxSharedDataValueSize> 10240 </maxSharedDataValueSize> <!-- Type: Unsigned Integer -->
+
+	<networkAddressTranslation>
+		<externalAddress>  </externalAddress> <!-- Type: String -->
+		<localNetMask>  </localNetMask> <!-- Type: String -->
+	</networkAddressTranslation>
+
+	<externalInterface> </externalInterface> <!-- Type: String -->
+	<monitoringInterface> bwmachined </monitoringInterface> <!-- Type: String -->
+
+	<shutDownServerOnBadState> true </shutDownServerOnBadState> <!-- Type: Boolean -->
+	<shutDownServerOnBaseAppDeath> false </shutDownServerOnBaseAppDeath> <!-- Type: Boolean -->
+	<shutDownServerOnCellAppDeath> false </shutDownServerOnCellAppDeath> <!-- Type: Boolean -->
+	<shutDownServerOnServiceAppDeath> false </shutDownServerOnServiceAppDeath> <!-- Type: Boolean -->
+	<shutDownServerOnServiceDeath> false </shutDownServerOnServiceDeath> <!-- Type: Boolean -->
+	<isBadStateWithNoServiceApps> false </isBadStateWithNoServiceApps> <!-- Type: Boolean -->
+
+	<shouldUseChecksums> true </shouldUseChecksums> <!-- Type: Boolean -->
+	
+	<maxMgrRegisterStagger> 0.0 </maxMgrRegisterStagger> <!-- Type: Float -->
+
+	<shouldUseWebSockets> true </shouldUseWebSockets>
+    
+	<profilerJsonDumpDirectory></profilerJsonDumpDirectory> <!-- Type: String -->
+    
+	<profilerMaxThreads> 96 </profilerMaxThreads> <!-- Type: Integer -->
+
+	<balance>
+		<aggressionDecrease> 0.5 </aggressionDecrease> <!-- Type: Float -->
+		<aggressionIncreasePeriod> 10.0 </aggressionIncreasePeriod> <!-- Type: Float -->
+		<maxAggression> 1.0 </maxAggression> <!-- Type: Float -->
+		<maxAggressionIncreasePeriod> 40.0 </maxAggressionIncreasePeriod> <!-- Type: Float -->
+		<maxCPUOffload> 0.02 </maxCPUOffload> <!-- Type: Float -->
+		<numCPUOffloadLevels> 5 </numCPUOffloadLevels> <!-- Type: Integer -->
+
+		<demo>
+			<enable> false </enable> <!-- Type: Boolean -->
+			<numEntitiesPerCell> 100 </numEntitiesPerCell> <!-- Type: Float -->
+		</demo>
+	</balance>
+
+	<loginConditions>
+		<overloadTolerancePeriod> 5.0 </overloadTolerancePeriod> <!-- Type: Float -->
+
+		<baseApp>
+			<!-- <overloadTolerancePeriod> 5.0 </overloadTolerancePeriod> -->
+
+			<overloadLogins> 10 </overloadLogins> <!-- Type: Int -->
+
+			<minLoad> 0.8 <!-- Type: Float -->
+
+				<!-- <overloadTolerancePeriod> 5.0 </overloadTolerancePeriod> -->
+			</minLoad>
+		</baseApp>
+
+		<cellApp>
+			<!-- <overloadTolerancePeriod> 5.0 </overloadTolerancePeriod> -->
+
+			<avgLoad> 0.85 <!-- Type: Float -->
+				<!-- <overloadTolerancePeriod> 5.0 </overloadTolerancePeriod> -->
+			</avgLoad> 
+
+			<maxLoad> 0.9 <!-- Type: Float -->
+				<!-- <overloadTolerancePeriod> 5.0 </overloadTolerancePeriod> -->
+			</maxLoad> 
+		</cellApp>
+		
+		<dbApp>
+			<maxLoad> 1.0 </maxLoad> <!-- Type: Float -->
+			<!-- <overloadTolerancePeriod> 5.0 </overloadTolerancePeriod> -->
+		</dbApp>
+	</loginConditions>
+
+	<baseApp>
+		<archiveEmergencyThreshold> 0.25 </archiveEmergencyThreshold> <!-- Type: Float -->
+		<archivePeriod> 100 </archivePeriod> <!-- Type: Float -->
+		<backupPeriod> 10 </backupPeriod> <!-- Type: Float -->
+		<backupSizeWarningLevel> 102400 </backupSizeWarningLevel> <!-- Type: Integer -->
+		<backUpUndefinedProperties> false </backUpUndefinedProperties> <!-- Type: Boolean -->
+		<shouldLogBackups> false </shouldLogBackups> <!-- Type: Boolean -->
+		<clientOverflowLimit> 1000 </clientOverflowLimit> <!-- Type:Integer -->
+		<createBaseElsewhereThreshold> 0.0 </createBaseElsewhereThreshold> <!-- Type: Float -->
+		<!-- <externalInterface>  </externalInterface> --> <!-- Type: String -->
+		<!-- <externalPorts> -->
+		<!-- 	<port> 34567 </port> --> <!-- Type: Integer -->
+		<!-- 	<port> 34568 </port> --> <!-- Type: Integer -->
+		<!-- </externalPorts> -->
+
+		<inactivityTimeout> 30.0 </inactivityTimeout> <!-- Type: Float -->
+		<maxExternalSocketProcessingTime> -1.0 </maxExternalSocketProcessingTime> <!-- Type: Float -->
+		<minClientInactivityResendDelay> 1.0 </minClientInactivityResendDelay> <!-- Type: Float -->
+		<loadSmoothingBias> 0.01 </loadSmoothingBias> <!-- Type: Float -->
+		<reservedTickFraction> 0.05 </reservedTickFraction> <!-- Type: Float -->
+		<sendAuthToClient> false </sendAuthToClient> <!-- Type: Boolean -->
+		<sendWindowCallbackThreshold> 0.5 </sendWindowCallbackThreshold> <!-- Type: Float -->
+		<shouldResolveMailBoxes> false </shouldResolveMailBoxes> <!-- Type: Boolean -->
+		<shouldShutDownIfPortUsed> true </shouldShutDownIfPortUsed> <!-- Type: Boolean -->
+		<shouldDelayLookUpSend> false </shouldDelayLookUpSend> <!-- Type: Boolean -->
+		<verboseExternalInterface> false </verboseExternalInterface> <!-- Type: Boolean -->
+		<warnOnNoDef> true </warnOnNoDef> <!-- Type: Boolean -->
+
+		<downloadStreaming>
+			<bitsPerSecondTotal> 10000000 </bitsPerSecondTotal> <!-- Type: Int -->
+			<bitsPerSecondPerClient> 100000 </bitsPerSecondPerClient> <!-- Type: Int -->
+			<rampUpRate> 5000 </rampUpRate> <!-- Type: Int -->
+			<backlogLimit> 5 </backlogLimit> <!-- Type: Int -->
+		</downloadStreaming>
+
+		<!-- 0 means bind python server to a random port
+			 non-zero means bind to exactly that port
+			 omit tag to bind to 40000 + appID -->
+		<pythonPort> 0 </pythonPort>
+
+		<ids>
+			<criticallyLowSize> 100 </criticallyLowSize> <!-- Type: Integer -->
+			<lowSize> 2000 </lowSize> <!-- Type: Integer -->
+			<desiredSize> 2400 </desiredSize> <!-- Type: Integer -->
+			<highSize> 3000 </highSize> <!-- Type: Integer -->
+		</ids>
+
+		<packetLog>
+			<enable> false </enable> <!-- Type: Boolean -->
+			<flushMode> false </flushMode> <!-- Type: Boolean -->
+			<hexMode> false </hexMode> <!-- Type: Boolean -->
+			<addr> </addr> <!-- Type: String -->
+		</packetLog>
+
+		<clientUpstreamLimits>
+			<warnMessagesPerSecond> 250 </warnMessagesPerSecond><!-- Type: Integer -->
+			<maxMessagesPerSecond> 500 </maxMessagesPerSecond><!-- Type: Integer -->
+			
+			<warnBytesPerSecond> 20480 </warnBytesPerSecond><!-- Type: Integer -->
+			<maxBytesPerSecond> 40960 </maxBytesPerSecond><!-- Type: Integer -->
+
+			<warnMessagesBuffered> 500 </warnMessagesBuffered><!-- Type: Integer -->
+			<maxMessagesBuffered> 1000 </maxMessagesBuffered><!-- Type: Integer -->
+			<warnBytesBuffered> 262144 </warnBytesBuffered><!-- Type: Integer -->
+			<maxBytesBuffered> 524288 </maxBytesBuffered><!-- Type: Integer -->
+		</clientUpstreamLimits>
+	</baseApp>
+
+	<baseAppMgr>
+		<baseAppTimeout> 5.0 </baseAppTimeout> <!-- Type: Float -->
+
+		<maxDestinationsInCreateBaseInfo> 250 </maxDestinationsInCreateBaseInfo> <!-- Type: Integer -->
+		<updateCreateBaseInfoPeriod> 5.0 </updateCreateBaseInfoPeriod> <!-- Type: Float -->
+	</baseAppMgr>
+
+	<billingSystem>
+		<authenticateViaBaseEntity> false </authenticateViaBaseEntity>
+		<shouldAcceptUnknownUsers> false </shouldAcceptUnknownUsers>
+		<shouldRememberUnknownUsers> false </shouldRememberUnknownUsers>
+		<entityTypeForUnknownUsers> </entityTypeForUnknownUsers>
+		<isPasswordHashed> true </isPasswordHashed>
+		<type> standard </type>
+	</billingSystem>
+
+	<bots>
+		<controllerData> server/bots/test.bwp </controllerData> <!-- Type: String -->
+		<controllerType> Patrol </controllerType> <!-- Type: String -->
+		<password>  </password> <!-- Type: String -->
+		<port> 0 </port> <!-- Type: Integer -->
+		<publicKey> loginapp.pubkey </publicKey>
+		<serverName> </serverName> <!-- Type: String -->
+		<shouldLog> true </shouldLog> <!-- Type: Boolean -->
+		<shouldUseRandomName> true </shouldUseRandomName> <!-- Type: Boolean -->
+		<shouldUseScripts> true </shouldUseScripts> <!-- Type: Boolean -->
+		<shouldUseTCP> false </shouldUseTCP> <!-- Type: Boolean -->
+		<shouldUseWebSockets> false  </shouldUseWebSockets> <!-- Type: Boolean -->
+		<standinEntity> DefaultEntity </standinEntity>
+		<tag> Default </tag> <!-- Type: String -->
+		<username> Bot </username> <!-- Type: String -->
+		<logOnRetryPeriod> 0.0 </logOnRetryPeriod> <!--Type: Float -->
+		<chunkLoadingPeriod> 0.02 </chunkLoadingPeriod> <!-- Type: Float -->
+		<shouldListenForGeometryMappings> false </shouldListenForGeometryMappings> <!-- Type: Boolean -->
+	</bots>
+
+	<cellApp>
+		<absoluteMaxControllers> 50 </absoluteMaxControllers> <!-- Type: Integer -->
+		<backupPeriod> 10 </backupPeriod> <!-- Type: Float -->
+		<checkOffloadsPeriod> 0.1 </checkOffloadsPeriod> <!-- Type: Float -->
+		<chunkLoadingPeriod> 0.02 </chunkLoadingPeriod> <!-- Type: Float -->
+		<defaultAoIRadius> 500.0 </defaultAoIRadius> <!-- Type: Float -->
+		<enforceGhostDecorators> true </enforceGhostDecorators> <!-- Type: Boolean -->
+		<entitySpamSize> 200 </entitySpamSize> <!-- Type: Integer -->
+		<expectedMaxControllers> 25 </expectedMaxControllers> <!-- Type: Integer -->
+		<fastShutdown> true </fastShutdown> <!-- Type: Boolean -->
+		<ghostDistance> 500.0 </ghostDistance> <!-- Type: Float -->
+		<ghostUpdateHertz> 50 </ghostUpdateHertz> <!-- Type: Integer -->
+		<loadDominantTextureMaps> false </loadDominantTextureMaps> <!-- Type: Boolean -->
+		<loadSmoothingBias> 0.05 </loadSmoothingBias> <!-- Type: Float -->
+		<maxAoIRadius> 500.0 </maxAoIRadius> <!-- Type: Float -->
+		<maxControllersExpected> 25 </maxControllersExpected> <!-- Type: Integer -->
+		<maxControllersAbsolute> 50 </maxControllersAbsolute> <!-- Type: Integer -->
+		<maxGhostsToDelete> 100 </maxGhostsToDelete> <!-- Type: Integer -->
+		<minGhostLifespan> 5.0 </minGhostLifespan> <!-- Type: Float -->
+		<maxPhysicsNetworkJitter> 0.2 </maxPhysicsNetworkJitter> <!-- Type: Float -->
+		<maxTickStagger> 0.0 </maxTickStagger> <!-- Type: Float -->
+		<maxTimeBetweenPlayerUpdates> 0.0 </maxTimeBetweenPlayerUpdates> <!-- Type: Float -->
+		<navigationMaxClimb> 0.65 </navigationMaxClimb> <!-- Type: Float -->
+		<navigationMaxSlope> 45.0 </navigationMaxSlope> <!-- Type: Float -->
+		<obstacleTreeDepth> 5 </obstacleTreeDepth> <!-- Type: Integer -->
+		<reservedTickFraction> 0.05 </reservedTickFraction> <!-- Type: Float -->
+		<sendWindowCallbackThreshold> 0.5 </sendWindowCallbackThreshold> <!-- Type: Float -->
+		<shouldLoadAllChunks> false </shouldLoadAllChunks> <!-- Type: Boolean -->
+		<shouldNavigationDropPosition> false </shouldNavigationDropPosition> <!-- Type: Boolean -->
+		<sendDetailedPlayerVehicles> false </sendDetailedPlayerVehicles> <!-- Type: Boolean -->
+		<shouldResolveMailBoxes> false </shouldResolveMailBoxes> <!-- Type: Boolean -->
+		<treatAllOtherEntitiesAsGhosts> true </treatAllOtherEntitiesAsGhosts> <!-- Type: Boolean -->
+		<witnessUpdateMaxPriorityDelta> 5.0 </witnessUpdateMaxPriorityDelta> <!-- Type: Float -->
+		<witnessUpdateDefaultMinDelta> 1.0 </witnessUpdateDefaultMinDelta> <!-- Type: Float -->
+		<witnessUpdateDefaultMaxDelta> 101.0 </witnessUpdateDefaultMaxDelta> <!-- Type: Float -->
+		<witnessUpdateDeltaGrowthThrottle> 1.125 </witnessUpdateDeltaGrowthThrottle> <!-- Type: Float -->
+
+		<!-- 0 means bind python server to a random port
+			 non-zero means bind to exactly that port
+			 omit tag to bind to 50000 + appID -->
+		<pythonPort> 0 </pythonPort>
+
+		<aoiUpdateSchemes>
+
+			<!-- if aoiUpdateSchemes appears in a child xml, the whole
+				 section will be overridden -->
+
+			<!-- 	The default scheme is always defined and available:
+			<scheme>
+				<name> default </name>
+				<minDelta> [cellApp/witnessUpdateDefaultMinDelta, default 1.0] </minDelta>
+				<maxDelta> [cellApp/witnessUpdateDefaultMaxDelta, default 101.0] </maxDelta>
+			</scheme>
+			-->
+
+			<!-- 	Schemes where the minDelta or maxDelta value is omitted
+					will use these defaults.
+			-->
+
+			<!-- 	This scheme is an example of a scheme where the entity is
+					updated at the same frequency regardless of distance.
+
+			<scheme>
+				<name> sniper </name>
+				<minDelta> 10 </minDelta>
+				<maxDelta> 10 </maxDelta>
+			</scheme>
+			-->
+
+			<!-- 	Update twice as frequently as other entities at the same
+					distance. Useful for large entities like dragons.
+
+			<scheme>
+				<name> largeEntity </name>
+				<maxDelta> 50.5 </maxDelta>
+			</scheme>
+			-->
+
+		</aoiUpdateSchemes>
+
+		<ids>
+			<criticallyLowSize> 100 </criticallyLowSize> <!-- Type: Integer -->
+			<lowSize> 2000 </lowSize> <!-- Type: Integer -->
+			<desiredSize> 2400 </desiredSize> <!-- Type: Integer -->
+			<highSize> 3000 </highSize> <!-- Type: Integer -->
+		</ids>
+
+		<noise>
+			<standardRange> 10.0 </standardRange> <!-- Type: Float -->
+			<horizontalSpeed> 1000000.0 </horizontalSpeed> <!-- Type: Float -->
+			<verticalSpeed> 1000000.0 </verticalSpeed> <!-- Type: Float -->
+		</noise>
+
+		<profiles>
+			<initGhost>
+				<timeWarningLevel> 0.1</timeWarningLevel>
+				<sizeWarningLevel> 5120 </sizeWarningLevel>
+			</initGhost>
+			<initReal>
+				<timeWarningLevel> 0.1	</timeWarningLevel>
+				<sizeWarningLevel> 10240 </sizeWarningLevel>
+			</initReal>
+			<onload>
+				<timeWarningLevel> 0.1	</timeWarningLevel>
+				<sizeWarningLevel> 10240 </sizeWarningLevel>
+			</onload>
+			<backup>
+				<sizeWarningLevel> 10240 </sizeWarningLevel>
+			</backup>
+		</profiles>
+
+		<throttle>
+			<behindThreshold> 0.1 </behindThreshold> <!-- Type: Float -->
+			<min> 0.1 </min> <!-- Type: Float -->
+			<scaleBackTime> 1.0 </scaleBackTime> <!-- Type: Float -->
+			<scaleForwardTime> 1.0 </scaleForwardTime> <!-- Type: Float -->
+			<spareTimeThreshold> 0.001 </spareTimeThreshold> <!-- Type: Float -->
+		</throttle>
+
+	</cellApp>
+
+	<cellAppMgr>
+		<archivePeriod> 0 </archivePeriod> <!-- Type: Float -->
+		<shouldArchiveSpaceData> true </shouldArchiveSpaceData>  <!-- Type: Boolean --> 
+
+		<cellAppLoad>
+			<lowerBound> 0.02 </lowerBound> <!-- Type: Float -->
+			<safetyBound> 0.85 </safetyBound> <!-- Type: Float -->
+			<safetyRatio> 1.1 </safetyRatio> <!-- Type: Float -->
+			<warningLevel> 0.75 </warningLevel> <!-- Type: Float -->
+		</cellAppLoad>
+
+		<cellAppTimeout> 3.0 </cellAppTimeout> <!-- Type: Float -->
+		<estimatedInitialCellLoad> 0.1 </estimatedInitialCellLoad>
+		<loadBalancePeriod> 1 </loadBalancePeriod> <!-- Type: Float -->
+		<loadSmoothingBias> 0.05 </loadSmoothingBias> <!-- Type: Float -->
+		<maxLoadingCells> 4 </maxLoadingCells> <!-- Type: Integer -->
+		<metaLoadBalanceScheme> 0 </metaLoadBalanceScheme> <!-- Type: Integer -->
+		<metaLoadBalancePeriod> 3 </metaLoadBalancePeriod> <!-- Type: Float -->
+		<metaLoadBalanceTolerance> 0.05 </metaLoadBalanceTolerance> <!-- Type: Float -->
+		<shouldShowMetaLoadBalanceDebug> false </shouldShowMetaLoadBalanceDebug> <!-- Type: Boolean -->
+		<minLoadingArea> 1000000.0 </minLoadingArea> <!-- Type: Float -->
+		<shouldLimitBalanceToChunks> true </shouldLimitBalanceToChunks> <!-- Type: Boolean -->
+		<metaLoadBalancePriority>
+			<!-- if metaLoadBalancePriority appears in a child xml, the whole
+				 section will be overridden -->
+
+			<!-- the scorers are applied in order of their appearance in this section -->
+			<!-- <baseCellTraffic/> -->
+			<!-- <cellCellTraffic/> -->
+			<!-- <limitedSpaces> 1 </limitedSpaces> --> <!-- Type: Integer -->
+			<groupLoad/>
+			<cellAppLoad/>
+		</metaLoadBalancePriority>
+		<shouldMetaLoadBalance> true </shouldMetaLoadBalance> <!-- Type: Boolean -->
+	</cellAppMgr>
+
+	<db>
+		<type> mysql </type> <!-- Type: String -->
+
+		<mysql>
+			<host> localhost </host> <!-- Type: String -->
+			<port> 0 </port> <!-- Type: Integer -->
+			<databaseName> bigworld </databaseName> <!-- Type: String -->
+			<username> bigworld </username> <!-- Type: String -->
+			<password> bigworld </password> <!-- Type: String -->
+
+			<maxSpaceDataSize> 2048 </maxSpaceDataSize> <!-- Type: Integer -->
+			<numConnections> 5 </numConnections> <!-- Type: Integer -->
+			<secureAuth> false </secureAuth> <!-- Type: Boolean -->
+			<syncTablesToDefs> false </syncTablesToDefs>
+			<unicodeString>
+				<characterSet> utf8 </characterSet> <!-- Type: String -->
+				<collation> utf8_bin </collation> <!-- Type: String -->
+			</unicodeString>
+		</mysql>
+
+		<secondaryDB>
+			<enable> true </enable> <!-- Type: Boolean -->
+			<maxCommitPeriod> 5 </maxCommitPeriod> <!-- Type: Float -->
+			<directory> server/db/secondary </directory> <!-- Type: String -->
+
+			<consolidation>
+				<directory> /tmp/ </directory> <!-- Type: String -->
+			</consolidation>
+		</secondaryDB>
+
+		<xml>
+			<archivePeriod> 3600 </archivePeriod> <!-- Type: Float -->
+			<numArchives> 5 </numArchives> <!-- Type: Integer -->
+			<savePeriod> 900 </savePeriod> <!-- Type: Float -->
+		</xml>
+
+	</db>
+
+	<dbApp>
+		<dumpEntityDescription> 0 </dumpEntityDescription> <!-- Type: Integer -->
+		<maxConcurrentEntityLoaders> 5 </maxConcurrentEntityLoaders> <!-- Type: Int -->
+		<numDBLockRetries> 30 </numDBLockRetries> <!-- Type: Integer -->
+		<shouldCacheLogOnRecords> false </shouldCacheLogOnRecords>
+		<shouldDelayLookUpSend> false </shouldDelayLookUpSend> <!-- Type: Boolean -->
+	</dbApp>
+
+	<loginApp>
+		<!-- <externalInterface>  </externalInterface> --> <!-- Type: String -->
+		<externalPorts>
+			<port> 20013 </port> <!-- Type: Integer -->
+		</externalPorts>
+
+		<allowLogin> false </allowLogin> <!-- Type: Boolean -->
+		<allowProbe> false </allowProbe> <!-- Type: Boolean -->
+		<allowUnencryptedLogins> false </allowUnencryptedLogins> <!-- Type: Boolean -->
+		<challengeType>  </challengeType> <!-- Type: String -->
+		<loginRateLimit> 0 </loginRateLimit> <!-- Type: Integer -->
+		<logProbes> true </logProbes> <!-- Type: Boolean -->
+		<loginChallenge>
+			<!-- delay>
+				<duration> 1.0 </duration>
+			</delay-->
+
+			<!--cuckoo_cycle>
+				<easiness> 50.0 </easiness>
+			</cuckoo_cycle -->
+		</loginChallenge>
+		<maxLoginDelay> 10.0 </maxLoginDelay> <!-- Type: Float -->
+		<privateKey> server/loginapp.privkey </privateKey> <!-- Type: String -->
+		<rateLimitDuration> 0 </rateLimitDuration><!-- Type: Integer -->
+		<ipAddressRateLimit> 0 </ipAddressRateLimit> <!-- Type: Integer -->
+		<ipAddressPortRateLimit> 0 </ipAddressPortRateLimit> <!-- Type: Integer -->
+		<maxRepliesOnFailPerSecond> 100 </maxRepliesOnFailPerSecond> <!-- Type: Integer -->
+		<verboseLoginFailures> false </verboseLoginFailures> <!-- Type: Boolean -->
+		<passwordlessLoginsOnly> false </passwordlessLoginsOnly> <!-- Type: Boolean -->
+		<ipBanListCleanupInterval> 10 </ipBanListCleanupInterval> <!-- Type: Integer -->
+		<registerExternalInterface> false </registerExternalInterface> <!-- Type: Boolean -->
+		<shouldOffsetExternalPortByUID> false </shouldOffsetExternalPortByUID> <!-- Type: Boolean -->
+		<shouldShutDownIfPortUsed> true </shouldShutDownIfPortUsed> <!-- Type: Boolean -->
+		<maxExternalSocketProcessingTime> 1.0 </maxExternalSocketProcessingTime> <!-- Type: Float -->
+		<maxInternalSocketProcessingTime> 1.0 </maxInternalSocketProcessingTime> <!-- Type: Float -->
+		<verboseExternalInterface> false </verboseExternalInterface> <!-- Type: Boolean -->
+		<maxUsernameLength> 256 </maxUsernameLength> <!-- Type: Integer -->
+		<maxPasswordLength> 256 </maxPasswordLength> <!-- Type: Integer -->
+		<maxLoginMessageSize> 1472 </maxLoginMessageSize> <!-- Type: Integer -->
+	</loginApp>
+
+	<reviver>
+		<pingPeriod> 0.1 </pingPeriod> <!-- Type: Float -->
+		<reattachPeriod> 10 </reattachPeriod> <!-- Type: Float -->
+		<shutDownOnRevive> true </shutDownOnRevive> <!-- Type: Boolean -->
+		<subjectTimeout> 0.2 </subjectTimeout> <!-- Type: Float -->
+		<timeout> 5.0 </timeout> <!-- Type: Float -->
+	</reviver>
+</root>

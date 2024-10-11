@@ -1,0 +1,21 @@
+<xyznuv2tb_d.xml>
+	<elements>
+		<POSITION/>
+		<NORMAL/>
+		<TEXCOORD>
+			<semanticIndex> 0 </semanticIndex>
+			<type> FLOAT2 </type>
+		</TEXCOORD>
+		<TEXCOORD>
+			<semanticIndex> 1 </semanticIndex>
+			<type> FLOAT2 </type>
+		</TEXCOORD>
+		<TANGENT/>
+		<BINORMAL/>
+		<COLOR>
+			<stream> 1 </stream>
+			<offset> 0 </offset>
+			<type> COLOR </type>
+		</COLOR>
+	</elements>
+</xyznuv2tb_d.xml>

@@ -1,0 +1,66 @@
+<quest_4_3_13.xml>
+  <quests>
+    <potapovQuest>
+      <enabled>	true	</enabled>
+      <id>	quest_4_3_13_main	</id>
+      <serverOnly>	true	</serverOnly>
+      <conditions>
+        <preBattle>
+          <battle>
+            <unit>
+              <isSquad>	true	</isSquad>
+            </unit>
+          </battle>
+        </preBattle>
+        <postBattle>
+          <and>
+            <unit>
+              <and>
+                <unitVehicleDamage>
+                  <greaterOrEqual>	9000	</greaterOrEqual>
+                </unitVehicleDamage>
+              </and>
+            </unit>
+          </and>
+        </postBattle>
+      </conditions>
+      <bonus>
+        <freeXP>	4000	</freeXP>
+        <item>	7929	  <count>	1	</count>
+        </item>
+      </bonus>
+    </potapovQuest>
+    <potapovQuest>
+      <enabled>	true	</enabled>
+      <id>	quest_4_3_13_add	</id>
+      <serverOnly>	true	</serverOnly>
+      <conditions>
+        <preBattle>
+          <battle>
+            <unit>
+              <isSquad>	true	</isSquad>
+            </unit>
+          </battle>
+        </preBattle>
+        <postBattle>
+          <and>
+            <unit>
+              <and>
+                <unitVehicleDamage>
+                  <greaterOrEqual>	9000	</greaterOrEqual>
+                </unitVehicleDamage>
+                <results>
+                  <key>	xp	</key>
+                  <max>	3	</max>
+                </results>
+              </and>
+            </unit>
+          </and>
+        </postBattle>
+      </conditions>
+      <bonus>
+        <premium>	2	</premium>
+      </bonus>
+    </potapovQuest>
+  </quests>
+</quest_4_3_13.xml>

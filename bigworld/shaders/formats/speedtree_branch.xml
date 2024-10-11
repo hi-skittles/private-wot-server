@@ -1,0 +1,10 @@
+<speedtree_branch.xml>
+	<elements>
+		<POSITION/>
+		<NORMAL/>
+		<TEXCOORD>
+			<type> FLOAT4 </type>
+		</TEXCOORD>
+		<TANGENT/>
+	</elements>
+</speedtree_branch.xml>

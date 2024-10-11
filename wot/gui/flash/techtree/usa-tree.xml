@@ -1,0 +1,481 @@
+<usa-tree.xml>
+  <settings>	normal	</settings>
+  <grid>	grid_1	  <rows>	10	</rows>
+    <columns>	11	</columns>
+  </grid>
+  <nodes>
+    <T1_Cunningham>
+      <row>	1	</row>
+      <column>	1	</column>
+      <lines>
+        <T18></T18>
+        <M2_lt></M2_lt>
+        <T2_med></T2_med>
+        <T57></T57>
+      </lines>
+    </T1_Cunningham>
+    <T57>
+      <row>	1	</row>
+      <column>	2	</column>
+      <lines>
+        <M7_Priest></M7_Priest>
+      </lines>
+    </T57>
+    <M2_lt>
+      <row>	2	</row>
+      <column>	2	</column>
+      <lines>
+        <M3_Stuart></M3_Stuart>
+      </lines>
+    </M2_lt>
+    <T18>
+      <row>	5	</row>
+      <column>	2	</column>
+      <lines>
+        <T82></T82>
+      </lines>
+    </T18>
+    <T2_lt>
+      <row>	6	</row>
+      <column>	2	</column>
+    </T2_lt>
+    <T7_Combat_Car>
+      <row>	7	</row>
+      <column>	2	</column>
+    </T7_Combat_Car>
+    <T2_med>
+      <row>	8	</row>
+      <column>	2	</column>
+      <lines>
+        <M2_med></M2_med>
+      </lines>
+    </T2_med>
+    <M7_Priest>
+      <row>	1	</row>
+      <column>	3	</column>
+      <lines>
+        <M37></M37>
+      </lines>
+    </M7_Priest>
+    <M3_Stuart>
+      <row>	2	</row>
+      <column>	3	</column>
+      <lines>
+        <M5_Stuart></M5_Stuart>
+        <T82>
+          <line>	vertical	</line>
+          <outPin>	BM	</outPin>
+          <inPin>	TM	</inPin>
+        </T82>
+      </lines>
+    </M3_Stuart>
+    <T82>
+      <row>	5	</row>
+      <column>	3	</column>
+      <lines>
+        <M8A1>
+          <line>	H_Diag	</line>
+          <inPin>	BL	</inPin>
+        </M8A1>
+        <T40></T40>
+      </lines>
+    </T82>
+    <M22_Locust>
+      <row>	6	</row>
+      <column>	3	</column>
+    </M22_Locust>
+    <MTLS-1G14>
+      <row>	7	</row>
+      <column>	3	</column>
+    </MTLS-1G14>
+    <M2_med>
+      <row>	8	</row>
+      <column>	3	</column>
+      <lines>
+        <M3_Grant></M3_Grant>
+      </lines>
+    </M2_med>
+    <M37>
+      <row>	1	</row>
+      <column>	4	</column>
+      <lines>
+        <M41></M41>
+      </lines>
+    </M37>
+    <M5_Stuart>
+      <row>	2	</row>
+      <column>	4	</column>
+      <lines>
+        <M24_Chaffee></M24_Chaffee>
+        <M7_med>
+          <line>	H_Diag	</line>
+        </M7_med>
+      </lines>
+    </M5_Stuart>
+    <M8A1>
+      <row>	4	</row>
+      <column>	4	</column>
+      <lines>
+        <T67></T67>
+      </lines>
+    </M8A1>
+    <T40>
+      <row>	5	</row>
+      <column>	4	</column>
+      <lines>
+        <M10_Wolverine></M10_Wolverine>
+      </lines>
+    </T40>
+    <M3_Grant>
+      <row>	8	</row>
+      <column>	4	</column>
+      <lines>
+        <M4_Sherman>
+          <line>	H_Diag	</line>
+          <inPin>	BL	</inPin>
+        </M4_Sherman>
+        <T1_hvy></T1_hvy>
+      </lines>
+    </M3_Grant>
+    <M41>
+      <row>	1	</row>
+      <column>	5	</column>
+      <lines>
+        <M44></M44>
+      </lines>
+    </M41>
+    <M24_Chaffee>
+      <row>	2	</row>
+      <column>	5	</column>
+      <lines>
+        <M41>
+          <line>	vertical	</line>
+        </M41>
+        <A94_T37></A94_T37>
+      </lines>
+    </M24_Chaffee>
+    <M7_med>
+      <row>	3	</row>
+      <column>	5	</column>
+      <lines>
+        <T21></T21>
+      </lines>
+    </M7_med>
+    <T67>
+      <row>	4	</row>
+      <column>	5	</column>
+      <lines>
+        <M18_Hellcat></M18_Hellcat>
+      </lines>
+    </T67>
+    <M10_Wolverine>
+      <row>	5	</row>
+      <column>	5	</column>
+      <lines>
+        <M36_Slagger></M36_Slagger>
+        <M18_Hellcat>
+          <line>	H_Diag	</line>
+          <inPin>	BL	</inPin>
+        </M18_Hellcat>
+      </lines>
+    </M10_Wolverine>
+    <Ram-II>
+      <row>	6	</row>
+      <column>	5	</column>
+    </Ram-II>
+    <M4_Sherman>
+      <row>	7	</row>
+      <column>	5	</column>
+      <lines>
+        <M4A3E8_Sherman>
+          <line>	H_Diag	</line>
+          <inPin>	BL	</inPin>
+        </M4A3E8_Sherman>
+        <Sherman_Jumbo></Sherman_Jumbo>
+      </lines>
+    </M4_Sherman>
+    <T1_hvy>
+      <row>	8	</row>
+      <column>	5	</column>
+      <lines>
+        <M6></M6>
+      </lines>
+    </T1_hvy>
+    <T14>
+      <row>	9	</row>
+      <column>	5	</column>
+    </T14>
+    <M4A2E4>
+      <row>	10	</row>
+      <column>	5	</column>
+    </M4A2E4>
+    <M44>
+      <row>	1	</row>
+      <column>	6	</column>
+      <lines>
+        <M12></M12>
+      </lines>
+    </M44>
+    <A94_T37>
+      <row>	2	</row>
+      <column>	6	</column>
+      <lines>
+        <M41_Bulldog></M41_Bulldog>
+      </lines>
+    </A94_T37>
+    <T21>
+      <row>	3	</row>
+      <column>	6	</column>
+      <lines>
+        <T71></T71>
+      </lines>
+    </T21>
+    <M18_Hellcat>
+      <row>	4	</row>
+      <column>	6	</column>
+      <lines>
+        <T25_2></T25_2>
+      </lines>
+    </M18_Hellcat>
+    <M36_Slagger>
+      <row>	5	</row>
+      <column>	6	</column>
+      <lines>
+        <T25_AT></T25_AT>
+      </lines>
+    </M36_Slagger>
+    <M4A3E8_Sherman>
+      <row>	6	</row>
+      <column>	6	</column>
+      <lines>
+        <M36_Slagger>
+          <line>	vertical	</line>
+        </M36_Slagger>
+        <T20></T20>
+      </lines>
+    </M4A3E8_Sherman>
+    <Sherman_Jumbo>
+      <row>	7	</row>
+      <column>	6	</column>
+      <lines>
+        <T20>
+          <line>	H_Diag	</line>
+          <inPin>	BL	</inPin>
+        </T20>
+        <T29>
+          <line>	H_Diag	</line>
+        </T29>
+      </lines>
+    </Sherman_Jumbo>
+    <M6>
+      <row>	8	</row>
+      <column>	6	</column>
+      <lines>
+        <T29></T29>
+      </lines>
+    </M6>
+    <A104_M4A3E8A>
+      <row>	9	</row>
+      <column>	6	</column>
+    </A104_M4A3E8A>
+    <T23E3>
+      <row>	10	</row>
+      <column>	6	</column>
+    </T23E3>
+    <M12>
+      <row>	1	</row>
+      <column>	7	</column>
+      <lines>
+        <M40M43></M40M43>
+      </lines>
+    </M12>
+    <M41_Bulldog>
+      <row>	2	</row>
+      <column>	7	</column>
+      <lines>
+        <T49></T49>
+      </lines>
+    </M41_Bulldog>
+    <T71>
+      <row>	3	</row>
+      <column>	7	</column>
+      <lines>
+        <T69></T69>
+      </lines>
+    </T71>
+    <T25_2>
+      <row>	4	</row>
+      <column>	7	</column>
+      <lines>
+        <T28_Prototype></T28_Prototype>
+      </lines>
+    </T25_2>
+    <T25_AT>
+      <row>	5	</row>
+      <column>	7	</column>
+      <lines>
+        <T28></T28>
+      </lines>
+    </T25_AT>
+    <T20>
+      <row>	6	</row>
+      <column>	7	</column>
+      <lines>
+        <A35_Pershing></A35_Pershing>
+      </lines>
+    </T20>
+    <T29>
+      <row>	8	</row>
+      <column>	7	</column>
+      <lines>
+        <T32></T32>
+      </lines>
+    </T29>
+    <A101_M56>
+      <row>	9	</row>
+      <column>	7	</column>
+    </A101_M56>
+    <A102_T28_concept>
+      <row>	10	</row>
+      <column>	7	</column>
+    </A102_T28_concept>
+    <M40M43>
+      <row>	1	</row>
+      <column>	8	</column>
+      <lines>
+        <M53_55></M53_55>
+      </lines>
+    </M40M43>
+    <T49>
+      <row>	2	</row>
+      <column>	8	</column>
+      <lines>
+        <T54E1>
+          <line>	H_Diag	</line>
+        </T54E1>
+      </lines>
+    </T49>
+    <T69>
+      <row>	3	</row>
+      <column>	8	</column>
+      <lines>
+        <T54E1></T54E1>
+      </lines>
+    </T69>
+    <T28_Prototype>
+      <row>	4	</row>
+      <column>	8	</column>
+      <lines>
+        <T28>
+          <line>	vertical	</line>
+          <outPin>	BM	</outPin>
+          <inPin>	TM	</inPin>
+        </T28>
+        <T30></T30>
+      </lines>
+    </T28_Prototype>
+    <T28>
+      <row>	5	</row>
+      <column>	8	</column>
+      <lines>
+        <T95></T95>
+      </lines>
+    </T28>
+    <A35_Pershing>
+      <row>	6	</row>
+      <column>	8	</column>
+      <lines>
+        <M46_Patton></M46_Patton>
+      </lines>
+    </A35_Pershing>
+    <T26_E4_SuperPershing>
+      <row>	7	</row>
+      <column>	8	</column>
+    </T26_E4_SuperPershing>
+    <T32>
+      <row>	8	</row>
+      <column>	8	</column>
+      <lines>
+        <M103></M103>
+      </lines>
+    </T32>
+    <T34_hvy>
+      <row>	9	</row>
+      <column>	8	</column>
+    </T34_hvy>
+    <M6A2E1>
+      <row>	10	</row>
+      <column>	8	</column>
+    </M6A2E1>
+    <M53_55>
+      <row>	1	</row>
+      <column>	9	</column>
+      <lines>
+        <T92></T92>
+      </lines>
+    </M53_55>
+    <T54E1>
+      <row>	3	</row>
+      <column>	9	</column>
+      <lines>
+        <T57_58></T57_58>
+      </lines>
+    </T54E1>
+    <T30>
+      <row>	4	</row>
+      <column>	9	</column>
+      <lines>
+        <T110E4></T110E4>
+      </lines>
+    </T30>
+    <T95>
+      <row>	5	</row>
+      <column>	9	</column>
+      <lines>
+        <T110E3></T110E3>
+      </lines>
+    </T95>
+    <M46_Patton>
+      <row>	6	</row>
+      <column>	9	</column>
+      <lines>
+        <M48A1></M48A1>
+      </lines>
+    </M46_Patton>
+    <M103>
+      <row>	8	</row>
+      <column>	9	</column>
+      <lines>
+        <T110></T110>
+      </lines>
+    </M103>
+    <T92>
+      <row>	1	</row>
+      <column>	10	</column>
+    </T92>
+    <T57_58>
+      <row>	3	</row>
+      <column>	10	</column>
+    </T57_58>
+    <T110E4>
+      <row>	4	</row>
+      <column>	10	</column>
+    </T110E4>
+    <T110E3>
+      <row>	5	</row>
+      <column>	10	</column>
+    </T110E3>
+    <M48A1>
+      <row>	6	</row>
+      <column>	10	</column>
+    </M48A1>
+    <T95_E6>
+      <row>	7	</row>
+      <column>	10	</column>
+    </T95_E6>
+    <T110>
+      <row>	8	</row>
+      <column>	10	</column>
+    </T110>
+  </nodes>
+</usa-tree.xml>

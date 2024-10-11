@@ -1,0 +1,69 @@
+<quest_3_1_12.xml>
+  <quests>
+    <potapovQuest>
+      <enabled>	true	</enabled>
+      <id>	quest_3_1_12_main	</id>
+      <serverOnly>	true	</serverOnly>
+      <conditions>
+        <preBattle>
+          <battle>
+            <unit>
+              <isSquad>	true	</isSquad>
+            </unit>
+          </battle>
+        </preBattle>
+        <postBattle>
+          <and>
+            <unit>
+              <and>
+                <unitVehicleDescr>
+                  <classes>	lightTank	</classes>
+                </unitVehicleDescr>
+                <results>
+                  <key>	damageAssistedRadio	</key>
+                  <greaterOrEqual>	5000	</greaterOrEqual>
+                </results>
+              </and>
+            </unit>
+          </and>
+        </postBattle>
+      </conditions>
+      <bonus>
+        <freeXP>	2000	</freeXP>
+      </bonus>
+    </potapovQuest>
+    <potapovQuest>
+      <enabled>	true	</enabled>
+      <id>	quest_3_1_12_add	</id>
+      <serverOnly>	true	</serverOnly>
+      <conditions>
+        <preBattle>
+          <battle>
+            <unit>
+              <isSquad>	true	</isSquad>
+            </unit>
+          </battle>
+        </preBattle>
+        <postBattle>
+          <and>
+            <unit>
+              <and>
+                <unitVehicleDescr>
+                  <classes>	lightTank	</classes>
+                </unitVehicleDescr>
+                <results>
+                  <key>	damageAssistedRadio	</key>
+                  <greaterOrEqual>	5000	</greaterOrEqual>
+                </results>
+                <aliveCnt>	2	</aliveCnt>
+              </and>
+            </unit>
+          </and>
+        </postBattle>
+      </conditions>
+      <bonus>
+        <slots>	1	</slots>
+      </bonus>
+    </potapovQuest>
+  </quests>
+</quest_3_1_12.xml>

@@ -1,0 +1,165 @@
+<main_sound_modes.xml>
+  <modes>
+    <mode>
+      <name>	default	</name>
+      <fmod_language>	default	</fmod_language>
+      <description>	#settings:sound/soundModes/default	</description>
+      <invisible>	False	</invisible>
+      <banks>
+        <bank>	ingame_voice_def	</bank>
+      </banks>
+    </mode>
+    <mode>
+      <name>	RU	</name>
+      <fmod_language>	RU	</fmod_language>
+      <description>	#settings:sound/soundModes/ussr	</description>
+      <invisible>	True	</invisible>
+      <banks>
+        <bank>	ingame_voice_RU	</bank>
+      </banks>
+    </mode>
+    <mode>
+      <name>	DE	</name>
+      <fmod_language>	DE	</fmod_language>
+      <description>	#settings:sound/soundModes/deutch	</description>
+      <invisible>	True	</invisible>
+      <banks>
+        <bank>	ingame_voice_DE	</bank>
+      </banks>
+    </mode>
+    <mode>
+      <name>	EN	</name>
+      <fmod_language>	EN	</fmod_language>
+      <description>	#settings:sound/soundModes/english	</description>
+      <invisible>	True	</invisible>
+      <banks>
+        <bank>	ingame_voice_EN	</bank>
+      </banks>
+    </mode>
+    <mode>
+      <name>	UK	</name>
+      <fmod_language>	UK	</fmod_language>
+      <description>	#settings:sound/soundModes/english_uk	</description>
+      <invisible>	True	</invisible>
+      <banks>
+        <bank>	ingame_voice_UK	</bank>
+      </banks>
+    </mode>
+    <mode>
+      <name>	FR	</name>
+      <fmod_language>	FR	</fmod_language>
+      <description>	#settings:sound/soundModes/french	</description>
+      <invisible>	True	</invisible>
+      <banks>
+        <bank>	ingame_voice_FR	</bank>
+      </banks>
+    </mode>
+    <mode>
+      <name>	ZH_CH	</name>
+      <fmod_language>	CN1	</fmod_language>
+      <description>	#settings:sound/soundModes/chinese	</description>
+      <invisible>	True	</invisible>
+      <banks>
+        <bank>	ingame_voice_CN1	</bank>
+      </banks>
+    </mode>
+    <mode>
+      <name>	JA	</name>
+      <fmod_language>	JA	</fmod_language>
+      <description>	#settings:sound/soundModes/japan	</description>
+      <invisible>	True	</invisible>
+      <banks>
+        <bank>	ingame_voice_JA	</bank>
+      </banks>
+    </mode>
+    <mode>
+      <name>	User1	</name>
+      <fmod_language>	U01	</fmod_language>
+      <description>	#settings:sound/soundModes/U01	</description>
+      <invisible>	False	</invisible>
+      <banks>
+        <bank>	ingame_voice_U01	  <filePath>	audio/ingame_voice_U01.fsb	</filePath>
+        </bank>
+      </banks>
+    </mode>
+    <mode>
+      <name>	User2	</name>
+      <fmod_language>	U02	</fmod_language>
+      <description>	#settings:sound/soundModes/U02	</description>
+      <invisible>	False	</invisible>
+      <banks>
+        <bank>	ingame_voice_U02	  <filePath>	audio/ingame_voice_U02.fsb	</filePath>
+        </bank>
+      </banks>
+    </mode>
+    <mode>
+      <name>	User3	</name>
+      <fmod_language>	U03	</fmod_language>
+      <description>	#settings:sound/soundModes/U03	</description>
+      <invisible>	False	</invisible>
+      <banks>
+        <bank>	ingame_voice_U03	  <filePath>	audio/ingame_voice_U03.fsb	</filePath>
+        </bank>
+      </banks>
+    </mode>
+    <mode>
+      <name>	User4	</name>
+      <fmod_language>	U04	</fmod_language>
+      <description>	#settings:sound/soundModes/U04	</description>
+      <invisible>	False	</invisible>
+      <banks>
+        <bank>	ingame_voice_U04	  <filePath>	audio/ingame_voice_U04.fsb	</filePath>
+        </bank>
+      </banks>
+    </mode>
+    <mode>
+      <name>	User5	</name>
+      <fmod_language>	U05	</fmod_language>
+      <description>	#settings:sound/soundModes/U05	</description>
+      <invisible>	False	</invisible>
+      <banks>
+        <bank>	ingame_voice_U05	  <filePath>	audio/ingame_voice_U05.fsb	</filePath>
+        </bank>
+      </banks>
+    </mode>
+  </modes>
+  <modified_sound_groups>
+    <sound_group>	/ingame_voice/notifications_VO	</sound_group>
+  </modified_sound_groups>
+  <nationalPresets>
+    <preset>
+      <name>	NationalDefault	</name>
+      <description>	#settings:sound/soundModes/nationalDefault	</description>
+      <nations>
+        <nation>
+          <name>	default	</name>
+          <soundMode>	RU	</soundMode>
+        </nation>
+        <nation>
+          <name>	germany	</name>
+          <soundMode>	DE	</soundMode>
+        </nation>
+        <nation>
+          <name>	france	</name>
+          <soundMode>	FR	</soundMode>
+        </nation>
+        <nation>
+          <name>	usa	</name>
+          <soundMode>	EN	</soundMode>
+        </nation>
+        <nation>
+          <name>	uk	</name>
+          <soundMode>	UK	</soundMode>
+        </nation>
+        <nation>
+          <name>	china	</name>
+          <soundMode>	ZH_CH	</soundMode>
+        </nation>
+        <nation>
+          <name>	japan	</name>
+          <soundMode>	JA	</soundMode>
+        </nation>
+      </nations>
+    </preset>
+  </nationalPresets>
+</main_sound_modes.xml>

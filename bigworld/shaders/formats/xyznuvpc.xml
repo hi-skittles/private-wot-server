@@ -1,0 +1,11 @@
+<xyznuvpc.xml>
+	<elements>
+		<POSITION/>
+		<NORMAL>
+			<type> UBYTE4_NORMAL_8_8_8 </type>
+		</NORMAL>
+		<TEXCOORD>
+			<type> SHORT2 </type>
+		</TEXCOORD>
+	</elements>
+</xyznuvpc.xml>

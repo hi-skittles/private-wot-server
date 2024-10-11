@@ -1,0 +1,15 @@
+<xyznuv.xml>
+	<elements>
+		<POSITION/>
+		<NORMAL/>
+		<TEXCOORD>
+			<type> FLOAT2 </type>
+		</TEXCOORD>
+	</elements>
+	<targets>
+		<target>
+			<name> D3D9 </name>
+			<format> xyznuvpc </format>
+		</target>
+	</targets>
+</xyznuv.xml>

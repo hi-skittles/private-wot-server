@@ -1,0 +1,11 @@
+<root>
+    <!-- Configuration for HTTPResTreeService -->
+
+    <!-- 
+    CIDR netmask that specifies which network interfaces this service
+    is allowed to listen to. If not defined, this service will attempt to
+    bind to BigWorld's internal interface (as given by BigWorld.address()).
+    -->
+    <!--<interface>10.40.0.0/16</interface>-->
+	
+</root>

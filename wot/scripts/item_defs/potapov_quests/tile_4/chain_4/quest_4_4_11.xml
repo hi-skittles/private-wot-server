@@ -1,0 +1,67 @@
+<quest_4_4_11.xml>
+  <quests>
+    <potapovQuest>
+      <enabled>	true	</enabled>
+      <id>	quest_4_4_11_main	</id>
+      <serverOnly>	true	</serverOnly>
+      <conditions>
+        <preBattle>
+          <battle>
+            <unit>
+              <isSquad>	true	</isSquad>
+            </unit>
+          </battle>
+        </preBattle>
+        <postBattle>
+          <and>
+            <unit>
+              <and>
+                <unitVehicleKills>
+                  <greaterOrEqual>	8	</greaterOrEqual>
+                </unitVehicleKills>
+                <unitVehicleDescr>
+                  <classes>	AT-SPG	</classes>
+                </unitVehicleDescr>
+              </and>
+            </unit>
+          </and>
+        </postBattle>
+      </conditions>
+      <bonus>
+        <freeXP>	4000	</freeXP>
+      </bonus>
+    </potapovQuest>
+    <potapovQuest>
+      <enabled>	true	</enabled>
+      <id>	quest_4_4_11_add	</id>
+      <serverOnly>	true	</serverOnly>
+      <conditions>
+        <preBattle>
+          <battle>
+            <unit>
+              <isSquad>	true	</isSquad>
+            </unit>
+          </battle>
+        </preBattle>
+        <postBattle>
+          <and>
+            <unit>
+              <and>
+                <unitVehicleKills>
+                  <greaterOrEqual>	8	</greaterOrEqual>
+                </unitVehicleKills>
+                <unitVehicleDescr>
+                  <classes>	AT-SPG	</classes>
+                </unitVehicleDescr>
+                <allAlive></allAlive>
+              </and>
+            </unit>
+          </and>
+        </postBattle>
+      </conditions>
+      <bonus>
+        <premium>	2	</premium>
+      </bonus>
+    </potapovQuest>
+  </quests>
+</quest_4_4_11.xml>

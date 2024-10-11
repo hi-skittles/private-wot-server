@@ -1,0 +1,15 @@
+<music_events.xml>
+  <music>
+    <login>	/music/main_menu/main_menu	</login>
+    <lobby>	/hangar/music/hangar/lobby	</lobby>
+    <combat_victory>	/music/victory/victory	</combat_victory>
+    <combat_lose>	/music/defeat/defeat	</combat_lose>
+    <combat_draw>	/music/drawn_game/drawn_game	</combat_draw>
+  </music>
+  <ambient>
+    <lobby>	/hangar/ambient/hangar_v2/hangar_v2_drone_industrial	</lobby>
+    <fort>	/fortified_area/ambient/dynamic_ambient_main	</fort>
+    <shop>	/hangar/ambient/hangar_v2/hangar_v2_drone_industrial	</shop>
+    <rating>	/hangar/ambient/hangar_v2/hangar_v2_drone_industrial	</rating>
+  </ambient>
+</music_events.xml>

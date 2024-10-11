@@ -1,0 +1,22 @@
+<patrolGraph>
+	<nodeDefaults>
+		<minStay> 5 </minStay>
+		<maxStay> 10 </maxStay>
+		<radius> 20 </radius>
+	</nodeDefaults>
+
+	<nodes>
+		<node> <name> fred </name> <minStay> 7 </minStay> <pos> 5000 0 0	</pos> <edges> <edge> 1 </edge> </edges> </node>
+		<node> <pos> 5000 0 5000	</pos> <edges> <edge> 2 </edge> </edges> </node>
+		<node> <pos> 0 0 5000	</pos> <edges> <edge> fred </edge> </edges> </node>
+
+		<node> <pos> -5000 0 0	</pos> <edges> <edge> 4 </edge> </edges> </node>
+		<node> <pos> -5000 0 -5000	</pos> <edges> <edge> 5 </edge> </edges> </node>
+		<node> <pos> 0 0 -5000	</pos> <edges> <edge> 3 </edge> </edges> </node>
+
+		<node> <pos> -5000 0 -4000	</pos> <edges> <edge> 7 </edge> </edges> </node>
+		<node> <pos> -4000 0 -5000	</pos> <edges> <edge> 8 </edge> </edges> </node>
+		<node> <pos> 5000 0 4000	</pos> <edges> <edge> 9 </edge> </edges> </node>
+		<node> <pos> 4000 0 5000	</pos> <edges> <edge> 6 </edge> </edges> </node>
+	</nodes>
+</patrolGraph>

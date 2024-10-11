@@ -1,0 +1,122 @@
+This file contains instructions on how to configure and use the Note Data Store
+example for Fantasy Demo.
+
+The example connects to a MySQL server via the oursql Python module.
+Please note that oursql depends on libmysqlclient which is GLP'd. Due to
+licensing issues with shipping the MySQLdb binaries, only the oursql
+source is redistributed. The module should build out of the box with
+the make file provided. 
+
+
+Installation
+============
+Step 1) Create a Database
+
+ This guide assumes you already have a working MySQL database server
+configured and running allowing TCP connections from other machines in the
+network. We also assume that you have already created a user within the
+database that can be assigned privileges as required.
+
+The Note Data Store example requires a separate database to store
+and retrieve notes from. To create a new database connect to your current
+MySQL database server using the command line client using a user with
+sufficient privileges to create a database and issue the following SQL command:
+
+$ mysql
+mysql> CREATE DATABASE note_data_store;
+mysql> GRANT ALL PRIVILEGES ON note_data_store.* TO customer_username;
+mysql> GRANT ALL PRIVILEGES ON note_data_store.* TO 'customer_username'@'%' IDENTIFIED \
+	-> BY 'customer_password';
+
+
+Step 2) Configuring the example
+
+ The Note Data Store example reads its configuration from
+fantasydemo/res/server/config/note_data_store.xml. In this file you will need
+to specify how to connect to the database server via the hostname, username,
+password fields. This database connection information is intentionally
+different to the DBMgr options provided in bw.xml as non entity data stores
+will generally exist on a separate database to the main Entity DB.
+
+ In this file also ensure that the example has been enabled with the
+corresponding XML tag.
+
+
+<root>
+
+    <enabled> True </enabled>
+
+    <database>
+        <host> customer_machine </host>
+        <username> customer_username </username>
+        <password> customer_password </password>
+        <databaseName> note_data_store </databaseName>
+        <type> mysql+oursql </type>
+    </database>
+</root>
+
+
+Step 3) Build oursql and SQLAlchemy
+
+The make file included will build SQLAlchemy and oursql.
+
+$ cd $BWROOT/src
+$ make python_sqlalchemy
+$ make install
+
+
+Using
+=====
+
+Step 1) Starting a Fantasy Demo Server
+
+ Provided the installation was performed correctly and the database details
+were correct, simply starting a server normally should be enough to get the
+example running. All the initialisation is performed through the BaseApp
+personality script FantasyDemo.py.
+
+ To confirm that the Note Data Store example has been enabled, search the
+BaseApp SCRIPT output for the following line
+
+   Note Data Store example enabled
+
+
+Step 2) Start a Fantasy Demo Client
+
+ On a Windows machine simply start the Fantasy Demo client as normal and
+connect to the server that was started in Step 1. Once connected and in the
+game world there are 2 operations that can be performed
+* Add a note
+* Retrieve notes
+
+ To add a note simply type
+
+ /addNote description of the note
+
+ This will place a new note into the database in a non-blocking manner. To
+verify the back has been added, attempt to retrieve the note with the command
+
+ /getNotes
+
+ This will display the newly added note into the chat console.
+
+
+Step 3) Check the database has entries written
+
+ To verify the database has the notes stored from the client connect to the
+PostgreSQL server and perform a SELECT statement on the notes table.
+
+$ mysql
+mysql> USE note_data_store;
+Database changed
+
+mysql> SELECT * FROM notes;
++----+-----------------------+
+| id | description           |
++----+-----------------------+
+|  1 | The first note I added | 
+|  2 | Second note added      |
+|  3 | This is the final note |
++----+-----------------------+
+3 rows in set (0.01 sec)
+

@@ -1,0 +1,1155 @@
+<player_emblems.xml>
+  <auto>
+    <userString>	#vehicle_customization:emblem/auto	</userString>
+    <notInShop>	true	</notInShop>
+    <priceFactor>	1.0	</priceFactor>
+    <emblems>
+      <ussr_star>
+        <id>	1	</id>
+        <texName>	gui/maps/vehicles/decals/ussr_star.dds	</texName>
+        <userString>	#vehicle_customization:emblem/auto/star	</userString>
+      </ussr_star>
+      <germany_cross>
+        <id>	2	</id>
+        <texName>	gui/maps/vehicles/decals/germany_cross.dds	</texName>
+        <userString>	#vehicle_customization:emblem/auto/germany_cross	</userString>
+      </germany_cross>
+      <usa_star>
+        <id>	3	</id>
+        <texName>	gui/maps/vehicles/decals/usa_star.dds	</texName>
+        <userString>	#vehicle_customization:emblem/auto/usa_star	</userString>
+      </usa_star>
+      <french_rose>
+        <id>	4	</id>
+        <texName>	gui/maps/vehicles/decals/french_rose.dds	</texName>
+        <userString>	#vehicle_customization:emblem/auto/french_rose	</userString>
+      </french_rose>
+      <china_star>
+        <id>	5	</id>
+        <texName>	gui/maps/vehicles/decals/china_star.dds	</texName>
+        <userString>	#vehicle_customization:emblem/auto/china_star	</userString>
+      </china_star>
+      <britain_color>
+        <id>	6	</id>
+        <texName>	gui/maps/vehicles/decals/britain_color.dds	</texName>
+        <userString>	#vehicle_customization:emblem/auto/britain_color	</userString>
+      </britain_color>
+      <germany_bundecross>
+        <id>	7	</id>
+        <texName>	gui/maps/vehicles/decals/germany_bundecross.dds	</texName>
+        <userString>	#vehicle_customization:emblem/auto/germany_bundecross	</userString>
+      </germany_bundecross>
+      <japanese_sun>
+        <id>	8	</id>
+        <texName>	gui/maps/vehicles/decals/japanese_sun.dds	</texName>
+        <userString>	#vehicle_customization:emblem/auto/japanese_sun	</userString>
+      </japanese_sun>
+      <china_kuomintang>
+        <id>	9	</id>
+        <texName>	gui/maps/vehicles/decals/china_kuomintang.dds	</texName>
+        <userString>	#vehicle_customization:emblem/auto/china_kuomintang	</userString>
+      </china_kuomintang>
+      <alpha_tester>
+        <id>	10	</id>
+        <texName>	gui/maps/vehicles/decals/alpha_tester.dds	</texName>
+        <userString>	#vehicle_customization:emblem/auto/alpha_tester	</userString>
+      </alpha_tester>
+      <beta_tester>
+        <id>	11	</id>
+        <texName>	gui/maps/vehicles/decals/beta_tester.dds	</texName>
+        <userString>	#vehicle_customization:emblem/auto/beta_tester	</userString>
+      </beta_tester>
+      <germany_ddr>
+        <id>	12	</id>
+        <texName>	gui/maps/vehicles/decals/germany_ddr.dds	</texName>
+        <userString>	#vehicle_customization:emblem/auto/germany_ddr	</userString>
+      </germany_ddr>
+      <moder_ring>
+        <id>	13	</id>
+        <texName>	gui/maps/vehicles/decals/moder_ring.dds	</texName>
+        <userString>	#vehicle_customization:emblem/auto/moder_ring	</userString>
+      </moder_ring>
+    </emblems>
+  </auto>
+  <group1>
+    <userString>	#vehicle_customization:emblem/animals	</userString>
+    <priceFactor>	1.0	</priceFactor>
+    <emblems>
+      <emblem>
+        <id>	101	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_01.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_1	</userString>
+      </emblem>
+      <emblem>
+        <id>	102	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_02.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_2	</userString>
+      </emblem>
+      <emblem>
+        <id>	103	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_03.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_3	</userString>
+      </emblem>
+      <emblem>
+        <id>	104	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_04.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_4	</userString>
+      </emblem>
+      <emblem>
+        <id>	105	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_05.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_5	</userString>
+      </emblem>
+      <emblem>
+        <id>	106	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_06.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_6	</userString>
+      </emblem>
+      <emblem>
+        <id>	107	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_07.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_7	</userString>
+      </emblem>
+      <emblem>
+        <id>	108	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_08.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_8	</userString>
+      </emblem>
+      <emblem>
+        <id>	109	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_09.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_9	</userString>
+      </emblem>
+      <emblem>
+        <id>	110	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_10.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_10	</userString>
+      </emblem>
+      <emblem>
+        <id>	111	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_11.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_11	</userString>
+      </emblem>
+      <emblem>
+        <id>	112	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_12.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_12	</userString>
+      </emblem>
+      <emblem>
+        <id>	113	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_13.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_13	</userString>
+      </emblem>
+      <emblem>
+        <id>	114	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_14.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_14	</userString>
+      </emblem>
+      <emblem>
+        <id>	115	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_15.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_15	</userString>
+      </emblem>
+      <emblem>
+        <id>	116	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_16.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_16	</userString>
+      </emblem>
+      <emblem>
+        <id>	117	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_17.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_17	</userString>
+      </emblem>
+      <emblem>
+        <id>	118	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_18.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_18	</userString>
+      </emblem>
+      <emblem>
+        <id>	119	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_19.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_19	</userString>
+      </emblem>
+      <emblem>
+        <id>	120	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_20.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_20	</userString>
+      </emblem>
+      <emblem>
+        <id>	121	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_21.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_21	</userString>
+      </emblem>
+      <emblem>
+        <id>	122	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_22.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_22	</userString>
+      </emblem>
+      <emblem>
+        <id>	123	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_23.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_23	</userString>
+      </emblem>
+      <emblem>
+        <id>	124	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_24.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_24	</userString>
+      </emblem>
+      <emblem>
+        <id>	125	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_25.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_25	</userString>
+      </emblem>
+      <emblem>
+        <id>	126	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_26.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_26	</userString>
+      </emblem>
+      <emblem>
+        <id>	127	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_27.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_27	</userString>
+      </emblem>
+      <emblem>
+        <id>	128	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_28.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_28	</userString>
+      </emblem>
+      <emblem>
+        <id>	129	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_29.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_29	</userString>
+      </emblem>
+      <emblem>
+        <id>	130	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_30.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_30	</userString>
+      </emblem>
+      <emblem>
+        <id>	131	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_31.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_31	</userString>
+      </emblem>
+      <emblem>
+        <id>	132	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_32.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_32	</userString>
+      </emblem>
+      <emblem>
+        <id>	133	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_33.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_33	</userString>
+      </emblem>
+      <emblem>
+        <id>	134	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/animals/sticker_34.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group1/animal_34	</userString>
+      </emblem>
+    </emblems>
+  </group1>
+  <group2>
+    <userString>	#vehicle_customization:emblem/battle	</userString>
+    <priceFactor>	1.0	</priceFactor>
+    <emblems>
+      <emblem>
+        <id>	201	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/battle/sticker_01.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group2/battle_1	</userString>
+      </emblem>
+      <emblem>
+        <id>	202	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/battle/sticker_02.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group2/battle_2	</userString>
+      </emblem>
+      <emblem>
+        <id>	203	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/battle/sticker_03.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group2/battle_3	</userString>
+      </emblem>
+      <emblem>
+        <id>	204	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/battle/sticker_04.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group2/battle_4	</userString>
+      </emblem>
+      <emblem>
+        <id>	205	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/battle/sticker_05.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group2/battle_5	</userString>
+      </emblem>
+      <emblem>
+        <id>	206	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/battle/sticker_06.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group2/battle_6	</userString>
+      </emblem>
+      <emblem>
+        <id>	207	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/battle/sticker_07.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group2/battle_7	</userString>
+      </emblem>
+      <emblem>
+        <id>	208	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/battle/sticker_08.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group2/battle_8	</userString>
+      </emblem>
+      <emblem>
+        <id>	209	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/battle/sticker_09.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group2/battle_9	</userString>
+      </emblem>
+      <emblem>
+        <id>	210	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/battle/sticker_10.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group2/battle_10	</userString>
+      </emblem>
+      <emblem>
+        <id>	211	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/battle/sticker_11.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group2/battle_11	</userString>
+      </emblem>
+      <emblem>
+        <id>	212	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/battle/sticker_12.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group2/battle_12	</userString>
+      </emblem>
+      <emblem>
+        <id>	213	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/battle/sticker_13.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group2/battle_13	</userString>
+      </emblem>
+      <emblem>
+        <id>	214	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/battle/sticker_14.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group2/battle_14	</userString>
+      </emblem>
+      <emblem>
+        <id>	215	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/battle/sticker_15.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group2/battle_15	</userString>
+      </emblem>
+      <emblem>
+        <id>	216	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/battle/sticker_16.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group2/battle_16	</userString>
+      </emblem>
+      <emblem>
+        <id>	217	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/battle/sticker_17.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group2/battle_17	</userString>
+      </emblem>
+      <emblem>
+        <id>	218	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/battle/sticker_18.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group2/battle_18	</userString>
+      </emblem>
+      <emblem>
+        <id>	219	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/battle/sticker_19.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group2/battle_19	</userString>
+      </emblem>
+      <emblem>
+        <id>	220	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/battle/sticker_20.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group2/battle_20	</userString>
+      </emblem>
+      <emblem>
+        <id>	221	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/battle/sticker_21.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group2/battle_21	</userString>
+      </emblem>
+      <emblem>
+        <id>	222	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/battle/sticker_22.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group2/battle_22	</userString>
+      </emblem>
+      <emblem>
+        <id>	223	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/battle/sticker_23.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group2/battle_23	</userString>
+      </emblem>
+      <emblem>
+        <id>	224	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/battle/sticker_24.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group2/battle_24	</userString>
+      </emblem>
+      <emblem>
+        <id>	225	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/battle/sticker_25.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group2/battle_25	</userString>
+      </emblem>
+      <emblem>
+        <id>	226	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/battle/sticker_26.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group2/battle_26	</userString>
+      </emblem>
+      <emblem>
+        <id>	227	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/battle/sticker_27.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group2/battle_27	</userString>
+      </emblem>
+      <emblem>
+        <id>	228	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/battle/sticker_28.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group2/battle_28	</userString>
+      </emblem>
+    </emblems>
+  </group2>
+  <group3>
+    <userString>	#vehicle_customization:emblem/cool	</userString>
+    <priceFactor>	1.0	</priceFactor>
+    <emblems>
+      <emblem>
+        <id>	301	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/cool/sticker_01.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group3/cool_1	</userString>
+        <tags></tags>
+      </emblem>
+      <emblem>
+        <id>	302	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/cool/sticker_02.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group3/cool_2	</userString>
+      </emblem>
+      <emblem>
+        <id>	303	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/cool/sticker_03.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group3/cool_3	</userString>
+      </emblem>
+      <emblem>
+        <id>	304	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/cool/sticker_04.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group3/cool_4	</userString>
+      </emblem>
+      <emblem>
+        <id>	305	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/cool/sticker_05.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group3/cool_5	</userString>
+      </emblem>
+      <emblem>
+        <id>	306	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/cool/sticker_06.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group3/cool_6	</userString>
+      </emblem>
+      <emblem>
+        <id>	307	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/cool/sticker_07.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group3/cool_7	</userString>
+      </emblem>
+      <emblem>
+        <id>	308	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/cool/sticker_08.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group3/cool_8	</userString>
+      </emblem>
+      <emblem>
+        <id>	309	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/cool/sticker_09.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group3/cool_9	</userString>
+      </emblem>
+      <emblem>
+        <id>	310	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/cool/sticker_10.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group3/cool_10	</userString>
+      </emblem>
+      <emblem>
+        <id>	311	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/cool/sticker_11.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group3/cool_11	</userString>
+      </emblem>
+      <emblem>
+        <id>	312	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/cool/sticker_12.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group3/cool_12	</userString>
+      </emblem>
+      <emblem>
+        <id>	313	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/cool/sticker_13.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group3/cool_13	</userString>
+      </emblem>
+      <emblem>
+        <id>	314	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/cool/sticker_14.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group3/cool_14	</userString>
+      </emblem>
+      <emblem>
+        <id>	315	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/cool/sticker_15.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group3/cool_15	</userString>
+      </emblem>
+      <emblem>
+        <id>	316	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/cool/sticker_16.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group3/cool_16	</userString>
+      </emblem>
+      <emblem>
+        <id>	317	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/cool/sticker_17.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group3/cool_17	</userString>
+      </emblem>
+      <emblem>
+        <id>	318	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/cool/sticker_18.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group3/cool_18	</userString>
+      </emblem>
+      <emblem>
+        <id>	319	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/cool/sticker_19.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group3/cool_19	</userString>
+      </emblem>
+      <emblem>
+        <id>	320	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/cool/sticker_20.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group3/cool_20	</userString>
+      </emblem>
+      <emblem>
+        <id>	321	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/cool/sticker_21.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group3/cool_21	</userString>
+      </emblem>
+      <emblem>
+        <id>	322	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/cool/sticker_22.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group3/cool_22	</userString>
+      </emblem>
+      <emblem>
+        <id>	323	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/cool/sticker_23.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group3/cool_23	</userString>
+      </emblem>
+      <emblem>
+        <id>	324	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/cool/sticker_24.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group3/cool_24	</userString>
+      </emblem>
+      <emblem>
+        <id>	325	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/cool/sticker_25.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group3/cool_25	</userString>
+      </emblem>
+      <emblem>
+        <id>	326	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/cool/sticker_26.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group3/cool_26	</userString>
+      </emblem>
+      <emblem>
+        <id>	327	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/cool/sticker_27.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group3/cool_27	</userString>
+      </emblem>
+      <emblem>
+        <id>	328	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/cool/sticker_28.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group3/cool_28	</userString>
+      </emblem>
+      <emblem>
+        <id>	329	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/cool/sticker_29.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group3/cool_29	</userString>
+      </emblem>
+    </emblems>
+  </group3>
+  <group4>
+    <userString>	#vehicle_customization:emblem/signs	</userString>
+    <priceFactor>	1.0	</priceFactor>
+    <emblems>
+      <emblem>
+        <id>	401	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_48.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_48	</userString>
+      </emblem>
+      <emblem>
+        <id>	402	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_43.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_43	</userString>
+      </emblem>
+      <emblem>
+        <id>	403	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_46.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_46	</userString>
+      </emblem>
+      <emblem>
+        <id>	404	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_59.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_59	</userString>
+      </emblem>
+      <emblem>
+        <id>	405	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_45.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_45	</userString>
+      </emblem>
+      <emblem>
+        <id>	406	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_44.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_44	</userString>
+      </emblem>
+      <emblem>
+        <id>	407	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_36.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_36	</userString>
+      </emblem>
+      <emblem>
+        <id>	408	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_41.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_41	</userString>
+      </emblem>
+      <emblem>
+        <id>	409	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_42.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_42	</userString>
+      </emblem>
+      <emblem>
+        <id>	410	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_10.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_10	</userString>
+      </emblem>
+      <emblem>
+        <id>	411	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_11.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_11	</userString>
+      </emblem>
+      <emblem>
+        <id>	412	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_12.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_12	</userString>
+      </emblem>
+      <emblem>
+        <id>	413	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_13.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_13	</userString>
+      </emblem>
+      <emblem>
+        <id>	414	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_14.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_14	</userString>
+      </emblem>
+      <emblem>
+        <id>	415	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_15.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_15	</userString>
+      </emblem>
+      <emblem>
+        <id>	416	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_16.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_16	</userString>
+      </emblem>
+      <emblem>
+        <id>	417	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_17.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_17	</userString>
+      </emblem>
+      <emblem>
+        <id>	418	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_18.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_18	</userString>
+      </emblem>
+      <emblem>
+        <id>	419	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_19.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_19	</userString>
+      </emblem>
+      <emblem>
+        <id>	420	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_20.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_20	</userString>
+      </emblem>
+      <emblem>
+        <id>	421	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_21.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_21	</userString>
+      </emblem>
+      <emblem>
+        <id>	422	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_22.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_22	</userString>
+      </emblem>
+      <emblem>
+        <id>	423	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_23.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_23	</userString>
+      </emblem>
+      <emblem>
+        <id>	424	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_24.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_24	</userString>
+      </emblem>
+      <emblem>
+        <id>	425	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_25.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_25	</userString>
+      </emblem>
+      <emblem>
+        <id>	426	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_26.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_26	</userString>
+      </emblem>
+      <emblem>
+        <id>	427	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_27.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_27	</userString>
+      </emblem>
+      <emblem>
+        <id>	428	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_28.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_28	</userString>
+      </emblem>
+      <emblem>
+        <id>	429	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_29.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_29	</userString>
+      </emblem>
+      <emblem>
+        <id>	430	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_30.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_30	</userString>
+      </emblem>
+      <emblem>
+        <id>	431	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_31.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_31	</userString>
+      </emblem>
+      <emblem>
+        <id>	432	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_32.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_32	</userString>
+      </emblem>
+      <emblem>
+        <id>	433	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_33.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_33	</userString>
+      </emblem>
+      <emblem>
+        <id>	434	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_34.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_34	</userString>
+      </emblem>
+      <emblem>
+        <id>	435	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_35.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_35	</userString>
+      </emblem>
+      <emblem>
+        <id>	436	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_07.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_7	</userString>
+      </emblem>
+      <emblem>
+        <id>	437	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_37.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_37	</userString>
+      </emblem>
+      <emblem>
+        <id>	438	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_38.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_38	</userString>
+      </emblem>
+      <emblem>
+        <id>	439	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_39.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_39	</userString>
+      </emblem>
+      <emblem>
+        <id>	440	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_40.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_40	</userString>
+      </emblem>
+      <emblem>
+        <id>	441	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_08.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_8	</userString>
+      </emblem>
+      <emblem>
+        <id>	442	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_09.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_9	</userString>
+      </emblem>
+      <emblem>
+        <id>	443	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_02.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_2	</userString>
+      </emblem>
+      <emblem>
+        <id>	444	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_06.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_6	</userString>
+      </emblem>
+      <emblem>
+        <id>	445	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_05.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_5	</userString>
+      </emblem>
+      <emblem>
+        <id>	446	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_03.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_3	</userString>
+      </emblem>
+      <emblem>
+        <id>	447	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_47.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_47	</userString>
+      </emblem>
+      <emblem>
+        <id>	448	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_01.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_1	</userString>
+      </emblem>
+      <emblem>
+        <id>	449	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_49.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_49	</userString>
+      </emblem>
+      <emblem>
+        <id>	450	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_50.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_50	</userString>
+      </emblem>
+      <emblem>
+        <id>	451	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_51.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_51	</userString>
+      </emblem>
+      <emblem>
+        <id>	452	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_52.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_52	</userString>
+      </emblem>
+      <emblem>
+        <id>	453	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_53.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_53	</userString>
+      </emblem>
+      <emblem>
+        <id>	454	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_54.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_54	</userString>
+      </emblem>
+      <emblem>
+        <id>	455	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_55.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_55	</userString>
+      </emblem>
+      <emblem>
+        <id>	456	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_56.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_56	</userString>
+      </emblem>
+      <emblem>
+        <id>	457	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_57.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_57	</userString>
+      </emblem>
+      <emblem>
+        <id>	458	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_58.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_58	</userString>
+      </emblem>
+      <emblem>
+        <id>	459	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_04.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_4	</userString>
+      </emblem>
+      <emblem>
+        <id>	460	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_60.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_60	</userString>
+      </emblem>
+      <emblem>
+        <id>	461	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_61.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_61	</userString>
+      </emblem>
+      <emblem>
+        <id>	462	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_62.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_62	</userString>
+      </emblem>
+      <emblem>
+        <id>	463	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_63.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_63	</userString>
+      </emblem>
+      <emblem>
+        <id>	464	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_64.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_64	</userString>
+      </emblem>
+      <emblem>
+        <id>	465	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_65.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_65	</userString>
+      </emblem>
+      <emblem>
+        <id>	466	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_66.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_66	</userString>
+      </emblem>
+      <emblem>
+        <id>	467	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_67.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_67	</userString>
+      </emblem>
+      <emblem>
+        <id>	468	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_68.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_68	</userString>
+      </emblem>
+      <emblem>
+        <id>	469	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_69.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_69	</userString>
+      </emblem>
+      <emblem>
+        <id>	470	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_70.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_70	</userString>
+      </emblem>
+      <emblem>
+        <id>	471	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_71.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_71	</userString>
+      </emblem>
+      <emblem>
+        <id>	472	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_72.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_72	</userString>
+      </emblem>
+      <emblem>
+        <id>	473	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_73.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_73	</userString>
+      </emblem>
+      <emblem>
+        <id>	474	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_74.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_74	</userString>
+      </emblem>
+      <emblem>
+        <id>	475	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_75.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_75	</userString>
+      </emblem>
+      <emblem>
+        <id>	476	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_76.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_76	</userString>
+      </emblem>
+      <emblem>
+        <id>	477	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_77.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_77	</userString>
+      </emblem>
+      <emblem>
+        <id>	478	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_78.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_78	</userString>
+      </emblem>
+      <emblem>
+        <id>	480	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_80.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_80	</userString>
+      </emblem>
+      <emblem>
+        <id>	481	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_81.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_81	</userString>
+      </emblem>
+      <emblem>
+        <id>	482	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_82.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_82	</userString>
+      </emblem>
+      <emblem>
+        <id>	483	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_83.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_83	</userString>
+      </emblem>
+      <emblem>
+        <id>	484	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_84.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_84	</userString>
+      </emblem>
+      <emblem>
+        <id>	485	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_85.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_85	</userString>
+      </emblem>
+      <emblem>
+        <id>	486	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_86.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_86	</userString>
+      </emblem>
+      <emblem>
+        <id>	487	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_87.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_87	</userString>
+      </emblem>
+      <emblem>
+        <id>	488	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_88.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_88	</userString>
+      </emblem>
+      <emblem>
+        <id>	489	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/signs/sticker_89.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group4/signs_89	</userString>
+      </emblem>
+    </emblems>
+  </group4>
+  <group5>
+    <userString>	#vehicle_customization:emblem/IGR	</userString>
+    <igrType>	2	</igrType>
+    <priceFactor>	0.0	</priceFactor>
+    <emblems>
+      <emblem>
+        <id>	5001	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/IGR/sticker_01.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group5/sticker_01	</userString>
+      </emblem>
+      <emblem>
+        <id>	5002	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/IGR/sticker_02.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group5/sticker_02	</userString>
+      </emblem>
+      <emblem>
+        <id>	5003	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/IGR/sticker_03.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group5/sticker_03	</userString>
+      </emblem>
+      <emblem>
+        <id>	5004	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/IGR/sticker_04.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group5/sticker_04	</userString>
+      </emblem>
+      <emblem>
+        <id>	5005	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/IGR/sticker_05.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group5/sticker_05	</userString>
+      </emblem>
+      <emblem>
+        <id>	5006	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/IGR/sticker_06.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group5/sticker_06	</userString>
+      </emblem>
+      <emblem>
+        <id>	5007	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/IGR/sticker_07.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group5/sticker_07	</userString>
+      </emblem>
+      <emblem>
+        <id>	5008	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/IGR/sticker_08.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group5/sticker_08	</userString>
+      </emblem>
+      <emblem>
+        <id>	5009	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/IGR/sticker_09.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group5/sticker_09	</userString>
+      </emblem>
+      <emblem>
+        <id>	5010	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/IGR/sticker_10.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group5/sticker_10	</userString>
+      </emblem>
+    </emblems>
+    <emblems>
+      <emblem>
+        <id>	5501	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/IGR/sticker_1001.dds	</texName>
+        <userString>	#vehicle_customization_cn:emblem/group5/sticker_1001	</userString>
+      </emblem>
+      <emblem>
+        <id>	5502	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/IGR/sticker_1002.dds	</texName>
+        <userString>	#vehicle_customization_cn:emblem/group5/sticker_1002	</userString>
+      </emblem>
+      <emblem>
+        <id>	5503	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/IGR/sticker_1003.dds	</texName>
+        <userString>	#vehicle_customization_cn:emblem/group5/sticker_1003	</userString>
+      </emblem>
+      <emblem>
+        <id>	5504	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/IGR/sticker_1004.dds	</texName>
+        <userString>	#vehicle_customization_cn:emblem/group5/sticker_1004	</userString>
+      </emblem>
+      <emblem>
+        <id>	5505	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/IGR/sticker_1005.dds	</texName>
+        <userString>	#vehicle_customization_cn:emblem/group5/sticker_1005	</userString>
+      </emblem>
+      <emblem>
+        <id>	5506	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/IGR/sticker_1006.dds	</texName>
+        <userString>	#vehicle_customization_cn:emblem/group5/sticker_1006	</userString>
+      </emblem>
+    </emblems>
+  </group5>
+  <group7>
+    <userString>	#vehicle_customization:emblem/clan_content	</userString>
+    <notInShop>	true	</notInShop>
+    <priceFactor>	0.0	</priceFactor>
+    <emblems>
+      <emblem>
+        <id>	701	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/clan_content/sticker_01.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group7/clan_content_01	</userString>
+      </emblem>
+      <emblem>
+        <id>	702	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/clan_content/sticker_02.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group7/clan_content_02	</userString>
+      </emblem>
+      <emblem>
+        <id>	703	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/clan_content/sticker_03.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group7/clan_content_03	</userString>
+      </emblem>
+      <emblem>
+        <id>	704	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/clan_content/sticker_04.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group7/clan_content_04	</userString>
+      </emblem>
+      <emblem>
+        <id>	705	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/clan_content/sticker_05.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group7/clan_content_05	</userString>
+      </emblem>
+      <emblem>
+        <id>	711	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/clan_content/sticker_11.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group7/clan_content_11	</userString>
+      </emblem>
+      <emblem>
+        <id>	712	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/clan_content/sticker_12.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group7/clan_content_12	</userString>
+      </emblem>
+      <emblem>
+        <id>	713	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/clan_content/sticker_13.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group7/clan_content_13	</userString>
+      </emblem>
+    </emblems>
+  </group7>
+  <group8>
+    <userString>	#vehicle_customization:emblem/special	</userString>
+    <notInShop>	true	</notInShop>
+    <priceFactor>	0.0	</priceFactor>
+    <nations>	china france uk usa ussr	</nations>
+    <emblems>
+      <emblem>
+        <id>	801	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/special/sticker_01.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group8/special_01	</userString>
+      </emblem>
+    </emblems>
+  </group8>
+  <group11>
+    <userString>	#vehicle_customization:emblem/special	</userString>
+    <priceFactor>	0.0	</priceFactor>
+    <notInShop>	true	</notInShop>
+    <emblems>
+      <emblem>
+        <id>	822	</id>
+        <texName>	gui/maps/vehicles/decals/player_stickers/special/sticker_22.dds	</texName>
+        <userString>	#vehicle_customization:emblem/group10/special_22	</userString>
+      </emblem>
+    </emblems>
+  </group11>
+</player_emblems.xml>

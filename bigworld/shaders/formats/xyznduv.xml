@@ -1,0 +1,12 @@
+<xyznduv.xml>
+	<elements>
+		<POSITION/>
+		<NORMAL/>
+		<COLOR>
+			<type> COLOR </type>
+		</COLOR>
+		<TEXCOORD>
+			<type> FLOAT2 </type>
+		</TEXCOORD>
+	</elements>
+</xyznduv.xml>

@@ -1,0 +1,11 @@
+<xyzduv.xml>
+	<elements>
+		<POSITION/>
+		<COLOR>
+			<type> COLOR </type>
+		</COLOR>
+		<TEXCOORD>
+			<type> FLOAT2 </type>
+		</TEXCOORD>
+	</elements>
+</xyzduv.xml>

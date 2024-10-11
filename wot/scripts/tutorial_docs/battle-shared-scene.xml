@@ -1,0 +1,61 @@
+<battle-shared-scene.xml>
+  <gui-items>
+    <gui-item>	DebugPanel	  <life-cycle>	permanent	</life-cycle>
+      <properties>
+        <property>	_visible	  <asBool>	False	</asBool>
+        </property>
+      </properties>
+    </gui-item>
+    <gui-item>	LeftPlayerPanel	  <life-cycle>	permanent	</life-cycle>
+      <properties>
+        <property>	_visible	  <asBool>	False	</asBool>
+        </property>
+      </properties>
+    </gui-item>
+    <gui-item>	RightPlayerPanel	  <life-cycle>	permanent	</life-cycle>
+      <properties>
+        <property>	_visible	  <asBool>	False	</asBool>
+        </property>
+      </properties>
+    </gui-item>
+    <gui-item>	PlayerPanelSwitcher	  <life-cycle>	permanent	</life-cycle>
+      <properties>
+        <property>	_visible	  <asBool>	False	</asBool>
+        </property>
+      </properties>
+    </gui-item>
+    <gui-item>	Messenger	  <life-cycle>	permanent	</life-cycle>
+      <properties>
+        <property>	_visible	  <asBool>	False	</asBool>
+        </property>
+      </properties>
+    </gui-item>
+    <gui-item>	FragCorrelationBar	  <life-cycle>	permanent	</life-cycle>
+      <properties>
+        <property>	_visible	  <asBool>	False	</asBool>
+        </property>
+      </properties>
+    </gui-item>
+    <gui-item>	BattleTarget	  <life-cycle>	permanent	</life-cycle>
+      <properties>
+        <property>	_visible	  <asBool>	False	</asBool>
+        </property>
+      </properties>
+    </gui-item>
+    <gui-item>	MovingText	  <life-cycle>	permanent	</life-cycle>
+      <properties>
+        <property>	_visible	  <asBool>	False	</asBool>
+        </property>
+      </properties>
+    </gui-item>
+  </gui-items>
+  <post-effects>
+    <invoke-gui-cmd>	RemoveKeyHandlersInFlash	</invoke-gui-cmd>
+    <invoke-gui-cmd>	DisableRadialMenu	</invoke-gui-cmd>
+    <invoke-gui-cmd>	DisableMinimap	</invoke-gui-cmd>
+    <invoke-gui-cmd>	DisableGUIVisibleToggle	</invoke-gui-cmd>
+    <invoke-gui-cmd>	DisableAIMVisibleToggle	</invoke-gui-cmd>
+    <disable-camera-zoom></disable-camera-zoom>
+  </post-effects>
+  <runtime-effects></runtime-effects>
+</battle-shared-scene.xml>

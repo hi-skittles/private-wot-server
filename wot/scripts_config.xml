@@ -1,0 +1,158 @@
+<scripts_config.xml>
+  <login>
+    <host>
+      <name>	BigWorld Testing	</name>
+      <short_name>	BW0	</short_name>
+      <url>	172.21.58.57:20013	</url>
+      <public_key_path>	bw.pubkey	</public_key_path>
+      <periphery_id>	100	</periphery_id>
+    </host>
+    <!-- <host>
+      <name>	WOT RU1	</name>
+      <short_name>	RU1	</short_name>
+      <url>	login.p1.worldoftanks.net:20014	</url>
+      <url_token>	login2.p1.worldoftanks.net:20014	</url_token>
+      <public_key_path>	loginapp_wot.pubkey	</public_key_path>
+      <periphery_id>	101	</periphery_id>
+    </host>
+    <host>
+      <name>	WOT RU2	</name>
+      <short_name>	RU2	</short_name>
+      <url>	login.p2.worldoftanks.net:20014	</url>
+      <url_token>	login2.p2.worldoftanks.net:20014	</url_token>
+      <public_key_path>	loginapp_wot.pubkey	</public_key_path>
+      <periphery_id>	102	</periphery_id>
+    </host>
+    <host>
+      <name>	WOT RU3	</name>
+      <short_name>	RU3	</short_name>
+      <url>	login.p3.worldoftanks.net:20014	</url>
+      <url_token>	login2.p3.worldoftanks.net:20014	</url_token>
+      <public_key_path>	loginapp_wot.pubkey	</public_key_path>
+      <periphery_id>	103	</periphery_id>
+    </host>
+    <host>
+      <name>	WOT RU4	</name>
+      <short_name>	RU4	</short_name>
+      <url>	login.p4.worldoftanks.net:20014	</url>
+      <url_token>	login2.p4.worldoftanks.net:20014	</url_token>
+      <public_key_path>	loginapp_wot.pubkey	</public_key_path>
+      <periphery_id>	104	</periphery_id>
+    </host>
+    <host>
+      <name>	WOT RU5	</name>
+      <short_name>	RU5	</short_name>
+      <url>	login.p5.worldoftanks.net:20014	</url>
+      <url_token>	login2.p5.worldoftanks.net:20014	</url_token>
+      <public_key_path>	loginapp_wot.pubkey	</public_key_path>
+      <periphery_id>	105	</periphery_id>
+    </host>
+    <host>
+      <name>	WOT RU7	</name>
+      <short_name>	RU7	</short_name>
+      <url>	login.p7.worldoftanks.net:20014	</url>
+      <url_token>	login2.p7.worldoftanks.net:20014	</url_token>
+      <public_key_path>	loginapp_wot.pubkey	</public_key_path>
+      <periphery_id>	107	</periphery_id>
+    </host>
+    <host>
+      <name>	WOT RU8	</name>
+      <short_name>	RU8	</short_name>
+      <url>	login.p8.worldoftanks.net:20014	</url>
+      <url_token>	login2.p8.worldoftanks.net:20014	</url_token>
+      <public_key_path>	loginapp_wot.pubkey	</public_key_path>
+      <periphery_id>	108	</periphery_id>
+    </host>
+    <host>
+      <name>	WOT RU9	</name>
+      <short_name>	RU9	</short_name>
+      <url>	login.p9.worldoftanks.net:20014	</url>
+      <url_token>	login2.p9.worldoftanks.net:20014	</url_token>
+      <public_key_path>	loginapp_wot.pubkey	</public_key_path>
+      <periphery_id>	109	</periphery_id>
+    </host> -->
+  </login>
+  <updateUrl>	http://worldoftanks.ru/update	</updateUrl>
+  <csisUrl>	http://csis.worldoftanks.ru/csis/wotru1/	</csisUrl>
+  <silhouetteColors>
+    <common>
+      <self>	0.5 0.5 0.5 1	</self>
+      <enemy>	1.0 0.070 0.027 1	</enemy>
+      <friend>	0.488 0.839 0.023 1	</friend>
+    </common>
+    <colorBlind>
+      <self>	0.5 0.5 0.5 1	</self>
+      <enemy>	0.511 0.472 0.992 1	</enemy>
+      <friend>	0.488 0.839 0.023 1	</friend>
+    </colorBlind>
+  </silhouetteColors>
+  <decal>
+    <criticalAngle>	30	</criticalAngle>
+    <groups>
+      <slow>
+        <lifeTime>	100	</lifeTime>
+        <trianglesCount>	10000	</trianglesCount>
+      </slow>
+      <medium>
+        <lifeTime>	50	</lifeTime>
+        <trianglesCount>	5000	</trianglesCount>
+      </medium>
+      <fast>
+        <lifeTime>	25	</lifeTime>
+        <trianglesCount>	2500	</trianglesCount>
+      </fast>
+    </groups>
+    <textures>
+      <explosion>
+        <texture>	maps/fx/decal_ground_1.dds	</texture>
+      </explosion>
+      <bumpExplosion>
+        <texture>	maps/fx/decal_ground_1_NM.dds	</texture>
+      </bumpExplosion>
+      <explosionGround>
+        <texture>	maps/fx/decal_ground_1.dds	</texture>
+      </explosionGround>
+      <explosionGroundHE>
+        <texture>	maps/fx/decal_ground_1.dds	</texture>
+      </explosionGroundHE>
+      <bumpExplosionGround>
+        <texture>	maps/fx/decal_ground_1_NM.dds	</texture>
+      </bumpExplosionGround>
+      <explosionSand>
+        <texture>	maps/fx/decal_sand_1.dds	</texture>
+      </explosionSand>
+      <explosionSandHE>
+        <texture>	maps/fx/decal_sand_1.dds	</texture>
+      </explosionSandHE>
+      <bumpExplosionSand>
+        <texture>	maps/fx/decal_sand_1_NM.dds	</texture>
+      </bumpExplosionSand>
+      <explosionSnow>
+        <texture>	maps/fx/decal_snow_1.dds	</texture>
+      </explosionSnow>
+      <explosionSnowHE>
+        <texture>	maps/fx/decal_snow_1.dds	</texture>
+      </explosionSnowHE>
+      <bumpExplosionSnow>
+        <texture>	maps/fx/decal_snow_1_NM.dds	</texture>
+      </bumpExplosionSnow>
+      <explosionStone>
+        <texture>	maps/fx/decal_stone_1.dds	</texture>
+      </explosionStone>
+      <explosionStoneHE>
+        <texture>	maps/fx/decal_stone_1.dds	</texture>
+      </explosionStoneHE>
+      <bumpExplosionStone>
+        <texture>	maps/fx/decal_stone_1_NM.dds	</texture>
+      </bumpExplosionStone>
+    </textures>
+  </decal>
+  <camouflage>
+    <excludeMaterials>
+      <item>	*gun_inside	</item>
+      <item>	tank_bottom_mat	</item>
+      <item>	tank_ins_mat	</item>
+      <item>	*equipment	</item>
+    </excludeMaterials>
+  </camouflage>
+</scripts_config.xml>

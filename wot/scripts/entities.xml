@@ -1,0 +1,14 @@
+<root>
+  <ClientServerEntities>
+    <Account/>
+    <Avatar/>
+    <Vehicle/>
+    <AreaDestructibles/>
+    <OfflineEntity/>
+    <Flock/>
+    <FlockExotic/>
+    <Login/>
+    <DetachedTurret/>
+  </ClientServerEntities>
+  <ServerOnlyEntities></ServerOnlyEntities>
+</root>

@@ -1,0 +1,65 @@
+<quest_3_3_13.xml>
+  <quests>
+    <potapovQuest>
+      <enabled>	true	</enabled>
+      <id>	quest_3_3_13_main	</id>
+      <serverOnly>	true	</serverOnly>
+      <conditions>
+        <preBattle>
+          <battle>
+            <unit>
+              <isSquad>	true	</isSquad>
+            </unit>
+          </battle>
+        </preBattle>
+        <postBattle>
+          <and>
+            <unit>
+              <and>
+                <unitVehicleDamage>
+                  <greaterOrEqual>	7000	</greaterOrEqual>
+                </unitVehicleDamage>
+              </and>
+            </unit>
+          </and>
+        </postBattle>
+      </conditions>
+      <bonus>
+        <premium>	1	</premium>
+        <freeXP>	2000	</freeXP>
+      </bonus>
+    </potapovQuest>
+    <potapovQuest>
+      <enabled>	true	</enabled>
+      <id>	quest_3_3_13_add	</id>
+      <serverOnly>	true	</serverOnly>
+      <conditions>
+        <preBattle>
+          <battle>
+            <unit>
+              <isSquad>	true	</isSquad>
+            </unit>
+          </battle>
+        </preBattle>
+        <postBattle>
+          <and>
+            <unit>
+              <and>
+                <unitVehicleDamage>
+                  <greaterOrEqual>	7000	</greaterOrEqual>
+                </unitVehicleDamage>
+                <results>
+                  <key>	xp	</key>
+                  <max>	3	</max>
+                </results>
+              </and>
+            </unit>
+          </and>
+        </postBattle>
+      </conditions>
+      <bonus>
+        <premium>	1	</premium>
+      </bonus>
+    </potapovQuest>
+  </quests>
+</quest_3_3_13.xml>

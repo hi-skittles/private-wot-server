@@ -1,0 +1,18 @@
+<xyznuvi.xml>
+	<elements>
+		<POSITION/>
+		<NORMAL/>
+		<TEXCOORD>
+			<type> FLOAT2 </type>
+		</TEXCOORD>
+		<BLENDINDICES>
+			<type> FLOAT1 </type>
+		</BLENDINDICES>
+	</elements>
+	<targets>
+		<target>
+			<name> D3D9 </name>
+			<format> xyznuvipc </format>
+		</target>
+	</targets>
+</xyznuvi.xml>

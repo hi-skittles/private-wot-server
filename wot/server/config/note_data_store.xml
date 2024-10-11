@@ -1,0 +1,16 @@
+<root>
+
+	<enabled> true </enabled>
+
+	<!-- External Data Store bug reporting example -->
+	<database>
+		<host> </host>
+		<username> </username>
+		<password> </password>
+		<databaseName> note_data_store </databaseName>
+		<type> mysql+oursql</type>
+
+		<!-- Only used for sqlite -->
+		<filename> server/note_data_store.db </filename>
+	</database>
+</root>

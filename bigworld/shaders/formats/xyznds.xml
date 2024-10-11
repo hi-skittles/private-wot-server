@@ -1,0 +1,13 @@
+<xyznds.xml>
+	<elements>
+		<POSITION/>
+		<NORMAL/>
+		<COLOR>
+			<type> COLOR </type>
+		</COLOR>
+		<COLOR>
+			<semanticIndex> 1 </semanticIndex>
+			<type> COLOR </type>
+		</COLOR>
+	</elements>
+</xyznds.xml>

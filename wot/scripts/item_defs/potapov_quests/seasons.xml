@@ -1,0 +1,7 @@
+<seasons.xml>
+  <season_1>
+    <id>	1	</id>
+    <userString>	#potapov_quests:season_1	</userString>
+    <description>	#potapov_quests:season_1_descr	</description>
+  </season_1>
+</seasons.xml>

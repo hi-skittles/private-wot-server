@@ -1,0 +1,107 @@
+#define UV_TRANSFORM_OTHER
+#include "stdinclude.fxh"
+#include "unskinned_effect_include.fxh"
+
+BW_ARTIST_EDITABLE_ADDRESS_MODE(BW_WRAP)
+DECLARE_OTHER_MAP( otherMap, otherSampler, "Other Map", "The other map for the material, to which the uv transform will be applied." )
+
+#include "lightonly_2uv.fxh"
+
+//--------------------------------------------------------------------------------------------------
+#if BW_DEFERRED_SHADING
+
+//--------------------------------------------------------------------------------------------------
+BW_COLOR_TECHNIQUE(false, false)
+{
+	pass P0
+	{		
+		BW_BLENDING_SOLID
+		BW_CULL_DOUBLESIDED
+		
+		VertexShader = compile vs_3_0 vs_deferred_3_0();
+		PixelShader  = compiled_ps_deferred_3_0[alphaTestEnable];
+	}
+}
+
+//--------------------------------------------------------------------------------------------------
+BW_COLOR_INSTANCED_TECHNIQUE(false, false)
+{
+	pass P0
+	{		
+		BW_BLENDING_SOLID
+		BW_CULL_DOUBLESIDED
+		
+		VertexShader = compile vs_3_0 vs_instanced_deferred_3_0();
+		PixelShader  = compiled_ps_deferred_3_0[alphaTestEnable];
+	}
+}
+
+//--------------------------------------------------------------------------------------------------
+BW_REFLECTION_TECHNIQUE(false, false)
+{
+	pass P0
+	{		
+		BW_BLENDING_SOLID
+		BW_CULL_DOUBLESIDED
+		
+		VertexShader = compile vs_3_0 vs_reflection_3_0();
+		PixelShader  = compiled_ps_reflection_3_0[alphaTestEnable];
+	}
+}
+
+//--------------------------------------------------------------------------------------------------
+BW_REFLECTION_INSTANCED_TECHNIQUE(false, false)
+{
+	pass P0
+	{		
+		BW_BLENDING_SOLID
+		BW_CULL_DOUBLESIDED
+		
+		VertexShader = compile vs_3_0 vs_instanced_reflection_3_0();
+		PixelShader  = compiled_ps_reflection_3_0[alphaTestEnable];
+	}
+}
+
+//--------------------------------------------------------------------------------------------------
+BW_SHADOW_TECHNIQUE(false)
+{
+	pass P0
+	{		
+		BW_BLENDING_SOLID
+		BW_SHADOW_CULL_MODE
+		
+		VertexShader = compile vs_3_0 vs_shadows_3_0();
+		PixelShader  = compiled_ps_shadows_3_0[alphaTestEnable];
+	}
+}
+
+//--------------------------------------------------------------------------------------------------
+BW_SHADOW_INSTANCED_TECHNIQUE(false)
+{
+	pass P0
+	{		
+		BW_BLENDING_SOLID
+		BW_SHADOW_CULL_MODE
+		
+		VertexShader = compile vs_3_0 vs_instanced_shadows_3_0();
+		PixelShader  = compiled_ps_shadows_3_0[alphaTestEnable];
+	}
+}
+
+#else //-- BW_DEFERRED_SHADING
+
+//--------------------------------------------------------------------------------------------------
+BW_COLOR_TECHNIQUE(false, false)
+{
+	pass P0
+	{		
+		BW_BLENDING_SOLID
+		BW_CULL_DOUBLESIDED
+		BW_FOG
+		
+		VertexShader = compile vs_2_0 vs_main_2_0();
+		PixelShader  = compiled_ps_main_2_0[alphaTestEnable];
+	}
+}
+
+#endif //-- BW_DEFERRED_SHADING

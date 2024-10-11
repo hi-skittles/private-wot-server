@@ -1,0 +1,689 @@
+<gb07_matilda.xml>
+  <crew>
+    <commander>	radioman	</commander>
+    <gunner></gunner>
+    <driver></driver>
+    <loader></loader>
+  </crew>
+  <speedLimits>
+    <forward>	24	</forward>
+    <backward>	11	</backward>
+  </speedLimits>
+  <repairCost>	4.17	</repairCost>
+  <crewXpFactor>	1.0	</crewXpFactor>
+  <effects>
+    <collision></collision>
+    <damagedStateGroup>	medium	</damagedStateGroup>
+  </effects>
+  <camouflage>
+    <priceFactor>	0.8	</priceFactor>
+    <tiling>	1 1 0 0	</tiling>
+    <exclusionMask>	vehicles/british/GB07_Matilda/Matilda_CM.dds	</exclusionMask>
+  </camouflage>
+  <emblems>
+    <default>	britain_color	</default>
+    <lodDist>	MEDIUM	</lodDist>
+    <alpha>	0.88	</alpha>
+  </emblems>
+  <horns>
+    <priceFactor>	1	</priceFactor>
+    <distanceFactor>	1	</distanceFactor>
+    <volumeFactor>	1	</volumeFactor>
+  </horns>
+  <hull>
+    <models>
+      <undamaged>	vehicles/british/GB07_Matilda/normal/lod0/Hull.model	</undamaged>
+      <destroyed>	vehicles/british/GB07_Matilda/crash/lod0/Hull.model	</destroyed>
+      <exploded>	vehicles/british/GB07_Matilda/crash/lod0/Hull.model	</exploded>
+    </models>
+    <swinging>
+      <lodDist>	FAR	</lodDist>
+      <pitchParams>	0.28 37.00 0.34 1.00 0.05 0.33	</pitchParams>
+      <rollParams>	1.00 0.28 37.00 0.34 1.00 0.05 0.33	</rollParams>
+      <sensitivityToImpulse>	0.76	</sensitivityToImpulse>
+    </swinging>
+    <exhaust>
+      <pixie>	gas_medium	</pixie>
+      <nodes>	HP_Track_Exhaus_1 HP_Track_Exhaus_2	</nodes>
+    </exhaust>
+    <turretPositions>
+      <turret>	0.000000 0.652469 0.586405	</turret>
+    </turretPositions>
+    <hitTester>
+      <collisionModel>	vehicles/british/GB07_Matilda/collision/Hull.model	</collisionModel>
+    </hitTester>
+    <armor>
+      <armor_1>	75	</armor_1>
+      <armor_2>	78	</armor_2>
+      <armor_3>	70	</armor_3>
+      <armor_4>	55	</armor_4>
+      <armor_5>	47	</armor_5>
+      <armor_6>	40	</armor_6>
+      <armor_7>	20	</armor_7>
+      <armor_8>	20	</armor_8>
+      <armor_9>	13	</armor_9>
+      <armor_10>	0	</armor_10>
+      <armor_11>	25	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+      </armor_11>
+      <armor_12>	13	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+      </armor_12>
+      <armor_13>	55	</armor_13>
+      <armor_14>	70	</armor_14>
+      <armor_15>	47	</armor_15>
+    </armor>
+    <primaryArmor>	armor_1 armor_3 armor_4	</primaryArmor>
+    <weight>	12923	</weight>
+    <maxHealth>	272	</maxHealth>
+    <ammoBayHealth>
+      <maxHealth>	140	</maxHealth>
+      <maxRegenHealth>	90	</maxRegenHealth>
+      <repairCost>	1.0	</repairCost>
+    </ammoBayHealth>
+    <emblemSlots>
+      <clan>
+        <rayStart>	1.45749 0.074464 2.36099	</rayStart>
+        <rayEnd>	1.05751 0.0744634 2.36099	</rayEnd>
+        <rayUp>	0.000000 1 0.000000	</rayUp>
+        <size>	0.26	</size>
+        <hideIfDamaged>	true	</hideIfDamaged>
+      </clan>
+      <inscription>
+        <rayStart>	1.33059 0.54181 0.672957	</rayStart>
+        <rayEnd>	0.965761 0.377849 0.672957	</rayEnd>
+        <rayUp>	0.000000 1 0.000000	</rayUp>
+        <size>	0.58	</size>
+        <hideIfDamaged>	true	</hideIfDamaged>
+      </inscription>
+    </emblemSlots>
+  </hull>
+  <chassis>
+    <Chassis_GB07_Matilda>
+      <userString>	#gb_vehicles:Chassis_GB07_Matilda	</userString>
+      <tags></tags>
+      <level>	3	</level>
+      <price>	2270.0	</price>
+      <unlocks>
+        <chassis>	Chassis_GB07_Matilda_2	  <cost>	1100	</cost>
+        </chassis>
+      </unlocks>
+      <models>
+        <undamaged>	vehicles/british/GB07_Matilda/normal/lod0/Chassis.model	</undamaged>
+        <destroyed>	vehicles/british/GB07_Matilda/crash/lod0/Chassis.model	</destroyed>
+        <exploded>	vehicles/british/GB07_Matilda/crash/lod0/Chassis.model	</exploded>
+      </models>
+      <traces>
+        <lodDist>	FAR	</lodDist>
+        <bufferPrefs>	mediumTank	</bufferPrefs>
+        <textureSet>	usa_02	</textureSet>
+        <size>	0.28 0.3	</size>
+      </traces>
+      <tracks>
+        <lodDist>	MEDIUM_TRACK	</lodDist>
+        <leftMaterial>	track_mat_L_skinned	</leftMaterial>
+        <rightMaterial>	track_mat_R_skinned	</rightMaterial>
+        <textureScale>	-1.5	</textureScale>
+      </tracks>
+      <wheels>
+        <lodDist>	MEDIUM	</lodDist>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_R0	</name>
+          <radius>	0.262319	</radius>
+        </wheel>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_R1	</name>
+          <radius>	0.152948	</radius>
+        </wheel>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_R2	</name>
+          <radius>	0.301846	</radius>
+        </wheel>
+        <group>
+          <isLeft>	false	</isLeft>
+          <template>	W_R	</template>
+          <radius>	0.112891	</radius>
+          <startIndex>	0	</startIndex>
+          <count>	10	</count>
+        </group>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_L0	</name>
+          <radius>	0.262319	</radius>
+        </wheel>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_L1	</name>
+          <radius>	0.152948	</radius>
+        </wheel>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_L2	</name>
+          <radius>	0.301846	</radius>
+        </wheel>
+        <group>
+          <isLeft>	true	</isLeft>
+          <template>	W_L	</template>
+          <radius>	0.112891	</radius>
+          <startIndex>	0	</startIndex>
+          <count>	10	</count>
+        </group>
+      </wheels>
+      <drivingWheels>	WD_L0 WD_L1	</drivingWheels>
+      <effects>
+        <lodDist>	MEDIUM	</lodDist>
+        <dust>	mediumTankDust	</dust>
+        <mud>	mediumTankMud	</mud>
+      </effects>
+      <soundPC>	/vehicles/tanks_pc/treads/treads_2	</soundPC>
+      <soundNPC>	/vehicles/tanks_npc/treads/treads_2	</soundNPC>
+      <hullPosition>	0.000000 0.903942 0.000000	</hullPosition>
+      <hitTester>
+        <collisionModel>	vehicles/british/GB07_Matilda/collision/Chassis.model	</collisionModel>
+      </hitTester>
+      <armor>
+        <leftTrack>	10	</leftTrack>
+        <rightTrack>	10	</rightTrack>
+      </armor>
+      <topRightCarryingPoint>	1.00585 1.74721	</topRightCarryingPoint>
+      <maxClimbAngle>	25	</maxClimbAngle>
+      <navmeshGirth>	6.0	</navmeshGirth>
+      <weight>	7200	</weight>
+      <maxLoad>	27000	</maxLoad>
+      <terrainResistance>	1 1.3 2.3	</terrainResistance>
+      <brakeForce>	24000	</brakeForce>
+      <rotationIsAroundCenter>	false	</rotationIsAroundCenter>
+      <rotationSpeed>	34	</rotationSpeed>
+      <shotDispersionFactors>
+        <vehicleMovement>	0.2	</vehicleMovement>
+        <vehicleRotation>	0.2	</vehicleRotation>
+      </shotDispersionFactors>
+      <bulkHealthFactor>	3.0	</bulkHealthFactor>
+      <maxHealth>	70	</maxHealth>
+      <maxRegenHealth>	55	</maxRegenHealth>
+      <repairCost>	5.0	</repairCost>
+      <AODecals>
+        <decal>
+          <transform>
+            <row0>	3.277240 0.000000 0.000000	</row0>
+            <row1>	0.000000 1.355910 0.000000	</row1>
+            <row2>	0.000000 0.000000 6.639400	</row2>
+            <row3>	0.000000 0.000000 0.000000	</row3>
+          </transform>
+        </decal>
+      </AODecals>
+    </Chassis_GB07_Matilda>
+    <Chassis_GB07_Matilda_2>
+      <userString>	#gb_vehicles:Chassis_GB07_Matilda_2	</userString>
+      <tags></tags>
+      <level>	4	</level>
+      <price>	4800	</price>
+      <models>
+        <undamaged>	vehicles/british/GB07_Matilda/normal/lod0/Chassis.model	</undamaged>
+        <destroyed>	vehicles/british/GB07_Matilda/crash/lod0/Chassis.model	</destroyed>
+        <exploded>	vehicles/british/GB07_Matilda/crash/lod0/Chassis.model	</exploded>
+      </models>
+      <traces>
+        <lodDist>	FAR	</lodDist>
+        <bufferPrefs>	mediumTank	</bufferPrefs>
+        <textureSet>	usa_02	</textureSet>
+        <size>	0.28 0.3	</size>
+      </traces>
+      <tracks>
+        <lodDist>	MEDIUM_TRACK	</lodDist>
+        <leftMaterial>	track_mat_L_skinned	</leftMaterial>
+        <rightMaterial>	track_mat_R_skinned	</rightMaterial>
+        <textureScale>	-1.5	</textureScale>
+      </tracks>
+      <wheels>
+        <lodDist>	MEDIUM	</lodDist>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_R0	</name>
+          <radius>	0.262319	</radius>
+        </wheel>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_R1	</name>
+          <radius>	0.152948	</radius>
+        </wheel>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_R2	</name>
+          <radius>	0.301846	</radius>
+        </wheel>
+        <group>
+          <isLeft>	false	</isLeft>
+          <template>	W_R	</template>
+          <radius>	0.112891	</radius>
+          <startIndex>	0	</startIndex>
+          <count>	10	</count>
+        </group>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_L0	</name>
+          <radius>	0.262319	</radius>
+        </wheel>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_L1	</name>
+          <radius>	0.152948	</radius>
+        </wheel>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	false	</isLeading>
+          <name>	WD_L2	</name>
+          <radius>	0.301846	</radius>
+        </wheel>
+        <group>
+          <isLeft>	true	</isLeft>
+          <template>	W_L	</template>
+          <radius>	0.112891	</radius>
+          <startIndex>	0	</startIndex>
+          <count>	10	</count>
+        </group>
+      </wheels>
+      <drivingWheels>	WD_L0 WD_L1	</drivingWheels>
+      <effects>
+        <lodDist>	MEDIUM	</lodDist>
+        <dust>	mediumTankDust	</dust>
+        <mud>	mediumTankMud	</mud>
+      </effects>
+      <soundPC>	/vehicles/tanks_pc/treads/treads_2	</soundPC>
+      <soundNPC>	/vehicles/tanks_npc/treads/treads_2	</soundNPC>
+      <hullPosition>	0.000000 0.903942 0.000000	</hullPosition>
+      <hitTester>
+        <collisionModel>	vehicles/british/GB07_Matilda/collision/Chassis.model	</collisionModel>
+      </hitTester>
+      <armor>
+        <leftTrack>	10	</leftTrack>
+        <rightTrack>	10	</rightTrack>
+      </armor>
+      <topRightCarryingPoint>	1.00585 1.74721	</topRightCarryingPoint>
+      <maxClimbAngle>	25	</maxClimbAngle>
+      <navmeshGirth>	6.0	</navmeshGirth>
+      <weight>	7200	</weight>
+      <maxLoad>	29000	</maxLoad>
+      <terrainResistance>	0.9 1.2 2.1	</terrainResistance>
+      <brakeForce>	25000	</brakeForce>
+      <rotationIsAroundCenter>	false	</rotationIsAroundCenter>
+      <rotationSpeed>	36	</rotationSpeed>
+      <shotDispersionFactors>
+        <vehicleMovement>	0.18	</vehicleMovement>
+        <vehicleRotation>	0.18	</vehicleRotation>
+      </shotDispersionFactors>
+      <bulkHealthFactor>	3.0	</bulkHealthFactor>
+      <maxHealth>	80	</maxHealth>
+      <maxRegenHealth>	60	</maxRegenHealth>
+      <repairCost>	5.0	</repairCost>
+      <AODecals>
+        <decal>
+          <transform>
+            <row0>	3.265840 0.000000 0.000000	</row0>
+            <row1>	0.000000 1.355910 0.000000	</row1>
+            <row2>	0.000000 0.000000 6.639400	</row2>
+            <row3>	0.000000 0.000000 0.000000	</row3>
+          </transform>
+        </decal>
+      </AODecals>
+    </Chassis_GB07_Matilda_2>
+  </chassis>
+  <turrets0>
+    <Turret_1_GB07_Matilda>
+      <userString>	#gb_vehicles:Turret_1_GB07_Matilda	</userString>
+      <tags></tags>
+      <level>	3	</level>
+      <price>	2160.0	</price>
+      <models>
+        <undamaged>	vehicles/british/GB07_Matilda/normal/lod0/Turret_01.model	</undamaged>
+        <destroyed>	vehicles/british/GB07_Matilda/crash/lod0/Turret_01.model	</destroyed>
+        <exploded>	vehicles/british/GB07_Matilda/crash/lod0/Turret_01.model	</exploded>
+      </models>
+      <hitTester>
+        <collisionModel>	vehicles/british/GB07_Matilda/collision/Turret_01.model	</collisionModel>
+      </hitTester>
+      <gunPosition>	0.000000 0.361704 0.631566	</gunPosition>
+      <armor>
+        <armor_1>	75	</armor_1>
+        <armor_2>	75	</armor_2>
+        <armor_3>	75	</armor_3>
+        <armor_4>	75	</armor_4>
+        <armor_5>	75	</armor_5>
+        <armor_6>	20	</armor_6>
+        <armor_7>	20	</armor_7>
+        <armor_8>	0	</armor_8>
+        <armor_9>	10	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+        </armor_9>
+        <armor_10>	20	</armor_10>
+      </armor>
+      <primaryArmor>	armor_1 armor_3 armor_4	</primaryArmor>
+      <weight>	5650	</weight>
+      <maxHealth>	68	</maxHealth>
+      <rotationSpeed>	34	</rotationSpeed>
+      <turretRotatorHealth>
+        <maxHealth>	80	</maxHealth>
+        <maxRegenHealth>	40	</maxRegenHealth>
+        <repairCost>	1.0	</repairCost>
+      </turretRotatorHealth>
+      <circularVisionRadius>	330	</circularVisionRadius>
+      <surveyingDeviceHealth>
+        <maxHealth>	60	</maxHealth>
+        <maxRegenHealth>	30	</maxRegenHealth>
+        <repairCost>	1.0	</repairCost>
+      </surveyingDeviceHealth>
+      <guns>
+        <_2pdr_Gun_Mk_X>	shared	  <maxAmmo>	92	</maxAmmo>
+          <unlocks>
+            <gun>	QF_2pdr_Littlejohn	  <cost>	1800	</cost>
+            </gun>
+            <gun>	_76mm_Howitzer_MkI	  <cost>	2100	</cost>
+            </gun>
+          </unlocks>
+          <models>
+            <undamaged>	vehicles/british/GB07_Matilda/normal/lod0/Gun_01.model	</undamaged>
+            <destroyed>	vehicles/british/GB07_Matilda/crash/lod0/Gun_01.model	</destroyed>
+            <exploded>	vehicles/british/GB07_Matilda/crash/lod0/Gun_01.model	</exploded>
+          </models>
+          <hitTester>
+            <collisionModel>	vehicles/british/GB07_Matilda/collision/Gun_01.model	</collisionModel>
+          </hitTester>
+          <armor>
+            <armor_1>	75	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_1>
+            <gun>	10	</gun>
+          </armor>
+          <shotDispersionRadius>	0.36	</shotDispersionRadius>
+          <reloadTime>	2.1	</reloadTime>
+          <aimingTime>	1.7	</aimingTime>
+          <shotDispersionFactors>
+            <turretRotation>	0.06	</turretRotation>
+            <afterShot>	3	</afterShot>
+            <whileGunDamaged>	2.0	</whileGunDamaged>
+          </shotDispersionFactors>
+          <pitchLimits>	-20 10	</pitchLimits>
+          <extraPitchLimits>
+            <back>	-20 9 25	</back>
+          </extraPitchLimits>
+        </_2pdr_Gun_Mk_X>
+        <_76mm_Howitzer_MkI>	shared	  <maxAmmo>	35	</maxAmmo>
+          <unlocks>
+            <turret>	Turret_2_GB07_Matilda	  <cost>	1200	</cost>
+            </turret>
+          </unlocks>
+          <models>
+            <undamaged>	vehicles/british/GB07_Matilda/normal/lod0/Gun_02.model	</undamaged>
+            <destroyed>	vehicles/british/GB07_Matilda/crash/lod0/Gun_02.model	</destroyed>
+            <exploded>	vehicles/british/GB07_Matilda/crash/lod0/Gun_02.model	</exploded>
+          </models>
+          <hitTester>
+            <collisionModel>	vehicles/british/GB07_Matilda/collision/Gun_02.model	</collisionModel>
+          </hitTester>
+          <armor>
+            <armor_1>	75	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_1>
+            <gun>	20	</gun>
+          </armor>
+          <shotDispersionRadius>	0.53	</shotDispersionRadius>
+          <reloadTime>	4	</reloadTime>
+          <aimingTime>	1.9	</aimingTime>
+          <pitchLimits>	-20 10	</pitchLimits>
+          <shotDispersionFactors>
+            <turretRotation>	0.08	</turretRotation>
+            <afterShot>	4.0	</afterShot>
+            <whileGunDamaged>	2.0	</whileGunDamaged>
+          </shotDispersionFactors>
+          <extraPitchLimits>
+            <back>	-20 9 25	</back>
+          </extraPitchLimits>
+        </_76mm_Howitzer_MkI>
+        <QF_2pdr_Littlejohn>	shared	  <maxAmmo>	92	</maxAmmo>
+          <models>
+            <undamaged>	vehicles/british/GB07_Matilda/normal/lod0/Gun_07.model	</undamaged>
+            <destroyed>	vehicles/british/GB07_Matilda/crash/lod0/Gun_07.model	</destroyed>
+            <exploded>	vehicles/british/GB07_Matilda/crash/lod0/Gun_07.model	</exploded>
+          </models>
+          <hitTester>
+            <collisionModel>	vehicles/british/GB07_Matilda/collision/Gun_07.model	</collisionModel>
+          </hitTester>
+          <armor>
+            <armor_1>	75	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_1>
+            <gun>	20	</gun>
+          </armor>
+          <shotDispersionRadius>	0.36	</shotDispersionRadius>
+          <reloadTime>	2.1	</reloadTime>
+          <aimingTime>	1.9	</aimingTime>
+          <pitchLimits>	-20 10	</pitchLimits>
+          <shotDispersionFactors>
+            <turretRotation>	0.16	</turretRotation>
+            <afterShot>	4	</afterShot>
+            <whileGunDamaged>	2.0	</whileGunDamaged>
+          </shotDispersionFactors>
+          <extraPitchLimits>
+            <back>	-20 9 25	</back>
+          </extraPitchLimits>
+        </QF_2pdr_Littlejohn>
+      </guns>
+      <emblemSlots>
+        <player>
+          <rayStart>	-0.997164 0.607003 -0.0121969	</rayStart>
+          <rayEnd>	-0.603289 0.607003 -0.0818872	</rayEnd>
+          <rayUp>	0.000000 1 0.000000	</rayUp>
+          <size>	0.28	</size>
+          <hideIfDamaged>	true	</hideIfDamaged>
+        </player>
+        <inscription>
+          <rayStart>	-0.787318 0.46203 -0.761061	</rayStart>
+          <rayEnd>	-0.523394 0.46203 -0.460516	</rayEnd>
+          <rayUp>	0.000000 1 0.000000	</rayUp>
+          <size>	0.58	</size>
+          <hideIfDamaged>	false	</hideIfDamaged>
+        </inscription>
+      </emblemSlots>
+      <showEmblemsOnGun>	false	</showEmblemsOnGun>
+      <physicsShape>	0.813 0.000 1.000 0.000 0.537 0.111 0.500 0.463 0.312 0.500 0.317 0.500 0.000 0.000 0.000	</physicsShape>
+      <turretRotatorSoundManual>	/turret/turret/turret_manual_traverse/turret_manual_traverse_4000-5999	</turretRotatorSoundManual>
+      <turretRotatorSoundGear>	/turret/turret/turret_hydraulic_traverse/turret_hydraulic_traverse_4000-5999	</turretRotatorSoundGear>
+      <camouflage>
+        <tiling>	1.36 1.36 0.000000 0.000000	</tiling>
+      </camouflage>
+    </Turret_1_GB07_Matilda>
+    <Turret_2_GB07_Matilda>
+      <userString>	#gb_vehicles:Turret_2_GB07_Matilda	</userString>
+      <tags></tags>
+      <level>	4	</level>
+      <price>	5000	</price>
+      <unlocks>
+        <vehicle>	GB08_Churchill_I	  <cost>	11500	</cost>
+        </vehicle>
+      </unlocks>
+      <models>
+        <undamaged>	vehicles/british/GB07_Matilda/normal/lod0/Turret_02.model	</undamaged>
+        <destroyed>	vehicles/british/GB07_Matilda/crash/lod0/Turret_02.model	</destroyed>
+        <exploded>	vehicles/british/GB07_Matilda/crash/lod0/Turret_02.model	</exploded>
+      </models>
+      <hitTester>
+        <collisionModel>	vehicles/british/GB07_Matilda/collision/Turret_02.model	</collisionModel>
+      </hitTester>
+      <gunPosition>	0.000000 0.361704 0.631566	</gunPosition>
+      <armor>
+        <armor_1>	75	</armor_1>
+        <armor_2>	75	</armor_2>
+        <armor_3>	75	</armor_3>
+        <armor_4>	75	</armor_4>
+        <armor_5>	75	</armor_5>
+        <armor_6>	20	</armor_6>
+        <armor_7>	20	</armor_7>
+        <armor_8>	0	</armor_8>
+        <armor_9>	10	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+        </armor_9>
+        <armor_10>	20	</armor_10>
+      </armor>
+      <primaryArmor>	armor_1 armor_3 armor_4	</primaryArmor>
+      <weight>	6050	</weight>
+      <maxHealth>	98	</maxHealth>
+      <rotationSpeed>	34	</rotationSpeed>
+      <turretRotatorHealth>
+        <maxHealth>	80	</maxHealth>
+        <maxRegenHealth>	40	</maxRegenHealth>
+        <repairCost>	1.0	</repairCost>
+      </turretRotatorHealth>
+      <circularVisionRadius>	340	</circularVisionRadius>
+      <surveyingDeviceHealth>
+        <maxHealth>	60	</maxHealth>
+        <maxRegenHealth>	30	</maxRegenHealth>
+        <repairCost>	1.0	</repairCost>
+      </surveyingDeviceHealth>
+      <guns>
+        <_2pdr_Gun_Mk_X>	shared	  <maxAmmo>	92	</maxAmmo>
+          <models>
+            <undamaged>	vehicles/british/GB07_Matilda/normal/lod0/Gun_01.model	</undamaged>
+            <destroyed>	vehicles/british/GB07_Matilda/crash/lod0/Gun_01.model	</destroyed>
+            <exploded>	vehicles/british/GB07_Matilda/crash/lod0/Gun_01.model	</exploded>
+          </models>
+          <hitTester>
+            <collisionModel>	vehicles/british/GB07_Matilda/collision/Gun_01.model	</collisionModel>
+          </hitTester>
+          <armor>
+            <armor_1>	75	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_1>
+            <gun>	10	</gun>
+          </armor>
+          <shotDispersionRadius>	0.36	</shotDispersionRadius>
+          <reloadTime>	2.1	</reloadTime>
+          <aimingTime>	1.7	</aimingTime>
+          <shotDispersionFactors>
+            <turretRotation>	0.04	</turretRotation>
+            <afterShot>	3	</afterShot>
+            <whileGunDamaged>	2.0	</whileGunDamaged>
+          </shotDispersionFactors>
+          <pitchLimits>	-20 10	</pitchLimits>
+          <extraPitchLimits>
+            <back>	-20 9 25	</back>
+          </extraPitchLimits>
+          <camouflage>
+            <tiling>	0.775 0.775 0.000000 0.000000	</tiling>
+          </camouflage>
+        </_2pdr_Gun_Mk_X>
+        <_76mm_Howitzer_MkI>	shared	  <maxAmmo>	35	</maxAmmo>
+          <models>
+            <undamaged>	vehicles/british/GB07_Matilda/normal/lod0/Gun_02.model	</undamaged>
+            <destroyed>	vehicles/british/GB07_Matilda/crash/lod0/Gun_02.model	</destroyed>
+            <exploded>	vehicles/british/GB07_Matilda/crash/lod0/Gun_02.model	</exploded>
+          </models>
+          <hitTester>
+            <collisionModel>	vehicles/british/GB07_Matilda/collision/Gun_02.model	</collisionModel>
+          </hitTester>
+          <armor>
+            <armor_1>	75	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_1>
+            <gun>	20	</gun>
+          </armor>
+          <shotDispersionRadius>	0.53	</shotDispersionRadius>
+          <reloadTime>	4	</reloadTime>
+          <shotDispersionFactors>
+            <turretRotation>	0.06	</turretRotation>
+            <afterShot>	4.0	</afterShot>
+            <whileGunDamaged>	2.0	</whileGunDamaged>
+          </shotDispersionFactors>
+          <aimingTime>	1.9	</aimingTime>
+          <pitchLimits>	-20 10	</pitchLimits>
+          <extraPitchLimits>
+            <back>	-20 9 25	</back>
+          </extraPitchLimits>
+        </_76mm_Howitzer_MkI>
+        <QF_2pdr_Littlejohn>	shared	  <maxAmmo>	92	</maxAmmo>
+          <models>
+            <undamaged>	vehicles/british/GB07_Matilda/normal/lod0/Gun_07.model	</undamaged>
+            <destroyed>	vehicles/british/GB07_Matilda/crash/lod0/Gun_07.model	</destroyed>
+            <exploded>	vehicles/british/GB07_Matilda/crash/lod0/Gun_07.model	</exploded>
+          </models>
+          <hitTester>
+            <collisionModel>	vehicles/british/GB07_Matilda/collision/Gun_07.model	</collisionModel>
+          </hitTester>
+          <armor>
+            <armor_1>	75	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_1>
+            <gun>	20	</gun>
+          </armor>
+          <shotDispersionRadius>	0.36	</shotDispersionRadius>
+          <reloadTime>	2.1	</reloadTime>
+          <aimingTime>	1.9	</aimingTime>
+          <pitchLimits>	-20 10	</pitchLimits>
+          <shotDispersionFactors>
+            <turretRotation>	0.14	</turretRotation>
+            <afterShot>	4	</afterShot>
+            <whileGunDamaged>	2.0	</whileGunDamaged>
+          </shotDispersionFactors>
+          <extraPitchLimits>
+            <back>	-20 9 25	</back>
+          </extraPitchLimits>
+          <camouflage>
+            <tiling>	0.835 0.835 0.000000 0.000000	</tiling>
+          </camouflage>
+        </QF_2pdr_Littlejohn>
+      </guns>
+      <emblemSlots>
+        <player>
+          <rayStart>	-1.0015 0.597221 -0.0366553	</rayStart>
+          <rayEnd>	-0.607612 0.597221 -0.106347	</rayEnd>
+          <rayUp>	0.000000 1 0.000000	</rayUp>
+          <size>	0.28	</size>
+          <hideIfDamaged>	true	</hideIfDamaged>
+        </player>
+        <inscription>
+          <rayStart>	-0.770549 0.22433 -0.775789	</rayStart>
+          <rayEnd>	-0.506624 0.22433 -0.475242	</rayEnd>
+          <rayUp>	0.000000 1 0.000000	</rayUp>
+          <size>	0.58	</size>
+          <hideIfDamaged>	false	</hideIfDamaged>
+        </inscription>
+      </emblemSlots>
+      <showEmblemsOnGun>	false	</showEmblemsOnGun>
+      <physicsShape>	0.885 0.000 1.000 0.000 0.528 0.105 0.500 0.396 0.333 0.500 0.218 0.500 0.000 0.100 0.000	</physicsShape>
+      <turretRotatorSoundManual>	/turret/turret/turret_manual_traverse/turret_manual_traverse_6000-7999	</turretRotatorSoundManual>
+      <turretRotatorSoundGear>	/turret/turret/turret_hydraulic_traverse/turret_hydraulic_traverse_6000-7999	</turretRotatorSoundGear>
+    </Turret_2_GB07_Matilda>
+  </turrets0>
+  <engines>
+    <AEC>	shared	  <unlocks>
+        <engine>	Leyland	  <cost>	310	</cost>
+        </engine>
+      </unlocks>
+    </AEC>
+    <Leyland>	shared	</Leyland>
+  </engines>
+  <fuelTanks>
+    <Average>	shared	</Average>
+  </fuelTanks>
+  <radios>
+    <N11>	shared	  <unlocks>
+        <radio>	N9	  <cost>	610	</cost>
+        </radio>
+      </unlocks>
+    </N11>
+    <N9>	shared	  <unlocks>
+        <radio>	N19Mk1	  <cost>	1480	</cost>
+        </radio>
+      </unlocks>
+    </N9>
+    <N19Mk1>	shared	  <unlocks>
+        <radio>	N19Mk2	  <cost>	3600	</cost>
+        </radio>
+      </unlocks>
+    </N19Mk1>
+    <N19Mk2>	shared	</N19Mk2>
+  </radios>
+</gb07_matilda.xml>

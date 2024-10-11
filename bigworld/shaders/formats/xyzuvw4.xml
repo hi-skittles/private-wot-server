@@ -1,0 +1,29 @@
+<xyzuvw4.xml>
+	<elements>
+		<POSITION/>
+		<TEXCOORD>
+			<semanticIndex> 0 </semanticIndex>
+			<type> FLOAT3 </type>
+		</TEXCOORD>
+		<TEXCOORD>
+			<semanticIndex> 1 </semanticIndex>
+			<type> FLOAT3 </type>
+		</TEXCOORD>
+		<TEXCOORD>
+			<semanticIndex> 2 </semanticIndex>
+			<type> FLOAT3 </type>
+		</TEXCOORD>
+		<TEXCOORD>
+			<semanticIndex> 3 </semanticIndex>
+			<type> FLOAT3 </type>
+		</TEXCOORD>
+		<TEXCOORD>
+			<semanticIndex> 4 </semanticIndex>
+			<type> FLOAT3 </type>
+		</TEXCOORD>
+		<TEXCOORD>
+			<semanticIndex> 5 </semanticIndex>
+			<type> FLOAT3 </type>
+		</TEXCOORD>
+	</elements>
+</xyzuvw4.xml>

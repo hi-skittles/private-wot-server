@@ -1,0 +1,17 @@
+<xyznuvtbpc.xml>
+	<elements>
+		<POSITION/>
+		<NORMAL>
+			<type> UBYTE4_NORMAL_8_8_8 </type>
+		</NORMAL>
+		<TEXCOORD>
+			<type> SHORT2 </type>
+		</TEXCOORD>
+		<TANGENT>
+			<type> UBYTE4_NORMAL_8_8_8 </type>
+		</TANGENT>
+		<BINORMAL>
+			<type> UBYTE4_NORMAL_8_8_8 </type>
+		</BINORMAL>
+	</elements>
+</xyznuvtbpc.xml>

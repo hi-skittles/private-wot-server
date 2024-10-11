@@ -1,0 +1,1620 @@
+#line 1 "D:\\dev\\2_current_wot_renderer\\bigworld\\res\\shaders\\std_effects\\lightonly.fx"
+
+
+#line 1 "stdinclude.fxh"
+
+
+
+#line 19
+
+
+
+#line 23
+
+
+#line 26
+
+
+
+
+
+#line 1 "shared_constants.fxh"
+
+
+
+#line 16
+
+
+
+#line 35
+
+
+#line 38
+struct SunLight 
+{ 
+    float3 m_dir ; 
+    float4 m_color ; 
+    float4 m_ambient ; 
+} ; 
+
+#line 46
+struct FogParams 
+{ 
+    float m_enabled ; 
+    float m_density ; 
+    float m_start ; 
+    float m_end ; 
+    float4 m_color ; 
+    float4 m_outerBB ; 
+    float4 m_innerBB ; 
+} ; 
+
+#line 58
+
+shared float g_time : Time < bool isShared = true ; > ; 
+
+shared float4 g_nvStereoParams : NvStereoParams < bool isShared = true ; > = float4 ( 0 , 0 , 0 , 0 ) ; 
+shared texture g_nvStereoParamsMap : NvStereoParamsMap < bool isShared = true ; > ; 
+shared float4 g_debugVisualizer : DebugVisualizer < bool isShared = true ; > = float4 ( 1 , 1 , 1 , 1 ) ; 
+
+shared float4 g_windAnimation : WindAnimation < bool isShared = true ; > ; 
+shared int mipFilter : MipFilter < bool isShared = true ; > = 2 ; 
+shared int minMagFilter : MinMagFilter < bool isShared = true ; > = 2 ; 
+shared int maxAnisotropy : MaxAnisotropy < bool isShared = true ; > = 1 ; 
+shared texture g_envCubeMap : EnvironmentCubeMap < bool isShared = true ; > ; 
+shared texture g_noiseMap : NoiseMap < bool isShared = true ; > ; 
+shared texture g_bitwiseLUTMap : BitwiseLUTMap < bool isShared = true ; > ; 
+shared texture g_atan2LUTMap : Atan2LUTMap < bool isShared = true ; > ; 
+shared texture g_speedTreeMaterialsMap : SpeedTreeMaterials < bool isShared = true ; > ; 
+shared SunLight g_sunLight : SunLight < bool isShared = true ; > ; 
+shared FogParams g_fogParams : FogParams < bool isShared = true ; > ; 
+shared float g_sunVisibility : SunVisibility < bool isShared = true ; > ; 
+
+#line 79
+shared float4x4 g_SSAOParams : SSAOParams < bool isShared = true ; > ; 
+
+shared float4 g_HDRParams : HDRParams < bool isShared = true ; > = float4 ( 0 , 1 , 1 , 1 ) ; 
+
+shared float4 g_gammaCorrection : GammaCorrection < bool isShared = true ; > = float4 ( 1 , 1 , 0 , 0 ) ; 
+
+#line 86
+shared float4 g_shadowBlendParams : ShadowBlendParams < bool isShared = true ; > ; 
+shared texture g_ssShadowMap : ShadowScreenSpaceMap < bool isShared = true ; > ; 
+
+shared float4 g_specularParams : SpecularParams < bool isShared = true ; > ; 
+shared bool g_enableShadows : IsShadowsEnabled < bool isShared = true ; > ; 
+
+#line 93
+shared texture g_GBufferChannel0Tex : GBufferChannel0 < bool isShared = true ; > ; sampler g_GBufferChannel0Sml = sampler_state { Texture = ( g_GBufferChannel0Tex ) ; ADDRESSU = CLAMP ; ADDRESSV = CLAMP ; ADDRESSW = CLAMP ; MAGFILTER = POINT ; MINFILTER = POINT ; MIPFILTER = POINT ; MAXANISOTROPY = 1 ; MAXMIPLEVEL = 0 ; MIPMAPLODBIAS = 0 ; } ; 
+shared texture g_GBufferChannel1Tex : GBufferChannel1 < bool isShared = true ; > ; sampler g_GBufferChannel1Sml = sampler_state { Texture = ( g_GBufferChannel1Tex ) ; ADDRESSU = CLAMP ; ADDRESSV = CLAMP ; ADDRESSW = CLAMP ; MAGFILTER = POINT ; MINFILTER = POINT ; MIPFILTER = POINT ; MAXANISOTROPY = 1 ; MAXMIPLEVEL = 0 ; MIPMAPLODBIAS = 0 ; } ; 
+shared texture g_GBufferChannel2Tex : GBufferChannel2 < bool isShared = true ; > ; sampler g_GBufferChannel2Sml = sampler_state { Texture = ( g_GBufferChannel2Tex ) ; ADDRESSU = CLAMP ; ADDRESSV = CLAMP ; ADDRESSW = CLAMP ; MAGFILTER = POINT ; MINFILTER = POINT ; MIPFILTER = POINT ; MAXANISOTROPY = 1 ; MAXMIPLEVEL = 0 ; MIPMAPLODBIAS = 0 ; } ; 
+
+
+#line 99
+
+shared float4 g_screen : Screen < bool isShared = true ; > ; 
+shared float4 g_invScreen : InvScreen < bool isShared = true ; > ; 
+
+
+#line 105
+
+shared float4x4 g_viewMat : View < bool isShared = true ; > ; 
+shared float4x4 g_invViewMat : InvView < bool isShared = true ; > ; 
+shared float4x4 g_projMat : Projection < bool isShared = true ; > ; 
+shared float4x4 g_viewProjMat : ViewProjection < bool isShared = true ; > ; 
+shared float4x4 g_invViewProjMat : InvViewProjection < bool isShared = true ; > ; 
+shared float4x4 g_lastViewProjMat : LastViewProjection < bool isShared = true ; > ; 
+shared float4x4 g_environmentMat : EnvironmentTransform < bool isShared = true ; > ; 
+shared float4x4 g_cameraDirs : CameraDirs < bool isShared = true ; > ; 
+shared float4 g_cameraPos : CameraPos < bool isShared = true ; > ; 
+shared float4 g_lodCameraPos : LodCameraPos < bool isShared = true ; > ; 
+shared float3 g_cameraDir : CameraDir < bool isShared = true ; > ; 
+shared float4 g_farNearPlane : FarNearPlane < bool isShared = true ; > ; 
+shared float4 g_farPlane : FarPlane < bool isShared = true ; > ; 
+
+
+
+
+
+
+
+#line 124
+
+
+#line 31 "stdinclude.fxh"
+
+
+#line 1 "d3d_state_mirror.fxh"
+
+
+#line 4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 21
+
+
+
+
+
+
+
+
+
+#line 31
+
+
+
+
+
+
+#line 38
+
+
+
+
+#line 40
+
+
+#line 32 "stdinclude.fxh"
+
+
+#line 1 "lighting_helpers.fxh"
+
+
+
+#line 5
+struct DirectionalLight 
+{ 
+    float3 direction ; 
+    float4 colour ; 
+} ; 
+
+#line 12
+struct PointLight 
+{ 
+    float4 position ; 
+    float4 colour ; 
+    float4 attenuation ; 
+    float4 padding ; 
+} ; 
+
+#line 21
+struct SpotLight 
+{ 
+    float4 position ; 
+    float4 colour ; 
+    float4 attenuation ; 
+    float4 direction ; 
+} ; 
+
+#line 30
+half3 gamma2linear ( const half3 gammaSpaceColor ) 
+{ 
+    
+#line 34
+    
+    
+    if ( g_gammaCorrection . x > 1 ) 
+    { 
+        return gammaSpaceColor * gammaSpaceColor ; 
+    } 
+    else 
+    { 
+        return gammaSpaceColor ; 
+    } 
+    
+} 
+
+#line 48
+half4 gamma2linear ( const half4 gammaSpaceColorWithAlpha ) 
+{ 
+    return half4 ( gamma2linear ( gammaSpaceColorWithAlpha . rgb ) , gammaSpaceColorWithAlpha . a ) ; 
+} 
+
+#line 54
+half3 linear2gamma ( const half3 linearSpaceColor ) 
+{ 
+    
+#line 58
+    
+    
+    if ( g_gammaCorrection . x > 1 ) 
+    { 
+        return sqrt ( linearSpaceColor ) ; 
+    } 
+    else 
+    { 
+        return linearSpaceColor ; 
+    } 
+    
+} 
+
+#line 72
+half4 linear2gamma ( const half4 linearSpaceColorWithAlpha ) 
+{ 
+    return half4 ( linear2gamma ( linearSpaceColorWithAlpha . rgb ) , linearSpaceColorWithAlpha . a ) ; 
+} 
+
+#line 78
+half luminance ( half3 i ) 
+{ 
+    return dot ( i , half3 ( 0.2125 , 0.7154 , 0.0721 ) ) ; 
+} 
+
+#line 84
+float3 normalisedEyeVector ( in float3 pos , in float3 cameraPos ) 
+{ 
+    return normalize ( cameraPos - pos ) ; 
+} 
+
+#line 90
+half3 sunAmbientTerm ( ) 
+{ 
+    return ( half3 ) g_sunLight . m_ambient * g_debugVisualizer . x * g_HDRParams . z ; 
+} 
+
+#line 96
+half3 sunDiffuseTerm ( in half3 worldNormal , in half lightAdjust = 0 ) 
+{ 
+    half NdotL = dot ( - ( half3 ) g_sunLight . m_dir . xyz , worldNormal ) ; 
+    NdotL = lerp ( lightAdjust , 1 , saturate ( NdotL ) ) ; 
+    
+    return NdotL * ( half3 ) g_sunLight . m_color . rgb * ( half ) g_HDRParams . y * ( half ) g_debugVisualizer . y ; 
+} 
+
+#line 105
+half3 sunSpecTerm ( in half3 worldNormal , in half3 eye , in half power = 32 ) 
+{ 
+    half facing = dot ( - ( half3 ) g_sunLight . m_dir . xyz , worldNormal ) > 0 ; 
+    half3 h = normalize ( eye - ( half3 ) g_sunLight . m_dir . xyz ) ; 
+    half att = saturate ( dot ( worldNormal , h ) ) ; 
+    att = pow ( att , power ) ; 
+    
+    return att * facing * ( half3 ) g_sunLight . m_color . rgb * ( half ) g_HDRParams . y * ( half ) g_debugVisualizer . z ; 
+} 
+
+#line 116
+half3 pointLight ( in float3 position , in half3 normal , in PointLight light ) 
+{ 
+    half3 lDir = normalize ( light . position . xyz - position ) ; 
+    half distance = dot ( light . position . xyz - position , lDir ) ; 
+    half2 att = { ( - distance + light . attenuation . x ) * light . attenuation . y , dot ( lDir , normal ) } ; 
+    att = saturate ( att ) ; 
+    
+    return att . x * att . y * ( half3 ) light . colour . rgb ; 
+} 
+
+#line 127
+half3 pointSpecLight ( in float3 position , in half3 normal , in half3 eye , in PointLight light , in half power = 32 ) 
+{ 
+    half3 lightDir = light . position . xyz - position ; 
+    half lightLen = length ( lightDir ) ; 
+    lightDir /= lightLen ; 
+    
+    half3 h = normalize ( eye + lightDir ) ; 
+    half att = saturate ( dot ( normal , h ) ) ; 
+    att = pow ( att , power ) ; 
+    
+    return saturate ( ( - lightLen + light . attenuation . x ) * light . attenuation . y ) * att * ( half3 ) light . colour . rgb ; 
+    
+} 
+
+#line 142
+half3 spotLight ( in float3 position , in half3 normal , in SpotLight light ) 
+{ 
+    half3 lDir = normalize ( light . position . xyz - position ) ; 
+    half distance = dot ( light . position . xyz - position , lDir ) ; 
+    
+    half3 att = { 
+        ( - distance + light . attenuation . x ) * light . attenuation . y , 
+        dot ( - light . direction . xyz , normal ) , 
+        ( dot ( - light . direction . xyz , lDir ) - light . attenuation . z ) / ( 1 - light . attenuation . z ) 
+    } ; 
+    att = saturate ( att ) ; 
+    
+    return att . x * att . y * att . z * ( half3 ) light . colour . rgb ; 
+} 
+
+#line 158
+void spotSpecLight ( in float3 position , in half3 normal , in half3 eye , in SpotLight light , out half3 diffuse , out half3 spec ) 
+{ 
+    half3 lDir = normalize ( light . position . xyz - position ) ; 
+    half distance = dot ( light . position . xyz - position , lDir ) ; 
+    half3 h = normalize ( eye + lDir ) ; 
+    
+    half4 att = { 
+        ( - distance + light . attenuation . x ) * light . attenuation . y , 
+        dot ( - light . direction . xyz , normal ) , 
+        ( dot ( - light . direction . xyz , lDir ) - light . attenuation . z ) / ( 1 - light . attenuation . z ) , 
+        dot ( normal , h ) 
+    } ; 
+    
+    att = saturate ( att ) ; 
+    
+    diffuse = ( att . x * att . y * att . z * ( half3 ) light . colour . xyz ) ; 
+    
+    spec = att . x * att . z * pow ( att . w , 32 ) * ( half3 ) light . colour . rgb ; 
+} 
+
+
+
+
+#line 33 "stdinclude.fxh"
+
+
+#line 1 "vertex_declarations.fxh"
+
+
+#line 4
+
+
+float3 unpackNormal ( float3 src ) 
+{ 
+    return ( src - 127.0f ) / 127.0f ; 
+} 
+float2 unpackTexCoord ( float2 src ) 
+{ 
+    return src / 2047.0f ; 
+} 
+
+
+
+
+
+
+#line 30
+
+
+#line 37
+
+
+
+
+
+#line 47
+
+
+#line 55
+
+
+#line 58
+struct InstancingStream 
+{ 
+    float4 v0 : TEXCOORD4 ; 
+    float4 v1 : TEXCOORD5 ; 
+    float4 v2 : TEXCOORD6 ; 
+    float4 v3 : TEXCOORD7 ; 
+} ; 
+
+#line 67
+struct VertexXYZNUVIIIWWTB 
+{ 
+    float4 pos : POSITION ; 
+    float3 indices : BLENDINDICES ; 
+    float2 weights : BLENDWEIGHT ; 
+    float3 normal : NORMAL ; 
+    float3 binormal : BINORMAL ; 
+    float3 tangent : TANGENT ; 
+    float2 tc : TEXCOORD0 ; 
+} ; 
+
+#line 79
+struct VertexXYZNUVIIIWW 
+{ 
+    float4 pos : POSITION ; 
+    float3 indices : BLENDINDICES ; 
+    float2 weights : BLENDWEIGHT ; 
+    float3 normal : NORMAL ; 
+    float2 tc : TEXCOORD0 ; 
+} ; 
+
+#line 89
+struct VertexXYZNUV2IIIWW 
+{ 
+    float4 pos : POSITION ; 
+    float3 indices : BLENDINDICES ; 
+    float2 weights : BLENDWEIGHT ; 
+    float3 normal : NORMAL ; 
+    float2 tc : TEXCOORD0 ; 
+    float2 tc2 : TEXCOORD1 ; 
+} ; 
+
+#line 100
+struct VertexXYZNDUVIIIWW 
+{ 
+    float4 pos : POSITION ; 
+    float3 indices : BLENDINDICES ; 
+    float2 weights : BLENDWEIGHT ; 
+    float3 normal : NORMAL ; 
+    float4 colour : COLOR ; 
+    float2 tc : TEXCOORD0 ; 
+} ; 
+
+#line 111
+struct VertexXYZNUVITB 
+{ 
+    float4 pos : POSITION ; 
+    float index : BLENDINDICES ; 
+    float3 normal : NORMAL ; 
+    float3 binormal : BINORMAL ; 
+    float3 tangent : TANGENT ; 
+    float2 tc : TEXCOORD0 ; 
+} ; 
+
+#line 122
+struct VertexXYZNUVI 
+{ 
+    float4 pos : POSITION ; 
+    float index : BLENDINDICES ; 
+    float3 normal : NORMAL ; 
+    float2 tc : TEXCOORD0 ; 
+} ; 
+
+#line 131
+struct VertexXYZNUVTB 
+{ 
+    float4 pos : POSITION ; 
+    float3 normal : NORMAL ; 
+    float3 binormal : BINORMAL ; 
+    float3 tangent : TANGENT ; 
+    float2 tc : TEXCOORD0 ; 
+} ; 
+
+#line 141
+struct VertexXYZNUV2TB 
+{ 
+    float4 pos : POSITION ; 
+    float3 normal : NORMAL ; 
+    float3 binormal : BINORMAL ; 
+    float3 tangent : TANGENT ; 
+    float2 tc : TEXCOORD0 ; 
+    float2 tc2 : TEXCOORD1 ; 
+} ; 
+
+#line 152
+struct VertexXYZNUV 
+{ 
+    float4 pos : POSITION ; 
+    float3 normal : NORMAL ; 
+    float2 tc : TEXCOORD0 ; 
+} ; 
+
+#line 160
+struct VertexXYZNUV2 
+{ 
+    float4 pos : POSITION ; 
+    float3 normal : NORMAL ; 
+    float2 tc : TEXCOORD0 ; 
+    float2 tc2 : TEXCOORD1 ; 
+} ; 
+
+#line 169
+struct VertexXYZNDUV 
+{ 
+    float4 pos : POSITION ; 
+    float3 normal : NORMAL ; 
+    float4 colour : COLOR ; 
+    float2 tc : TEXCOORD0 ; 
+} ; 
+
+#line 178
+struct VertexXYZNDUV2 
+{ 
+    float4 pos : POSITION ; 
+    float3 normal : NORMAL ; 
+    float4 colour : COLOR ; 
+    float2 tc : TEXCOORD0 ; 
+    float2 tc2 : TEXCOORD1 ; 
+} ; 
+
+#line 188
+struct VertexXYZL 
+{ 
+    float4 pos : POSITION ; 
+    float4 diffuse : COLOR ; 
+} ; 
+
+#line 195
+struct VertexXYZDUV 
+{ 
+    float4 pos : POSITION ; 
+    float4 diffuse : COLOR ; 
+    float2 tc : TEXCOORD0 ; 
+} ; 
+
+#line 34 "stdinclude.fxh"
+
+
+#line 1 "material_helpers.fxh"
+
+
+#line 9
+
+
+
+
+
+#line 20
+
+
+#line 29
+
+
+#line 38
+
+
+#line 48
+
+
+#line 57
+
+
+#line 67
+
+
+#line 79
+
+
+#line 88
+
+
+#line 99
+
+
+#line 111
+
+
+#line 124
+
+
+#line 136
+
+
+#line 145
+
+
+#line 159
+
+
+
+
+
+#line 168
+
+
+#line 173
+
+
+#line 186
+
+
+#line 209
+
+
+#line 222
+
+
+#line 235
+
+
+#line 239
+
+
+#line 242
+
+
+#line 246
+
+
+#line 251
+
+
+#line 254
+
+
+
+#line 258
+
+
+#line 270
+
+
+#line 282
+
+
+#line 291
+
+
+#line 300
+
+
+#line 320
+
+
+#line 340
+
+
+#line 357
+
+
+
+#line 378
+
+
+#line 395
+
+
+
+#line 414
+
+
+#line 432
+
+
+#line 450
+
+
+#line 469
+
+
+#line 473
+
+
+#line 480
+half3 bwTextureOp ( int textureOperation , half3 currentColour , half currentAlpha , half4 diffuseMap , half4 otherMap ) 
+{ 
+    
+#line 510
+    if ( textureOperation == 18 ) 
+    { 
+        
+        return currentColour + ( currentAlpha * otherMap . xyz ) ; 
+    } 
+    else if ( textureOperation == 7 ) 
+    { 
+        
+        return currentColour + otherMap . xyz ; 
+    } 
+    else if ( textureOperation == 4 ) 
+    { 
+        
+        return currentColour * otherMap . xyz ; 
+    } 
+    else if ( textureOperation == 20 ) 
+    { 
+        
+        return currentColour + ( ( 1.0 - currentAlpha ) * otherMap . xyz ) ; 
+    } 
+    else if ( textureOperation == 2 ) 
+    { 
+        
+        return currentColour ; 
+    } 
+    else if ( textureOperation == 3 ) 
+    { 
+        
+        return otherMap . xyz ; 
+    } 
+    else if ( textureOperation == 5 ) 
+    { 
+        
+        return currentColour * otherMap . xyz * 2.0 ; 
+    } 
+    else if ( textureOperation == 6 ) 
+    { 
+        
+        return currentColour * otherMap . xyz * 4.0 ; 
+    } 
+    else 
+    { 
+        
+#line 555
+        return currentColour + otherMap . xyz ; 
+    } 
+} 
+
+
+#line 35 "stdinclude.fxh"
+
+
+#line 1 "fresnel_helpers.fxh"
+
+
+#line 25
+
+
+#line 29
+
+
+#line 33
+float fresnelNoConstant ( float3 vec , float3 normal , float exponent ) 
+{ 
+    float edotn = abs ( dot ( vec , normal ) ) ; 
+    return pow ( 1.0 - edotn , exponent ) ; 
+} 
+
+#line 40
+float fresnel ( float3 vec , float3 normal , float exponent , float constant ) 
+{ 
+    float f = fresnelNoConstant ( vec , normal , exponent ) ; 
+    return ( constant + ( 1.0 - constant ) * f ) ; 
+} 
+
+#line 36 "stdinclude.fxh"
+
+
+#line 1 "fog_helpers.fxh"
+
+
+
+#line 6
+float vertexFog ( in float wPos , in float fogStart , in float fogEnd ) 
+{ 
+    float2 fogging = float2 ( ( - 1.0 / ( fogEnd - fogStart ) ) , ( fogEnd / ( fogEnd - fogStart ) ) ) ; 
+    return wPos * fogging . x + fogging . y ; 
+} 
+
+#line 14
+float bw_vertexFog ( in float4 wPos , in float linearZ ) 
+{ 
+    
+    float isBBFogEnabled = all ( g_fogParams . m_outerBB ) ; 
+    
+#line 20
+    float outFog = saturate ( ( g_fogParams . m_end - linearZ ) / ( g_fogParams . m_end - g_fogParams . m_start ) ) ; 
+    
+#line 23
+    float4 coeff = max ( g_fogParams . m_density * ( ( wPos . xzxz - g_fogParams . m_innerBB ) / ( ( g_fogParams . m_outerBB - g_fogParams . m_innerBB ) + ( 1.0f - isBBFogEnabled ) ) ) , 0.0f ) ; 
+    float fogBB = 1.0f - max ( max ( max ( coeff . x , coeff . y ) , coeff . z ) , coeff . w ) ; 
+    
+#line 27
+    outFog = min ( outFog , fogBB ) * isBBFogEnabled + outFog * ( 1.0f - isBBFogEnabled ) ; 
+    
+    return outFog ; 
+} 
+
+#line 33
+
+
+#line 37
+half3 applyFogTo ( const in half3 color , const in half fogDensity ) 
+{ 
+    return lerp ( color , ( half3 ) g_fogParams . m_color . rgb * ( half ) g_HDRParams . w , ( 1 - fogDensity ) * ( half ) g_fogParams . m_enabled ) ; 
+} 
+
+#line 44
+half3 applyFogTo ( const in half3 color , const in half3 fogColor , const in half fogDensity ) 
+{ 
+    return lerp ( color , fogColor * ( half ) g_HDRParams . w , ( 1 - fogDensity ) * ( half ) g_fogParams . m_enabled ) ; 
+} 
+
+
+
+#line 49
+
+
+#line 37 "stdinclude.fxh"
+
+
+#line 1 "technique_helpers.fxh"
+
+
+
+#line 5
+static const int G_RENDERING_PASS_COLOR = 0 ; 
+static const int G_RENDERING_PASS_REFLECTION = 1 ; 
+static const int G_RENDERING_PASS_SHADOWS = 2 ; 
+static const int G_RENDERING_PASS_DEPTH = 3 ; 
+
+#line 20
+
+
+#line 25
+
+static const bool g_isDual = false ; 
+
+
+#line 38
+
+
+#line 42
+
+
+#line 46
+
+
+#line 50
+
+
+#line 54
+
+
+#line 58
+
+
+#line 62
+
+
+#line 66
+
+
+#line 70
+
+
+#line 74
+
+
+
+
+#line 76
+
+
+#line 40 "stdinclude.fxh"
+static const int G_STENCIL_SYSTEM_WRITE_MASK = 0xF0 ; 
+static const int G_STENCIL_CUMSTOM_WRITE_MASK = 0x0F ; 
+
+#line 45
+static const int G_STENCIL_USAGE_TERRAIN = 0x10 ; 
+static const int G_STENCIL_USAGE_SPEEDTREE = 0x20 ; 
+static const int G_STENCIL_USAGE_FLORA = 0x40 ; 
+static const int G_STENCIL_USAGE_OTHER_OPAQUE = 0x80 ; 
+static const int G_STENCIL_USAGE_ALL_OPAQUE = 0xF0 ; 
+
+#line 52
+static const int G_OBJECT_KIND_TERRAIN = 1 ; 
+static const int G_OBJECT_KIND_FLORA = 2 ; 
+static const int G_OBJECT_KIND_SPEEDTREE = 3 ; 
+static const int G_OBJECT_KIND_STATIC = 4 ; 
+static const int G_OBJECT_KIND_DYNAMIC = 5 ; 
+
+#line 71
+
+
+
+
+#line 73
+
+
+#line 2 "D:\\dev\\2_current_wot_renderer\\bigworld\\res\\shaders\\std_effects\\lightonly.fx"
+
+
+#line 1 "unskinned_effect_include.fxh"
+
+
+
+
+
+#line 1 "uv.fxh"
+
+
+
+#line 64
+
+
+#line 88
+
+
+#line 110
+
+
+#line 120
+
+
+
+
+
+#line 131
+
+
+
+
+#line 141
+
+
+#line 145
+
+
+
+#line 150
+
+
+
+
+
+
+
+#line 159
+
+
+#line 159
+
+
+#line 7 "unskinned_effect_include.fxh"
+float4x4 g_world : World ; 
+float g_objectID : ObjectID ; 
+
+#line 11
+float3 transformPos ( float4x4 world , float4 pos ) 
+{ 
+    float3 ret = { dot ( world [ 0 ] , pos ) , dot ( world [ 1 ] , pos ) , dot ( world [ 2 ] , pos ) } ; 
+    return ret ; 
+} 
+
+#line 18
+float3 transformNormaliseVector ( float4x4 world , float3 v ) 
+{ 
+    float3 ret ; 
+    ret = mul ( v , ( float3x3 ) world ) ; 
+    return normalize ( ret ) ; 
+} 
+
+#line 26
+float3x3 worldSpaceTSMatrix ( in float4x4 world , in float3 tangent , in float3 binormal , in float3 worldNormal ) 
+{ 
+    float3 worldTangent = transformNormaliseVector ( world , unpackNormal ( tangent ) ) ; 
+    float3 worldBinormal = transformNormaliseVector ( world , unpackNormal ( binormal ) ) ; 
+    
+    float3x3 tsMatrix = { worldTangent , worldBinormal , worldNormal } ; 
+    return tsMatrix ; 
+} 
+
+#line 36
+float4 unskinnedTransform ( in float4 pos , in float3 normal , in float4x4 world , in float4x4 viewProj , out float4 worldPos , out float3 worldNormal ) 
+{ 
+    worldPos = mul ( pos , world ) ; 
+    worldNormal = transformNormaliseVector ( world , unpackNormal ( normal ) ) ; 
+    
+    float4 projPos = mul ( worldPos , viewProj ) ; 
+    return projPos ; 
+} 
+
+#line 52
+
+
+#line 55
+
+
+#line 62
+
+
+#line 69
+
+
+#line 80
+
+
+#line 87
+
+
+#line 94
+
+
+#line 101
+
+
+#line 106
+
+
+#line 113
+
+
+#line 122
+
+
+
+
+
+
+
+
+#line 3 "D:\\dev\\2_current_wot_renderer\\bigworld\\res\\shaders\\std_effects\\lightonly.fx"
+
+
+#line 1 "lightonly.fxh"
+
+
+
+texture diffuseMap < bool artistEditable = true ; string UIName = "Diffuse Map" ; string UIDesc = "The diffuse map for the material" ; > ; 
+bool doubleSided < bool artistEditable = true ; string UIName = "Double Sided" ; string UIDesc = "Whether the material is draw on both sides" ; > = false ; 
+bool alphaTestEnable < bool artistEditable = true ; string UIName = "Alpha Test" ; string UIDesc = "Whether an alpha test should be performed" ; > = false ; int alphaReference < bool artistEditable = true ; string UIName = "Alpha Reference" ; string UIDesc = "The alpha value cut-off value" ; int UIMax = 255 ; int UIMin = 0 ; > = 0 ; 
+float diffuseLightExtraModulation = 0.0 ; 
+int texAddressMode < bool artistEditable = true ; string UIName = "Texture Address Mode" ; string UIDesc = "D3D Texture Adress Mode" ; string EnumType = "TEXTUREADDRESS" ; int UIMin = 1 ; int UIMax = 5 ; int UIDigits = 1 ; > = 1 ; 
+
+sampler diffuseSampler = sampler_state { Texture = ( diffuseMap ) ; ADDRESSU = < texAddressMode > ; ADDRESSV = < texAddressMode > ; ADDRESSW = < texAddressMode > ; MAGFILTER = LINEAR ; MINFILTER = ( minMagFilter ) ; MIPFILTER = ( mipFilter ) ; MAXANISOTROPY = ( maxAnisotropy ) ; MAXMIPLEVEL = 0 ; MIPMAPLODBIAS = 0 ; } ; 
+
+#line 15
+
+
+#line 20
+
+
+#line 25
+
+
+#line 31
+
+
+
+
+#line 36
+half4 diffuseColor ( float2 tc , float2 tc2 ) 
+{ 
+    
+#line 42
+    
+    half4 diffuseMap = gamma2linear ( tex2D ( diffuseSampler , tc . xy ) ) ; 
+    
+    
+#line 48
+    
+    
+    return diffuseMap ; 
+} 
+
+#line 54
+
+
+
+
+#line 1 "write_g_buffer.fxh"
+
+
+
+
+
+#line 1 "deferred_shading.fxh"
+
+
+
+
+
+#line 73 "stdinclude.fxh"
+
+
+#line 73
+
+
+#line 7 "deferred_shading.fxh"
+struct BW_DS_VS_DIFFUSE2_OUT 
+{ 
+    float4 pos : POSITION ; 
+    float linerZ : TEXCOORD0 ; 
+    float2 tc : TEXCOORD1 ; 
+    float2 tc2 : TEXCOORD2 ; 
+    float3 normal : TEXCOORD3 ; 
+} ; 
+
+#line 17
+struct BW_DS_VS_DIFFUSE_OUT 
+{ 
+    float4 pos : POSITION ; 
+    float linerZ : TEXCOORD0 ; 
+    float2 tc : TEXCOORD1 ; 
+    
+#line 24
+    
+    float3 normal : TEXCOORD3 ; 
+} ; 
+
+#line 29
+struct BW_DS_VS_BUMP_OUT 
+{ 
+    float4 pos : POSITION ; 
+    float linerZ : TEXCOORD0 ; 
+    float2 tc : TEXCOORD1 ; 
+    
+#line 36
+    
+    float3 normal : TEXCOORD3 ; 
+    float3 tangent : TEXCOORD4 ; 
+    float3 binormal : TEXCOORD5 ; 
+} ; 
+
+#line 43
+struct VS_CASTER_OUTPUT 
+{ 
+    float4 pos : POSITION ; 
+    float2 depth : TEXCOORD0 ; 
+} ; 
+
+#line 50
+struct VS_CASTER_OUTPUT_ALPHA_TESTED 
+{ 
+    float4 pos : POSITION ; 
+    float2 tc : TEXCOORD0 ; 
+    
+#line 56
+    
+    float2 depth : TEXCOORD2 ; 
+} ; 
+
+#line 62
+struct BW_DS_LIGHT_PASS_VS 
+{ 
+    float4 pos : POSITION ; 
+    float2 tc : TEXCOORD0 ; 
+} ; 
+
+#line 70
+struct BW_DS_LIGHT_PASS_VS2PS 
+{ 
+    float4 pos : POSITION ; 
+    float2 tc : TEXCOORD0 ; 
+} ; 
+
+#line 79
+float2 SC2TC ( float2 vPos ) 
+{ 
+    return ( vPos + float2 ( + 0.5f , + 0.5f ) ) * g_invScreen . zw ; 
+} 
+
+#line 86
+float2 CS2TS ( in float2 cs ) 
+{ 
+    return cs * float2 ( + 0.5f , - 0.5f ) + float2 ( + 0.5f , + 0.5f ) ; 
+} 
+
+#line 93
+float2 TS2CS ( in float2 ts ) 
+{ 
+    return ts * float2 ( - 2.0f , + 2.0f ) + float2 ( + 1.0f , - 1.0f ) ; 
+} 
+
+#line 99
+sampler g_atan2LUTMapSml = sampler_state 
+{ 
+    Texture = < g_atan2LUTMap > ; 
+    ADDRESSU = CLAMP ; 
+    ADDRESSV = CLAMP ; 
+    MinFilter = POINT ; 
+    MagFilter = POINT ; 
+} ; 
+
+#line 109
+half lookup_atan2 ( half y , half x ) 
+{ 
+    return tex2Dlod ( g_atan2LUTMapSml , half4 ( y , x , 0 , 0 ) ) . x ; 
+} 
+
+#line 116
+float3x3 computeTangentFrame ( float3 N , float3 p , float2 uv ) 
+{ 
+    
+    float3 dp1 = ddx ( p ) ; 
+    float3 dp2 = ddy ( p ) ; 
+    float2 duv1 = ddx ( uv ) ; 
+    float2 duv2 = ddy ( uv ) ; 
+    
+#line 125
+    float3x3 M = float3x3 ( dp1 , dp2 , cross ( dp1 , dp2 ) ) ; 
+    float2x3 inversetransposeM = float2x3 ( cross ( M [ 1 ] , M [ 2 ] ) , cross ( M [ 2 ] , M [ 0 ] ) ) ; 
+    float3 T = mul ( float2 ( duv1 . x , duv2 . x ) , inversetransposeM ) ; 
+    float3 B = mul ( float2 ( duv1 . y , duv2 . y ) , inversetransposeM ) ; 
+    
+#line 131
+    return float3x3 ( normalize ( T ) , normalize ( B ) , N ) ; 
+} 
+
+#line 136
+float computeTextureLOD ( in float2 uv , in float2 texDim ) 
+{ 
+    uv *= texDim ; 
+    
+    float2 ddx_ = ddx ( uv ) ; 
+    float2 ddy_ = ddy ( uv ) ; 
+    float2 mag = abs ( ddx_ ) + abs ( ddy_ ) ; 
+    float lod = log2 ( max ( mag . x , mag . y ) ) ; 
+    
+    return lod ; 
+} 
+
+#line 150
+float3 packFloatToVec3 ( const float value ) 
+{ 
+    static const float invByte = 1.0f / 255.0f ; 
+    static const float max24int = 256 * 256 * 256 - 1 ; 
+    static const float3 bitSh = float3 ( max24int / ( 256 * 256 ) , max24int / 256 , max24int ) ; 
+    static const float3 bitMsk = float3 ( 0.0 , 256.0 , 256.0 ) ; 
+    
+    float3 decomp = floor ( value * bitSh ) * invByte ; 
+    decomp -= decomp . xxy * bitMsk ; 
+    return decomp ; 
+} 
+
+#line 163
+float unpackFloatFromVec3 ( const float3 value ) 
+{ 
+    static const float3 bitSh = float3 ( 255.0 / 256 , 255.0 / ( 256 * 256 ) , 255.0 / ( 256 * 256 * 256 ) ) ; 
+    
+    return dot ( value , bitSh ) ; 
+} 
+
+#line 172
+half2 cartesianToSpherical ( in half3 cartesian ) 
+{ 
+    
+#line 180
+    
+    half3 packed = cartesian * 0.5h + 0.5h ; 
+    half2 spherical ; 
+    spherical . x = lookup_atan2 ( packed . y , packed . x ) ; 
+    spherical . y = packed . z ; 
+    return spherical ; 
+    
+} 
+
+#line 191
+half3 sphericalToCartesian ( half2 spherical ) 
+{ 
+    half2 sinCosTheta , sinCosPhi ; 
+    
+    spherical = spherical * 2 - 1 ; 
+    sincos ( spherical . x * 3.14159h , sinCosTheta . x , sinCosTheta . y ) ; 
+    sinCosPhi = half2 ( sqrt ( 1 - spherical . y * spherical . y ) , spherical . y ) ; 
+    
+    return half3 ( sinCosTheta . y * sinCosPhi . x , sinCosTheta . x * sinCosPhi . x , sinCosPhi . y ) ; 
+} 
+
+#line 203
+float almostZero ( float f , float epsilon = 0.0004f ) 
+{ 
+    return f < epsilon && f > - epsilon ; 
+} 
+
+
+
+#line 208
+
+
+#line 8 "write_g_buffer.fxh"
+struct G_BUFFER_LAYOUT 
+{ 
+    float4 color0 : COLOR0 ; 
+    float4 color1 : COLOR1 ; 
+    float4 color2 : COLOR2 ; 
+} ; 
+
+#line 16
+void g_buffer_writeNormal ( inout G_BUFFER_LAYOUT o , in float3 normal ) 
+{ 
+    float3 nn = normalize ( normal ) ; 
+    o . color1 . rg = cartesianToSpherical ( nn ) ; 
+} 
+
+#line 24
+void g_buffer_writePackedNormal ( inout G_BUFFER_LAYOUT o , in half2 packedNormal ) 
+{ 
+    o . color1 . rg = packedNormal ; 
+} 
+
+#line 30
+void g_buffer_writeSpecAmount ( inout G_BUFFER_LAYOUT o , in half amount ) 
+{ 
+    o . color1 . b = amount ; 
+} 
+
+#line 36
+void g_buffer_writeDepth ( inout G_BUFFER_LAYOUT o , in float depth ) 
+{ 
+    o . color0 . rgb = packFloatToVec3 ( depth * g_farPlane . y ) ; 
+} 
+
+#line 43
+void g_buffer_writeObjectKind ( inout G_BUFFER_LAYOUT o , in half id ) 
+{ 
+    static const half invByte = 1.0f / 255.0f ; 
+    o . color0 . a = id * invByte ; 
+} 
+
+#line 51
+void g_buffer_writeAlbedo ( inout G_BUFFER_LAYOUT o , in half3 color ) 
+{ 
+    o . color2 . rgb = color ; 
+} 
+
+#line 59
+void g_buffer_writeUserData1 ( inout G_BUFFER_LAYOUT o , in half id , uniform const bool isPacked = true ) 
+{ 
+    
+    if ( isPacked ) 
+    { 
+        static const half invByte = 1.0f / 255.0f ; 
+        o . color2 . a = id * invByte ; 
+    } 
+    else 
+    { 
+        o . color2 . a = id ; 
+    } 
+} 
+
+#line 76
+void g_buffer_writeUserData2 ( inout G_BUFFER_LAYOUT o , in half id , uniform const bool isPacked = true ) 
+{ 
+    
+    if ( isPacked ) 
+    { 
+        static const half invByte = 1.0f / 255.0f ; 
+        o . color1 . a = id * invByte ; 
+    } 
+    else 
+    { 
+        o . color1 . a = id ; 
+    } 
+} 
+
+
+
+#line 90
+
+
+#line 59 "lightonly.fxh"
+BW_DS_VS_DIFFUSE_OUT vs_deferred_3_0 ( VertexXYZNUV i ) 
+{ 
+    BW_DS_VS_DIFFUSE_OUT o = ( BW_DS_VS_DIFFUSE_OUT ) 0 ; 
+    
+    float4 worldPos ; o . pos = unskinnedTransform ( i . pos , i . normal , g_world , g_viewProjMat , worldPos , o . normal ) ; o . linerZ = o . pos . w ; 
+    float4 tc = float4 ( unpackTexCoord ( i . tc ) , 1 , 1 ) ; o . tc . xy = tc . xy ; 
+    
+    return o ; 
+} 
+
+#line 70
+BW_DS_VS_DIFFUSE_OUT vs_instanced_deferred_3_0 ( VertexXYZNUV i , InstancingStream instance ) 
+{ 
+    BW_DS_VS_DIFFUSE_OUT o = ( BW_DS_VS_DIFFUSE_OUT ) 0 ; 
+    
+    float4 worldPos ; float4x4 worldMat = { instance . v0 , instance . v1 , instance . v2 , instance . v3 } ; o . pos = unskinnedTransform ( i . pos , i . normal , worldMat , g_viewProjMat , worldPos , o . normal ) ; o . linerZ = o . pos . w ; 
+    float4 tc = float4 ( unpackTexCoord ( i . tc ) , 1 , 1 ) ; o . tc . xy = tc . xy ; 
+    
+    return o ; 
+} 
+
+#line 81
+G_BUFFER_LAYOUT ps_deferred_3_0 ( BW_DS_VS_DIFFUSE_OUT i , uniform bool alphaTest ) 
+{ 
+    G_BUFFER_LAYOUT o = ( G_BUFFER_LAYOUT ) 0 ; 
+    
+    half4 color = diffuseColor ( i . tc , float2 ( 0 , 0 ) ) ; ; 
+    
+#line 88
+    if ( alphaTest ) 
+    { 
+        clip ( color . a - alphaReference / 255.0h ) ; 
+    } 
+    
+    g_buffer_writeAlbedo ( o , color . rgb ) ; 
+    
+#line 98
+    
+    
+    g_buffer_writeDepth ( o , i . linerZ ) ; 
+    g_buffer_writeNormal ( o , i . normal ) ; 
+    g_buffer_writeObjectKind ( o , g_objectID ? G_OBJECT_KIND_DYNAMIC : G_OBJECT_KIND_STATIC ) ; 
+    
+    return o ; 
+} 
+
+#line 108
+struct OutputDiffuseLighting 
+{ 
+    float4 pos : POSITION ; 
+    float2 tc : TEXCOORD0 ; 
+    
+#line 114
+    
+    float3 normal : TEXCOORD2 ; 
+    float4 worldPos : TEXCOORD3 ; 
+    float fog : TEXCOORD4 ; 
+} ; 
+
+#line 121
+OutputDiffuseLighting vs_reflection_3_0 ( VertexXYZNUV i ) 
+{ 
+    OutputDiffuseLighting o = ( OutputDiffuseLighting ) 0 ; 
+    
+    o . pos = unskinnedTransform ( i . pos , i . normal , g_world , g_viewProjMat , o . worldPos , o . normal ) ; 
+    float4 tc = float4 ( unpackTexCoord ( i . tc ) , 1 , 1 ) ; o . tc . xy = tc . xy ; 
+    o . fog = bw_vertexFog ( o . worldPos , o . pos . w ) ; 
+    
+    return o ; 
+} 
+
+#line 133
+OutputDiffuseLighting vs_instanced_reflection_3_0 ( VertexXYZNUV i , InstancingStream instance ) 
+{ 
+    OutputDiffuseLighting o = ( OutputDiffuseLighting ) 0 ; 
+    
+    float4x4 worldMat = { instance . v0 , instance . v1 , instance . v2 , instance . v3 } ; o . pos = unskinnedTransform ( i . pos , i . normal , worldMat , g_viewProjMat , o . worldPos , o . normal ) ; 
+    float4 tc = float4 ( unpackTexCoord ( i . tc ) , 1 , 1 ) ; o . tc . xy = tc . xy ; 
+    o . fog = bw_vertexFog ( o . worldPos , o . pos . w ) ; 
+    
+    return o ; 
+} 
+
+#line 145
+float4 ps_reflection_3_0 ( OutputDiffuseLighting i , uniform bool alphaTest ) : COLOR0 
+{ 
+    
+    half4 diffuse = diffuseColor ( i . tc , float2 ( 0 , 0 ) ) ; ; 
+    
+#line 151
+    if ( alphaTest ) 
+    { 
+        clip ( diffuse . a - alphaReference / 255.0h ) ; 
+    } 
+    
+#line 157
+    half3 normal = normalize ( i . normal ) ; 
+    half3 color = diffuse . rgb * ( sunAmbientTerm ( ) . rgb + sunDiffuseTerm ( normal ) . rgb ) ; 
+    
+#line 163
+    
+    
+#line 166
+    color = applyFogTo ( color , i . fog ) ; 
+    
+    return float4 ( color , 0 ) ; 
+} 
+
+#line 172
+VS_CASTER_OUTPUT_ALPHA_TESTED vs_shadows_3_0 ( VertexXYZNUV i ) 
+{ 
+    VS_CASTER_OUTPUT_ALPHA_TESTED o = ( VS_CASTER_OUTPUT_ALPHA_TESTED ) 0 ; 
+    float4 worldPos ; float3 worldNormal ; o . pos = unskinnedTransform ( i . pos , i . normal , g_world , g_viewProjMat , worldPos , worldNormal ) ; ; 
+    float4 tc = float4 ( unpackTexCoord ( i . tc ) , 1 , 1 ) ; o . tc . xy = tc . xy ; 
+    
+    o . depth = o . pos . zw ; 
+    return o ; 
+} 
+
+#line 183
+VS_CASTER_OUTPUT_ALPHA_TESTED vs_instanced_shadows_3_0 ( VertexXYZNUV i , InstancingStream instance ) 
+{ 
+    VS_CASTER_OUTPUT_ALPHA_TESTED o = ( VS_CASTER_OUTPUT_ALPHA_TESTED ) 0 ; 
+    float4 worldPos ; float3 worldNormal ; float4x4 worldMat = { instance . v0 , instance . v1 , instance . v2 , instance . v3 } ; o . pos = unskinnedTransform ( i . pos , i . normal , worldMat , g_viewProjMat , worldPos , worldNormal ) ; ; 
+    float4 tc = float4 ( unpackTexCoord ( i . tc ) , 1 , 1 ) ; o . tc . xy = tc . xy ; 
+    
+    o . depth = o . pos . zw ; 
+    return o ; 
+} 
+
+#line 194
+float4 ps_shadows_3_0 ( VS_CASTER_OUTPUT_ALPHA_TESTED i , uniform bool alphaTest ) : COLOR0 
+{ 
+    
+    if ( alphaTest ) 
+    { 
+        
+#line 203
+        
+        half alpha = tex2D ( diffuseSampler , i . tc . xy ) . w ; 
+        
+        
+        clip ( alpha - alphaReference / 255.0h ) ; 
+    } 
+    
+    return i . depth . x / i . depth . y ; 
+} 
+
+#line 214
+PixelShader compiled_ps_deferred_3_0 [ ] = { 
+    compile ps_3_0 ps_deferred_3_0 ( false ) , 
+    compile ps_3_0 ps_deferred_3_0 ( true ) 
+} ; 
+
+#line 220
+PixelShader compiled_ps_reflection_3_0 [ ] = { 
+    compile ps_3_0 ps_reflection_3_0 ( false ) , 
+    compile ps_3_0 ps_reflection_3_0 ( true ) 
+} ; 
+
+#line 226
+PixelShader compiled_ps_shadows_3_0 [ ] = { 
+    compile ps_3_0 ps_shadows_3_0 ( false ) , 
+    compile ps_3_0 ps_shadows_3_0 ( true ) 
+} ; 
+
+#line 288
+
+
+
+
+
+#line 6 "D:\\dev\\2_current_wot_renderer\\bigworld\\res\\shaders\\std_effects\\lightonly.fx"
+
+
+#line 9
+technique COLOR < bool dualUV = g_isDual ; string channel = "none" ; bool bumpMapped = false ; bool skinned = false ; bool instanced = false ; int renderType = G_RENDERING_PASS_COLOR ; > 
+{ 
+    pass P0 
+    { 
+        ALPHATESTENABLE = FALSE ; ALPHABLENDENABLE = FALSE ; ZWRITEENABLE = TRUE ; ZENABLE = TRUE ; ZFUNC = LESSEQUAL ; 
+        CULLMODE = ( doubleSided ? 1 : 2 ) ; 
+        
+        VertexShader = compile vs_3_0 vs_deferred_3_0 ( ) ; 
+        PixelShader = compiled_ps_deferred_3_0 [ alphaTestEnable ] ; 
+    } 
+} 
+
+#line 22
+technique COLOR_INSTANCED < bool dualUV = g_isDual ; string channel = "none" ; bool bumpMapped = false ; bool skinned = false ; bool instanced = true ; int renderType = G_RENDERING_PASS_COLOR ; > 
+{ 
+    pass P0 
+    { 
+        ALPHATESTENABLE = FALSE ; ALPHABLENDENABLE = FALSE ; ZWRITEENABLE = TRUE ; ZENABLE = TRUE ; ZFUNC = LESSEQUAL ; 
+        CULLMODE = ( doubleSided ? 1 : 2 ) ; 
+        
+        VertexShader = compile vs_3_0 vs_instanced_deferred_3_0 ( ) ; 
+        PixelShader = compiled_ps_deferred_3_0 [ alphaTestEnable ] ; 
+    } 
+} 
+
+#line 35
+technique REFLECTION < bool dualUV = g_isDual ; string channel = "none" ; bool bumpMapped = false ; bool skinned = false ; bool instanced = false ; int renderType = G_RENDERING_PASS_REFLECTION ; > 
+{ 
+    pass P0 
+    { 
+        ALPHATESTENABLE = FALSE ; ALPHABLENDENABLE = FALSE ; ZWRITEENABLE = TRUE ; ZENABLE = TRUE ; ZFUNC = LESSEQUAL ; 
+        CULLMODE = ( doubleSided ? 1 : 2 ) ; 
+        
+        VertexShader = compile vs_3_0 vs_reflection_3_0 ( ) ; 
+        PixelShader = compiled_ps_reflection_3_0 [ alphaTestEnable ] ; 
+    } 
+} 
+
+#line 48
+technique REFLECTION_INSTANCED < bool dualUV = g_isDual ; string channel = "none" ; bool bumpMapped = false ; bool skinned = false ; bool instanced = true ; int renderType = G_RENDERING_PASS_REFLECTION ; > 
+{ 
+    pass P0 
+    { 
+        ALPHATESTENABLE = FALSE ; ALPHABLENDENABLE = FALSE ; ZWRITEENABLE = TRUE ; ZENABLE = TRUE ; ZFUNC = LESSEQUAL ; 
+        CULLMODE = ( doubleSided ? 1 : 2 ) ; 
+        
+        VertexShader = compile vs_3_0 vs_instanced_reflection_3_0 ( ) ; 
+        PixelShader = compiled_ps_reflection_3_0 [ alphaTestEnable ] ; 
+    } 
+} 
+
+#line 61
+technique SHADOW < bool dualUV = g_isDual ; string channel = "none" ; bool bumpMapped = false ; bool skinned = false ; bool instanced = false ; int renderType = G_RENDERING_PASS_SHADOWS ; > 
+{ 
+    pass P0 
+    { 
+        ALPHATESTENABLE = FALSE ; ALPHABLENDENABLE = FALSE ; ZWRITEENABLE = TRUE ; ZENABLE = TRUE ; ZFUNC = LESSEQUAL ; 
+        CULLMODE = ( doubleSided ? 1 : 3 ) ; 
+        
+        VertexShader = compile vs_3_0 vs_shadows_3_0 ( ) ; 
+        PixelShader = compiled_ps_shadows_3_0 [ alphaTestEnable ] ; 
+    } 
+} 
+
+#line 74
+technique SHADOW_INSTANCED < bool dualUV = g_isDual ; string channel = "none" ; bool bumpMapped = false ; bool skinned = false ; bool instanced = true ; int renderType = G_RENDERING_PASS_SHADOWS ; > 
+{ 
+    pass P0 
+    { 
+        ALPHATESTENABLE = FALSE ; ALPHABLENDENABLE = FALSE ; ZWRITEENABLE = TRUE ; ZENABLE = TRUE ; ZFUNC = LESSEQUAL ; 
+        CULLMODE = ( doubleSided ? 1 : 3 ) ; 
+        
+        VertexShader = compile vs_3_0 vs_instanced_shadows_3_0 ( ) ; 
+        PixelShader = compiled_ps_shadows_3_0 [ alphaTestEnable ] ; 
+    } 
+} 
+
+#line 104
+
+ 

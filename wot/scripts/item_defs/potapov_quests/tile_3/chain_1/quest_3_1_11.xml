@@ -1,0 +1,88 @@
+<quest_3_1_11.xml>
+  <quests>
+    <potapovQuest>
+      <enabled>	true	</enabled>
+      <id>	quest_3_1_11_main	</id>
+      <serverOnly>	true	</serverOnly>
+      <conditions>
+        <preBattle>
+          <battle>
+            <unit>
+              <isSquad>	true	</isSquad>
+            </unit>
+          </battle>
+        </preBattle>
+        <postBattle>
+          <and>
+            <results>
+              <key>	damageAssistedRadio	</key>
+              <greaterOrEqual>	2000	</greaterOrEqual>
+            </results>
+            <vehicleKills>
+              <greaterOrEqual>	2	</greaterOrEqual>
+            </vehicleKills>
+            <unit>
+              <and>
+                <unitVehicleDescr>
+                  <classesDiversity>	2	</classesDiversity>
+                  <classes>	lightTank SPG	</classes>
+                </unitVehicleDescr>
+                <results>
+                  <key>	damageDealt	</key>
+                  <greaterOrEqual>	1500	</greaterOrEqual>
+                  <exceptUs></exceptUs>
+                </results>
+              </and>
+            </unit>
+          </and>
+        </postBattle>
+      </conditions>
+      <bonus>
+        <freeXP>	2000	</freeXP>
+      </bonus>
+    </potapovQuest>
+    <potapovQuest>
+      <enabled>	true	</enabled>
+      <id>	quest_3_1_11_add	</id>
+      <serverOnly>	true	</serverOnly>
+      <conditions>
+        <preBattle>
+          <battle>
+            <unit>
+              <isSquad>	true	</isSquad>
+            </unit>
+          </battle>
+        </preBattle>
+        <postBattle>
+          <and>
+            <results>
+              <key>	damageAssistedRadio	</key>
+              <greaterOrEqual>	2000	</greaterOrEqual>
+            </results>
+            <vehicleKills>
+              <greaterOrEqual>	2	</greaterOrEqual>
+            </vehicleKills>
+            <unit>
+              <and>
+                <unitVehicleDescr>
+                  <classesDiversity>	2	</classesDiversity>
+                  <classes>	lightTank SPG	</classes>
+                </unitVehicleDescr>
+                <results>
+                  <key>	damageDealt	</key>
+                  <greaterOrEqual>	1500	</greaterOrEqual>
+                  <exceptUs></exceptUs>
+                </results>
+              </and>
+            </unit>
+            <isAlive></isAlive>
+            <win></win>
+          </and>
+        </postBattle>
+      </conditions>
+      <bonus>
+        <slots>	1	</slots>
+      </bonus>
+    </potapovQuest>
+  </quests>
+</quest_3_1_11.xml>

@@ -1,0 +1,413 @@
+<vehicle_messages_panel.xml>
+  <direction>	up	</direction>
+  <maxLinesCount>	5	</maxLinesCount>
+  <lifeTime>	12.0	</lifeTime>
+  <alphaSpeed>	3.0	</alphaSpeed>
+  <messages>
+    <DEVICE_CRITICAL_AT_SHOT>
+      <text>	_(#ingame_gui:player_messages/DEVICE_CRITICAL_AT_SHOT)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_CRITICAL_AT_SHOT>
+    <DEVICE_DESTROYED_AT_SHOT>
+      <text>	_(#ingame_gui:player_messages/DEVICE_DESTROYED_AT_SHOT)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_DESTROYED_AT_SHOT>
+    <DEVICE_STARTED_FIRE_AT_SHOT>
+      <text>	_(#ingame_gui:player_messages/DEVICE_STARTED_FIRE_AT_SHOT)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_STARTED_FIRE_AT_SHOT>
+    <TANKMAN_HIT_AT_SHOT>
+      <text>	_(#ingame_gui:player_messages/TANKMAN_HIT_AT_SHOT)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </TANKMAN_HIT_AT_SHOT>
+    <TANKMAN_RESTORED>
+      <text>	_(#ingame_gui:player_messages/TANKMAN_RESTORED)	</text>
+      <colorAlias>	green	</colorAlias>
+    </TANKMAN_RESTORED>
+    <TANKMAN_HIT_AT_MEDKIT_OVER>
+      <text>	_(#ingame_gui:player_messages/TANKMAN_HIT_AT_MEDKIT_OVER)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </TANKMAN_HIT_AT_MEDKIT_OVER>
+    <DEVICE_CRITICAL_AT_FIRE>
+      <text>	_(#ingame_gui:player_messages/DEVICE_CRITICAL_AT_FIRE)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_CRITICAL_AT_FIRE>
+    <DEVICE_DESTROYED_AT_FIRE>
+      <text>	_(#ingame_gui:player_messages/DEVICE_DESTROYED_AT_FIRE)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_DESTROYED_AT_FIRE>
+    <DEVICE_REPAIRED_TO_CRITICAL>
+      <text>	_(#ingame_gui:player_messages/DEVICE_REPAIRED_TO_CRITICAL)	</text>
+      <colorAlias>	green	</colorAlias>
+    </DEVICE_REPAIRED_TO_CRITICAL>
+    <DEVICE_REPAIRED>
+      <text>	_(#ingame_gui:player_messages/DEVICE_REPAIRED)	</text>
+      <colorAlias>	green	</colorAlias>
+    </DEVICE_REPAIRED>
+    <DEVICE_CRITICAL_AT_REPAIRKIT_OVER>
+      <text>	_(#ingame_gui:player_messages/DEVICE_CRITICAL_AT_REPAIRKIT_OVER)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_CRITICAL_AT_REPAIRKIT_OVER>
+    <ENGINE_CRITICAL_AT_UNLIMITED_RPM>
+      <text>	_(#ingame_gui:player_messages/ENGINE_CRITICAL_AT_UNLIMITED_RPM)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </ENGINE_CRITICAL_AT_UNLIMITED_RPM>
+    <ENGINE_DESTROYED_AT_UNLIMITED_RPM>
+      <text>	_(#ingame_gui:player_messages/ENGINE_DESTROYED_AT_UNLIMITED_RPM)	</text>
+      <colorAlias>
+        <default>	red	</default>
+        <color_blind>	purple	</color_blind>
+      </colorAlias>
+    </ENGINE_DESTROYED_AT_UNLIMITED_RPM>
+    <FIRE_STOPPED>
+      <text>	_(#ingame_gui:player_messages/FIRE_STOPPED)	</text>
+      <colorAlias>	green	</colorAlias>
+    </FIRE_STOPPED>
+    <SCREENSHOT_CREATED>
+      <text>	_(#menu:screenshot/save)	</text>
+      <colorAlias>	green	</colorAlias>
+    </SCREENSHOT_CREATED>
+    <DEATH_FROM_INACTIVE_CREW_AT_SHOT>
+      <text>	_(#ingame_gui:player_messages/DEATH_FROM_INACTIVE_CREW_AT_SHOT)	</text>
+      <colorAlias>
+        <default>	red	</default>
+        <color_blind>	purple	</color_blind>
+      </colorAlias>
+    </DEATH_FROM_INACTIVE_CREW_AT_SHOT>
+    <DEATH_FROM_DEVICE_EXPLOSION_AT_SHOT>
+      <text>	_(#ingame_gui:player_messages/DEATH_FROM_DEVICE_EXPLOSION_AT_SHOT)	</text>
+      <colorAlias>
+        <default>	red	</default>
+        <color_blind>	purple	</color_blind>
+      </colorAlias>
+    </DEATH_FROM_DEVICE_EXPLOSION_AT_SHOT>
+    <DEATH_FROM_DEVICE_EXPLOSION_AT_FIRE>
+      <text>	_(#ingame_gui:player_messages/DEATH_FROM_DEVICE_EXPLOSION_AT_FIRE)	</text>
+      <colorAlias>
+        <default>	red	</default>
+        <color_blind>	purple	</color_blind>
+      </colorAlias>
+    </DEATH_FROM_DEVICE_EXPLOSION_AT_FIRE>
+    <insufficient_memory_please_reboot>
+      <text>	_(#system_messages:memory_critical/insufficient_memory_please_reboot)	</text>
+      <colorAlias>
+        <default>	red	</default>
+        <color_blind>	purple	</color_blind>
+      </colorAlias>
+    </insufficient_memory_please_reboot>
+    <tex_was_lowered_to_min>
+      <text>	_(#system_messages:memory_critical/tex_was_lowered_to_min)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </tex_was_lowered_to_min>
+    <replayPaused>
+      <text>	_(#ingame_gui:player_messages/replayPaused)	</text>
+      <colorAlias>	green	</colorAlias>
+    </replayPaused>
+    <replayFreeCameraActivated>
+      <text>	_(#ingame_gui:player_messages/replayFreeCameraActivated)	</text>
+      <colorAlias>	green	</colorAlias>
+    </replayFreeCameraActivated>
+    <replaySavedCameraActivated>
+      <text>	_(#ingame_gui:player_messages/replaySavedCameraActivated)	</text>
+      <colorAlias>	green	</colorAlias>
+    </replaySavedCameraActivated>
+    <replaySpeedChange>
+      <text>	_(#ingame_gui:player_messages/replaySpeedChange)	</text>
+      <colorAlias>	green	</colorAlias>
+    </replaySpeedChange>
+    <replayControlsHelp1>
+      <text>	_(#ingame_gui:player_messages/replayControlsHelp1)	</text>
+      <colorAlias>	green	</colorAlias>
+    </replayControlsHelp1>
+    <replayControlsHelp2>
+      <text>	_(#ingame_gui:player_messages/replayControlsHelp2)	</text>
+      <colorAlias>	green	</colorAlias>
+    </replayControlsHelp2>
+    <replayControlsHelp3>
+      <text>	_(#ingame_gui:player_messages/replayControlsHelp3)	</text>
+      <colorAlias>	green	</colorAlias>
+    </replayControlsHelp3>
+    <HORN_IS_BLOCKED>
+      <text>	_(#ingame_gui:player_messages/horn_is_blocked)	</text>
+      <colorAlias>
+        <default>	red	</default>
+        <color_blind>	purple	</color_blind>
+      </colorAlias>
+    </HORN_IS_BLOCKED>
+    <LOADER_INTUITION_WAS_USED>
+      <text>	_(#ingame_gui:player_messages/loader_intuition_was_used)	</text>
+      <colorAlias>	green	</colorAlias>
+    </LOADER_INTUITION_WAS_USED>
+    <DEATH_FROM_FIRE>
+      <text>	_(#ingame_gui:vehicle_messages/DEATH_FROM_FIRE)	</text>
+      <colorAlias>
+        <default>	red	</default>
+        <color_blind>	purple	</color_blind>
+      </colorAlias>
+    </DEATH_FROM_FIRE>
+    <DEATH_FROM_SHOT>
+      <text>	_(#ingame_gui:vehicle_messages/DEATH_FROM_SHOT)	</text>
+      <colorAlias>
+        <default>	red	</default>
+        <color_blind>	purple	</color_blind>
+      </colorAlias>
+    </DEATH_FROM_SHOT>
+    <DEVICE_CRITICAL_AT_WORLD_COLLISION_SELF_SUICIDE>
+      <text>	_(#ingame_gui:vehicle_messages/DEVICE_CRITICAL_AT_WORLD_COLLISION_SELF_SUICIDE)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_CRITICAL_AT_WORLD_COLLISION_SELF_SUICIDE>
+    <DEVICE_CRITICAL_AT_WORLD_COLLISION_ENEMY_SELF>
+      <text>	_(#ingame_gui:vehicle_messages/DEVICE_CRITICAL_AT_WORLD_COLLISION_ENEMY_SELF)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_CRITICAL_AT_WORLD_COLLISION_ENEMY_SELF>
+    <DEVICE_CRITICAL_AT_WORLD_COLLISION_ALLY_SELF>
+      <text>	_(#ingame_gui:vehicle_messages/DEVICE_CRITICAL_AT_WORLD_COLLISION_ALLY_SELF)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_CRITICAL_AT_WORLD_COLLISION_ALLY_SELF>
+    <DEVICE_CRITICAL_AT_WORLD_COLLISION_ALLY_SUICIDE>
+      <text>	_(#ingame_gui:vehicle_messages/DEVICE_CRITICAL_AT_WORLD_COLLISION_ALLY_SUICIDE)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_CRITICAL_AT_WORLD_COLLISION_ALLY_SUICIDE>
+    <DEVICE_CRITICAL_AT_WORLD_COLLISION_ENEMY_ALLY>
+      <text>	_(#ingame_gui:vehicle_messages/DEVICE_CRITICAL_AT_WORLD_COLLISION_ENEMY_ALLY)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_CRITICAL_AT_WORLD_COLLISION_ENEMY_ALLY>
+    <DEVICE_CRITICAL_AT_WORLD_COLLISION_ALLY_ALLY>
+      <text>	_(#ingame_gui:vehicle_messages/DEVICE_CRITICAL_AT_WORLD_COLLISION_ALLY_ALLY)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_CRITICAL_AT_WORLD_COLLISION_ALLY_ALLY>
+    <DEVICE_DESTROYED_AT_WORLD_COLLISION_SELF_SUICIDE>
+      <text>	_(#ingame_gui:vehicle_messages/DEVICE_DESTROYED_AT_WORLD_COLLISION_SELF_SUICIDE)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_DESTROYED_AT_WORLD_COLLISION_SELF_SUICIDE>
+    <DEVICE_DESTROYED_AT_WORLD_COLLISION_ENEMY_SELF>
+      <text>	_(#ingame_gui:vehicle_messages/DEVICE_DESTROYED_AT_WORLD_COLLISION_ENEMY_SELF)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_DESTROYED_AT_WORLD_COLLISION_ENEMY_SELF>
+    <DEVICE_DESTROYED_AT_WORLD_COLLISION_ALLY_SELF>
+      <text>	_(#ingame_gui:vehicle_messages/DEVICE_DESTROYED_AT_WORLD_COLLISION_ALLY_SELF)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_DESTROYED_AT_WORLD_COLLISION_ALLY_SELF>
+    <DEVICE_DESTROYED_AT_WORLD_COLLISION_ALLY_SUICIDE>
+      <text>	_(#ingame_gui:vehicle_messages/DEVICE_DESTROYED_AT_WORLD_COLLISION_ALLY_SUICIDE)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_DESTROYED_AT_WORLD_COLLISION_ALLY_SUICIDE>
+    <DEVICE_DESTROYED_AT_WORLD_COLLISION_ENEMY_ALLY>
+      <text>	_(#ingame_gui:vehicle_messages/DEVICE_DESTROYED_AT_WORLD_COLLISION_ENEMY_ALLY)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_DESTROYED_AT_WORLD_COLLISION_ENEMY_ALLY>
+    <DEVICE_DESTROYED_AT_WORLD_COLLISION_ALLY_ALLY>
+      <text>	_(#ingame_gui:vehicle_messages/DEVICE_DESTROYED_AT_WORLD_COLLISION_ALLY_ALLY)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_DESTROYED_AT_WORLD_COLLISION_ALLY_ALLY>
+    <DEVICE_CRITICAL_AT_RAMMING_SELF_SUICIDE>
+      <text>	_(#ingame_gui:vehicle_messages/DEVICE_CRITICAL_AT_RAMMING_SELF_SUICIDE)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_CRITICAL_AT_RAMMING_SELF_SUICIDE>
+    <DEVICE_CRITICAL_AT_RAMMING_ENEMY_SELF>
+      <text>	_(#ingame_gui:vehicle_messages/DEVICE_CRITICAL_AT_RAMMING_ENEMY_SELF)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_CRITICAL_AT_RAMMING_ENEMY_SELF>
+    <DEVICE_CRITICAL_AT_RAMMING_ALLY_SELF>
+      <text>	_(#ingame_gui:vehicle_messages/DEVICE_CRITICAL_AT_RAMMING_ALLY_SELF)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_CRITICAL_AT_RAMMING_ALLY_SELF>
+    <DEVICE_CRITICAL_AT_RAMMING_ALLY_SUICIDE>
+      <text>	_(#ingame_gui:vehicle_messages/DEVICE_CRITICAL_AT_RAMMING_ALLY_SUICIDE)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_CRITICAL_AT_RAMMING_ALLY_SUICIDE>
+    <DEVICE_CRITICAL_AT_RAMMING_ENEMY_ALLY>
+      <text>	_(#ingame_gui:vehicle_messages/DEVICE_CRITICAL_AT_RAMMING_ENEMY_ALLY)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_CRITICAL_AT_RAMMING_ENEMY_ALLY>
+    <DEVICE_CRITICAL_AT_RAMMING_ALLY_ALLY>
+      <text>	_(#ingame_gui:vehicle_messages/DEVICE_CRITICAL_AT_RAMMING_ALLY_ALLY)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_CRITICAL_AT_RAMMING_ALLY_ALLY>
+    <DEVICE_DESTROYED_AT_RAMMING_SELF_SUICIDE>
+      <text>	_(#ingame_gui:vehicle_messages/DEVICE_DESTROYED_AT_RAMMING_SELF_SUICIDE)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_DESTROYED_AT_RAMMING_SELF_SUICIDE>
+    <DEVICE_DESTROYED_AT_RAMMING_ENEMY_SELF>
+      <text>	_(#ingame_gui:vehicle_messages/DEVICE_DESTROYED_AT_RAMMING_ENEMY_SELF)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_DESTROYED_AT_RAMMING_ENEMY_SELF>
+    <DEVICE_DESTROYED_AT_RAMMING_ALLY_SELF>
+      <text>	_(#ingame_gui:vehicle_messages/DEVICE_DESTROYED_AT_RAMMING_ALLY_SELF)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_DESTROYED_AT_RAMMING_ALLY_SELF>
+    <DEVICE_DESTROYED_AT_RAMMING_ALLY_SUICIDE>
+      <text>	_(#ingame_gui:vehicle_messages/DEVICE_DESTROYED_AT_RAMMING_ALLY_SUICIDE)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_DESTROYED_AT_RAMMING_ALLY_SUICIDE>
+    <DEVICE_DESTROYED_AT_RAMMING_ENEMY_ALLY>
+      <text>	_(#ingame_gui:vehicle_messages/DEVICE_DESTROYED_AT_RAMMING_ENEMY_ALLY)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_DESTROYED_AT_RAMMING_ENEMY_ALLY>
+    <DEVICE_DESTROYED_AT_RAMMING_ALLY_ALLY>
+      <text>	_(#ingame_gui:vehicle_messages/DEVICE_DESTROYED_AT_RAMMING_ALLY_ALLY)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_DESTROYED_AT_RAMMING_ALLY_ALLY>
+    <DEVICE_STARTED_FIRE_AT_RAMMING_SELF_SUICIDE>
+      <text>	_(#ingame_gui:vehicle_messages/DEVICE_STARTED_FIRE_AT_RAMMING_SELF_SUICIDE)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_STARTED_FIRE_AT_RAMMING_SELF_SUICIDE>
+    <DEVICE_STARTED_FIRE_AT_RAMMING_ENEMY_SELF>
+      <text>	_(#ingame_gui:vehicle_messages/DEVICE_STARTED_FIRE_AT_RAMMING_ENEMY_SELF)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_STARTED_FIRE_AT_RAMMING_ENEMY_SELF>
+    <DEVICE_STARTED_FIRE_AT_RAMMING_ALLY_SELF>
+      <text>	_(#ingame_gui:vehicle_messages/DEVICE_STARTED_FIRE_AT_RAMMING_ALLY_SELF)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_STARTED_FIRE_AT_RAMMING_ALLY_SELF>
+    <DEVICE_STARTED_FIRE_AT_RAMMING_ALLY_SUICIDE>
+      <text>	_(#ingame_gui:vehicle_messages/DEVICE_STARTED_FIRE_AT_RAMMING_ALLY_SUICIDE)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_STARTED_FIRE_AT_RAMMING_ALLY_SUICIDE>
+    <DEVICE_STARTED_FIRE_AT_RAMMING_ENEMY_ALLY>
+      <text>	_(#ingame_gui:vehicle_messages/DEVICE_STARTED_FIRE_AT_RAMMING_ENEMY_ALLY)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_STARTED_FIRE_AT_RAMMING_ENEMY_ALLY>
+    <DEVICE_STARTED_FIRE_AT_RAMMING_ALLY_ALLY>
+      <text>	_(#ingame_gui:vehicle_messages/DEVICE_STARTED_FIRE_AT_RAMMING_ALLY_ALLY)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </DEVICE_STARTED_FIRE_AT_RAMMING_ALLY_ALLY>
+    <TANKMAN_HIT_AT_WORLD_COLLISION_SELF_SUICIDE>
+      <text>	_(#ingame_gui:vehicle_messages/TANKMAN_HIT_AT_WORLD_COLLISION_SELF_SUICIDE)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </TANKMAN_HIT_AT_WORLD_COLLISION_SELF_SUICIDE>
+    <TANKMAN_HIT_AT_WORLD_COLLISION_ENEMY_SELF>
+      <text>	_(#ingame_gui:vehicle_messages/TANKMAN_HIT_AT_WORLD_COLLISION_ENEMY_SELF)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </TANKMAN_HIT_AT_WORLD_COLLISION_ENEMY_SELF>
+    <TANKMAN_HIT_AT_WORLD_COLLISION_ALLY_SELF>
+      <text>	_(#ingame_gui:vehicle_messages/TANKMAN_HIT_AT_WORLD_COLLISION_ALLY_SELF)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </TANKMAN_HIT_AT_WORLD_COLLISION_ALLY_SELF>
+    <TANKMAN_HIT_AT_WORLD_COLLISION_ALLY_SUICIDE>
+      <text>	_(#ingame_gui:vehicle_messages/TANKMAN_HIT_AT_WORLD_COLLISION_ALLY_SUICIDE)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </TANKMAN_HIT_AT_WORLD_COLLISION_ALLY_SUICIDE>
+    <TANKMAN_HIT_AT_WORLD_COLLISION_ENEMY_ALLY>
+      <text>	_(#ingame_gui:vehicle_messages/TANKMAN_HIT_AT_WORLD_COLLISION_ENEMY_ALLY)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </TANKMAN_HIT_AT_WORLD_COLLISION_ENEMY_ALLY>
+    <TANKMAN_HIT_AT_WORLD_COLLISION_ALLY_ALLY>
+      <text>	_(#ingame_gui:vehicle_messages/TANKMAN_HIT_AT_WORLD_COLLISION_ALLY_ALLY)	</text>
+      <colorAlias>	yellow	</colorAlias>
+    </TANKMAN_HIT_AT_WORLD_COLLISION_ALLY_ALLY>
+    <DEATH_FROM_DROWNING_SELF_SUICIDE>
+      <text>	_(#ingame_gui:vehicle_messages/DEATH_FROM_DROWNING_SELF_SUICIDE)	</text>
+      <colorAlias>
+        <default>	red	</default>
+        <color_blind>	purple	</color_blind>
+      </colorAlias>
+    </DEATH_FROM_DROWNING_SELF_SUICIDE>
+    <DEATH_FROM_DROWNING_ENEMY_SELF>
+      <text>	_(#ingame_gui:vehicle_messages/DEATH_FROM_DROWNING_ENEMY_SELF)	</text>
+      <colorAlias>
+        <default>	red	</default>
+        <color_blind>	purple	</color_blind>
+      </colorAlias>
+    </DEATH_FROM_DROWNING_ENEMY_SELF>
+    <DEATH_FROM_DROWNING_ALLY_SELF>
+      <text>	_(#ingame_gui:vehicle_messages/DEATH_FROM_DROWNING_ALLY_SELF)	</text>
+      <colorAlias>
+        <default>	red	</default>
+        <color_blind>	purple	</color_blind>
+      </colorAlias>
+    </DEATH_FROM_DROWNING_ALLY_SELF>
+    <DEATH_FROM_WORLD_COLLISION_SELF_SUICIDE>
+      <text>	_(#ingame_gui:vehicle_messages/DEATH_FROM_WORLD_COLLISION_SELF_SUICIDE)	</text>
+      <colorAlias>
+        <default>	red	</default>
+        <color_blind>	purple	</color_blind>
+      </colorAlias>
+    </DEATH_FROM_WORLD_COLLISION_SELF_SUICIDE>
+    <DEATH_FROM_WORLD_COLLISION_ENEMY_SELF>
+      <text>	_(#ingame_gui:vehicle_messages/DEATH_FROM_WORLD_COLLISION_ENEMY_SELF)	</text>
+      <colorAlias>
+        <default>	red	</default>
+        <color_blind>	purple	</color_blind>
+      </colorAlias>
+    </DEATH_FROM_WORLD_COLLISION_ENEMY_SELF>
+    <DEATH_FROM_WORLD_COLLISION_ALLY_SELF>
+      <text>	_(#ingame_gui:vehicle_messages/DEATH_FROM_WORLD_COLLISION_ALLY_SELF)	</text>
+      <colorAlias>
+        <default>	red	</default>
+        <color_blind>	purple	</color_blind>
+      </colorAlias>
+    </DEATH_FROM_WORLD_COLLISION_ALLY_SELF>
+    <DEATH_FROM_INACTIVE_CREW_AT_WORLD_COLLISION_SELF_SUICIDE>
+      <text>	_(#ingame_gui:vehicle_messages/DEATH_FROM_INACTIVE_CREW_AT_WORLD_COLLISION_SELF_SUICIDE)	</text>
+      <colorAlias>
+        <default>	red	</default>
+        <color_blind>	purple	</color_blind>
+      </colorAlias>
+    </DEATH_FROM_INACTIVE_CREW_AT_WORLD_COLLISION_SELF_SUICIDE>
+    <DEATH_FROM_INACTIVE_CREW_AT_WORLD_COLLISION_ENEMY_SELF>
+      <text>	_(#ingame_gui:vehicle_messages/DEATH_FROM_INACTIVE_CREW_AT_WORLD_COLLISION_ENEMY_SELF)	</text>
+      <colorAlias>
+        <default>	red	</default>
+        <color_blind>	purple	</color_blind>
+      </colorAlias>
+    </DEATH_FROM_INACTIVE_CREW_AT_WORLD_COLLISION_ENEMY_SELF>
+    <DEATH_FROM_INACTIVE_CREW_AT_WORLD_COLLISION_ALLY_SELF>
+      <text>	_(#ingame_gui:vehicle_messages/DEATH_FROM_INACTIVE_CREW_AT_WORLD_COLLISION_ALLY_SELF)	</text>
+      <colorAlias>
+        <default>	red	</default>
+        <color_blind>	purple	</color_blind>
+      </colorAlias>
+    </DEATH_FROM_INACTIVE_CREW_AT_WORLD_COLLISION_ALLY_SELF>
+    <DEATH_FROM_DEATH_ZONE_SELF_SUICIDE>
+      <text>	_(#ingame_gui:vehicle_messages/DEATH_FROM_DEATH_ZONE_SELF_SUICIDE)	</text>
+      <colorAlias>
+        <default>	red	</default>
+        <color_blind>	purple	</color_blind>
+      </colorAlias>
+    </DEATH_FROM_DEATH_ZONE_SELF_SUICIDE>
+    <DEATH_FROM_DEATH_ZONE_ENEMY_SELF>
+      <text>	_(#ingame_gui:vehicle_messages/DEATH_FROM_DEATH_ZONE_ENEMY_SELF)	</text>
+      <colorAlias>
+        <default>	red	</default>
+        <color_blind>	purple	</color_blind>
+      </colorAlias>
+    </DEATH_FROM_DEATH_ZONE_ENEMY_SELF>
+    <DEATH_FROM_DEATH_ZONE_ALLY_SELF>
+      <text>	_(#ingame_gui:vehicle_messages/DEATH_FROM_DEATH_ZONE_ALLY_SELF)	</text>
+      <colorAlias>
+        <default>	red	</default>
+        <color_blind>	purple	</color_blind>
+      </colorAlias>
+    </DEATH_FROM_DEATH_ZONE_ALLY_SELF>
+    <DEATH_FROM_RAMMING_SELF_SUICIDE>
+      <text>	_(#ingame_gui:vehicle_messages/DEATH_FROM_RAMMING_SELF_SUICIDE)	</text>
+      <colorAlias>
+        <default>	red	</default>
+        <color_blind>	purple	</color_blind>
+      </colorAlias>
+    </DEATH_FROM_RAMMING_SELF_SUICIDE>
+    <DEATH_FROM_RAMMING_ENEMY_SELF>
+      <text>	_(#ingame_gui:vehicle_messages/DEATH_FROM_RAMMING_ENEMY_SELF)	</text>
+      <colorAlias>
+        <default>	red	</default>
+        <color_blind>	purple	</color_blind>
+      </colorAlias>
+    </DEATH_FROM_RAMMING_ENEMY_SELF>
+    <DEATH_FROM_RAMMING_ALLY_SELF>
+      <text>	_(#ingame_gui:vehicle_messages/DEATH_FROM_RAMMING_ALLY_SELF)	</text>
+      <colorAlias>
+        <default>	red	</default>
+        <color_blind>	purple	</color_blind>
+      </colorAlias>
+    </DEATH_FROM_RAMMING_ALLY_SELF>
+    <DRR_SCALE_STEP_UP>
+      <text>	_(#system_messages:drr_scale/step_up)	</text>
+      <colorAlias>	green	</colorAlias>
+    </DRR_SCALE_STEP_UP>
+    <DRR_SCALE_STEP_DOWN>
+      <text>	_(#system_messages:drr_scale/step_down)	</text>
+      <colorAlias>	green	</colorAlias>
+    </DRR_SCALE_STEP_DOWN>
+  </messages>
+</vehicle_messages_panel.xml>

@@ -1,0 +1,48 @@
+<root>
+
+	<!-- This file contains the default development options for
+		configuring the server.
+		These are documented in the Server Operations Guide
+		(bigworld/doc/server_operations_guide.pdf). -->
+
+	<parentFile> server/production_defaults.xml </parentFile>
+	<production> false </production> <!-- Type: Boolean -->
+
+	<hasDevelopmentAssertions> true </hasDevelopmentAssertions> <!-- Type: Boolean -->
+
+	<maxChannelOverflow>
+		<isAssert> true </isAssert> <!-- Type: Boolean -->
+	</maxChannelOverflow>
+
+	<baseApp>
+	</baseApp>
+
+	<baseAppMgr>
+		<!-- <baseAppOverloadLevel>	1.5	</baseAppOverloadLevel> --> <!-- Type: Float -->
+	</baseAppMgr>
+
+	<cellApp>
+	</cellApp>
+
+	<cellAppMgr>
+		<!--  <cellAppOverloadLevel> 1.5 </cellAppOverloadLevel> --> <!-- Type: Float -->
+	</cellAppMgr>
+
+	<db>
+		<type> xml </type> <!-- Type: String -->
+
+		<mysql>
+			<syncTablesToDefs> true </syncTablesToDefs> <!-- Type: Boolean -->
+		</mysql>
+	</db>
+
+	<loginApp>
+		<shouldShutDownIfPortUsed> false </shouldShutDownIfPortUsed> <!-- Type: Boolean -->
+		<allowLogin> true </allowLogin> <!-- Type: Boolean -->
+		<allowProbe> true </allowProbe> <!-- Type: Boolean -->
+		<logProbes> false </logProbes> <!-- Type: Boolean -->
+		<registerExternalInterface> true </registerExternalInterface> <!-- Type: Boolean -->
+		<verboseLoginFailures> true </verboseLoginFailures> <!-- Type: Boolean -->
+	</loginApp>
+
+</root>

@@ -1,0 +1,16 @@
+<xyznuvtb_d.xml>
+	<elements>
+		<POSITION/>
+		<NORMAL/>
+		<TEXCOORD>
+			<type> FLOAT2 </type>
+		</TEXCOORD>
+		<TANGENT/>
+		<BINORMAL/>
+		<COLOR>
+			<stream> 1 </stream>
+			<offset> 0 </offset>
+			<type> COLOR </type>
+		</COLOR>
+	</elements>
+</xyznuvtb_d.xml>

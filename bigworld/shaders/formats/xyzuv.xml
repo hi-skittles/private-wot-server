@@ -1,0 +1,8 @@
+<xyzuv.xml>
+	<elements>
+		<POSITION/>
+		<TEXCOORD>
+			<type> FLOAT2 </type>
+		</TEXCOORD>
+	</elements>
+</xyzuv.xml>

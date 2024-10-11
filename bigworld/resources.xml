@@ -1,0 +1,250 @@
+<resources.xml>
+	<!--
+		This file specifies where the resources
+		required by the BigWorld Client engine are located.
+
+		You can customise this file for your specific resource tree
+		by copying this file into the root of your tree, and making
+		the required changes there.
+
+		This file res/bigworld/resources.xml should not itself be changed.
+	-->
+	<system>
+		<engineConfigXML>	engine_config.xml	</engineConfigXML>
+		<!-- Global engine settings -->
+		<scriptsConfigXML>	scripts_config.xml	</scriptsConfigXML>
+		<!-- Config file to be passed to the scripts -->
+		<notFoundBmp>	system/maps/notfound.bmp		</notFoundBmp>
+		<!-- Texture map to be used in place of missing textures -->
+		<blackBmp>	system/maps/col_black.bmp		</blackBmp>
+		<!-- Black texture map -->
+		<defaultNorms>	system/maps/default_norms.bmp		</defaultNorms>
+		<!-- Default flat normal map -->
+		<nullBmp>	system/maps/aid_null.tga	</nullBmp>
+		<!-- Default texture map for new space -->
+		<emptyTerrainTextureBmp>	helpers/maps/aid_builder.tga	</emptyTerrainTextureBmp>
+		<!-- Null texture map -->
+		<stippleMap>	system/maps/stipple.tga	</stippleMap>
+		<!-- Stipple texture map -->
+		<notFoundModel>	helpers/props/standin.model	</notFoundModel>
+		<!-- Model to be used in place of missing models -->
+		<notFoundMeshPSModel>	helpers/props/mesh_particles_standin.model	</notFoundMeshPSModel>
+		<!-- Model to be used in place of missing mesh particle system models -->
+		<fontRoot>	system/fonts/				</fontRoot>
+		<!-- Root directory where to look for font definition files -->
+		<defaultFontName>	default_medium.font		</defaultFontName>
+		<!-- Default font for text gui components -->
+		
+		<consoleFonts>	
+			<!-- List of font files the console can use. The one that 
+			better matches the desired width will be used. The desired width 
+			is computed based on the display width and desired console width -->
+		
+			<font>	system_tiny.font		</font>
+			<font>	system_small.font		</font>
+			<font>	system_medium.font	</font>
+			<font>	system_large.font		</font>
+		</consoleFonts>
+		
+		<loadingScreen>	system/maps/loading_screen.bmp	</loadingScreen>
+		<!-- Points to image to be shown right after creating the 
+		display device, while the application is initialising and 
+		resources pre-loading. This is only used if loadingScreenGUI 
+		is not defined or can't be found -->
+		<geometricsMaterial> system/materials/geometrics.mfm </geometricsMaterial>
+		<!-- Material to be used when rendering geometrics -->
+		<ashesMaterial>	system/materials/ashes.mfm		</ashesMaterial>
+		<!-- Material to be used when rendering GUI components -->
+		<goboMaterial>	system/materials/gobo.mfm	</goboMaterial>
+		<!-- Material to be used by the gobo component -->
+		<minimapMaterial>	system/materials/minimap.mfm		</minimapMaterial>
+		<!-- Material to be used when rendering Minimap components -->
+		<shaderIncludePaths> shaders/std_effects/;shaders/terrain </shaderIncludePaths>
+		<!-- Shader include search paths. Separate multiple paths using ; -->
+		<defaultShaderPath> shaders/std_effects/ </defaultShaderPath>
+		<!-- The default shader path for ModelEditor -->
+		<defaultMfmPath> materials/template_mfms </defaultMfmPath>
+		<!-- The default MFM path for ModelEditor -->		
+		<defaultLightsPath> helpers/lights </defaultLightsPath>
+		<!-- The default light path for ModelEditor -->
+		<terrain2> system/data/terrain2.xml </terrain2>
+		<!-- The settings for terrain2 -->
+		<lightOnlyEffect> shaders/std_effects/lightonly.fx </lightOnlyEffect>
+		<defaultFloorTexture> helpers/maps/system/default.bmp </defaultFloorTexture>
+		<decalEffect>	shaders/decal/decal.fx	</decalEffect>
+		<!-- Decal effect material -->
+		<textureDetailLevels> system/data/texture_detail_levels.xml </textureDetailLevels>
+		<!-- Texture detail level information file -->
+		<bloom>
+			<!-- blooming setup -->
+			<downSample>	shaders/bloom/down_sample.fx	</downSample>
+			<colourScale>	shaders/post_processing/legacy/colour_scale.fx	</colourScale>
+			<gaussianBlur>	shaders/post_processing/legacy/gaussian_blur.fx	</gaussianBlur>
+			<transfer>	shaders/bloom/transfer.fx	</transfer>
+			<downSampleColourScale> shaders/bloom/down_sample_and_colour_scale.fx	</downSampleColourScale>
+		</bloom>
+		<dxenum>
+			system/data/dxenum.xml
+		</dxenum>
+		<speedTreeXML> system/data/speedtree.xml </speedTreeXML>
+		<meshParticles>
+			<solid>		shaders/std_effects/mesh_particle.fx		</solid>
+			<additive>	shaders/std_effects/mesh_particle_add.fx	</additive>
+			<blended>	shaders/std_effects/mesh_particle_alpha.fx	</blended>
+		</meshParticles>
+		
+		<spriteParticles>
+			<default>	shaders/std_effects/sprite_particle.fx	</default>
+		</spriteParticles>
+		
+		<graphicsSettingsXML> system/data/graphics_settings.xml </graphicsSettingsXML>
+		<graphicsSettingsPresets> system/data/graphics_settings_presets.xml </graphicsSettingsPresets>
+		<autoConfigSettings> system/data/auto_config_settings.xml </autoConfigSettings>
+		
+	</system>
+	<environment>
+		<materialKinds> system/data/material_kinds.xml  </materialKinds>
+		<!-- Points to the XML describing material kinds -->
+		<floraXML>		system/data/flora.xml			</floraXML>
+		<!-- Points to the XML describing ecotypes -->
+		<skyXML>		system/data/sky.xml			</skyXML>
+		<!-- Points to the xml containing data for the sky light map (cloud
+		shadowing)-->		
+		<splodgeMaterial>	system/materials/splodge.mfm	</splodgeMaterial>
+		<!-- Splodge shadow material -->
+		<footprintMaterial>	system/materials/footprint.mfm	</footprintMaterial>
+		<!-- Foot print material -->
+		<footprintThreshold>	0.035	</footprintThreshold>
+		<!-- The threshold is used by the FootTrigger class to determinate
+		when to trigger a footstep. A new foot step is generated whenever
+		the assigned node's height crosses this level while moving downwards -->
+		<floraMaterial>	system/materials/flora.mfm	</floraMaterial>
+		<!-- Material used to render the flora -->
+		<floraShadowMaterial>	system/materials/flora_shadows.mfm	</floraShadowMaterial>
+		<!-- Material used to render character shadows on flora -->
+		<sunFlareMaterial> system/materials/fx_sun_flare.mfm </sunFlareMaterial>
+		<!-- Material used to render the sun flare -->
+		<sunSplitMaterial> system/materials/fx_sun_split.mfm </sunSplitMaterial>
+		<!-- Material used to render the sun split -->
+		<skyDomeMaterial>	system/materials/sky_dome.mfm	</skyDomeMaterial>
+		<!-- Material used to render the sky dome -->
+		<skyDomeVisual>	system/models/fx_skydome.visual	</skyDomeVisual>
+		<!-- Visual used to render the sky dome -->
+		<ZBufferOccluderFX>	shaders/environment/z_buffer_occluder.fx	</ZBufferOccluderFX>
+		<!-- Effect file used by z buffer occluder to render test geometry for lens flares -->		
+		<billboardMaterial>	system/materials/billboard.mfm </billboardMaterial>
+		<!-- Material used to render billboards -->
+		<billboardVisual> system/models/fx_billboard.visual </billboardVisual>
+		<!-- Visual used to render billboards -->
+		<fogGradientBmpName>	system/maps/gradient.tga	</fogGradientBmpName>
+		<!-- The fog gradient texture, used only by the terrain renderer -->
+		<rainBmpName> system/maps/rain_dash.bmp </rainBmpName>
+		<!-- Rain drops texture map -->
+		<rainSplashParticles> particles/rain_splashes.xml </rainSplashParticles>
+		<!-- Rain splash texture map -->
+		<sunBmpName>	system/maps/sun.tga	</sunBmpName>
+		<!-- Sun texture map -->
+		<sunMaterial>	system/materials/sun.mfm	</sunMaterial>
+		<!-- Sun material -->
+		<moonMaskBmpName>	system/maps/moon_opacity.tga	</moonMaskBmpName>
+		<!-- Moon mask texture map -->
+		<moonBmpName>	system/maps/moon.bmp	</moonBmpName>
+		<!-- Moon texture map -->
+		<moonMaterial>	system/materials/moon.mfm	</moonMaterial>
+		<!-- Moon material -->
+		<sunFlareXML>	system/data/fx_sun.xml	</sunFlareXML>
+		<!-- Sun flare definition file -->
+		<moonFlareXML>	system/data/fx_moon.xml	</moonFlareXML>
+		<!-- Moon flare definition file -->
+		<waterReflectBmpName> system/maps/ref_bwclouds.bmp </waterReflectBmpName>
+		<!-- <waterReflectBmpName> system/maps/default_reflection.dds </waterReflectBmpName> -->
+		<!-- Water reflection map -->
+		<waterNormalMap> system/maps/waves2.dds </waterNormalMap>
+		<!-- Water normal map -->
+		<waterScreenFadeMap> system/maps/fadetoblack.bmp </waterScreenFadeMap>
+		<!-- Water scene fade map -->
+		<waterSimCookieMap> system/maps/water_cookie.tga </waterSimCookieMap>
+		<!-- Water simulation cookie -->
+		<waterNullSimMap> system/maps/null_sim.tga </waterNullSimMap>
+		<!-- Null simulation map -->	
+		<waterEdgeMap> system/maps/edge_foam3.tga </waterEdgeMap>
+		<!-- Water edge foam -->
+		<waterFoamMap> system/maps/foam.tga </waterFoamMap>
+		<!-- Water foam -->
+		<waterSplashParticles>	particles/water_splash.xml	</waterSplashParticles>
+		<!-- Particle system for water splash -->
+		<waterImpactParticles>	particles/water_impact.xml	</waterImpactParticles>
+		<!-- Particle system for water impact -->
+		<waterEffect> shaders/water/water.fx </waterEffect>
+		<!-- Water FX Shader -->
+		<waterSimEffect> shaders/water/simulation.fx </waterSimEffect>
+		<!-- Water Simulation FX Shader -->		
+		<lightningBmpName>	system/maps/fx_arc.bmp	</lightningBmpName>
+		<!-- Lightning strike texture map -->
+		<terrainTextureSpacing> 10.0			</terrainTextureSpacing>
+		<!-- Number of metres per repeat of the tiled terrain textures -->
+		<defaultEditorSpace> helpers/spaces/pe </defaultEditorSpace>
+		<chunkParticleStagger>	50			</chunkParticleStagger>
+		<!-- Number of frames to wait between auto-seeding ticks for chunk particle systems-->
+		<cubeMap>
+			<size> 128 </size>
+			<!-- Size of each face of the cube map. Defaults to 128 -->
+			<numFaceUpdatesPerFrame> 1 </numFaceUpdatesPerFrame>
+			<!-- Number of cube map faces to update each frame. Valid range is from 1 to 6 -->
+		</cubeMap>
+	</environment>
+	<dummy>
+		<!-- Resources used by BigBang -->
+		<characterModel> helpers/props/standin.model	</characterModel>
+		<!-- Default marker model -->
+		<cData>			helpers/blank.cdata	</cData>
+		<!-- Template cData file for terrain2, used to create new spaces -->
+	</dummy>
+	<selectionfx>
+		<portal>	resources/shaders/portal.fx	</portal>
+		<terrain>	resources/shaders/terrain2.fx	</terrain>
+		<prefix>	resources/shaders/selection	</prefix>
+	</selectionfx>
+	<exporter>
+		<defaultMaterial>	materials/template_mfms/lightonly.mfm	</defaultMaterial>
+    	<defaultSkinnedMaterial>	materials/template_mfms/lightonly_skinned.mfm	</defaultSkinnedMaterial>
+	</exporter>
+	<editor>
+		<pointerModel>		resources/models/pointer.model		</pointerModel>
+		<positionGizmo>		helpers/models/position_gizmo.visual	</positionGizmo>
+		<positionGizmoObLock>	helpers/models/position_gizmo2.visual	</positionGizmoObLock>
+		<positionGizmoTrLock>	helpers/models/position_gizmo3.visual	</positionGizmoTrLock>
+		<scaleGizmo>		helpers/models/scale_gizmo.visual	</scaleGizmo>
+		<scaleGizmoUV>      helpers/models/scale_gizmo_uv.visual </scaleGizmoUV>
+		<radiusGizmo>		helpers/models/radius_gizmo.visual	</radiusGizmo>
+		<radiusGizmoSmall>	helpers/models/radius_gizmo_small.visual</radiusGizmoSmall>
+		<rotationGizmo>		helpers/models/rotate_gizmo.visual	</rotationGizmo>
+		<graphLinkGizmo>	helpers/models/graph_link.visual	</graphLinkGizmo>
+		<graphLinkDragGizmo>	helpers/models/graph_link_drag.visual	</graphLinkDragGizmo>
+		<graphAddGizmo>		helpers/models/graph_add.visual	</graphAddGizmo>
+		<linkShader>        resources/shaders/patrol_path.fx    </linkShader>
+		<chunkLinkShader>   resources/shaders/transparent_patrol_path.fx    </chunkLinkShader>
+		<directionalTexture>       resources/materials/patrol_path.bmp </directionalTexture>
+		<noDirectionLinkTexture> resources/materials/patrol_path_entity.bmp </noDirectionLinkTexture>
+		<chunkLinkTexture> resources/materials/patrol_path_chunk.tga </chunkLinkTexture>
+		<entityModel> 		resources/models/entity.model	</entityModel>
+		<entityModelLegacy> helpers/props/standin.model		</entityModelLegacy>
+		<girthSettings> helpers/girths.xml		</girthSettings>
+	</editor>
+	<shaderPaths>
+		<!-- WARNING: It is recommended you only include to folders that
+		directly contain .fx files here, at the lowest level of the directory
+		structure. Including directories closer to the root folder and/or with
+		many files can degrade startup performance -->
+		<path>  resources/effects/  </path>
+		<path>  resources/materials/  </path>
+		<path>  resources/models/ </path>
+		<path>  resources/shaders/  </path>
+		<path>  system/materials/   </path>
+		<path>  shaders/   </path>
+	</shaderPaths>
+  <assetServer>
+    <path>../../bin/tools/asset_pipeline_release/jit_compiler</path>
+    <params>-j 4</params>
+  </assetServer>
+</resources.xml>

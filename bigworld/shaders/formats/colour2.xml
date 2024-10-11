@@ -1,0 +1,10 @@
+<colour2.xml>
+	<elements>
+		<COLOR>
+			<semanticIndex> 1 </semanticIndex>
+			<stream> 11 </stream>
+			<offset> 0 </offset>
+			<type> COLOR </type>
+		</COLOR>
+	</elements>
+</colour2.xml>

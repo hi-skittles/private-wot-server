@@ -1,0 +1,108 @@
+<root>
+	<snow_flakes>
+		<serialiseVersionData>	2	</serialiseVersionData>
+		<capacity>	5000	</capacity>
+		<windFactor_>	0.400000	</windFactor_>
+		<explicitTransform_>	false	</explicitTransform_>
+		<explicitPosition_>	0.000000 0.000000 0.000000	</explicitPosition_>
+		<explicitDirection_>	0.000000 0.000000 1.000000	</explicitDirection_>
+		<localOffset_>	0.000000 0.000000 0.000000	</localOffset_>
+		<maxLod_>	0.000000	</maxLod_>
+		<fixedFrameRate_>	-1.000000	</fixedFrameRate_>
+		<Actions>
+			<Source>
+				<delay_>	0.000000	</delay_>
+				<minimumAge_>	0.000000	</minimumAge_>
+				<name_>	Source 1	</name_>
+				<pPositionSrc>
+					<CylinderVectorGenerator>
+						<nameID_>	CylinderVectorGenerator	</nameID_>
+						<origin_>	0.000000 3.000000 0.000000	</origin_>
+						<direction_>	0.000000 5.000000 0.000000	</direction_>
+						<maxRadius_>	50.000000	</maxRadius_>
+						<minRadius_>	0.000000	</minRadius_>
+						<basisU_>	0.000000 0.000000 1.000000	</basisU_>
+						<basisV_>	1.000000 0.000000 0.000000	</basisV_>
+					</CylinderVectorGenerator>
+				</pPositionSrc>
+				<pVelocitySrc>
+					<LineVectorGenerator>
+						<nameID_>	LineVectorGenerator	</nameID_>
+						<origin_>	0.000000 -1.500000 0.000000	</origin_>
+						<direction_>	0.000000 -1.000000 0.000000	</direction_>
+					</LineVectorGenerator>
+				</pVelocitySrc>
+				<motionTriggered_>	false	</motionTriggered_>
+				<timeTriggered_>	true	</timeTriggered_>
+				<grounded_>	false	</grounded_>
+				<dropDistance_>	15.000000	</dropDistance_>
+				<rate_>	2500.000000	</rate_>
+				<sensitivity_>	0.100000	</sensitivity_>
+				<activePeriod_>	1.000000	</activePeriod_>
+				<sleepPeriod_>	0.000000	</sleepPeriod_>
+				<sleepPeriodMax_>	-1.000000	</sleepPeriodMax_>
+				<minimumSize_>	0.050000	</minimumSize_>
+				<maximumSize_>	0.050000	</maximumSize_>
+				<forcedUnitSize_>	1	</forcedUnitSize_>
+				<allowedTimeInSeconds_>	1.000000	</allowedTimeInSeconds_>
+				<initialRotation_>	0.000000 0.000000	</initialRotation_>
+				<randomInitialRotation_>	0.000000 0.000000	</randomInitialRotation_>
+				<initialColour_>	0.500000 0.500000 0.500000 1.000000	</initialColour_>
+				<randomSpin_>	false	</randomSpin_>
+				<minSpin_>	0.000000	</minSpin_>
+				<maxSpin_>	0.000000	</maxSpin_>
+				<ignoreRotation_>	false	</ignoreRotation_>
+				<inheritVelocity_>	0	</inheritVelocity_>
+			</Source>			
+			<TintShader>
+				<delay_>	0.000000	</delay_>
+				<minimumAge_>	0.000000	</minimumAge_>
+				<name_>	TintShader 1	</name_>
+				<repeat_>	false	</repeat_>
+				<period_>	2.000000	</period_>
+				<tints_>
+					<Tint>
+						<time>	0.000000	</time>
+						<color>	0.500000 0.500000 0.500000 0.000000	</color>
+					</Tint>
+					<Tint>
+						<time>	0.112903	</time>
+						<color>	0.500000 0.500000 0.500000 1.000000	</color>
+					</Tint>
+					<Tint>
+						<time>	1.532258	</time>
+						<color>	0.498442 0.498442 0.498442 1.000000	</color>
+					</Tint>
+					<Tint>
+						<time>	2.000000	</time>
+						<color>	0.498039 0.498039 0.498039 0.000000	</color>
+					</Tint>
+				</tints_>
+			</TintShader>
+			<Force>
+				<delay_>	0.000000	</delay_>
+				<minimumAge_>	0.000000	</minimumAge_>
+				<name_>	Force 1	</name_>
+				<vector_>	0.000000 -0.500000 0.000000	</vector_>
+			</Force>
+			<Sink>
+				<delay_>	0.000000	</delay_>
+				<minimumAge_>	0.000000	</minimumAge_>
+				<name_>	Sink 1	</name_>
+				<maximumAge_>	2.000000	</maximumAge_>
+				<minimumSpeed_>	-1.000000	</minimumSpeed_>
+				<outsideOnly_>	true		</outsideOnly_>
+			</Sink>
+		</Actions>
+		<Renderer>
+			<PointSpriteParticleRenderer>
+				<viewDependent_>	false	</viewDependent_>
+				<local_>	false	</local_>
+				<textureName_>	system/maps/mask_glow.bmp	</textureName_>
+				<materialFX_>	0	</materialFX_>
+				<frameCount_>	0	</frameCount_>
+				<frameRate_>	0.000000	</frameRate_>
+			</PointSpriteParticleRenderer>
+		</Renderer>
+	</snow_flakes>
+</root>

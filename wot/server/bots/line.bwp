@@ -1,0 +1,23 @@
+<waypoints>
+
+    <nodeDefaults>
+        <minStay> 5 </minStay>
+        <maxStay> 10 </maxStay>
+        <radius> 10 </radius>
+    </nodeDefaults>
+
+    <nodes>
+        
+        <node>
+            <pos> 0 0 0 </pos>
+            <edges> <edge> 1 </edge> </edges>
+        </node>
+        
+        <node>
+            <pos> 0 0 100 </pos>
+            <edges> <edge> 0 </edge> </edges>
+        </node>
+        
+    </nodes>
+    
+</waypoints>

@@ -1,0 +1,19 @@
+<xyznduv_d.xml>
+	<elements>
+		<POSITION/>
+		<NORMAL/>
+		<COLOR>
+			<semanticIndex> 0 </semanticIndex>
+			<type> COLOR </type>
+		</COLOR>
+		<TEXCOORD>
+			<type> FLOAT2 </type>
+		</TEXCOORD>
+		<COLOR>
+			<semanticIndex> 1 </semanticIndex>
+			<stream> 1 </stream>
+			<offset> 0 </offset>
+			<type> COLOR </type>
+		</COLOR>
+	</elements>
+</xyznduv_d.xml>

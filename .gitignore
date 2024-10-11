@@ -1,0 +1,50 @@
+# Any dir, that starts with "_"
+_*/
+
+# compiled Python files
+*.pyc
+*.pyo
+__pycache__/
+
+# Visual Studio Code workspace and settings files
+.vscode/
+.vscode/*
+
+# Visual Studio files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Vagrant
+.vagrant/
+.vagrant/*
+
+# .rpm files
+*.rpm
+
+# macOS and other system files
+.DS_Store
+Thumbs.db
+
+.idea/
+wot/scripts/db.xml
+wot/scripts/db/data.xml
+wot/scripts/client/*
+
+wot/server/database_files/*
+
+bigworld/scripts/client/*
+bigworld/system/*
+bigworld/helpers/*
+bigworld/materials/*
+bigworld/scripts/common/Lib/*
+
+fantasydemo/*
+
+wot/system/*
+wot/gui/flash/video/*
+
+tools/
+
+*/build_*

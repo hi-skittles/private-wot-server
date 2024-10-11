@@ -1,0 +1,16 @@
+<xyznuv2pc.xml>
+	<elements>
+		<POSITION/>
+		<NORMAL>
+			<type> UBYTE4_NORMAL_8_8_8 </type>
+		</NORMAL>
+		<TEXCOORD>
+			<semanticIndex> 0 </semanticIndex>
+			<type> SHORT2 </type>
+		</TEXCOORD>
+		<TEXCOORD>
+			<semanticIndex> 1 </semanticIndex>
+			<type> SHORT2 </type>
+		</TEXCOORD>
+	</elements>
+</xyznuv2pc.xml>

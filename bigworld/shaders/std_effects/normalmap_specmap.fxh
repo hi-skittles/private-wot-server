@@ -1,0 +1,30 @@
+#ifndef NORMALMAP_SPECMAP_FXH
+#define NORMALMAP_SPECMAP_FXH
+
+BW_ARTIST_EDITABLE_DIFFUSE_MAP
+#if !defined(DUAL_UV_NORMAL) || defined(DUAL_UV_NORMAL_BLEND)
+BW_ARTIST_EDITABLE_NORMAL_MAP
+#endif
+BW_ARTIST_EDITABLE_DOUBLE_SIDED
+BW_ARTIST_EDITABLE_MOD2X
+BW_ARTIST_EDITABLE_ALPHA_TEST
+BW_ARTIST_EDITABLE_SPEC_MAP
+
+#ifndef COLOURISE_DIFFUSE_MAP
+BW_ARTIST_EDITABLE_ADDRESS_MODE(BW_WRAP)
+#endif
+
+// dual uv channel.
+#if DUAL_UV
+BW_ARTIST_EDITABLE_DIFFUSE_MAP2
+sampler diffuseSampler2 = BW_SAMPLER(diffuseMap2, BW_TEX_ADDRESS_MODE)
+#endif
+
+sampler diffuseSampler  = BW_SAMPLER(diffuseMap, BW_TEX_ADDRESS_MODE)
+sampler normalSampler   = BW_SAMPLER(normalMap, BW_TEX_ADDRESS_MODE)
+sampler specularSampler = BW_SAMPLER(specularMap, BW_TEX_ADDRESS_MODE)
+
+//This changes the definition of some pixel shaders along the way...
+#define USES_SPEC_MAP
+
+#endif //NORMALMAP_SPECMAP_FXH

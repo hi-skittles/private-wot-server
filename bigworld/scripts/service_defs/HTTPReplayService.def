@@ -1,0 +1,11 @@
+<root>
+	<Implements>
+		<Interface> TwistedWeb </Interface>
+	</Implements>
+
+	<TempProperties>
+		<_bgTaskMgr/>
+		<_replayFileCache/>
+		<_topLevelResource/>
+	</TempProperties>
+</root>

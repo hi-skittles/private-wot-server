@@ -1,0 +1,534 @@
+<gb10_black_prince.xml>
+  <crew>
+    <commander></commander>
+    <driver></driver>
+    <radioman></radioman>
+    <gunner></gunner>
+    <loader></loader>
+  </crew>
+  <speedLimits>
+    <forward>	20	</forward>
+    <backward>	12	</backward>
+  </speedLimits>
+  <repairCost>	6.5	</repairCost>
+  <crewXpFactor>	1.0	</crewXpFactor>
+  <effects>
+    <collision></collision>
+    <damagedStateGroup>	large	</damagedStateGroup>
+  </effects>
+  <camouflage>
+    <priceFactor>	1.4	</priceFactor>
+    <tiling>	1 1 0 0	</tiling>
+    <exclusionMask>	vehicles/british/GB10_Black_Prince/Black_Prince_CM.dds	</exclusionMask>
+  </camouflage>
+  <emblems>
+    <default>	britain_color	</default>
+    <lodDist>	MEDIUM	</lodDist>
+    <alpha>	0.88	</alpha>
+  </emblems>
+  <horns>
+    <priceFactor>	1	</priceFactor>
+    <distanceFactor>	1	</distanceFactor>
+    <volumeFactor>	1	</volumeFactor>
+  </horns>
+  <hull>
+    <models>
+      <undamaged>	vehicles/british/GB10_Black_Prince/normal/lod0/Hull.model	</undamaged>
+      <destroyed>	vehicles/british/GB10_Black_Prince/crash/lod0/Hull.model	</destroyed>
+      <exploded>	vehicles/british/GB10_Black_Prince/crash/lod0/Hull.model	</exploded>
+    </models>
+    <swinging>
+      <lodDist>	FAR	</lodDist>
+      <pitchParams>	0.22 36.00 0.36 1.00 0.04 0.26	</pitchParams>
+      <rollParams>	1.00 0.22 36.00 0.36 1.00 0.04 0.26	</rollParams>
+      <sensitivityToImpulse>	0.22	</sensitivityToImpulse>
+    </swinging>
+    <exhaust>
+      <pixie>	gas_large	</pixie>
+      <nodes>	HP_Track_Exhaus_1 HP_Track_Exhaus_2	</nodes>
+    </exhaust>
+    <turretPositions>
+      <turret>	0.000846 0.644989 0.005962	</turret>
+    </turretPositions>
+    <hitTester>
+      <collisionModel>	vehicles/british/GB10_Black_Prince/collision/Hull.model	</collisionModel>
+    </hitTester>
+    <armor>
+      <armor_1>	152.4	</armor_1>
+      <armor_2>	139.7	</armor_2>
+      <armor_3>	95.25	</armor_3>
+      <armor_4>	25.4	</armor_4>
+      <armor_5>	50.8	</armor_5>
+      <armor_6>	82.55	</armor_6>
+      <armor_7>	25.4	</armor_7>
+      <armor_8>	19	</armor_8>
+      <armor_9>	0	</armor_9>
+      <armor_10>	19	</armor_10>
+    </armor>
+    <primaryArmor>	armor_1 armor_3 armor_4	</primaryArmor>
+    <weight>	28100	</weight>
+    <maxHealth>	1160	</maxHealth>
+    <ammoBayHealth>
+      <maxHealth>	220	</maxHealth>
+      <maxRegenHealth>	150	</maxRegenHealth>
+      <repairCost>	1.0	</repairCost>
+    </ammoBayHealth>
+    <emblemSlots>
+      <clan>
+        <rayStart>	-0.747666 0.437049 2.45555	</rayStart>
+        <rayEnd>	-0.747666 0.437049 2.05555	</rayEnd>
+        <rayUp>	0.000000 1 0.000000	</rayUp>
+        <size>	0.28	</size>
+        <hideIfDamaged>	true	</hideIfDamaged>
+      </clan>
+    </emblemSlots>
+  </hull>
+  <chassis>
+    <Chassis_GB10_Black_Prince>
+      <userString>	#gb_vehicles:Chassis_GB10_Black_Prince	</userString>
+      <tags></tags>
+      <level>	6	</level>
+      <price>	13000	</price>
+      <unlocks>
+        <chassis>	Chassis_GB10_Black_Prince_2	  <cost>	8600	</cost>
+        </chassis>
+      </unlocks>
+      <models>
+        <undamaged>	vehicles/british/GB10_Black_Prince/normal/lod0/Chassis.model	</undamaged>
+        <destroyed>	vehicles/british/GB10_Black_Prince/crash/lod0/Chassis.model	</destroyed>
+        <exploded>	vehicles/british/GB10_Black_Prince/crash/lod0/Chassis.model	</exploded>
+      </models>
+      <traces>
+        <lodDist>	FAR	</lodDist>
+        <bufferPrefs>	largeTank	</bufferPrefs>
+        <textureSet>	germany_02	</textureSet>
+        <size>	0.4 0.58	</size>
+      </traces>
+      <tracks>
+        <lodDist>	MEDIUM_TRACK	</lodDist>
+        <leftMaterial>	track_mat_L_skinned	</leftMaterial>
+        <rightMaterial>	track_mat_R_skinned	</rightMaterial>
+        <textureScale>	-0.68	</textureScale>
+      </tracks>
+      <wheels>
+        <lodDist>	MEDIUM	</lodDist>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	true	</isLeading>
+          <name>	WD_R0	</name>
+          <radius>	0.436109	</radius>
+        </wheel>
+        <group>
+          <isLeft>	false	</isLeft>
+          <template>	WD_R	</template>
+          <radius>	0.185439	</radius>
+          <startIndex>	1	</startIndex>
+          <count>	2	</count>
+        </group>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	true	</isLeading>
+          <name>	WD_R3	</name>
+          <radius>	0.332247	</radius>
+        </wheel>
+        <group>
+          <isLeft>	false	</isLeft>
+          <template>	W_R	</template>
+          <radius>	0.185439	</radius>
+          <startIndex>	0	</startIndex>
+          <count>	10	</count>
+        </group>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	true	</isLeading>
+          <name>	WD_L0	</name>
+          <radius>	0.436109	</radius>
+        </wheel>
+        <group>
+          <isLeft>	true	</isLeft>
+          <template>	WD_L	</template>
+          <radius>	0.185439	</radius>
+          <startIndex>	1	</startIndex>
+          <count>	2	</count>
+        </group>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	true	</isLeading>
+          <name>	WD_L3	</name>
+          <radius>	0.332247	</radius>
+        </wheel>
+        <group>
+          <isLeft>	true	</isLeft>
+          <template>	W_L	</template>
+          <radius>	0.185439	</radius>
+          <startIndex>	0	</startIndex>
+          <count>	10	</count>
+        </group>
+      </wheels>
+      <drivingWheels>	WD_L0 WD_L3	</drivingWheels>
+      <effects>
+        <lodDist>	MEDIUM	</lodDist>
+        <dust>	largeTankDust	</dust>
+        <mud>	largeTankMud	</mud>
+      </effects>
+      <soundPC>	/vehicles/tanks_pc/treads/treads_3	</soundPC>
+      <soundNPC>	/vehicles/tanks_npc/treads/treads_3	</soundNPC>
+      <hullPosition>	0.000000 1.03054 0.000000	</hullPosition>
+      <hitTester>
+        <collisionModel>	vehicles/british/GB10_Black_Prince/collision/Chassis.model	</collisionModel>
+      </hitTester>
+      <armor>
+        <leftTrack>	20	</leftTrack>
+        <rightTrack>	20	</rightTrack>
+      </armor>
+      <topRightCarryingPoint>	1.35905 2.1193	</topRightCarryingPoint>
+      <maxClimbAngle>	25	</maxClimbAngle>
+      <navmeshGirth>	6.0	</navmeshGirth>
+      <weight>	10000	</weight>
+      <maxLoad>	51000	</maxLoad>
+      <terrainResistance>	1.3 1.6 2.5	</terrainResistance>
+      <brakeForce>	40000	</brakeForce>
+      <rotationIsAroundCenter>	false	</rotationIsAroundCenter>
+      <rotationSpeed>	18	</rotationSpeed>
+      <shotDispersionFactors>
+        <vehicleMovement>	0.18	</vehicleMovement>
+        <vehicleRotation>	0.18	</vehicleRotation>
+      </shotDispersionFactors>
+      <bulkHealthFactor>	3.0	</bulkHealthFactor>
+      <maxHealth>	170	</maxHealth>
+      <maxRegenHealth>	130	</maxRegenHealth>
+      <repairCost>	5.0	</repairCost>
+      <AODecals>
+        <decal>
+          <transform>
+            <row0>	4.652230 0.000000 0.000000	</row0>
+            <row1>	0.000000 1.545810 0.000000	</row1>
+            <row2>	0.000000 0.000000 8.053340	</row2>
+            <row3>	0.000000 0.000000 0.000000	</row3>
+          </transform>
+        </decal>
+      </AODecals>
+    </Chassis_GB10_Black_Prince>
+    <Chassis_GB10_Black_Prince_2>
+      <userString>	#gb_vehicles:Chassis_GB10_Black_Prince_2	</userString>
+      <tags></tags>
+      <level>	7	</level>
+      <price>	18000	</price>
+      <models>
+        <undamaged>	vehicles/british/GB10_Black_Prince/normal/lod0/Chassis.model	</undamaged>
+        <destroyed>	vehicles/british/GB10_Black_Prince/crash/lod0/Chassis.model	</destroyed>
+        <exploded>	vehicles/british/GB10_Black_Prince/crash/lod0/Chassis.model	</exploded>
+      </models>
+      <traces>
+        <lodDist>	FAR	</lodDist>
+        <bufferPrefs>	largeTank	</bufferPrefs>
+        <textureSet>	germany_02	</textureSet>
+        <size>	0.4 0.58	</size>
+      </traces>
+      <tracks>
+        <lodDist>	MEDIUM_TRACK	</lodDist>
+        <leftMaterial>	track_mat_L_skinned	</leftMaterial>
+        <rightMaterial>	track_mat_R_skinned	</rightMaterial>
+        <textureScale>	-0.68	</textureScale>
+      </tracks>
+      <wheels>
+        <lodDist>	MEDIUM	</lodDist>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	true	</isLeading>
+          <name>	WD_R0	</name>
+          <radius>	0.436109	</radius>
+        </wheel>
+        <group>
+          <isLeft>	false	</isLeft>
+          <template>	WD_R	</template>
+          <radius>	0.185439	</radius>
+          <startIndex>	1	</startIndex>
+          <count>	2	</count>
+        </group>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	true	</isLeading>
+          <name>	WD_R3	</name>
+          <radius>	0.332247	</radius>
+        </wheel>
+        <group>
+          <isLeft>	false	</isLeft>
+          <template>	W_R	</template>
+          <radius>	0.185439	</radius>
+          <startIndex>	0	</startIndex>
+          <count>	10	</count>
+        </group>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	true	</isLeading>
+          <name>	WD_L0	</name>
+          <radius>	0.436109	</radius>
+        </wheel>
+        <group>
+          <isLeft>	true	</isLeft>
+          <template>	WD_L	</template>
+          <radius>	0.185439	</radius>
+          <startIndex>	1	</startIndex>
+          <count>	2	</count>
+        </group>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	true	</isLeading>
+          <name>	WD_L3	</name>
+          <radius>	0.332247	</radius>
+        </wheel>
+        <group>
+          <isLeft>	true	</isLeft>
+          <template>	W_L	</template>
+          <radius>	0.185439	</radius>
+          <startIndex>	0	</startIndex>
+          <count>	10	</count>
+        </group>
+      </wheels>
+      <drivingWheels>	WD_L0 WD_L3	</drivingWheels>
+      <effects>
+        <lodDist>	MEDIUM	</lodDist>
+        <dust>	largeTankDust	</dust>
+        <mud>	largeTankMud	</mud>
+      </effects>
+      <soundPC>	/vehicles/tanks_pc/treads/treads_3	</soundPC>
+      <soundNPC>	/vehicles/tanks_npc/treads/treads_3	</soundNPC>
+      <hullPosition>	0.000000 1.03054 0.000000	</hullPosition>
+      <hitTester>
+        <collisionModel>	vehicles/british/GB10_Black_Prince/collision/Chassis.model	</collisionModel>
+      </hitTester>
+      <armor>
+        <leftTrack>	20	</leftTrack>
+        <rightTrack>	20	</rightTrack>
+      </armor>
+      <topRightCarryingPoint>	1.35905 2.1193	</topRightCarryingPoint>
+      <maxClimbAngle>	25	</maxClimbAngle>
+      <navmeshGirth>	6.0	</navmeshGirth>
+      <weight>	10000	</weight>
+      <maxLoad>	53000	</maxLoad>
+      <terrainResistance>	1.2 1.4 2.3	</terrainResistance>
+      <brakeForce>	45000	</brakeForce>
+      <rotationIsAroundCenter>	false	</rotationIsAroundCenter>
+      <rotationSpeed>	20	</rotationSpeed>
+      <shotDispersionFactors>
+        <vehicleMovement>	0.16	</vehicleMovement>
+        <vehicleRotation>	0.16	</vehicleRotation>
+      </shotDispersionFactors>
+      <bulkHealthFactor>	3.0	</bulkHealthFactor>
+      <maxHealth>	190	</maxHealth>
+      <maxRegenHealth>	145	</maxRegenHealth>
+      <repairCost>	5.0	</repairCost>
+      <AODecals>
+        <decal>
+          <transform>
+            <row0>	4.659090 0.000000 0.000000	</row0>
+            <row1>	0.000000 1.545810 0.000000	</row1>
+            <row2>	0.000000 0.000000 8.053340	</row2>
+            <row3>	0.000000 0.000000 0.000000	</row3>
+          </transform>
+        </decal>
+      </AODecals>
+    </Chassis_GB10_Black_Prince_2>
+  </chassis>
+  <turrets0>
+    <Turret_2_GB10_Black_Prince>
+      <userString>	#gb_vehicles:Turret_2_GB10_Black_Prince	</userString>
+      <tags></tags>
+      <level>	7	</level>
+      <price>	26300	</price>
+      <notInShop>	true	</notInShop>
+      <models>
+        <undamaged>	vehicles/british/GB10_Black_Prince/normal/lod0/Turret_02.model	</undamaged>
+        <destroyed>	vehicles/british/GB10_Black_Prince/crash/lod0/Turret_02.model	</destroyed>
+        <exploded>	vehicles/british/GB10_Black_Prince/crash/lod0/Turret_02.model	</exploded>
+      </models>
+      <hitTester>
+        <collisionModel>	vehicles/british/GB10_Black_Prince/collision/Turret_02.model	</collisionModel>
+      </hitTester>
+      <gunPosition>	0.000000 0.371889 0.929443	</gunPosition>
+      <armor>
+        <armor_1>	152.4	</armor_1>
+        <armor_2>	240	</armor_2>
+        <armor_3>	95.25	</armor_3>
+        <armor_4>	95.25	</armor_4>
+        <armor_5>	95.25	</armor_5>
+        <armor_6>	95.25	</armor_6>
+        <armor_7>	50.8	</armor_7>
+        <armor_8>	19	</armor_8>
+        <armor_9>	19	</armor_9>
+        <armor_10>	95.25	</armor_10>
+        <armor_11>	0	</armor_11>
+        <armor_12>	30	</armor_12>
+        <armor_13>	70	</armor_13>
+      </armor>
+      <primaryArmor>	armor_1 armor_3 armor_4	</primaryArmor>
+      <weight>	10000	</weight>
+      <maxHealth>	290	</maxHealth>
+      <rotationSpeed>	30	</rotationSpeed>
+      <turretRotatorHealth>
+        <maxHealth>	140	</maxHealth>
+        <maxRegenHealth>	70	</maxRegenHealth>
+        <repairCost>	1.0	</repairCost>
+      </turretRotatorHealth>
+      <circularVisionRadius>	370	</circularVisionRadius>
+      <surveyingDeviceHealth>
+        <maxHealth>	90	</maxHealth>
+        <maxRegenHealth>	45	</maxRegenHealth>
+        <repairCost>	1.0	</repairCost>
+      </surveyingDeviceHealth>
+      <guns>
+        <OQF_77mm_Gun_MkII>	shared	  <maxAmmo>	140	</maxAmmo>
+          <pitchLimits>	-20 8	</pitchLimits>
+          <unlocks>
+            <gun>	OQF_17pdr_Gun_Mk_VII	  <cost>	15000	</cost>
+            </gun>
+          </unlocks>
+          <models>
+            <undamaged>	vehicles/british/GB10_Black_Prince/normal/lod0/Gun_06.model	</undamaged>
+            <destroyed>	vehicles/british/GB10_Black_Prince/crash/lod0/Gun_06.model	</destroyed>
+            <exploded>	vehicles/british/GB10_Black_Prince/crash/lod0/Gun_06.model	</exploded>
+          </models>
+          <hitTester>
+            <collisionModel>	vehicles/british/GB10_Black_Prince/collision/Gun_06.model	</collisionModel>
+          </hitTester>
+          <armor>
+            <armor_1>	240	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_1>
+            <armor_2>	139	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_2>
+            <gun>	30	</gun>
+          </armor>
+          <extraPitchLimits>
+            <back>	-20 2 40	</back>
+          </extraPitchLimits>
+          <shotDispersionRadius>	0.34	</shotDispersionRadius>
+          <reloadTime>	4.2	</reloadTime>
+          <shotDispersionFactors>
+            <turretRotation>	0.14	</turretRotation>
+            <afterShot>	4.0	</afterShot>
+            <whileGunDamaged>	2.0	</whileGunDamaged>
+          </shotDispersionFactors>
+          <aimingTime>	2.3	</aimingTime>
+          <emblemSlots>
+            <insigniaOnGun>
+              <rayStart>	0.0405402 -0.0255471 2.15806	</rayStart>
+              <rayEnd>	0.226684 -0.0767155 2.15599	</rayEnd>
+              <rayUp>	0.065 0.063 4	</rayUp>
+              <size>	0.47	</size>
+              <hideIfDamaged>	false	</hideIfDamaged>
+            </insigniaOnGun>
+          </emblemSlots>
+          <animateEmblemSlots>	true	</animateEmblemSlots>
+          <camouflage>
+            <tiling>	0.895 0.895 0.000000 0.000000	</tiling>
+          </camouflage>
+        </OQF_77mm_Gun_MkII>
+        <OQF_17pdr_Gun_Mk_VII>	shared	  <maxAmmo>	84	</maxAmmo>
+          <pitchLimits>	-20 8	</pitchLimits>
+          <unlocks>
+            <vehicle>	GB11_Caernarvon	  <cost>	110000	</cost>
+            </vehicle>
+          </unlocks>
+          <models>
+            <undamaged>	vehicles/british/GB10_Black_Prince/normal/lod0/Gun_07.model	</undamaged>
+            <destroyed>	vehicles/british/GB10_Black_Prince/crash/lod0/Gun_07.model	</destroyed>
+            <exploded>	vehicles/british/GB10_Black_Prince/crash/lod0/Gun_07.model	</exploded>
+          </models>
+          <hitTester>
+            <collisionModel>	vehicles/british/GB10_Black_Prince/collision/Gun_07.model	</collisionModel>
+          </hitTester>
+          <armor>
+            <armor_1>	240	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_1>
+            <armor_2>	139	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_2>
+            <gun>	30	</gun>
+          </armor>
+          <extraPitchLimits>
+            <back>	-20 1 40	</back>
+          </extraPitchLimits>
+          <shotDispersionRadius>	0.34	</shotDispersionRadius>
+          <reloadTime>	5	</reloadTime>
+          <shotDispersionFactors>
+            <turretRotation>	0.2	</turretRotation>
+            <afterShot>	4	</afterShot>
+            <whileGunDamaged>	2.0	</whileGunDamaged>
+          </shotDispersionFactors>
+          <aimingTime>	2.3	</aimingTime>
+          <emblemSlots>
+            <insigniaOnGun>
+              <rayStart>	0.0404392 -0.0249554 2.65298	</rayStart>
+              <rayEnd>	0.200143 -0.126606 2.65181	</rayEnd>
+              <rayUp>	0.079 0.077 4	</rayUp>
+              <size>	0.47	</size>
+              <hideIfDamaged>	false	</hideIfDamaged>
+            </insigniaOnGun>
+          </emblemSlots>
+          <animateEmblemSlots>	true	</animateEmblemSlots>
+          <camouflage>
+            <tiling>	0.925 0.925 0.000000 0.000000	</tiling>
+          </camouflage>
+        </OQF_17pdr_Gun_Mk_VII>
+      </guns>
+      <emblemSlots>
+        <player>
+          <rayStart>	1.52821 0.554033 0.881134	</rayStart>
+          <rayEnd>	0.449736 0.554033 0.664552	</rayEnd>
+          <rayUp>	0.000000 1 0.000000	</rayUp>
+          <size>	0.32	</size>
+          <hideIfDamaged>	false	</hideIfDamaged>
+        </player>
+        <inscription>
+          <rayStart>	1.21853 0.208071 0.645532	</rayStart>
+          <rayEnd>	0.826361 0.208071 0.566775	</rayEnd>
+          <rayUp>	0.000000 1 0.000000	</rayUp>
+          <size>	0.64	</size>
+          <hideIfDamaged>	true	</hideIfDamaged>
+        </inscription>
+        <player>
+          <rayStart>	-1.55867 0.617527 -0.558652	</rayStart>
+          <rayEnd>	-0.562944 0.617527 -0.0911735	</rayEnd>
+          <rayUp>	0.000000 1 0.000000	</rayUp>
+          <size>	0.32	</size>
+          <hideIfDamaged>	false	</hideIfDamaged>
+        </player>
+        <inscription>
+          <rayStart>	-1.22008 0.208835 0.485993	</rayStart>
+          <rayEnd>	-0.832673 0.208835 0.386402	</rayEnd>
+          <rayUp>	0.000000 1 0.000000	</rayUp>
+          <size>	0.64	</size>
+          <hideIfDamaged>	false	</hideIfDamaged>
+        </inscription>
+      </emblemSlots>
+      <showEmblemsOnGun>	false	</showEmblemsOnGun>
+      <physicsShape>	1.057 -0.130 1.000 0.000 0.678 0.113 0.958 0.528 0.390 0.500 0.000 0.500 0.071 0.100 0.000	</physicsShape>
+      <turretRotatorSoundManual>	/turret/turret/turret_manual_traverse/turret_manual_traverse_8000-11999	</turretRotatorSoundManual>
+      <turretRotatorSoundGear>	/turret/turret/turret_electric_traverse/turret_electric_traverse_8000-11999	</turretRotatorSoundGear>
+    </Turret_2_GB10_Black_Prince>
+  </turrets0>
+  <engines>
+    <Vauxhall_Bedford_Twin_Six>	shared	  <unlocks>
+        <engine>	Rolls_Royse_Meteor	  <cost>	1500	</cost>
+        </engine>
+      </unlocks>
+    </Vauxhall_Bedford_Twin_Six>
+    <Rolls_Royse_Meteor>	shared	</Rolls_Royse_Meteor>
+  </engines>
+  <fuelTanks>
+    <Large>	shared	</Large>
+  </fuelTanks>
+  <radios>
+    <N19Mk2>	shared	  <unlocks>
+        <radio>	N19Mk3	  <cost>	4000	</cost>
+        </radio>
+      </unlocks>
+    </N19Mk2>
+    <N19Mk3>	shared	  <unlocks>
+        <radio>	N22	  <cost>	4500	</cost>
+        </radio>
+      </unlocks>
+    </N19Mk3>
+    <N22>	shared	</N22>
+  </radios>
+</gb10_black_prince.xml>

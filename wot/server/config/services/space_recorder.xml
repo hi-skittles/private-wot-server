@@ -1,0 +1,26 @@
+<root>
+	<!-- 	Whether opening a new file for writing (non-recovery mode)
+			should overwrite any existing file.
+	-->
+	<shouldOverwrite> 	false </shouldOverwrite>
+
+	<!-- 	The compression level. One of COMPRESSION_NONE,
+			COMPRESSION_ZIP_[1-9], COMPRESSION_ZIP_BEST_SPEED,
+			COMPRESSION_ZIP_BEST_COMPRESSION.
+	-->
+	<compressionLevel>	COMPRESSION_ZIP_BEST_SPEED </compressionLevel>
+
+	<!-- 	The path to the signing key.
+
+			See the Record and Replay HowTo for details on how to generate a
+			key using OpenSSL.
+
+			Note: regenerate this for different games! DO NOT use these keys as
+			they are.
+	-->
+	<signingKeyPath> server/replay-sign.privkey </signingKeyPath>
+
+	<!--	The number of ticks to sign at a time.
+	-->
+	<numTicksToSign> 10 </numTicksToSign>
+</root>

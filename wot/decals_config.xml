@@ -1,0 +1,88 @@
+<decals_config.xml>
+  <render>
+    <quality>
+      <option>	MAX	  <maxVisibleDecals>	2048	</maxVisibleDecals>
+      </option>
+      <option>	HIGH	  <maxVisibleDecals>	1024	</maxVisibleDecals>
+      </option>
+      <option>	MEDIUM	  <maxVisibleDecals>	512	</maxVisibleDecals>
+      </option>
+      <option>	LOW	  <maxVisibleDecals>	256	</maxVisibleDecals>
+      </option>
+      <option>	OFF	  <maxVisibleDecals>	1	</maxVisibleDecals>
+      </option>
+    </quality>
+  </render>
+  <scene>
+    <atlas1>
+      <width>	4096	</width>
+      <height>	4096	</height>
+      <format>	DXT5	</format>
+    </atlas1>
+    <atlas2>
+      <width>	4096	</width>
+      <height>	4096	</height>
+      <format>	DXT3	</format>
+    </atlas2>
+    <atlas3>
+      <width>	2048	</width>
+      <height>	2048	</height>
+      <format>	L8	</format>
+    </atlas3>
+    <quality>
+      <option>	MAX	  <mip>	0	</mip>
+        <matTypeDownsample>	0 0	</matTypeDownsample>
+      </option>
+      <option>	HIGH	  <mip>	1	</mip>
+        <matTypeDownsample>	1 0	</matTypeDownsample>
+      </option>
+      <option>	MEDIUM	  <mip>	1	</mip>
+        <matTypeDownsample>	1 1	</matTypeDownsample>
+      </option>
+      <option>	LOW	  <mip>	2	</mip>
+        <matTypeDownsample>	2 1	</matTypeDownsample>
+      </option>
+      <option>	OFF	  <mip>	-1	</mip>
+      </option>
+    </quality>
+  </scene>
+  <dynamic>
+    <atlas1>
+      <width>	2048	</width>
+      <height>	2048	</height>
+      <format>	DXT5	</format>
+    </atlas1>
+    <atlas2>
+      <width>	2048	</width>
+      <height>	2048	</height>
+      <format>	DXT3	</format>
+    </atlas2>
+  </dynamic>
+  <trace>
+    <quality>
+      <option>	MAX	  <lodBias>	1.0	</lodBias>
+        <maxTraceLength>	250	</maxTraceLength>
+        <lifetimeMultiplier>	4.0	</lifetimeMultiplier>
+      </option>
+      <option>	HIGH	  <lodBias>	0.8	</lodBias>
+        <maxTraceLength>	125	</maxTraceLength>
+        <lifetimeMultiplier>	2.0	</lifetimeMultiplier>
+      </option>
+      <option>	MEDIUM	  <lodBias>	0.6	</lodBias>
+        <maxTraceLength>	50	</maxTraceLength>
+        <lifetimeMultiplier>	1.0	</lifetimeMultiplier>
+      </option>
+      <option>	LOW	  <lodBias>	0.4	</lodBias>
+        <maxTraceLength>	50	</maxTraceLength>
+        <lifetimeMultiplier>	0.8	</lifetimeMultiplier>
+      </option>
+      <option>	OFF	  <lodBias>	0.0	</lodBias>
+      </option>
+    </quality>
+    <enableOptimisation>	true	</enableOptimisation>
+    <fade>	50 100	</fade>
+    <maxTraceAdditionTimeout>	0.5	</maxTraceAdditionTimeout>
+    <maxTraceAdditionAngle>	4.0	</maxTraceAdditionAngle>
+    <maxTraceOffset>	0.05	</maxTraceOffset>
+  </trace>
+</decals_config.xml>
