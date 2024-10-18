@@ -49,22 +49,22 @@ def getEntIDFromName(name):
 
 # Add premium time in days to given player
 # -----------------------------------------------------------------------------
-@functionWatcher( "command/wot:AddPremium",
-		BigWorld.EXPOSE_BASE_APPS,
-		"WoT: Adds premium time to player, in days" )
-@functionWatcherParameter(int, "Player's EntityID")
-@functionWatcherParameter(int, "Days")
-def addPremiumTime(entID, days):
-	playerProxy = BigWorld.entities[entID]
-	rdata = Helper.get_stats(playerProxy.databaseID)
-	result, msg, udata = AccountUpdates.__addPremiumTime(days, rdata, False)
-	if result > 0:
-		print msg
-		Helper.set_stats(playerProxy.databaseID, udata)
-		udata.update({'rev': 1, 'prevRev': 0})
-		playerProxy.ownClient.update(cPickle.dumps(udata))
-	else:
-		print msg
+# @functionWatcher( "command/wot:AddPremium",
+# 		BigWorld.EXPOSE_BASE_APPS,
+# 		"WoT: Adds premium time to player, in days" )
+# @functionWatcherParameter(int, "Player's EntityID")
+# @functionWatcherParameter(int, "Days")
+# def addPremiumTime(entID, days):
+# 	playerProxy = BigWorld.entities[entID]
+# 	rdata = Helper.get_stats(playerProxy.databaseID)
+# 	result, msg, udata = AccountUpdates.__addPremiumTime(days, rdata, False)
+# 	if result > 0:
+# 		print msg
+# 		Helper.set_stats(playerProxy.databaseID, udata)
+# 		udata.update({'rev': 1, 'prevRev': 0})
+# 		playerProxy.ownClient.update(cPickle.dumps(udata))
+# 	else:
+# 		print msg
 
 
 

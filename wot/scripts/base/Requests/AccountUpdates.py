@@ -30,7 +30,10 @@ def __addPremiumTime(extend_by_days, data, use_gold=True):
 	if attrs & ACCOUNT_ATTR.PREMIUM:
 		DEBUG_MSG('AccountCommands.CMD_PREMIUM :: already premium')
 		if use_gold: data['stats']['gold'] -= pcost
-		data['account']['premiumExpiryTime'] += extend_by_days * 86400
+		if data['account']['premiumExpiryTime'] < current_epoch:    # was expired
+			data['account']['premiumExpiryTime'] = (extend_by_days * 86400) + current_epoch
+		else:   # not expired
+			data['account']['premiumExpiryTime'] += extend_by_days * 86400
 		return 2, 'Premium extended', data
 	else:
 		DEBUG_MSG('AccountCommands.CMD_PREMIUM :: not already premium')

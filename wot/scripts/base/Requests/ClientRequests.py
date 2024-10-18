@@ -74,7 +74,7 @@ def exchangeCredits(proxy, requestID, int1, int2, int3):
         DEBUG_MSG('AccountCommands.CMD_EXCHANGE :: success=%s' % result)
         udata.update({'rev': 1, 'prevRev': 0})
         proxy.client.update(cPickle.dumps(udata))
-        proxy.client.onCmdResponse(requestID, AccountCommands.RES_CACHE, '')
+        proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
         udata.pop('rev')
         udata.pop('prevRev')
         yield async(StatsHandler.update_stats, cbname='callback')(proxy.databaseID, udata)
@@ -95,7 +95,7 @@ def premium(proxy, requestID, int1, int2, int3):
         DEBUG_MSG('AccountCommands.CMD_PREMIUM :: success=%s' % result)
         udata.update({'rev': 1, 'prevRev': 0})
         proxy.client.update(cPickle.dumps(udata))
-        proxy.client.onCmdResponse(requestID, AccountCommands.RES_CACHE, '')
+        proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
         udata.pop('rev')
         udata.pop('prevRev')
         yield async(StatsHandler.update_stats, cbname='callback')(proxy.databaseID, udata)
@@ -124,7 +124,7 @@ def addIntUserSettings(proxy, requestID, settings):
     # named "nothing" here because this method will return True if successful
     nothing = yield async(StatsHandler.update_stats, cbname='callback')(proxy.databaseID, rdata)
     
-    proxy.client.onCmdResponse(requestID, AccountCommands.RES_CACHE, '')
+    proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
 
 @baseRequest(AccountCommands.CMD_REQ_SERVER_STATS)
 def serverStats(proxy, requestID, int1, int2, int3):
@@ -142,38 +142,36 @@ def completeTutorial(proxy, requestID, revision, dataLen, dataCrc):
 
 # inventory[inventory, cache], stats[stats, account, economics, cache], questProgress[quests, tokens, potapovQuests], trader[offers], intUserSettings[(see comment below for more info)], clubs[cache[relatedToClubs, cybersportSeasonInProgress]]
 @baseRequest(AccountCommands.CMD_SYNC_DATA)
+@process
 def syncData(proxy, requestID, revision, crc, _):
     DEBUG_MSG('AccountCommands.CMD_SYNC_DATA :: ', revision, crc)
     # the client normally does not request a fullsync. nyi on requesting a partial sync or whatever who cares but since its not requesting a full sync i will return the partial key instead of full sync key
     # intUserSettings if updating only partial setting. the weird tuple, ('intUserSettings', '_r'), as primary key if its a full sync
     
-    data = {'rev': revision, 'prevRev': revision}
-    def callback(result):
-        data.update(result)
-        proxy.client.onCmdResponseExt(requestID, AccountCommands.RES_CACHE, '', cPickle.dumps(data))
-    
-    SyncDataHandler.get_sync_data(proxy.databaseID, callback)
-
+    data = {'rev': revision + 1, 'prevRev': revision}
+    rdata = yield async(SyncDataHandler.get_sync_data, cbname='callback')(proxy.databaseID)
+    data.update(rdata)
+    proxy.client.onCmdResponseExt(requestID, AccountCommands.RES_SUCCESS, '', cPickle.dumps(data))
 
 @baseRequest(AccountCommands.CMD_SYNC_SHOP)
 def syncShop(proxy, requestID, revision, dataLen, dataCrc):
     DEBUG_MSG('AccountCommands.CMD_SYNC_SHOP :: ', revision, dataLen, dataCrc)
     # if there is a desync then we can use AccountCommands.RES_SHOP_DESYNC as our result ID, which requires adding shopRev; else not
     shop = ShopHandler.get_shop()
-    shop.update({'prevRev': 0})
-    foo = zlib.compress(cPickle.dumps(shop))
-    
-    if shop['rev'] == revision:
-        DEBUG_MSG('AccountCommands.CMD_SYNC_SHOP :: revisions match, telling client to use its cache')
-        proxy.client.onCmdResponse(requestID, AccountCommands.RES_CACHE, '')
-    elif shop['rev'] != revision and dataLen == len(foo) and dataCrc == zlib.crc32(foo):
-        DEBUG_MSG('AccountCommands.CMD_SYNC_SHOP :: revisions do not match, sending new shop data to client')
-        # packStream(proxy, requestID, shop)
-        proxy.client.onCmdResponseExt(requestID, AccountCommands.RES_CACHE, '', cPickle.dumps({'shopRev': 1}))
-    elif revision == 0:
-        DEBUG_MSG('AccountCommands.CMD_SYNC_SHOP :: client requested full sync, sending full shop data to client')
-        packStream(proxy, requestID, shop)
-        proxy.client.onCmdResponse(requestID, AccountCommands.RES_STREAM, '')
+    shop.update({'prevRev': revision, 'rev': 2})
+    # foo = zlib.compress(cPickle.dumps(shop))
+    #
+    # if shop['rev'] == revision:
+    #     DEBUG_MSG('AccountCommands.CMD_SYNC_SHOP :: revisions match, telling client to use its cache')
+    #     proxy.client.onCmdResponse(requestID, AccountCommands.RES_CACHE, '')
+    # elif shop['rev'] != revision and dataLen == len(foo) and dataCrc == zlib.crc32(foo):
+    #     DEBUG_MSG('AccountCommands.CMD_SYNC_SHOP :: revisions do not match, but other shit matches so oh well use cache')
+    #     # packStream(proxy, requestID, shop)
+    #     proxy.client.onCmdResponseExt(requestID, AccountCommands.RES_CACHE, '', cPickle.dumps({'shopRev': 1}))
+    # elif revision == 0:
+    DEBUG_MSG('AccountCommands.CMD_SYNC_SHOP :: client requested full sync, sending full shop data to client')
+    packStream(proxy, requestID, shop)
+    proxy.client.onCmdResponse(requestID, AccountCommands.RES_STREAM, '')
 
 
 @baseRequest(AccountCommands.CMD_SYNC_DOSSIERS)
@@ -201,7 +199,7 @@ def sendGUI(proxy, requestID, _):
 @baseRequest(AccountCommands.CMD_SET_LANGUAGE)
 def setLanguage(proxy, requestID, language):
     DEBUG_MSG('AccountCommands.CMD_SET_LANGUAGE :: ', language)
-    packStream(proxy, requestID, (language))
+    packStream(proxy, requestID, language)
     proxy.client.onCmdResponse(requestID, AccountCommands.RES_STREAM, '')
 
 

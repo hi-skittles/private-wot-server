@@ -11,6 +11,7 @@ from bwdebug import DEBUG_MSG
 from items import ITEM_TYPE_INDICES, vehicles
 
 class InventoryManager:
+	raise DeprecationWarning
 	
 	def __init__(self):
 		directory = ResMgr.resolveToAbsolutePath('scripts/db/inventory')

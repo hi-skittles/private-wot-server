@@ -1,5 +1,6 @@
 from bwdebug import TRACE_MSG
 
+
 def __returnPremiumPrices():
 	return {
 		1: 250,
@@ -10,17 +11,18 @@ def __returnPremiumPrices():
 		30: 2500
 	}
 
+
 def __returnCreditsPrice():
 	return 400
+
 
 premiumPrices = __returnPremiumPrices()
 creditsPrice = __returnCreditsPrice()
 
+
 def get_shop():
 	TRACE_MSG('ShopHandler : get_shop')
 	return {
-		'rev': 1,
-		'shopRev': 1,
 		'crystalExchangeRate': 200,
 		'camouflageCost': {
 			0: (50, True),
@@ -41,7 +43,7 @@ def get_shop():
 			2: {'xpReuseFraction': 1.0, 'gold': 100, 'credits': 5000}
 		},
 		'refSystem': {
-			'maxNumberOfReferrals': 50,
+			'maxNumberOfReferrals': 2,
 			'posByXPinTeam': 10,
 			'maxReferralXPPool': 350000,
 			'periods': [(24, 3.0), (168, 2.0), (876000, 1.5)]
@@ -55,7 +57,7 @@ def get_shop():
 		'sellPriceModif': 0.75,
 		'passportChangeCost': 50,
 		'exchangeRateForShellsAndEqs': 400,
-		'exchangeRate': 400,
+		'exchangeRate': creditsPrice,
 		'tankmanCost': ({
 			                'isPremium': False,
 			                'baseRoleLoss': 0.20000000298023224,
@@ -68,25 +70,26 @@ def get_shop():
 			                'isPremium': False,
 			                'baseRoleLoss': 0.10000000149011612,
 			                'gold': 0,
-			                'credits': 20000,
+			                'credits': 20000,  # 20000
 			                'classChangeRoleLoss': 0.10000000149011612,
 			                'roleLevel': 75
 		                },
 		                {
 			                'isPremium': True,
 			                'baseRoleLoss': 0.0,
-			                'gold': 200,
+			                'gold': 100,  # 200
 			                'credits': 0,
 			                'classChangeRoleLoss': 0.0,
 			                'roleLevel': 100
 		                }),
 		'paidRemovalCost': 10,
-		'dailyXPFactor': 2,
+		'dailyXPFactor': 5,  # 2
 		'changeRoleCost': 500,
 		'isEnabledBuyingGoldShellsForCredits': False,
-		'items': {'notInShopItems': {53761, # ussr:SU_85I
-		                             52257, # usa:M4A2E4
-		                             51745, # usa:Ram-II // 53249 kv-5 re-added to shop // 61201 tiger 1 L/56 re-added to shop
+		'items': {'notInShopItems': {53761,  # ussr:SU_85I
+		                             52257,  # usa:M4A2E4
+		                             51745,
+		                             # usa:Ram-II // 53249 kv-5 re-added to shop // 61201 tiger 1 L/56 re-added to shop
 		                             15701, 12290, 18435, 15362052, 51205, 51207, 13571, 20482, 13844, 30211, 17,
 		                             30738, 19, 63508, 16405, 4119, 18436, 20506, 12293, 11525, 33, 36898, 35,
 		                             24612, 14373, 39, 22570, 4103, 49, 50, 51, 52, 53, 2103, 2113, 4162, 18499,

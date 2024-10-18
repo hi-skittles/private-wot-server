@@ -27,8 +27,12 @@ def shopItemsInit():
 premiumPrices1 = helper_commands.__returnPremiumPrices()
 InventoryManager = InventoryManager()
 
+'''
+this entire file is deprecated
+'''
 
 class Helper:
+	raise DeprecationWarning
 	
 	def __init__(self):
 		self.premiumPrices = premiumPrices1

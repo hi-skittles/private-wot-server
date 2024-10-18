@@ -61,7 +61,7 @@ class Account(BigWorld.Proxy):
         if len(self.name) <= 0:
             self.name = self.normalizedName.split('@')[0]
             self.writeToDB()
-        self.revision = 1
+        # self.revision = 1
     
     def chatCommandFromClient(self, i1, i2, i3, i4, i5, i6, i7):
         DEBUG_MSG('chatCommandFromClient', i1, i2, i3, i4, i5, i6, i7)

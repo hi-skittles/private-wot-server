@@ -13,6 +13,7 @@ import gc
 import pprint
 
 from db_scripts import DatabaseHandler
+import CronUpdaters
 
 DO_GC_DUMP = False
 
@@ -35,6 +36,7 @@ def onInit(isReload):
 	HierarchyCheck.checkTypes()
 	WARNING_MSG("wot.base.onInit: isReload={}".format(str(isReload)))
 	DatabaseHandler.init()
+	# CronUpdaters.init()
 
 def onFini():
 	WARNING_MSG("wot.base.onFini")
@@ -55,6 +57,7 @@ def onFini():
 	# onAppShutDown as that allows the NoteDataStore subsystem to cleanly
 	# terminate.
 	DatabaseHandler.fini()
+	# CronUpdaters.fini()
 
 def onAppReady(isBootstrap, didAutoLoadEntitiesFromDB):
 	# Load all the runscript watchers for this baseapp
@@ -62,12 +65,9 @@ def onAppReady(isBootstrap, didAutoLoadEntitiesFromDB):
 
 def onAppShutDown(state):
 	WARNING_MSG("wot.base.onAppShutDown: state={}".format(str(state)))
-	# if state == 0:
-	#   UniversalBackgroundDatabaseHandler.QuestsHandler.fini()
-	#   UniversalBackgroundDatabaseHandler.InventoryHandler.fini()
-	#   UniversalBackgroundDatabaseHandler.StatsHandler.fini()
-	#   UniversalBackgroundDatabaseHandler.DossierHandler.fini()
-	pass
+	if state == 0:
+		DatabaseHandler.fini()
+		# CronUpdaters.fini()
 
 def onCellAppDeath(addr):
 	WARNING_MSG("wot.base.onCellAppDeath: addr={}".format(str(addr)))
