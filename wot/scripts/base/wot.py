@@ -1,5 +1,7 @@
 import logging
 import BigWorld
+
+import items
 from bwdebug import *
 import os
 import ResMgr
@@ -37,6 +39,8 @@ def onInit(isReload):
 	WARNING_MSG("wot.base.onInit: isReload={}".format(str(isReload)))
 	DatabaseHandler.init()
 	# CronUpdaters.init()
+	
+	items.init(True, {})
 
 def onFini():
 	WARNING_MSG("wot.base.onFini")

@@ -15,7 +15,7 @@ class Account(BigWorld.Proxy):
                 'isVehicleRestoreEnabled': False,
                 'isFalloutQuestEnabled': False,
                 'isClubsEnabled': False,
-                'isSandboxEnabled': True,
+                'isSandboxEnabled': False,
                 'isFortBattleDivisionsEnabled': False,
                 'isFortsEnabled': False,
                 'isEncyclopediaEnabled': 'token',
@@ -169,7 +169,7 @@ class Account(BigWorld.Proxy):
         self.doCmd(requestID, cmd, int, str)
 
     def doCmdInt3(self, requestID, cmd, int1, int2, int3):
-        DEBUG_MSG('Server.doCmdInt3', requestID, cmd, int1, int2, int3)
+        DEBUG_MSG('Server.doCmdInt3', requestID, cmd, int1, int2, int3) if cmd != AccountCommands.CMD_REQ_SERVER_STATS else None
         self.doCmd(requestID, cmd, int1, int2, int3)
 
     def doCmdInt4(self, requestID, cmd, int1, int2, int3, int4):
@@ -195,7 +195,7 @@ class Account(BigWorld.Proxy):
         cmdCall = BASE_REQUESTS.get(cmd)
         if cmdCall:
             try:
-                TRACE_MSG('Server.request :: ', requestID, cmd, args)
+                TRACE_MSG('Server.request :: ', requestID, cmd, args) if cmd != AccountCommands.CMD_REQ_SERVER_STATS else None
                 cmdCall(self, requestID, *args)
             except AttributeError as a:
                 DEBUG_MSG('Server.requestFail :: ', requestID, cmd, args, a)

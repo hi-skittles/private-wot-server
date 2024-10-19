@@ -31,8 +31,6 @@ UniversalBackgroundDatabaseHandler.DossierHandler
 
 def init():
 	global threadManager
-	vehicles.init(True, None)
-	items.init(True, {})
 	if threadManager is None:
 		threadManager = BackgroundTask.Manager("DatabaseHandler")
 		threadManager.startThreads(15)
@@ -52,10 +50,12 @@ def add_task(task):
 		raise RuntimeError("UniversalBackgroundDatabaseHandler is not initialized.")
 	threadManager.addBackgroundTask(task)
 
+# #
 
 def press_unlocked_veh_co_de():
 	"""
-	Universal function to define tanks that are unlocked AND added to first time players' garages. Any tank can be
+	# PRESS ACCOUNTS ONLY #
+	Universal function to define tanks that are unlocked AND added to first time press account garages. Any tank can be
 	added here by appending its compact description below the for-loop, or, by modifying the for-loop directly.
 	@return: set
 	"""
@@ -80,7 +80,6 @@ def unlocked_veh_co_de(for_stats=True):
 		# unlocked_veh_co_de |= {55633}   # cromwell b
 		
 		# addition of premium tanks, as they require zero xp to buy, so they need to be here, unlocked, regardless of whether they are in the shop or not
-		# ussr prems
 		unlocked_veh_co_de |= {52505, 51985, 51489, 2113, 53585, 49, 3169, 52481, 54801, 52769, 2369, 53841, 305, 52065,
 		                       51457, 54545, 13345, 63297, 54097, 817, 51553, 51713, 57105, 2849, 63553, 54353, 64049,
 		                       51809, 54785, 57361, 33, 63809, 54609, 64561, 55297, 55313, 11809, 64065, 54865, 64817, 9217,
@@ -185,9 +184,9 @@ def initEmptyStats():
 	unlocksSet = set()
 	vehiclesSet = set()
 	
-	eliteVehicles = {52513}
+	eliteVehicles = {52513, 54033}
 	
-	# TODO: this shit
+	# TODO: use for inventory and shit adder thingy in webconsole
 	# pz_viv = vehicles.getVehicleType(54033)
 	# pz_viv = vehicles.VehicleDescr(typeID=pz_viv.id)
 	# print pz_viv.getComponentsByType('vehicleGun')[1]
@@ -217,8 +216,16 @@ def initEmptyStats():
 		# unlocked_veh_co_de = {vehicle['compactDescr'] for vehicle in vehicles.g_list.getList(nationID).values() if vehicle.get('level') == 1 and 'secret' not in vehicle.get('tags')}
 	
 	# amount of XP avail for each unlocked vehicle
-	vehTypeXP = {i: 10000 for i in vehiclesSet} # TODO: individualize this for each vehicle?
-	vehTypeXP[52513] = 0    # change M6A2E1 in XP list
+	vehTypeXP = {i: 10000 for i in vehiclesSet if i not in {52505, 51985, 51489, 2113, 53585, 49, 3169, 52481, 54801, 52769, 2369, 53841, 305, 52065,
+		                       51457, 54545, 13345, 63297, 54097, 817, 51553, 51713, 57105, 2849, 63553, 54353, 64049,
+		                       51809, 54785, 57361, 33, 63809, 54609, 64561, 55297, 55313, 11809, 64065, 54865, 64817, 9217,
+		                       60177, 12577, 55121, 51201, 51473, 15905, 55633, 52225, 51729, 51745, 55889, 52737, 52241,
+		                       52001, 52993, 52497, 52257, 53249, 54033, 52513, 53761, 54289, 53537, 54017, 55057, 53793,
+		                       54273, 55569, 54049, 56577, 57105, 55073, 56833, 57617, 55841, 57089, 58641, 56097, 58113,
+		                       59665, 56353, 58369, 60433, 56609, 58625, 60689, 58881, 60945, 59137, 61201, 59393, 61457,
+		                       59649, 61713, 59905, 60161}}
+	vehTypeXP[52513] = 5000000
+	vehTypeXP[54033] = 5000000
 	
 	attrs = 0
 	excluded_attrs = (ACCOUNT_ATTR.PREMIUM, ACCOUNT_ATTR.OUT_OF_SESSION_WALLET, ACCOUNT_ATTR.CBETA,
@@ -265,6 +272,8 @@ def initEmptyStats():
 			'tutorialsCompleted': 33553532,
 			'playLimits': ((0, ''), (0, '')),
 			'maxResearchedLevelByNation': {"0": 1, "1": 1, "2": 1, "3": 1, "4": 1, "5": 1, "6": 1},
+			'unlocks': unlocksSet,
+			'eliteVehicles': []
 		},
 		'account': {
 			'clanDBID': 0,
@@ -283,7 +292,7 @@ def initEmptyStats():
 			'clanFortState': None
 		},
 		'economics': {
-			'unlocks': unlocksSet,
+			'unlocks': [],
 			'eliteVehicles': eliteVehicles,  # vehiclesSet
 		},
 		'offers': {
@@ -321,6 +330,7 @@ def initEmptyDossier():
 	         (13579, 1622548000, 'dossierCompDescr3')}
 	return rdata
 
+# #
 
 class GetFullSyncData(BackgroundTask.BackgroundTask):
 	"""
@@ -382,9 +392,7 @@ class GetFullSyncData(BackgroundTask.BackgroundTask):
 		stats_file = os.path.join(self.stats_path, "%s" % self.databaseID)
 		if not os.path.isfile(stats_file):
 			self.result.update(initEmptyStats())  # dict
-			TRACE_MSG("CANDYinit :: %s" % self.result[('eventsData', '_r')])
 			self.result[('eventsData', '_r')][9] = zlib.compress(cPickle.dumps(self.result[('eventsData', '_r')][9]))
-			TRACE_MSG("CANDYinit :: %s" % self.result[('eventsData', '_r')])
 			try:
 				with open(stats_file, 'wb') as file:
 					pprint.pprint(initEmptyStats(), stream=file)
@@ -394,9 +402,7 @@ class GetFullSyncData(BackgroundTask.BackgroundTask):
 			try:
 				with open(stats_file, 'rb') as file:
 					self.result.update(eval(file.read()))  # dict
-				TRACE_MSG("CANDYnot :: %s" % self.result[('eventsData', '_r')])
 				self.result[('eventsData', '_r')][9] = zlib.compress(cPickle.dumps(self.result[('eventsData', '_r')][9]))
-				TRACE_MSG("CANDYnot :: %s" % self.result[('eventsData', '_r')])
 			except Exception as e:
 				raise Exception("GetFullSyncData :: Error occurred while fetching stats data=%s" % e)
 		bgTaskMgr.addMainThreadTask(self)
@@ -589,9 +595,7 @@ class SetStatsData(BackgroundTask.BackgroundTask):
 		if not os.path.exists(self.filepath):
 			os.makedirs(self.filepath)
 		filename = os.path.join(self.filepath, "%s" % self.databaseID)
-		TRACE_MSG("CANDY :: %s" % self.data[('eventsData', '_r')])
 		self.data[('eventsData', '_r')][EVENT_CLIENT_DATA.NOTIFICATIONS] = cPickle.loads(zlib.decompress(self.data[('eventsData', '_r')][EVENT_CLIENT_DATA.NOTIFICATIONS]))
-		TRACE_MSG("CANDY :: %s" % self.data[('eventsData', '_r')])
 		try:
 			with open(filename, 'wb') as file:
 				pprint.pprint(self.data, stream=file)

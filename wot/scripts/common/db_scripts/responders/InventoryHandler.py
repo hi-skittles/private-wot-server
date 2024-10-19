@@ -17,4 +17,9 @@ def get_inventory(databaseID, callback):
 	return deferred
 
 def set_inventory(databaseID, data, callback):
-	raise NotImplemented
+	TRACE_MSG('InventoryHandler : set_stats :: databaseID=%s' % databaseID)
+	deferred = defer.Deferred()
+	deferred.addCallback(callback)
+	task = DBHandler.SetInventoryData(databaseID, data, callback)
+	DBHandler.add_task(task)
+	return deferred

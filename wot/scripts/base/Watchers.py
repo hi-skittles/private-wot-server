@@ -6,10 +6,8 @@ import traceback
 from bwdecorators import functionWatcher, functionWatcherParameter
 
 from Requests import AccountUpdates
-from Requests.DatabaseWorker import Helper
 from bwdebug import DEBUG_MSG
 
-Helper = Helper()
 #import XMPPEventNotifier
 
 # Kick player

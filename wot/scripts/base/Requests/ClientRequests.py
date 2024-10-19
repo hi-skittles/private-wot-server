@@ -5,22 +5,14 @@ from Requests import AccountUpdates
 from adisp import async, process
 from bwdebug import DEBUG_MSG, TRACE_MSG
 import items
-from db_scripts.responders import SyncDataHandler, StatsHandler, ShopHandler, DossierHandler
+from db_scripts.responders import SyncDataHandler, InventoryHandler, StatsHandler, ShopHandler, DossierHandler
 from collections import namedtuple
-
-from DatabaseWorker import Helper
 
 import BigWorld
 import AccountCommands
 
-
-# RequestResult = namedtuple('RequestResult', ['resultID', 'errorStr', 'data'])
-
 BASE_REQUESTS = {}
-shopItems = {}
-Helper = Helper()
-
-items.init(True, shopItems)
+# RequestResult = namedtuple('RequestResult', ['resultID', 'errorStr', 'data'])
 
 def baseRequest(cmdID):
     def wrapper(func):
@@ -30,17 +22,61 @@ def baseRequest(cmdID):
         BASE_REQUESTS[cmdID] = requester
         return func
     return wrapper
-
 def packStream(proxy, requestID, data):
     data = zlib.compress(cPickle.dumps(data))
     desc = cPickle.dumps((len(data), zlib.crc32(data)))
     return proxy.streamStringToClient(data, desc, requestID)
 
 
-# notes:
-# tank = vehicles.getVehicleType(3089)
-# print tank.autounlockedItems
+@baseRequest(AccountCommands.CMD_BUY_VEHICLE)
+@process
+def buyVehicle(proxy, requestID, *args):
+    if len(args) != 5:
+        proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Invalid arguments')
+        return
+    
+    shopRev, vehTypeCompDescr, int1, int2, int3 = args
+    DEBUG_MSG('AccountCommands.CMD_BUY_VEHICLE :: ', shopRev, vehTypeCompDescr, int1, int2, int3)
+    rdata = yield async(StatsHandler.get_stats, cbname='callback')(proxy.databaseID)
+    result, msg, udata = AccountUpdates.__buyVehicle(rdata, shopRev, vehTypeCompDescr, int1, int2, int3)
+    
+    # this is the only thing the client needs in .update ...
+    cdata = {'rev': requestID, 'prevRev': requestID - 1, 'inventory': {'vehicles': None}, 'stats': {'credits': None}}
+    
+    if result > 0:
+        DEBUG_MSG('AccountCommands.CMD_BUY_VEHICLE :: success=%s' % result)
+        cdata['inventory']['vehicles'] = udata['inventory']['vehicles']
+        cdata['stats']['credits'] = udata['stats']['credits']
+        proxy.client.update(cPickle.dumps(cdata))
+        proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
+        # ...whereas we still store the full dict to db
+        yield async(StatsHandler.update_stats, cbname='callback')(proxy.databaseID, udata)
+    else:
+        DEBUG_MSG('AccountCommands.CMD_BUY_VEHICLE :: failure=%s' % result)
+        proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, msg)
 
+@baseRequest(AccountCommands.CMD_BUY_SLOT)
+@process
+def buySlot(proxy, requestID, int1, _, __):
+    DEBUG_MSG('AccountCommands.CMD_BUY_SLOT :: ', int1)
+    shopRev = int1
+    rdata = yield async(StatsHandler.get_stats, cbname='callback')(proxy.databaseID)
+    result, msg, udata = AccountUpdates.__buySlot(rdata)
+    
+    # this is the only thing the client needs in .update ...
+    cdata = {'rev': requestID, 'prevRev': requestID - 1, 'stats': {'slots': None, 'gold': None}}
+    
+    if result > 0:
+        DEBUG_MSG('AccountCommands.CMD_BUY_SLOT :: success=%s' % result)
+        cdata['stats']['slots'] = udata['stats']['slots']
+        cdata['stats']['gold'] = udata['stats']['gold']
+        proxy.client.update(cPickle.dumps(cdata))
+        proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
+        # ...whereas we still store the full dict to db
+        yield async(StatsHandler.update_stats, cbname='callback')(proxy.databaseID, udata)
+    else:
+        DEBUG_MSG('AccountCommands.CMD_BUY_SLOT :: failure=%s' % result)
+        proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, msg)
 
 @baseRequest(AccountCommands.CMD_VEH_CAMOUFLAGE)
 @process
@@ -59,9 +95,34 @@ def buyAndEquipItem(proxy, requestID, *args):
 @baseRequest(AccountCommands.CMD_FREE_XP_CONV)
 @process
 def exchangeFreeXP(proxy, requestID, *args):
-    array, int2 = args[0]
-    DEBUG_MSG('AccountCommands.CMD_BUY_AND_EQUIP_ITEM :: ', array, int2)
+    # array, int2 = args[0]
+    # DEBUG_MSG('AccountCommands.CMD_FREE_XP_CONV :: ', array, int2)
     proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, '')
+
+@baseRequest(AccountCommands.CMD_UNLOCK)
+@process
+def unlockItem(proxy, requestID, vehTypeCompDescr, unlockIdx, int1):
+    DEBUG_MSG('AccountCommands.CMD_UNLOCK :: ', vehTypeCompDescr, unlockIdx, int1)
+    rdata = yield async(StatsHandler.get_stats, cbname='callback')(proxy.databaseID)
+    result, msg, udata = AccountUpdates.__unlockItem(vehTypeCompDescr, unlockIdx, rdata)
+    
+    # this is the only thing the client needs in .update ...
+    cdata = {'rev': requestID, 'prevRev': requestID - 1, 'stats': {'vehTypeXP': None, 'freeXP': None, 'unlocks': None}}
+    
+    if result > 0:
+        DEBUG_MSG('AccountCommands.CMD_UNLOCK :: success=%s' % result)
+        cdata['stats']['vehTypeXP'] = udata['stats']['vehTypeXP']
+        cdata['stats']['freeXP'] = udata['stats']['freeXP']
+        cdata['stats']['unlocks'] = udata['stats']['unlocks']
+
+        proxy.client.update(cPickle.dumps(cdata))
+        proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
+        
+        # ...whereas we still store the full dict to db
+        yield async(StatsHandler.update_stats, cbname='callback')(proxy.databaseID, udata)
+    else:
+        DEBUG_MSG('AccountCommands.CMD_UNLOCK :: failure=%s' % result)
+        proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, msg)
 
 @baseRequest(AccountCommands.CMD_EXCHANGE)
 @process
@@ -70,17 +131,24 @@ def exchangeCredits(proxy, requestID, int1, int2, int3):
     credits = int2
     rdata = yield async(StatsHandler.get_stats, cbname='callback')(proxy.databaseID)
     result, msg, udata = AccountUpdates.__exchangeGold(credits, rdata)
+    
+    # this is the only thing the client needs in .update ...
+    cdata = {'rev': requestID, 'prevRev': requestID - 1, 'stats': {'gold': None, 'credits': None, 'freeXP': None}}
+    
     if result > 0:
         DEBUG_MSG('AccountCommands.CMD_EXCHANGE :: success=%s' % result)
-        udata.update({'rev': 1, 'prevRev': 0})
-        proxy.client.update(cPickle.dumps(udata))
+        #   should i ensure these are not None before being sent to client?
+        cdata['stats']['gold'] = udata['stats']['gold']
+        cdata['stats']['credits'] = udata['stats']['credits']
+        cdata['stats']['freeXP'] = udata['stats']['freeXP']
+        
+        proxy.client.update(cPickle.dumps(cdata))
         proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
-        udata.pop('rev')
-        udata.pop('prevRev')
+        # ...whereas we still store the full dict to db
         yield async(StatsHandler.update_stats, cbname='callback')(proxy.databaseID, udata)
     else:
         DEBUG_MSG('AccountCommands.CMD_EXCHANGE :: failure=%s' % result)
-        proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Not enough gold')
+        proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, msg)
 
 @baseRequest(AccountCommands.CMD_PREMIUM)
 @process
@@ -89,19 +157,24 @@ def premium(proxy, requestID, int1, int2, int3):
     shopRev = int1
     extend_by_days = int2
     rdata = yield async(StatsHandler.get_stats, cbname='callback')(proxy.databaseID)
-    TRACE_MSG('MAXIMUS %s ' % rdata[('eventsData', '_r')])
     result, msg, udata = AccountUpdates.__addPremiumTime(extend_by_days, rdata)
+    
+    # this is the only thing the client needs in .update ...
+    cdata = {'rev': requestID, 'prevRev': requestID - 1, 'stats': {'gold': None}, 'account': {'premiumExpiryTime': None, 'attrs': None}}
+    
     if result > 0:
         DEBUG_MSG('AccountCommands.CMD_PREMIUM :: success=%s' % result)
-        udata.update({'rev': 1, 'prevRev': 0})
-        proxy.client.update(cPickle.dumps(udata))
+        cdata['stats']['gold'] = udata['stats']['gold']
+        cdata['account']['premiumExpiryTime'] = udata['account']['premiumExpiryTime']
+        cdata['account']['attrs'] = udata['account']['attrs']
+
+        proxy.client.update(cPickle.dumps(cdata))
         proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
-        udata.pop('rev')
-        udata.pop('prevRev')
+        # ...whereas we still store the full dict to db
         yield async(StatsHandler.update_stats, cbname='callback')(proxy.databaseID, udata)
     else:
         DEBUG_MSG('AccountCommands.CMD_PREMIUM :: failure=%s' % result)
-        proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Not enough gold')
+        proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, msg)
 
 @baseRequest(AccountCommands.CMD_ADD_INT_USER_SETTINGS)
 @process    # ugly i know, but it doesn't WORK the other way around sooo
@@ -113,13 +186,13 @@ def addIntUserSettings(proxy, requestID, settings):
     rdata = yield async(StatsHandler.get_stats, cbname='callback')(proxy.databaseID)
     
     # processing settings
-    bdata = {'rev': requestID, 'prevRev': 0, 'intUserSettings': {}}
+    cdata = {'rev': requestID, 'prevRev': requestID - 1, 'intUserSettings': {}}
     for i in range(0, len(settings), 2):
         k, v = int(settings[i]), int(settings[i + 1])
         rdata[('intUserSettings', '_r')][k] = v
-        bdata['intUserSettings'][k] = v
+        cdata['intUserSettings'][k] = v
     # send new settings to client
-    proxy.client.update(cPickle.dumps(bdata))
+    proxy.client.update(cPickle.dumps(cdata))
     # send new settings to db
     # named "nothing" here because this method will return True if successful
     nothing = yield async(StatsHandler.update_stats, cbname='callback')(proxy.databaseID, rdata)
@@ -158,20 +231,19 @@ def syncShop(proxy, requestID, revision, dataLen, dataCrc):
     DEBUG_MSG('AccountCommands.CMD_SYNC_SHOP :: ', revision, dataLen, dataCrc)
     # if there is a desync then we can use AccountCommands.RES_SHOP_DESYNC as our result ID, which requires adding shopRev; else not
     shop = ShopHandler.get_shop()
-    shop.update({'prevRev': revision, 'rev': 2})
-    # foo = zlib.compress(cPickle.dumps(shop))
-    #
+    shop.update({'prevRev': revision})
+    foo = zlib.compress(cPickle.dumps(shop))
+    
     # if shop['rev'] == revision:
     #     DEBUG_MSG('AccountCommands.CMD_SYNC_SHOP :: revisions match, telling client to use its cache')
     #     proxy.client.onCmdResponse(requestID, AccountCommands.RES_CACHE, '')
-    # elif shop['rev'] != revision and dataLen == len(foo) and dataCrc == zlib.crc32(foo):
-    #     DEBUG_MSG('AccountCommands.CMD_SYNC_SHOP :: revisions do not match, but other shit matches so oh well use cache')
-    #     # packStream(proxy, requestID, shop)
-    #     proxy.client.onCmdResponseExt(requestID, AccountCommands.RES_CACHE, '', cPickle.dumps({'shopRev': 1}))
-    # elif revision == 0:
-    DEBUG_MSG('AccountCommands.CMD_SYNC_SHOP :: client requested full sync, sending full shop data to client')
-    packStream(proxy, requestID, shop)
-    proxy.client.onCmdResponse(requestID, AccountCommands.RES_STREAM, '')
+    if dataLen == len(foo) and dataCrc == zlib.crc32(foo):
+        DEBUG_MSG('AccountCommands.CMD_SYNC_SHOP :: revisions do not match, but other shit matches so oh well use cache')
+        proxy.client.onCmdResponseExt(requestID, AccountCommands.RES_CACHE, '', cPickle.dumps({'shopRev': 2}))
+    else:
+        DEBUG_MSG('AccountCommands.CMD_SYNC_SHOP :: client requested full sync, sending full shop data to client')
+        packStream(proxy, requestID, shop)
+        proxy.client.onCmdResponse(requestID, AccountCommands.RES_STREAM, '')
 
 
 @baseRequest(AccountCommands.CMD_SYNC_DOSSIERS)

@@ -1,28 +1,10 @@
 from bwdebug import TRACE_MSG
 
 
-def __returnPremiumPrices():
-	return {
-		1: 250,
-		3: 650,
-		7: 1250,
-		360: 26000,
-		180: 13500,
-		30: 2500
-	}
-
-
-def __returnCreditsPrice():
-	return 400
-
-
-premiumPrices = __returnPremiumPrices()
-creditsPrice = __returnCreditsPrice()
-
-
 def get_shop():
 	TRACE_MSG('ShopHandler : get_shop')
 	return {
+		'rev': 2,
 		'crystalExchangeRate': 200,
 		'camouflageCost': {
 			0: (50, True),
@@ -36,7 +18,7 @@ def get_shop():
 		},
 		'berthsPrices': (16, 16, [300]),
 		'femalePassportChangeCost': 50,
-		'freeXPConversion': (15, 1),
+		'freeXPConversion': (25, 1),
 		'dropSkillsCost': {
 			0: {'xpReuseFraction': 0.5, 'gold': 0, 'credits': 0},
 			1: {'xpReuseFraction': 0.75, 'gold': 0, 'credits': 20000},
@@ -1540,3 +1522,26 @@ def get_shop():
 			'nations': {}
 		}
 	}
+
+def __returnPremiumPrices():
+	return {
+		1: 250,
+		3: 650,
+		7: 1250,
+		360: 26000,
+		180: 13500,
+		30: 2500
+	}
+
+def __returnCreditsPrice():
+	return 400
+
+def __returnSlotsPrices():
+	return get_shop()['slotsPrices'][1][0]
+
+
+premiumPrices = __returnPremiumPrices()
+creditsPrice = __returnCreditsPrice()
+slotsPrices = __returnSlotsPrices()
+
+
