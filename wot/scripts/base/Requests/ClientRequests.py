@@ -30,7 +30,7 @@ def packStream(proxy, requestID, data):
 
 @baseRequest(AccountCommands.CMD_BUY_VEHICLE)
 @process
-def buyVehicle(proxy, requestID, *args):
+def buyVehicle(proxy, requestID, args):
     if len(args) != 5:
         proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Invalid arguments')
         return
@@ -94,26 +94,50 @@ def buyAndEquipItem(proxy, requestID, *args):
 
 @baseRequest(AccountCommands.CMD_FREE_XP_CONV)
 @process
-def exchangeFreeXP(proxy, requestID, *args):
-    # array, int2 = args[0]
-    # DEBUG_MSG('AccountCommands.CMD_FREE_XP_CONV :: ', array, int2)
-    proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, '')
+def exchangeFreeXP(proxy, requestID, args):
+    DEBUG_MSG('AccountCommands.CMD_FREE_XP_CONV')
+    wantedXP = args[1]
+    vehTypeDescrs = args[2:]
+    rdata = yield async(StatsHandler.get_stats, cbname='callback')(proxy.databaseID)
+    result, msg, udata = AccountUpdates.__exchangeFreeXP(wantedXP, rdata, vehTypeDescrs)
+    
+    cdata = {'rev': requestID, 'prevRev': requestID - 1, 'stats': {'gold': None, 'freeXP': None, 'vehTypeXP': None}}
+    
+    if result > 0:
+        DEBUG_MSG('AccountCommands.CMD_FREE_XP_CONV :: success=%s' % result)
+        
+        cdata['stats']['gold'] = udata['stats']['gold']
+        cdata['stats']['freeXP'] = udata['stats']['freeXP']
+        cdata['stats']['vehTypeXP'] = udata['stats']['vehTypeXP']
+        
+        proxy.client.update(cPickle.dumps(cdata))
+        proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
+        yield async(StatsHandler.update_stats, cbname='callback')(proxy.databaseID, udata)
+    else:
+        DEBUG_MSG('AccountCommands.CMD_FREE_XP_CONV :: failure=%s' % result)
+        proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, msg)
 
 @baseRequest(AccountCommands.CMD_UNLOCK)
 @process
 def unlockItem(proxy, requestID, vehTypeCompDescr, unlockIdx, int1):
     DEBUG_MSG('AccountCommands.CMD_UNLOCK :: ', vehTypeCompDescr, unlockIdx, int1)
     rdata = yield async(StatsHandler.get_stats, cbname='callback')(proxy.databaseID)
+    oldEliteVehicles = rdata['stats']['eliteVehicles']
     result, msg, udata = AccountUpdates.__unlockItem(vehTypeCompDescr, unlockIdx, rdata)
     
     # this is the only thing the client needs in .update ...
-    cdata = {'rev': requestID, 'prevRev': requestID - 1, 'stats': {'vehTypeXP': None, 'freeXP': None, 'unlocks': None}}
+    cdata = {'rev': requestID, 'prevRev': requestID - 1, 'stats': {'vehTypeXP': None, 'freeXP': None, 'unlocks': None, 'eliteVehicles': None}}
     
     if result > 0:
         DEBUG_MSG('AccountCommands.CMD_UNLOCK :: success=%s' % result)
         cdata['stats']['vehTypeXP'] = udata['stats']['vehTypeXP']
         cdata['stats']['freeXP'] = udata['stats']['freeXP']
         cdata['stats']['unlocks'] = udata['stats']['unlocks']
+        
+        if oldEliteVehicles != udata['stats']['eliteVehicles']:
+            cdata['stats']['eliteVehicles'] = udata['stats']['eliteVehicles']
+        else:
+            print cdata['stats'].pop('eliteVehicles')
 
         proxy.client.update(cPickle.dumps(cdata))
         proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
@@ -133,14 +157,13 @@ def exchangeCredits(proxy, requestID, int1, int2, int3):
     result, msg, udata = AccountUpdates.__exchangeGold(credits, rdata)
     
     # this is the only thing the client needs in .update ...
-    cdata = {'rev': requestID, 'prevRev': requestID - 1, 'stats': {'gold': None, 'credits': None, 'freeXP': None}}
+    cdata = {'rev': requestID, 'prevRev': requestID - 1, 'stats': {'gold': None, 'credits': None}}
     
     if result > 0:
         DEBUG_MSG('AccountCommands.CMD_EXCHANGE :: success=%s' % result)
         #   should i ensure these are not None before being sent to client?
         cdata['stats']['gold'] = udata['stats']['gold']
         cdata['stats']['credits'] = udata['stats']['credits']
-        cdata['stats']['freeXP'] = udata['stats']['freeXP']
         
         proxy.client.update(cPickle.dumps(cdata))
         proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')

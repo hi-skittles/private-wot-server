@@ -273,7 +273,7 @@ def initEmptyStats():
 			'playLimits': ((0, ''), (0, '')),
 			'maxResearchedLevelByNation': {"0": 1, "1": 1, "2": 1, "3": 1, "4": 1, "5": 1, "6": 1},
 			'unlocks': unlocksSet,
-			'eliteVehicles': []
+			'eliteVehicles': set()
 		},
 		'account': {
 			'clanDBID': 0,
@@ -292,7 +292,7 @@ def initEmptyStats():
 			'clanFortState': None
 		},
 		'economics': {
-			'unlocks': [],
+			'unlocks': set(),
 			'eliteVehicles': eliteVehicles,  # vehiclesSet
 		},
 		'offers': {
