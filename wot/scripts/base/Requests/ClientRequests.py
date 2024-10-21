@@ -1,4 +1,5 @@
 import cPickle
+import time
 import zlib
 
 from Requests import AccountUpdates
@@ -10,7 +11,23 @@ from collections import namedtuple
 
 import BigWorld
 import AccountCommands
-
+from enumerations import Enumeration
+SM_TYPE = Enumeration('System message type', ['Error',
+ 'Warning',
+ 'Information',
+ 'GameGreeting',
+ 'PowerLevel',
+ 'FinancialTransactionWithGold',
+ 'FinancialTransactionWithCredits',
+ 'FortificationStartUp',
+ 'PurchaseForGold',
+ 'DismantlingForGold',
+ 'PurchaseForCredits',
+ 'Selling',
+ 'Remove',
+ 'Repair',
+ 'CustomizationForGold',
+ 'CustomizationForCredits'])
 BASE_REQUESTS = {}
 # RequestResult = namedtuple('RequestResult', ['resultID', 'errorStr', 'data'])
 
@@ -37,20 +54,22 @@ def buyVehicle(proxy, requestID, args):
     
     shopRev, vehTypeCompDescr, int1, int2, int3 = args
     DEBUG_MSG('AccountCommands.CMD_BUY_VEHICLE :: ', shopRev, vehTypeCompDescr, int1, int2, int3)
-    rdata = yield async(StatsHandler.get_stats, cbname='callback')(proxy.databaseID)
-    result, msg, udata = AccountUpdates.__buyVehicle(rdata, shopRev, vehTypeCompDescr, int1, int2, int3)
+    s_data = yield async(StatsHandler.get_stats, cbname='callback')(proxy.databaseID)
+    i_data = yield async(InventoryHandler.get_inventory, cbname='callback')(proxy.databaseID)
+    result, msg, s_data, i_data = AccountUpdates.__buyVehicle(s_data, i_data, shopRev, vehTypeCompDescr, int1, int2, int3)
     
     # this is the only thing the client needs in .update ...
     cdata = {'rev': requestID, 'prevRev': requestID - 1, 'inventory': {'vehicles': None}, 'stats': {'credits': None}}
     
     if result > 0:
         DEBUG_MSG('AccountCommands.CMD_BUY_VEHICLE :: success=%s' % result)
-        cdata['inventory']['vehicles'] = udata['inventory']['vehicles']
-        cdata['stats']['credits'] = udata['stats']['credits']
+        cdata['inventory']['vehicles'] = i_data['inventory']['vehicles']
+        cdata['stats']['credits'] = s_data['stats']['credits']
         proxy.client.update(cPickle.dumps(cdata))
         proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
         # ...whereas we still store the full dict to db
-        yield async(StatsHandler.update_stats, cbname='callback')(proxy.databaseID, udata)
+        yield async(StatsHandler.update_stats, cbname='callback')(proxy.databaseID, s_data)
+        yield async(InventoryHandler.set_inventory, cbname='callback')(proxy.databaseID, i_data)
     else:
         DEBUG_MSG('AccountCommands.CMD_BUY_VEHICLE :: failure=%s' % result)
         proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, msg)
@@ -283,13 +302,15 @@ def sendGUI(proxy, requestID, _):
     _GUI_CTX = cPickle.dumps({
         'databaseID': proxy.databaseID,
         'logUXEvents': True,
-        'aogasStartedAt': None,
-        'sessionStartedAt': 0,
-        'isAogasEnabled': False,
+        'aogasStartedAt': time.time(),
+        'sessionStartedAt': time.time(),
+        'isAogasEnabled': True,
         'collectUiStats': False,
         'isLongDisconnectedFromCenter': False,
     })
     proxy.client.showGUI(_GUI_CTX)
+    proxy.client.pushClientMessage("Thank you for downloading WoT Offline 9.7", SM_TYPE.FortificationStartUp)
+
 
 @baseRequest(AccountCommands.CMD_SET_LANGUAGE)
 def setLanguage(proxy, requestID, language):

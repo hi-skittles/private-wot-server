@@ -18,9 +18,9 @@ else:
     IS_BASEAPP = BigWorld.component in ('base', 'service')
     IS_WEB = False
 
-CURRENT_REALM = 'RU'
-DEFAULT_LANGUAGE = 'ru'
-AUTH_REALM = 'RU'
+CURRENT_REALM = 'EU'
+DEFAULT_LANGUAGE = 'en'
+AUTH_REALM = 'EU'
 IS_DEVELOPMENT = CURRENT_REALM == 'DEV'
 IS_CHINA = CURRENT_REALM == 'CN'
 IS_VIETNAM = False

@@ -216,7 +216,7 @@ def initEmptyStats():
 		# unlocked_veh_co_de = {vehicle['compactDescr'] for vehicle in vehicles.g_list.getList(nationID).values() if vehicle.get('level') == 1 and 'secret' not in vehicle.get('tags')}
 	
 	# amount of XP avail for each unlocked vehicle
-	vehTypeXP = {i: 10000 for i in vehiclesSet if i not in {52505, 51985, 51489, 2113, 53585, 49, 3169, 52481, 54801, 52769, 2369, 53841, 305, 52065,
+	vehTypeXP = {i: 0 for i in vehiclesSet if i not in {52505, 51985, 51489, 2113, 53585, 49, 3169, 52481, 54801, 52769, 2369, 53841, 305, 52065,
 		                       51457, 54545, 13345, 63297, 54097, 817, 51553, 51713, 57105, 2849, 63553, 54353, 64049,
 		                       51809, 54785, 57361, 33, 63809, 54609, 64561, 55297, 55313, 11809, 64065, 54865, 64817, 9217,
 		                       60177, 12577, 55121, 51201, 51473, 15905, 55633, 52225, 51729, 51745, 55889, 52737, 52241,
@@ -230,7 +230,7 @@ def initEmptyStats():
 	attrs = 0
 	excluded_attrs = (ACCOUNT_ATTR.PREMIUM, ACCOUNT_ATTR.OUT_OF_SESSION_WALLET, ACCOUNT_ATTR.CBETA,
 	                  ACCOUNT_ATTR.OBETA, ACCOUNT_ATTR.AOGAS, ACCOUNT_ATTR.TUTORIAL_COMPLETED,
-	                  ACCOUNT_ATTR.IGR_PREMIUM, ACCOUNT_ATTR.IGR_BASE)
+	                  ACCOUNT_ATTR.IGR_PREMIUM, ACCOUNT_ATTR.IGR_BASE, ACCOUNT_ATTR.ALPHA, ACCOUNT_ATTR.CLAN, ACCOUNT_ATTR.TRADING)
 	for field in dir(ACCOUNT_ATTR):
 		value = getattr(ACCOUNT_ATTR, field, None)
 		if isinstance(value, (int, long)) and value not in excluded_attrs:
@@ -250,7 +250,7 @@ def initEmptyStats():
 			'denunciationsLeft': 10,
 			'freeVehiclesLeft': 2,
 			'refSystem': {'referrals': {}},
-			'slots': 500,
+			'slots': 10,
 			'battlesTillCaptcha': 9999999,
 			'hasFinPassword': False,
 			'freeTMenLeft': 25,
@@ -270,7 +270,7 @@ def initEmptyStats():
 			'dossier': '',
 			'multipliedXPVehs': [],
 			'tutorialsCompleted': 33553532,
-			'playLimits': ((0, ''), (0, '')),
+			'playLimits': ((0, ''), (0, '')),  # ((86400, ''), (604800, ''))
 			'maxResearchedLevelByNation': {"0": 1, "1": 1, "2": 1, "3": 1, "4": 1, "5": 1, "6": 1},
 			'unlocks': unlocksSet,
 			'eliteVehicles': set()

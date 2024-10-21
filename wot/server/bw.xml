@@ -37,7 +37,7 @@
 		<shouldAcceptUnknownUsers> false </shouldAcceptUnknownUsers>
 		<shouldRememberUnknownUsers> true </shouldRememberUnknownUsers>
 		<entityTypeForUnknownUsers> Account </entityTypeForUnknownUsers>
-		<authenticateViaBaseEntity> true </authenticateViaBaseEntity>
+		<authenticateViaBaseEntity> false </authenticateViaBaseEntity>
 	</billingSystem>
 
 	<db>

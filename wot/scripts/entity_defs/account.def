@@ -153,6 +153,14 @@
     </serverSettings>
   </Properties>
   <ClientMethods>
+
+    <!-- MODDED LINE -->
+    <pushClientMessage>
+      <Arg>	STRING	</Arg>
+      <Arg>	PYTHON	</Arg>
+    </pushClientMessage>
+    <!-- MODDED LINE -->
+
     <onCmdResponse>
       <Arg>	INT16	</Arg>
       <Arg>	INT16	</Arg>

@@ -1,3 +1,7 @@
+from itertools import cycle
+
+import AccountCommands
+import items
 from bwdebug import DEBUG_MSG, ERROR_MSG
 from constants import ACCOUNT_ATTR
 import time
@@ -48,11 +52,37 @@ def subtract_want_equally(want, values):
 ####
 
 # stats :: gold, maxResearchedLevelByNation, slots, vehTypeXP, unlocks
-# economics :: eliteVehicles
+# stats :: economics :: eliteVehicles
 # inventory :: 1 (tanks) :: compDescr, crew, eqs, eqsLayout, settings, shellsLayout
 # inventory :: 8 (crew) :: compDescr, vehicle
-def __buyVehicle(data, shopRev, vehTypeCompDescr, int1, int2, int3):
-    pass
+def __buyVehicle(s_data, i_data, shopRev, vehTypeCompDescr, int1, int2, int3):
+    if int2 or int3 != -1:
+        return -1, 'Crew NYI', s_data, i_data
+    
+    value = vehicles.getVehicleType(vehTypeCompDescr).id
+    vehicle = vehicles.VehicleDescr(typeID=value)
+    newCompDescr = vehicle.makeCompactDescr()
+    
+    i = len(i_data[ITEM_TYPE_INDICES['vehicle']]['compDescr']) + 1
+    i_crew = len(i_data[ITEM_TYPE_INDICES['crew']]['compDescr']) + 1
+    
+    turretGun = (vehicles.makeIntCompactDescrByID('vehicleTurret', *vehicle.turrets[0][0]['id']),
+                 vehicles.makeIntCompactDescrByID('vehicleGun', *vehicle.turrets[0][0]['guns'][0]['id']))
+    
+    tmanList = items.tankmen.generateTankmen(value[0], value[1], vehicle.type.crewRoles, True,
+                                             items.tankmen.MAX_SKILL_LEVEL, [])
+    tmanListCycle = cycle(tmanList)
+    
+    i_data[ITEM_TYPE_INDICES['vehicle']]['crew'].update(
+        {i: [tmanID for tmanID in xrange(i_crew, len(tmanList) + i_crew)]})
+    i_data[ITEM_TYPE_INDICES['vehicle']]['settings'].update(
+        {i: AccountCommands.VEHICLE_SETTINGS_FLAG.AUTO_REPAIR | AccountCommands.VEHICLE_SETTINGS_FLAG.AUTO_LOAD})
+    i_data[ITEM_TYPE_INDICES['vehicle']]['compDescr'].update({i: newCompDescr})
+    i_data[ITEM_TYPE_INDICES['vehicle']]['eqs'].update({i: []})
+    i_data[ITEM_TYPE_INDICES['vehicle']]['eqsLayout'].update({i: []})
+    i_data[ITEM_TYPE_INDICES['vehicle']]['shellsLayout'].update(
+        {i: {turretGun: vehicles.getDefaultAmmoForGun(vehicle.turrets[0][0]['guns'][0])}})
+
 
 #   stats :: gold, slots
 def __buySlot(data):
