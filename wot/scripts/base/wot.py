@@ -19,6 +19,8 @@ import CronUpdaters
 
 DO_GC_DUMP = False
 
+vehicle_prices = dict()
+
 try:
 	# srvtest is optional
 	# It will only be used if we run Fantasydemo from the testing environment
@@ -40,7 +42,8 @@ def onInit(isReload):
 	DatabaseHandler.init()
 	# CronUpdaters.init()
 	
-	items.init(True, {})
+	global vehicle_prices
+	items.init(True, vehicle_prices)
 
 def onFini():
 	WARNING_MSG("wot.base.onFini")

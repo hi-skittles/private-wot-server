@@ -82,7 +82,7 @@
 		<dumpEntityDescription> 0 </dumpEntityDescription> <!-- Type: Integer -->
 		<maxConcurrentEntityLoaders> 5 </maxConcurrentEntityLoaders> <!-- Type: Int -->
 		<numDBLockRetries> 30 </numDBLockRetries> <!-- Type: Integer -->
-		<shouldCacheLogOnRecords> false </shouldCacheLogOnRecords>
+		<shouldCacheLogOnRecords> true </shouldCacheLogOnRecords>
 		<shouldDelayLookUpSend> false </shouldDelayLookUpSend> <!-- Type: Boolean -->
 	</dbApp>
 

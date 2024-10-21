@@ -87,7 +87,7 @@ def unlocked_veh_co_de(for_stats=True):
 		                       52001, 52993, 52497, 52257, 53249, 54033, 52513, 53761, 54289, 53537, 54017, 55057, 53793,
 		                       54273, 55569, 54049, 56577, 57105, 55073, 56833, 57617, 55841, 57089, 58641, 56097, 58113,
 		                       59665, 56353, 58369, 60433, 56609, 58625, 60689, 58881, 60945, 59137, 61201, 59393, 61457,
-		                       59649, 61713, 59905, 60161}
+		                       59649, 61713, 59905, 60161, 53505}
 		
 		return unlocked_veh_co_de
 	else:
@@ -138,15 +138,15 @@ def initEmptyInventory():
 		'compDescr': {}
 	}
 	
-	data[ITEM_TYPE_INDICES['equipment']] = {}
-	data[ITEM_TYPE_INDICES['optionalDevice']] = {}
-	data[ITEM_TYPE_INDICES['shell']] = {}
-	data[ITEM_TYPE_INDICES['vehicleChassis']] = {}
-	data[ITEM_TYPE_INDICES['vehicleEngine']] = {}
-	data[ITEM_TYPE_INDICES['vehicleFuelTank']] = {}
-	data[ITEM_TYPE_INDICES['vehicleGun']] = {}
-	data[ITEM_TYPE_INDICES['vehicleRadio']] = {}
-	data[ITEM_TYPE_INDICES['vehicleTurret']] = {}
+	# data[ITEM_TYPE_INDICES['equipment']] = {}
+	# data[ITEM_TYPE_INDICES['optionalDevice']] = {}
+	# data[ITEM_TYPE_INDICES['shell']] = {}
+	# data[ITEM_TYPE_INDICES['vehicleChassis']] = {}
+	# data[ITEM_TYPE_INDICES['vehicleEngine']] = {}
+	# data[ITEM_TYPE_INDICES['vehicleFuelTank']] = {}
+	# data[ITEM_TYPE_INDICES['vehicleGun']] = {}
+	# data[ITEM_TYPE_INDICES['vehicleRadio']] = {}
+	# data[ITEM_TYPE_INDICES['vehicleTurret']] = {}
 
 	for value in unlocked_vehs: # vehicles.g_list._VehicleList__ids.values()
 		value = vehicles.getVehicleType(value).id
@@ -408,7 +408,7 @@ class GetFullSyncData(BackgroundTask.BackgroundTask):
 		bgTaskMgr.addMainThreadTask(self)
 	
 	def doMainThreadTask(self, bgTaskMgr):
-		TRACE_MSG('GetFullSyncData (foreground) :: databaseID=%s' % self.databaseID)
+		# TRACE_MSG('GetFullSyncData (foreground) :: databaseID=%s' % self.databaseID)
 		self.callback(self.result)
 
 
@@ -423,7 +423,7 @@ class GetQuestsData(BackgroundTask.BackgroundTask):
 		self.filepath = None
 	
 	def doBackgroundTask(self, bgTaskMgr, threadData):
-		TRACE_MSG('GetQuestsData (background) :: databaseID=%s' % self.databaseID)
+		# TRACE_MSG('GetQuestsData (background) :: databaseID=%s' % self.databaseID)
 		self.filepath = ResMgr.resolveToAbsolutePath('server/database_files/quests/')
 		if not os.path.exists(self.filepath):
 			os.makedirs(self.filepath)
@@ -449,7 +449,7 @@ class GetQuestsData(BackgroundTask.BackgroundTask):
 		return initEmptyQuests()
 	
 	def doMainThreadTask(self, bgTaskMgr):
-		TRACE_MSG('GetQuestsData (foreground) :: databaseID=%s' % self.databaseID)
+		# TRACE_MSG('GetQuestsData (foreground) :: databaseID=%s' % self.databaseID)
 		self.callback(self.result)
 
 class GetQuestsDataKeyed(BackgroundTask.BackgroundTask):
@@ -476,7 +476,7 @@ class GetInventoryData(BackgroundTask.BackgroundTask):
 		self.filepath = None
 	
 	def doBackgroundTask(self, bgTaskMgr, threadData):
-		TRACE_MSG('GetInventoryData (background) :: databaseID=%s' % self.databaseID)
+		# TRACE_MSG('GetInventoryData (background) :: databaseID=%s' % self.databaseID)
 		self.filepath = ResMgr.resolveToAbsolutePath('server/database_files/inventory/')
 		if not os.path.exists(self.filepath):
 			os.makedirs(self.filepath)
@@ -502,7 +502,7 @@ class GetInventoryData(BackgroundTask.BackgroundTask):
 		return initEmptyInventory()
 	
 	def doMainThreadTask(self, bgTaskMgr):
-		TRACE_MSG('GetInventoryData (foreground) :: databaseID=%s' % self.databaseID)
+		# TRACE_MSG('GetInventoryData (foreground) :: databaseID=%s' % self.databaseID)
 		self.callback(self.result)
 	
 class SetInventoryData(BackgroundTask.BackgroundTask):
@@ -517,7 +517,7 @@ class SetInventoryData(BackgroundTask.BackgroundTask):
 		self.filepath = None
 	
 	def doBackgroundTask(self, bgTaskMgr, threadData):
-		TRACE_MSG('SetInventoryData (background) :: databaseID=%s' % self.databaseID)
+		# TRACE_MSG('SetInventoryData (background) :: databaseID=%s' % self.databaseID)
 		self.filepath = ResMgr.resolveToAbsolutePath('server/database_files/inventory/')
 		if not os.path.exists(self.filepath):
 			os.makedirs(self.filepath)
@@ -531,7 +531,7 @@ class SetInventoryData(BackgroundTask.BackgroundTask):
 		bgTaskMgr.addMainThreadTask(self)
 	
 	def doMainThreadTask(self, bgTaskMgr):
-		TRACE_MSG('SetInventoryData (foreground) :: databaseID=%s' % self.databaseID)
+		# TRACE_MSG('SetInventoryData (foreground) :: databaseID=%s' % self.databaseID)
 		self.callback(self.result)
 
 
@@ -546,7 +546,7 @@ class GetStatsData(BackgroundTask.BackgroundTask):
 		self.filepath = None
 	
 	def doBackgroundTask(self, bgTaskMgr, threadData):
-		TRACE_MSG('GetStatsData (background) :: databaseID=%s' % self.databaseID)
+		# TRACE_MSG('GetStatsData (background) :: databaseID=%s' % self.databaseID)
 		self.filepath = ResMgr.resolveToAbsolutePath('server/database_files/stats/')
 		if not os.path.exists(self.filepath):
 			os.makedirs(self.filepath)
@@ -575,7 +575,7 @@ class GetStatsData(BackgroundTask.BackgroundTask):
 		return initEmptyStats()
 	
 	def doMainThreadTask(self, bgTaskMgr):
-		TRACE_MSG('GetStatsData (foreground) :: databaseID=%s' % self.databaseID)
+		# TRACE_MSG('GetStatsData (foreground) :: databaseID=%s' % self.databaseID)
 		self.callback(self.result)
 
 class SetStatsData(BackgroundTask.BackgroundTask):
@@ -590,7 +590,7 @@ class SetStatsData(BackgroundTask.BackgroundTask):
 		self.filepath = None
 	
 	def doBackgroundTask(self, bgTaskMgr, threadData):
-		TRACE_MSG('SetStatsData (background) :: databaseID=%s' % self.databaseID)
+		# TRACE_MSG('SetStatsData (background) :: databaseID=%s' % self.databaseID)
 		self.filepath = ResMgr.resolveToAbsolutePath('server/database_files/stats/')
 		if not os.path.exists(self.filepath):
 			os.makedirs(self.filepath)
@@ -605,7 +605,7 @@ class SetStatsData(BackgroundTask.BackgroundTask):
 		bgTaskMgr.addMainThreadTask(self)
 	
 	def doMainThreadTask(self, bgTaskMgr):
-		TRACE_MSG('SetStatsData (foreground) :: databaseID=%s' % self.databaseID)
+		# TRACE_MSG('SetStatsData (foreground) :: databaseID=%s' % self.databaseID)
 		self.callback(self.result)
 
 

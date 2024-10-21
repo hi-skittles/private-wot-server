@@ -4,7 +4,7 @@ import zlib
 
 from Requests import AccountUpdates
 from adisp import async, process
-from bwdebug import DEBUG_MSG, TRACE_MSG
+from bwdebug import DEBUG_MSG, TRACE_MSG, ERROR_MSG
 import items
 from db_scripts.responders import SyncDataHandler, InventoryHandler, StatsHandler, ShopHandler, DossierHandler
 from collections import namedtuple
@@ -53,26 +53,61 @@ def buyVehicle(proxy, requestID, args):
         return
     
     shopRev, vehTypeCompDescr, int1, int2, int3 = args
+    flags = int1
+    crew_level = int2
     DEBUG_MSG('AccountCommands.CMD_BUY_VEHICLE :: ', shopRev, vehTypeCompDescr, int1, int2, int3)
     s_data = yield async(StatsHandler.get_stats, cbname='callback')(proxy.databaseID)
     i_data = yield async(InventoryHandler.get_inventory, cbname='callback')(proxy.databaseID)
     result, msg, s_data, i_data = AccountUpdates.__buyVehicle(s_data, i_data, shopRev, vehTypeCompDescr, int1, int2, int3)
     
     # this is the only thing the client needs in .update ...
-    cdata = {'rev': requestID, 'prevRev': requestID - 1, 'inventory': {'vehicles': None}, 'stats': {'credits': None}}
+    cdata = {'rev': requestID, 'prevRev': requestID - 1,
+             'inventory': {
+                 1: {'compDescr': None, 'crew': None, 'eqs': None, 'eqsLayout': None, 'settings': None, 'shellsLayout': None},
+                 8: {'compDescr': None, 'vehicle': None}
+             },
+             'stats': {
+                 'gold': None, 'maxResearchedLevelByNation': None, 'vehTypeXP': None, 'unlocks': None, 'credits': None
+             }
+    }
     
     if result > 0:
         DEBUG_MSG('AccountCommands.CMD_BUY_VEHICLE :: success=%s' % result)
-        cdata['inventory']['vehicles'] = i_data['inventory']['vehicles']
+        
+        cdata['inventory'][1]['compDescr'] = i_data['inventory'][1]['compDescr']
+        cdata['inventory'][1]['crew'] = i_data['inventory'][1]['crew']
+        cdata['inventory'][1]['eqs'] = i_data['inventory'][1]['eqs']
+        cdata['inventory'][1]['eqsLayout'] = i_data['inventory'][1]['eqsLayout']
+        cdata['inventory'][1]['settings'] = i_data['inventory'][1]['settings']
+        cdata['inventory'][1]['shellsLayout'] = i_data['inventory'][1]['shellsLayout']
+        
+        cdata['inventory'][8]['compDescr'] = i_data['inventory'][8]['compDescr']
+        cdata['inventory'][8]['vehicle'] = i_data['inventory'][8]['vehicle']
+        
+        cdata['stats']['gold'] = s_data['stats']['gold']
         cdata['stats']['credits'] = s_data['stats']['credits']
-        proxy.client.update(cPickle.dumps(cdata))
-        proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
-        # ...whereas we still store the full dict to db
-        yield async(StatsHandler.update_stats, cbname='callback')(proxy.databaseID, s_data)
-        yield async(InventoryHandler.set_inventory, cbname='callback')(proxy.databaseID, i_data)
+        cdata['stats']['maxResearchedLevelByNation'] = s_data['stats']['maxResearchedLevelByNation']
+        cdata['stats']['vehTypeXP'] = s_data['stats']['vehTypeXP']
+        cdata['stats']['unlocks'] = s_data['stats']['unlocks']
+        
+        is_invalid_data, invalid_data = False, None
+        # ensure no value in cdata is None before sending to client
+        for k, v in cdata.iteritems():
+            if v is None:
+                is_invalid_data, invalid_data = True, k
+        
+        if not is_invalid_data:
+            proxy.client.update(cPickle.dumps(cdata))
+            proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
+            # ...whereas we still store the full dict to db
+            yield async(StatsHandler.update_stats, cbname='callback')(proxy.databaseID, s_data)
+            yield async(InventoryHandler.set_inventory, cbname='callback')(proxy.databaseID, i_data)
+        else:
+            ERROR_MSG('AccountCommands.CMD_BUY_VEHICLE :: None value in cdata=%s' % invalid_data)
+            proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'None value in cdata')
     else:
-        DEBUG_MSG('AccountCommands.CMD_BUY_VEHICLE :: failure=%s' % result)
-        proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, msg)
+        DEBUG_MSG('AccountCommands.CMD_BUY_VEHICLE :: failure=', result, msg)
+        proxy.client.onCmdResponse(requestID, AccountCommands.RES_WRONG_ARGS, msg)
 
 @baseRequest(AccountCommands.CMD_BUY_SLOT)
 @process
