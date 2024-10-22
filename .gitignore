@@ -47,4 +47,10 @@ wot/gui/flash/video/*
 
 tools/
 
+wot/server/
+fantasydemo/
+bigworld/
+scripts/entity_defs/
+scripts/db/
+
 */build_*
