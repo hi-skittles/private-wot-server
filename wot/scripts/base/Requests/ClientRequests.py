@@ -49,7 +49,7 @@ def packStream(proxy, requestID, data):
 @process
 def buyVehicle(proxy, requestID, args):
     if len(args) != 5:
-        proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Invalid arguments')
+        proxy.client.onCmdResponse(requestID, AccountCommands.RES_WRONG_ARGS, 'Invalid arguments')
         return
     
     shopRev, vehTypeCompDescr, int1, int2, int3 = args
