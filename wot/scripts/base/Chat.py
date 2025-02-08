@@ -1,7 +1,8 @@
 from bwdebug import DEBUG_MSG
+import BigWorld
 
 
-class Chat(object):
+class Chat(BigWorld.Base):
     def __init__(self):
         pass
 

@@ -19,10 +19,24 @@ except ImportError:
 
 
 DO_GC_DUMP = False
+gFirstSpaceID = 0
+gSpaceIDHook = None
 
 def onSpaceData(spaceID, entryID, key, value):
 	print "onSpaceData: spaceID", spaceID, \
 	 "entryID", entryID, "key", key, "value", len(value)
+	
+	print "[bwtest] onSpaceData: ", spaceID, key
+	#if 0 <= key and key <= 255:
+	#	return
+	
+	global gFirstSpaceID
+	global gSpaceIDHook
+	
+	gFirstSpaceID = spaceID
+	if gSpaceIDHook is not None:
+		print "[bwtest] onSpaceData: called the hook! "
+		gSpaceIDHook( spaceID )
 
 
 def onSpaceDataDeleted(spaceID, deletedEntryID, key, deletedValue):
@@ -84,6 +98,22 @@ def hasLoadedAllGeometry( spaceID ):
 	# except:
 	# 	return False
 	pass
+
+# Cell bootstrap script
+
+def onCellAppReady( isFromDB ):
+	pass
+
+def hookOnSpaceID( callback ):
+	global gSpaceIDHook
+	gSpaceIDHook = callback
+
+
+def getSpaceID():
+	global gFirstSpaceID
+	return gFirstSpaceID
+
+# BWPersonality.py
 
 import Watchers
 

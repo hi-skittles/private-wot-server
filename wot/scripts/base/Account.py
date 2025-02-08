@@ -4,8 +4,14 @@ import cPickle
 import AccountCommands
 
 from Requests.ClientRequests import BASE_REQUESTS
-from bwdebug import DEBUG_MSG, TRACE_MSG, ERROR_MSG
+from bwdebug import DEBUG_MSG, TRACE_MSG, ERROR_MSG, INFO_MSG
 
+
+def onComplete(entity):
+    if entity is not None:
+        DEBUG_MSG('onComplete', entity)
+    else:
+        ERROR_MSG('onComplete :: entity is None')
 
 class Account(BigWorld.Proxy):
     def __init__(self):
@@ -18,30 +24,30 @@ class Account(BigWorld.Proxy):
                 'isSandboxEnabled': False,
                 'isFortBattleDivisionsEnabled': False,
                 'isFortsEnabled': False,
-                'isEncyclopediaEnabled': 'token',
+                'isEncyclopediaEnabled': False, # 'token'
                 'isStrongholdsEnabled': False,
                 'isRegularQuestEnabled': False,
-                'isSpecBattleMgrEnabled': True,
+                'isSpecBattleMgrEnabled': False,
                 'isTankmanRestoreEnabled': False,
                 'isPotapovQuestEnabled': False,
                 'reCaptchaParser': '',
-            
+
                 'forbiddenSortiePeripheryIDs': (),
-                'newbieBattlesCount': 0,
-            
+                'newbieBattlesCount': 5,
+
                 'randomMapsForDemonstrator': {},
             
                 'forbidSPGinSquads': False,
                 'forbiddenRatedBattles': {},
                 'forbiddenSortieHours': (14,),
                 'forbiddenFortDefenseHours': (0, 1, 2, 3, 4),
-            
-                'eSportSeasonID': 4,
+
+                'eSportSeasonID': 1,
                 'eSportSeasonStart': 1442318400,
                 'eSportSeasonFinish': 1472688000,
-                
+    
                 'regional_settings': {'starting_day_of_a_new_week': 0, 'starting_time_of_a_new_game_day': 0, 'starting_time_of_a_new_day': 0, 'starting_day_of_a_new_weak': 0},
-            
+
                 'xmpp_enabled': False,
                 'xmpp_port': 0,
                 'xmpp_host': '',
@@ -61,7 +67,18 @@ class Account(BigWorld.Proxy):
         if len(self.name) <= 0:
             self.name = self.normalizedName.split('@')[0]
             self.writeToDB()
+        # TODO: add a check to remove premium flag from account if premium time is in the past or less than 0
         # self.revision = 1
+    
+    def onLogOnAttempt(self, ip, port, password):
+        DEBUG_MSG('Account.onLogOnAttempt', ip, port, password)
+        return None
+    
+    def set_attrs(self, oldValue):
+        INFO_MSG('Account.set_attrs', oldValue)
+    
+    def set_premiumExpiryTime(self, oldValue):
+        INFO_MSG('Account.set_premiumExpiryTime', oldValue)
     
     def chatCommandFromClient(self, i1, i2, i3, i4, i5, i6, i7):
         DEBUG_MSG('chatCommandFromClient', i1, i2, i3, i4, i5, i6, i7)
@@ -77,6 +94,9 @@ class Account(BigWorld.Proxy):
     
     def onWriteToDB(self, x):
         DEBUG_MSG('onWriteToDB', x, self.name)
+    
+    def onWriteToDBComplete(self, successful, entity):
+        DEBUG_MSG('onWriteToDB', successful, entity)
 
     def onStreamComplete(self, id, success):
         DEBUG_MSG('Account.onStreamComplete', id, success)
@@ -86,6 +106,7 @@ class Account(BigWorld.Proxy):
         DEBUG_MSG('Account.keepAlive :: requested')
 
     def onClientDeath(self):
+        DEBUG_MSG('Account.onClientDeath : %d' % self.id)
         self.destroy()
 
     def onEnqueued(self, UINT8):

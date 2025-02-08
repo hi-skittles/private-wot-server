@@ -3,7 +3,7 @@ from itertools import cycle
 
 import AccountCommands
 import items
-from bwdebug import DEBUG_MSG, ERROR_MSG
+from bwdebug import DEBUG_MSG, ERROR_MSG, TRACE_MSG
 from constants import ACCOUNT_ATTR
 import time
 
@@ -201,13 +201,32 @@ def __unlockItem(vehTypeCompDescr, unlockIdx, data):
 		return -1, 'Unexcepted error', data
 
 
+#   prem checker (used in Account.py)
+# TODO: make this run every hour for each account that is logged in.
+def __pCheck(data):
+	TRACE_MSG('AccountUpdates.__pCheck :: top')
+	current_time = int(time.time())
+	attrs = data['account']['attrs']    # checks only
+	premium_epoch = data['account']['premiumExpiryTime']    # checks only
+	
+	if (not attrs & ACCOUNT_ATTR.PREMIUM) and premium_epoch > current_time:
+		data['account']['attrs'] |= ACCOUNT_ATTR.PREMIUM
+		return 3, 'Premium flag not appropriate, fixed', data
+	if attrs & ACCOUNT_ATTR.PREMIUM and premium_epoch < current_time:
+		data['account']['attrs'] &= ~ACCOUNT_ATTR.PREMIUM
+		data['account']['premiumExpiryTime'] = 0
+		return 1, 'Premium expired, removed', data
+	elif attrs & ACCOUNT_ATTR.PREMIUM and premium_epoch > current_time:
+		return 2, 'Premium still active', data
+
+
 #   stats :: gold
 #   account :: premiumExpiryTime, attrs
 def __addPremiumTime(extend_by_days, data, use_gold=True):
 	#   stats[gold] -= price
 	#   account[premiumExpiryTime] += extend_by_days * 86400
 	#   account[attrs] |= ACCOUNT_ATTR.PREMIUM w/ checks
-	current_epoch = time.time()
+	current_epoch = int(time.time())
 	pcost = premiumPrices[extend_by_days]
 	new_gold_balance = data['stats']['gold'] - pcost
 	if new_gold_balance < 0 and use_gold:

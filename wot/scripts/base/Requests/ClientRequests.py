@@ -12,22 +12,25 @@ from collections import namedtuple
 import BigWorld
 import AccountCommands
 from enumerations import Enumeration
-SM_TYPE = Enumeration('System message type', ['Error',
- 'Warning',
- 'Information',
- 'GameGreeting',
- 'PowerLevel',
- 'FinancialTransactionWithGold',
- 'FinancialTransactionWithCredits',
- 'FortificationStartUp',
- 'PurchaseForGold',
- 'DismantlingForGold',
- 'PurchaseForCredits',
- 'Selling',
- 'Remove',
- 'Repair',
- 'CustomizationForGold',
- 'CustomizationForCredits'])
+
+SM_TYPE = Enumeration(
+    'System message type',
+    ['Error',
+     'Warning',
+     'Information',
+     'GameGreeting',
+     'PowerLevel',
+     'FinancialTransactionWithGold',
+     'FinancialTransactionWithCredits',
+     'FortificationStartUp',
+     'PurchaseForGold',
+     'DismantlingForGold',
+     'PurchaseForCredits',
+     'Selling',
+     'Remove',
+     'Repair',
+     'CustomizationForGold',
+     'CustomizationForCredits'])
 BASE_REQUESTS = {}
 # RequestResult = namedtuple('RequestResult', ['resultID', 'errorStr', 'data'])
 
@@ -302,7 +305,7 @@ def syncData(proxy, requestID, revision, crc, _):
     rdata = yield async(SyncDataHandler.get_sync_data, cbname='callback')(proxy.databaseID)
     data.update(rdata)
     proxy.client.onCmdResponseExt(requestID, AccountCommands.RES_SUCCESS, '', cPickle.dumps(data))
-
+    
 @baseRequest(AccountCommands.CMD_SYNC_SHOP)
 def syncShop(proxy, requestID, revision, dataLen, dataCrc):
     DEBUG_MSG('AccountCommands.CMD_SYNC_SHOP :: ', revision, dataLen, dataCrc)
@@ -321,7 +324,6 @@ def syncShop(proxy, requestID, revision, dataLen, dataCrc):
         DEBUG_MSG('AccountCommands.CMD_SYNC_SHOP :: client requested full sync, sending full shop data to client')
         packStream(proxy, requestID, shop)
         proxy.client.onCmdResponse(requestID, AccountCommands.RES_STREAM, '')
-
 
 @baseRequest(AccountCommands.CMD_SYNC_DOSSIERS)
 def syncDossiers(proxy, requestID, version, maxChangeTime, _):
@@ -347,6 +349,10 @@ def sendGUI(proxy, requestID, _):
     proxy.client.pushClientMessage("Thank you for downloading WoT Offline 9.7", SM_TYPE.FortificationStartUp)
 
 
+def sendPushNotifToClient(proxy, no_type, message):
+    proxy.client.pushClientMessage(message, no_type)
+
+    
 @baseRequest(AccountCommands.CMD_SET_LANGUAGE)
 def setLanguage(proxy, requestID, language):
     DEBUG_MSG('AccountCommands.CMD_SET_LANGUAGE :: ', language)

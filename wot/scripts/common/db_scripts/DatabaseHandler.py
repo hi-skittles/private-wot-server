@@ -1,5 +1,6 @@
 import cPickle
 import pprint
+import time
 import zlib
 from itertools import cycle
 import os
@@ -270,7 +271,7 @@ def initEmptyStats():
 			'dossier': '',
 			'multipliedXPVehs': [],
 			'tutorialsCompleted': 33553532,
-			'playLimits': ((0, ''), (0, '')),  # ((86400, ''), (604800, ''))
+			'playLimits': ((86400, '24'), (604800, '168')),  # ((86400, ''), (604800, ''))
 			'maxResearchedLevelByNation': {"0": 1, "1": 1, "2": 1, "3": 1, "4": 1, "5": 1, "6": 1},
 			'unlocks': unlocksSet,
 			'eliteVehicles': set()
@@ -355,6 +356,43 @@ class GetFullSyncData(BackgroundTask.BackgroundTask):
 				os.makedirs(f)
 		self.result = {}
 		
+		stats_file = os.path.join(self.stats_path, "%s" % self.databaseID)
+		if not os.path.isfile(stats_file):
+			self.result.update(initEmptyStats())  # dict
+			self.result[('eventsData', '_r')][9] = zlib.compress(cPickle.dumps(self.result[('eventsData', '_r')][9]))
+			try:
+				with open(stats_file, 'wb') as file:
+					pprint.pprint(initEmptyStats(), stream=file)
+			except Exception as e:
+				raise Exception("GetFullSyncData :: Error occurred while writing stats data (init)=%s" % e)
+		else:
+			try:
+				with open(stats_file, 'rb') as file:
+					self.result.update(eval(file.read()))  # dict
+				
+				data = self.result
+				TRACE_MSG('AccountUpdates.__pCheck :: top')
+				current_time = int(time.time())
+				attrs = data['account']['attrs']    # checks only
+				premium_epoch = data['account']['premiumExpiryTime']    # checks only
+				
+				if (not attrs & ACCOUNT_ATTR.PREMIUM) and premium_epoch > current_time:
+					data['account']['attrs'] |= ACCOUNT_ATTR.PREMIUM
+				if attrs & ACCOUNT_ATTR.PREMIUM and premium_epoch < current_time:
+					data['account']['attrs'] &= ~ACCOUNT_ATTR.PREMIUM
+					data['account']['premiumExpiryTime'] = 0
+				#   lookup mailbox by dbid, send in as sendPushNotifToClient('ur prem expired lul')
+				try:
+					with open(stats_file, 'wb') as file:
+						pprint.pprint(self.result, stream=file)
+				except Exception as e:
+					raise Exception("SetStatsData :: Error occurred while writing stats data=%s" % e)
+				TRACE_MSG('AccountUpdates.__pCheck :: bottom')
+				
+				self.result[('eventsData', '_r')][9] = zlib.compress(cPickle.dumps(self.result[('eventsData', '_r')][9]))
+			except Exception as e:
+				raise Exception("GetFullSyncData :: Error occurred while fetching stats data=%s" % e)
+		
 		quests_file = os.path.join(self.quests_path, "%s" % self.databaseID)
 		if not os.path.isfile(quests_file):
 			self.result.update(initEmptyQuests())  # dict
@@ -389,22 +427,6 @@ class GetFullSyncData(BackgroundTask.BackgroundTask):
 			except Exception as e:
 				raise Exception("GetFullSyncData :: Error occurred while fetching inventory data=%s" % e)
 		
-		stats_file = os.path.join(self.stats_path, "%s" % self.databaseID)
-		if not os.path.isfile(stats_file):
-			self.result.update(initEmptyStats())  # dict
-			self.result[('eventsData', '_r')][9] = zlib.compress(cPickle.dumps(self.result[('eventsData', '_r')][9]))
-			try:
-				with open(stats_file, 'wb') as file:
-					pprint.pprint(initEmptyStats(), stream=file)
-			except Exception as e:
-				raise Exception("GetFullSyncData :: Error occurred while writing stats data (init)=%s" % e)
-		else:
-			try:
-				with open(stats_file, 'rb') as file:
-					self.result.update(eval(file.read()))  # dict
-				self.result[('eventsData', '_r')][9] = zlib.compress(cPickle.dumps(self.result[('eventsData', '_r')][9]))
-			except Exception as e:
-				raise Exception("GetFullSyncData :: Error occurred while fetching stats data=%s" % e)
 		bgTaskMgr.addMainThreadTask(self)
 	
 	def doMainThreadTask(self, bgTaskMgr):
@@ -414,7 +436,7 @@ class GetFullSyncData(BackgroundTask.BackgroundTask):
 
 class GetQuestsData(BackgroundTask.BackgroundTask):
 	"""
-	Queries the database for quest data using.
+	Queries the database for quest data as a background task.
 	"""
 	def __init__(self, databaseID, callback):
 		self.databaseID = databaseID

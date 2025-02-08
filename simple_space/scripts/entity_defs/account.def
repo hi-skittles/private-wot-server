@@ -1,0 +1,9 @@
+<account.def>
+  <Properties>
+  </Properties>
+  <BaseMethods>
+    <onKickedFromServer>
+      <Arg>	STRING	</Arg>
+    </onKickedFromServer>
+  </BaseMethods>
+</account.def>

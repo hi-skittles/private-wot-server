@@ -9,9 +9,54 @@ from adisp import async, process
 from Requests import AccountUpdates
 from bwdebug import DEBUG_MSG
 from db_scripts.responders import StatsHandler
+from enumerations import Enumeration
+
+SM_TYPE = Enumeration(
+	'System message type',
+	['Error',
+	 'Warning',
+	 'Information',
+	 'GameGreeting',
+	 'PowerLevel',
+	 'FinancialTransactionWithGold',
+	 'FinancialTransactionWithCredits',
+	 'FortificationStartUp',
+	 'PurchaseForGold',
+	 'DismantlingForGold',
+	 'PurchaseForCredits',
+	 'Selling',
+	 'Remove',
+	 'Repair',
+	 'CustomizationForGold',
+	 'CustomizationForCredits'])
 
 
 #import XMPPEventNotifier
+
+# Send message to player
+# -----------------------------------------------------------------------------
+@functionWatcher( "command/wot:SendClientMessage",
+                  BigWorld.EXPOSE_BASE_APPS,
+                  "WoT: Send a player a message to their in-game client" )
+@functionWatcherParameter(str, "Player name")
+@functionWatcherParameter(str, "Message")
+@functionWatcherParameter(str, "Notification type")
+def sendMessageInGame( name, message, no_type="Information" ):
+	entityx = None
+	try:
+		for idx, entity in BigWorld.entities.items():
+			if entity.name == name:
+				entityx = entity
+	except:
+		traceback.print_exc()
+		print "Failed to get Player's EntityID."
+		return
+	try:
+		entityx.client.pushClientMessage(message, getattr(SM_TYPE, no_type, SM_TYPE.Information))
+		return "Success."
+	except:
+		traceback.print_exc()
+		return "Fail."
 
 # Kick player
 # -----------------------------------------------------------------------------
@@ -73,14 +118,17 @@ def addGold(name, gold):
 	cdata = {'rev': 1, 'prevRev': 0, 'stats': {'gold': None}}
 	
 	if result > 0:
-		print('AccountCommands.CMD_EXCHANGE :: success=%s' % result)
+		print 'AccountCommands.CMD_EXCHANGE :: success=%s' % result
 		cdata['stats']['gold'] = udata['stats']['gold']
 		
 		entityx.client.update(cPickle.dumps(cdata))
 		yield async(StatsHandler.update_stats, cbname='callback')(entityx.databaseID, udata)
+		print 'Successfully added %d gold to %s' % (gold, name)
+		entityx.client.pushClientMessage('Server: %d gold was added to your account.', SM_TYPE.FinancialTransactionWithGold)
 		return
 	else:
-		print('AccountCommands.CMD_EXCHANGE :: failure=%s' % result)
+		print 'AccountCommands.CMD_EXCHANGE :: failure=%s' % result
+		print 'Failed to add gold to %s' % name
 		return
 
 

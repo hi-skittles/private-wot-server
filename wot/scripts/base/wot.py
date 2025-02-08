@@ -17,8 +17,8 @@ import pprint
 from db_scripts import DatabaseHandler
 import CronUpdaters
 
-DO_GC_DUMP = False
 
+DO_GC_DUMP = False
 vehicle_prices = dict()
 
 try:
@@ -27,6 +27,7 @@ try:
 	import srvtest
 except ImportError:
 	pass
+	
 
 # ------------------------------------------------------------------------------
 # Section: Callbacks
@@ -75,6 +76,9 @@ def onAppShutDown(state):
 	if state == 0:
 		DatabaseHandler.fini()
 		# CronUpdaters.fini()
+	for entity in BigWorld.entities.values():
+		entity.ownClient.onKickedFromServer("Server restarting/shutting down", False, 0)
+		entity.destroy()
 
 def onCellAppDeath(addr):
 	WARNING_MSG("wot.base.onCellAppDeath: addr={}".format(str(addr)))
@@ -95,17 +99,17 @@ class Base(BigWorld.Base):
 		if not self.databaseID:
 			self.writeToDB()
 
-		if hasattr( self, "cellData" ):
-			try:
-				cell = self.createOnCell
-				self.createOnCell = None
-			except AttributeError, e:
-				cell = None
-
-			if cell != None:
-				self.createCellEntity( cell )
-			elif self.cellData["spaceID"]:
-				self.createCellEntity()
+		# if hasattr( self, "cellData" ):
+		# 	try:
+		# 		cell = self.createOnCell
+		# 		self.createOnCell = None
+		# 	except AttributeError, e:
+		# 		cell = None
+		#
+		# 	if cell != None:
+		# 		self.createCellEntity( cell )
+		# 	elif self.cellData["spaceID"]:
+		# 		self.createCellEntity()
 
 	def onSpaceLoaderDestroyed(self):
 		"""

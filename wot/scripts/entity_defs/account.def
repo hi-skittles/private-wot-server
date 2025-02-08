@@ -171,6 +171,7 @@
       <Arg>	INT16	</Arg>
       <Arg>	STRING	</Arg>
       <Arg>	STRING	</Arg>
+      <VariableLengthHeaderSize>4</VariableLengthHeaderSize>
     </onCmdResponseExt>
     <onKickedFromServer>
       <Arg>	STRING	</Arg>
