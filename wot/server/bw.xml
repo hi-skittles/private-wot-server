@@ -34,11 +34,12 @@
 	<parentFile> server/development_defaults.xml </parentFile>
 
 	<billingSystem>
-		<shouldAcceptUnknownUsers> true </shouldAcceptUnknownUsers>
+		<shouldAcceptUnknownUsers> false </shouldAcceptUnknownUsers>
 		<shouldRememberUnknownUsers> true </shouldRememberUnknownUsers>
 		<entityTypeForUnknownUsers> Login </entityTypeForUnknownUsers>
 		<authenticateViaBaseEntity> false </authenticateViaBaseEntity>
 		<isPasswordHashed>	true	</isPasswordHashed>
+		<type>	standard 	</type>
 	</billingSystem>
 
 	<db>
@@ -80,7 +81,7 @@
 	</db>
 
 	<dbApp>
-		<dumpEntityDescription> 0 </dumpEntityDescription> <!-- Type: Integer -->
+		<dumpEntityDescription> 1 </dumpEntityDescription> <!-- Type: Integer -->
 		<maxConcurrentEntityLoaders> 5 </maxConcurrentEntityLoaders> <!-- Type: Int -->
 		<numDBLockRetries> 30 </numDBLockRetries> <!-- Type: Integer -->
 		<shouldCacheLogOnRecords> true </shouldCacheLogOnRecords>

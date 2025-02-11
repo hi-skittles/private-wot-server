@@ -302,7 +302,7 @@ def syncData(proxy, requestID, revision, crc, _):
     # intUserSettings if updating only partial setting. the weird tuple, ('intUserSettings', '_r'), as primary key if its a full sync
     
     data = {'rev': revision + 1, 'prevRev': revision}
-    rdata = yield async(SyncDataHandler.get_sync_data, cbname='callback')(proxy.databaseID)
+    rdata = yield async(SyncDataHandler.get_sync_data, cbname='callback')(proxy.normalizedName, proxy.databaseID)
     data.update(rdata)
     proxy.client.onCmdResponseExt(requestID, AccountCommands.RES_SUCCESS, '', cPickle.dumps(data))
     

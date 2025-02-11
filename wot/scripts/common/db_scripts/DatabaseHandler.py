@@ -1,27 +1,27 @@
 import cPickle
+import functools
 import pprint
 import time
 import zlib
 from itertools import cycle
 import os
-import ast
 
-import BigWorld
-import oursql
+import mysql.connector
 
 import AccountCommands
-import bwdebug
+from bwdebug import INFO_MSG, TRACE_MSG, DEBUG_MSG
 import ResMgr
 
 import BackgroundTask
 import items
 import nations
-from adisp import async, process
 from bwdebug import TRACE_MSG, DEBUG_MSG
 from constants import ACCOUNT_ATTR, EVENT_CLIENT_DATA
 from items import vehicles, ITEM_TYPE_INDICES
 
 threadManager = None
+DATABASE_NAME = "player_data_dev1"
+DO_DEBUG = True  # set this to false if you don't want to see a bunch of debug messages
 
 """ TODO: Implement the following classes
 UniversalBackgroundDatabaseHandler.QuestsHandler
@@ -30,13 +30,27 @@ UniversalBackgroundDatabaseHandler.StatsHandler
 UniversalBackgroundDatabaseHandler.DossierHandler
 """
 
+
 def init():
+	connection = mysql.connector.connect(
+		host='localhost',
+		user='bigworld',
+		password='bigworld',
+		database=DATABASE_NAME
+	)
+	if connection.is_connected(): INFO_MSG("DatabaseHandler :: connected to %s" % connection.server_host)
 	global threadManager
 	if threadManager is None:
 		threadManager = BackgroundTask.Manager("DatabaseHandler")
-		threadManager.startThreads(15)
+		connection_creator = functools.partial(mysql.connector.connect,
+		                                       host='localhost',
+		                                       user='bigworld',
+		                                       password='bigworld',
+		                                       database=DATABASE_NAME)
+		threadManager.startThreads(15, connection_creator)
 		TRACE_MSG('DatabaseHandler :: Initialized background thread manager.')
 	return True
+
 
 def fini():
 	global threadManager
@@ -45,11 +59,13 @@ def fini():
 		threadManager = None
 		TRACE_MSG('DatabaseHandler :: Stopped background thread manager.')
 
+
 def add_task(task):
 	if threadManager is None:
 		assert threadManager is None, "DatabaseHandler :: Background thread manager is not initialized. Has it been initialized in the personality script?"
 		raise RuntimeError("UniversalBackgroundDatabaseHandler is not initialized.")
 	threadManager.addBackgroundTask(task)
+
 
 # #
 
@@ -62,9 +78,11 @@ def press_unlocked_veh_co_de():
 	"""
 	unlocked_veh_co_de = set()
 	for nationID in nations.INDICES.values():
-		unlocked_veh_co_de |= {vehicle['compactDescr'] for vehicle in vehicles.g_list.getList(nationID).values() if 'premiumIGR' not in vehicle.get('tags')}
+		unlocked_veh_co_de |= {vehicle['compactDescr'] for vehicle in vehicles.g_list.getList(nationID).values() if
+		                       'premiumIGR' not in vehicle.get('tags')}
 	
 	return unlocked_veh_co_de
+
 
 def unlocked_veh_co_de(for_stats=True):
 	"""
@@ -75,19 +93,26 @@ def unlocked_veh_co_de(for_stats=True):
 	if for_stats:
 		unlocked_veh_co_de = set()
 		for nationID in nations.INDICES.values():
-			unlocked_veh_co_de |= {vehicle['compactDescr'] for vehicle in vehicles.g_list.getList(nationID).values() if vehicle.get('level') == 1 and 'secret' not in vehicle.get('tags') and 'premiumIGR' not in vehicle.get('tags')}
-		unlocked_veh_co_de |= {52513}   # M6 mutant
-		unlocked_veh_co_de |= {54033}   # pz v/iv alpha
+			unlocked_veh_co_de |= {vehicle['compactDescr'] for vehicle in vehicles.g_list.getList(nationID).values() if
+			                       vehicle.get('level') == 1 and 'secret' not in vehicle.get(
+				                       'tags') and 'premiumIGR' not in vehicle.get('tags')}
+		unlocked_veh_co_de |= {52513}  # M6 mutant
+		unlocked_veh_co_de |= {54033}  # pz v/iv alpha
 		# unlocked_veh_co_de |= {55633}   # cromwell b
 		
 		# addition of premium tanks, as they require zero xp to buy, so they need to be here, unlocked, regardless of whether they are in the shop or not
 		unlocked_veh_co_de |= {52505, 51985, 51489, 2113, 53585, 49, 3169, 52481, 54801, 52769, 2369, 53841, 305, 52065,
 		                       51457, 54545, 13345, 63297, 54097, 817, 51553, 51713, 57105, 2849, 63553, 54353, 64049,
-		                       51809, 54785, 57361, 33, 63809, 54609, 64561, 55297, 55313, 11809, 64065, 54865, 64817, 9217,
-		                       60177, 12577, 55121, 51201, 51473, 15905, 55633, 52225, 51729, 51745, 55889, 52737, 52241,
-		                       52001, 52993, 52497, 52257, 53249, 54033, 52513, 53761, 54289, 53537, 54017, 55057, 53793,
-		                       54273, 55569, 54049, 56577, 57105, 55073, 56833, 57617, 55841, 57089, 58641, 56097, 58113,
-		                       59665, 56353, 58369, 60433, 56609, 58625, 60689, 58881, 60945, 59137, 61201, 59393, 61457,
+		                       51809, 54785, 57361, 33, 63809, 54609, 64561, 55297, 55313, 11809, 64065, 54865, 64817,
+		                       9217,
+		                       60177, 12577, 55121, 51201, 51473, 15905, 55633, 52225, 51729, 51745, 55889, 52737,
+		                       52241,
+		                       52001, 52993, 52497, 52257, 53249, 54033, 52513, 53761, 54289, 53537, 54017, 55057,
+		                       53793,
+		                       54273, 55569, 54049, 56577, 57105, 55073, 56833, 57617, 55841, 57089, 58641, 56097,
+		                       58113,
+		                       59665, 56353, 58369, 60433, 56609, 58625, 60689, 58881, 60945, 59137, 61201, 59393,
+		                       61457,
 		                       59649, 61713, 59905, 60161, 53505}
 		
 		return unlocked_veh_co_de
@@ -103,6 +128,7 @@ def unlocked_veh_co_de(for_stats=True):
 		
 		return unlocked_veh_co_de
 
+
 def initEmptyQuests():
 	DEBUG_MSG('DatabaseWorker : initEmptyQuests')
 	rdata = {
@@ -111,7 +137,8 @@ def initEmptyQuests():
 		'quests': {'progress': 0}
 	}
 	return rdata
-	
+
+
 def initEmptyInventory():
 	DEBUG_MSG('DatabaseWorker : initEmptyInventory')
 	unlocked_vehs = unlocked_veh_co_de(for_stats=False)
@@ -133,7 +160,7 @@ def initEmptyInventory():
 		'lock': {},
 		'shellsLayout': {}
 	}
-
+	
 	data[ITEM_TYPE_INDICES['tankman']] = {
 		'vehicle': {},
 		'compDescr': {}
@@ -148,35 +175,41 @@ def initEmptyInventory():
 	# data[ITEM_TYPE_INDICES['vehicleGun']] = {}
 	# data[ITEM_TYPE_INDICES['vehicleRadio']] = {}
 	# data[ITEM_TYPE_INDICES['vehicleTurret']] = {}
-
-	for value in unlocked_vehs: # vehicles.g_list._VehicleList__ids.values()
+	
+	for value in unlocked_vehs:  # vehicles.g_list._VehicleList__ids.values()
 		value = vehicles.getVehicleType(value).id
 		vehicle = vehicles.VehicleDescr(typeID=value)
 		# components can be installed at this step
 		compDescr[i] = vehicle.makeCompactDescr()
-		turretGun = (vehicles.makeIntCompactDescrByID('vehicleTurret', *vehicle.turrets[0][0]['id']), vehicles.makeIntCompactDescrByID('vehicleGun', *vehicle.turrets[0][0]['guns'][0]['id']))
-
-		tmanList = items.tankmen.generateTankmen(value[0], value[1], vehicle.type.crewRoles, True, items.tankmen.MAX_SKILL_LEVEL, [])
+		turretGun = (vehicles.makeIntCompactDescrByID('vehicleTurret', *vehicle.turrets[0][0]['id']),
+		             vehicles.makeIntCompactDescrByID('vehicleGun', *vehicle.turrets[0][0]['guns'][0]['id']))
+		
+		tmanList = items.tankmen.generateTankmen(value[0], value[1], vehicle.type.crewRoles, True,
+		                                         items.tankmen.MAX_SKILL_LEVEL, [])
 		tmanListCycle = cycle(tmanList)
-
-		data[ITEM_TYPE_INDICES['vehicle']]['crew'].update({i: [tmanID for tmanID in xrange(i_crew, len(tmanList) + i_crew)]})
-		data[ITEM_TYPE_INDICES['vehicle']]['settings'].update({i: AccountCommands.VEHICLE_SETTINGS_FLAG.AUTO_REPAIR | AccountCommands.VEHICLE_SETTINGS_FLAG.AUTO_LOAD})
+		
+		data[ITEM_TYPE_INDICES['vehicle']]['crew'].update(
+			{i: [tmanID for tmanID in xrange(i_crew, len(tmanList) + i_crew)]})
+		data[ITEM_TYPE_INDICES['vehicle']]['settings'].update(
+			{i: AccountCommands.VEHICLE_SETTINGS_FLAG.AUTO_REPAIR | AccountCommands.VEHICLE_SETTINGS_FLAG.AUTO_LOAD})
 		data[ITEM_TYPE_INDICES['vehicle']]['compDescr'].update(compDescr)
 		data[ITEM_TYPE_INDICES['vehicle']]['eqs'].update({i: []})
 		data[ITEM_TYPE_INDICES['vehicle']]['eqsLayout'].update({i: []})
 		# data[ITEM_TYPE_INDICES['vehicle']]['shells'].update({i: vehicles.getDefaultAmmoForGun(vehicle.turrets[0][0]['guns'][0])})
-		data[ITEM_TYPE_INDICES['vehicle']]['shellsLayout'].update({i: {turretGun: vehicles.getDefaultAmmoForGun(vehicle.turrets[0][0]['guns'][0])}})
-
+		data[ITEM_TYPE_INDICES['vehicle']]['shellsLayout'].update(
+			{i: {turretGun: vehicles.getDefaultAmmoForGun(vehicle.turrets[0][0]['guns'][0])}})
+		
 		for tmanID in xrange(i_crew, len(tmanList) + i_crew):
 			data[ITEM_TYPE_INDICES['tankman']]['vehicle'][tmanID] = i
 			data[ITEM_TYPE_INDICES['tankman']]['compDescr'][tmanID] = next(tmanListCycle)
 			i_crew += 1
-
+		
 		i += 1
 	
 	rdata = {'inventory': data}
 	
 	return rdata
+
 
 def initEmptyStats():
 	DEBUG_MSG('DatabaseHandler : initEmptyStats')
@@ -203,7 +236,6 @@ def initEmptyStats():
 		unlocksSet.add(vehicles.g_cache.vehicle(nation_id, veh_id).fuelTanks[0]['compactDescr'])
 		unlocksSet.add(vehicles.g_cache.vehicle(nation_id, veh_id).radios[0]['compactDescr'])
 		
-		
 		unlocksSet.add(vehicles.makeIntCompactDescrByID('vehicleTurret', turret_nid, turret_id))
 		unlocksSet.add(vehicles.makeIntCompactDescrByID('vehicleGun', gun_nid, gun_id))
 	
@@ -213,25 +245,27 @@ def initEmptyStats():
 	for nationID in nations.INDICES.values():
 		unlocksSet |= {vehicles.makeIntCompactDescrByID('shell', nationID, i) for i in
 		               vehicles.g_cache.shells(nationID).keys()}
-		# unlocked_veh_co_de = {vehicles.makeIntCompactDescrByID('vehicle', nationID, i) for i in vehicles.g_list.getList(nationID).keys()}
-		# unlocked_veh_co_de = {vehicle['compactDescr'] for vehicle in vehicles.g_list.getList(nationID).values() if vehicle.get('level') == 1 and 'secret' not in vehicle.get('tags')}
+	# unlocked_veh_co_de = {vehicles.makeIntCompactDescrByID('vehicle', nationID, i) for i in vehicles.g_list.getList(nationID).keys()}
+	# unlocked_veh_co_de = {vehicle['compactDescr'] for vehicle in vehicles.g_list.getList(nationID).values() if vehicle.get('level') == 1 and 'secret' not in vehicle.get('tags')}
 	
 	# amount of XP avail for each unlocked vehicle
-	vehTypeXP = {i: 0 for i in vehiclesSet if i not in {52505, 51985, 51489, 2113, 53585, 49, 3169, 52481, 54801, 52769, 2369, 53841, 305, 52065,
-		                       51457, 54545, 13345, 63297, 54097, 817, 51553, 51713, 57105, 2849, 63553, 54353, 64049,
-		                       51809, 54785, 57361, 33, 63809, 54609, 64561, 55297, 55313, 11809, 64065, 54865, 64817, 9217,
-		                       60177, 12577, 55121, 51201, 51473, 15905, 55633, 52225, 51729, 51745, 55889, 52737, 52241,
-		                       52001, 52993, 52497, 52257, 53249, 54033, 52513, 53761, 54289, 53537, 54017, 55057, 53793,
-		                       54273, 55569, 54049, 56577, 57105, 55073, 56833, 57617, 55841, 57089, 58641, 56097, 58113,
-		                       59665, 56353, 58369, 60433, 56609, 58625, 60689, 58881, 60945, 59137, 61201, 59393, 61457,
-		                       59649, 61713, 59905, 60161}}
+	vehTypeXP = {i: 0 for i in vehiclesSet if
+	             i not in {52505, 51985, 51489, 2113, 53585, 49, 3169, 52481, 54801, 52769, 2369, 53841, 305, 52065,
+	                       51457, 54545, 13345, 63297, 54097, 817, 51553, 51713, 57105, 2849, 63553, 54353, 64049,
+	                       51809, 54785, 57361, 33, 63809, 54609, 64561, 55297, 55313, 11809, 64065, 54865, 64817, 9217,
+	                       60177, 12577, 55121, 51201, 51473, 15905, 55633, 52225, 51729, 51745, 55889, 52737, 52241,
+	                       52001, 52993, 52497, 52257, 53249, 54033, 52513, 53761, 54289, 53537, 54017, 55057, 53793,
+	                       54273, 55569, 54049, 56577, 57105, 55073, 56833, 57617, 55841, 57089, 58641, 56097, 58113,
+	                       59665, 56353, 58369, 60433, 56609, 58625, 60689, 58881, 60945, 59137, 61201, 59393, 61457,
+	                       59649, 61713, 59905, 60161}}
 	vehTypeXP[52513] = 5000000
 	vehTypeXP[54033] = 5000000
 	
 	attrs = 0
 	excluded_attrs = (ACCOUNT_ATTR.PREMIUM, ACCOUNT_ATTR.OUT_OF_SESSION_WALLET, ACCOUNT_ATTR.CBETA,
 	                  ACCOUNT_ATTR.OBETA, ACCOUNT_ATTR.AOGAS, ACCOUNT_ATTR.TUTORIAL_COMPLETED,
-	                  ACCOUNT_ATTR.IGR_PREMIUM, ACCOUNT_ATTR.IGR_BASE, ACCOUNT_ATTR.ALPHA, ACCOUNT_ATTR.CLAN, ACCOUNT_ATTR.TRADING)
+	                  ACCOUNT_ATTR.IGR_PREMIUM, ACCOUNT_ATTR.IGR_BASE, ACCOUNT_ATTR.ALPHA, ACCOUNT_ATTR.CLAN,
+	                  ACCOUNT_ATTR.TRADING)
 	for field in dir(ACCOUNT_ATTR):
 		value = getattr(ACCOUNT_ATTR, field, None)
 		if isinstance(value, (int, long)) and value not in excluded_attrs:
@@ -325,11 +359,13 @@ def initEmptyStats():
 	
 	return rdata
 
+
 def initEmptyDossier():
 	DEBUG_MSG('DatabaseHandler : initEmptyDossier')
 	rdata = {(12345, 1622547800, 'dossierCompDescr1'), (67890, 1622547900, 'dossierCompDescr2'),
 	         (13579, 1622548000, 'dossierCompDescr3')}
 	return rdata
+
 
 # #
 
@@ -337,7 +373,9 @@ class GetFullSyncData(BackgroundTask.BackgroundTask):
 	"""
 	Queries the player database for all data related to first-time client sync (syncData).
 	"""
-	def __init__(self, databaseID, callback):
+	
+	def __init__(self, normalizedName, databaseID, callback):
+		self.normalizedName = normalizedName
 		self.databaseID = databaseID
 		self.callback = callback
 		self.result = None  # dict
@@ -345,7 +383,7 @@ class GetFullSyncData(BackgroundTask.BackgroundTask):
 		self.inventory_path = None
 		self.stats_path = None
 	
-	def doBackgroundTask(self, bgTaskMgr, threadData):
+	def doBackgroundTask(self, bgTaskMgr, connection):
 		TRACE_MSG('GetFullSyncData (background) :: databaseID=%s' % self.databaseID)
 		self.quests_path = ResMgr.resolveToAbsolutePath('server/database_files/quests/')
 		self.inventory_path = ResMgr.resolveToAbsolutePath('server/database_files/inventory/')
@@ -356,6 +394,7 @@ class GetFullSyncData(BackgroundTask.BackgroundTask):
 				os.makedirs(f)
 		self.result = {}
 		
+		if DO_DEBUG: DEBUG_MSG('GetFullSyncData (stats) :: databaseID=%s' % self.databaseID)
 		stats_file = os.path.join(self.stats_path, "%s" % self.databaseID)
 		if not os.path.isfile(stats_file):
 			self.result.update(initEmptyStats())  # dict
@@ -373,8 +412,8 @@ class GetFullSyncData(BackgroundTask.BackgroundTask):
 				data = self.result
 				TRACE_MSG('AccountUpdates.__pCheck :: top')
 				current_time = int(time.time())
-				attrs = data['account']['attrs']    # checks only
-				premium_epoch = data['account']['premiumExpiryTime']    # checks only
+				attrs = data['account']['attrs']  # checks only
+				premium_epoch = data['account']['premiumExpiryTime']  # checks only
 				
 				if (not attrs & ACCOUNT_ATTR.PREMIUM) and premium_epoch > current_time:
 					data['account']['attrs'] |= ACCOUNT_ATTR.PREMIUM
@@ -389,27 +428,46 @@ class GetFullSyncData(BackgroundTask.BackgroundTask):
 					raise Exception("SetStatsData :: Error occurred while writing stats data=%s" % e)
 				TRACE_MSG('AccountUpdates.__pCheck :: bottom')
 				
-				self.result[('eventsData', '_r')][9] = zlib.compress(cPickle.dumps(self.result[('eventsData', '_r')][9]))
+				self.result[('eventsData', '_r')][9] = zlib.compress(
+					cPickle.dumps(self.result[('eventsData', '_r')][9]))
 			except Exception as e:
 				raise Exception("GetFullSyncData :: Error occurred while fetching stats data=%s" % e)
 		
-		quests_file = os.path.join(self.quests_path, "%s" % self.databaseID)
-		if not os.path.isfile(quests_file):
+		if DO_DEBUG: DEBUG_MSG('GetFullSyncData (quests) :: normalizedName=%s' % self.normalizedName)
+		c = connection.cursor(dictionary=True)
+		c.execute("""SELECT * FROM quests WHERE email=%s""", (self.normalizedName,))
+		q_result = c.fetchone()
+		if q_result is None:
 			self.result.update(initEmptyQuests())  # dict
 			
 			try:
-				with open(quests_file, 'wb') as file:
-					pprint.pprint(initEmptyQuests(), stream=file)
+				c.execute("""INSERT INTO quests (email, tokens, potapovQuests, quests) VALUES (?, ?, ?, ?)""", (
+					self.normalizedName, self.result['tokens'], self.result['potapovQuests'], self.result['quests']))
 			except Exception as e:
-				raise Exception("GetFullSyncData :: Error occurred while writing quests data (init)=%s" % e)
+				raise Exception("GetQuestsData :: Error occurred while writing quests data (init)=%s" % e)
 		else:
-			try:
-				with open(quests_file, 'rb') as file:
-					foo = file.read()  # str
-				self.result.update(eval(foo))  # dict
-			except Exception as e:
-				raise Exception("GetFullSyncData :: Error occurred while fetching quests data=%s" % e)
+			self.result.update(q_result)  # dict
 		
+		# if DO_DEBUG: DEBUG_MSG('GetFullSyncData (quests) :: databaseID=%s' % self.databaseID)
+		# quests_file = os.path.join(self.quests_path, "%s" % self.databaseID)
+		# if not os.path.isfile(quests_file):
+		# 	self.result.update(initEmptyQuests())  # dict
+		#
+		# 	try:
+		# 		with open(quests_file, 'wb') as file:
+		# 			pprint.pprint(initEmptyQuests(), stream=file)
+		# 	except Exception as e:
+		# 		raise Exception("GetFullSyncData :: Error occurred while writing quests data (init)=%s" % e)
+		# else:
+		# 	try:
+		# 		with open(quests_file, 'rb') as file:
+		# 			foo = file.read()  # str
+		# 		self.result.update(eval(foo))  # dict
+		# 	except Exception as e:
+		# 		raise Exception("GetFullSyncData :: Error occurred while fetching quests data=%s" % e)
+		DEBUG_MSG("does result have quests? %s" % self.result)
+		
+		if DO_DEBUG: DEBUG_MSG('GetFullSyncData (inventory) :: databaseID=%s' % self.databaseID)
 		inventory_file = os.path.join(self.inventory_path, "%s" % self.databaseID)
 		if not os.path.isfile(inventory_file):
 			self.result.update(initEmptyInventory())  # dict
@@ -438,47 +496,59 @@ class GetQuestsData(BackgroundTask.BackgroundTask):
 	"""
 	Queries the database for quest data as a background task.
 	"""
-	def __init__(self, databaseID, callback):
-		self.databaseID = databaseID
+	
+	def __init__(self, normalizedName, callback, *columns):
+		self.normalizedName = normalizedName
+		self.columns = columns
 		self.callback = callback
 		self.result = None
-		self.filepath = None
 	
-	def doBackgroundTask(self, bgTaskMgr, threadData):
-		# TRACE_MSG('GetQuestsData (background) :: databaseID=%s' % self.databaseID)
-		self.filepath = ResMgr.resolveToAbsolutePath('server/database_files/quests/')
-		if not os.path.exists(self.filepath):
-			os.makedirs(self.filepath)
-		filename = os.path.join(self.filepath, "%s" % self.databaseID)  # bit weedy, innit
-		if not os.path.isfile(filename):
+	def doBackgroundTask(self, bgTaskMgr, connection):
+		DEBUG_MSG('GetQuestsData (background) :: databaseID=%s' % self.normalizedName) if DO_DEBUG else None
+		
+		if self.columns:
+			self.columns = ', '.join(self.columns)
+		else:
+			self.columns = '*'
+		query = """SELECT %s FROM quests WHERE email=%%s""" % self.columns
+		# params = [self.normalizedName]
+		# results = []
+		
+		# for col, value in self.conditions.items():
+		# 	query += " AND %s = ?" % col
+		# 	params.append(value)
+		
+		c = connection.cursor(dictionary=True)
+		results = c.execute(query, (self.normalizedName,))
+		self.result = c.fetchone()
+		# for v in params:
+		# 	c.execute(query, v)
+		# 	results.append(c.fetchone())
+		
+		if results is None:  # TODO: return error; accounts will be made with template data during creation process instead
 			self.result = self.__initEmptyQuests()  # dict
 			
 			try:
-				with open(filename, 'wb') as file:
-					pprint.pprint(self.result, stream=file)
+				c.execute("""INSERT INTO quests (email, tokens, potapovQuests, quests) VALUES (?, ?, ?, ?)""", (
+					self.normalizedName, self.result['tokens'], self.result['potapovQuests'], self.result['quests']))
 			except Exception as e:
-				raise Exception("GetQuestsData :: Error occurred while writing inventory data (init)=%s" % e)
-		else:
-			try:
-				with open(filename, 'rb') as file:
-					self.result = file.read()  # str
-				self.result = eval(self.result)  # dict
-			except Exception as e:
-				raise Exception("GetQuestsData :: Error occurred while fetching inventory data=%s" % e)
+				raise Exception("GetQuestsData :: Error occurred while writing quest data (init)=%s" % e)
+		# else:
+		# 	try:
+		# 		with open(filename, 'rb') as file:
+		# 			self.result = file.read()  # str
+		# 		self.result = eval(self.result)  # dict
+		# 	except Exception as e:
+		# 		raise Exception("GetQuestsData :: Error occurred while fetching inventory data=%s" % e)
 		bgTaskMgr.addMainThreadTask(self)
 	
 	def __initEmptyQuests(self):
 		return initEmptyQuests()
 	
 	def doMainThreadTask(self, bgTaskMgr):
-		# TRACE_MSG('GetQuestsData (foreground) :: databaseID=%s' % self.databaseID)
+		DEBUG_MSG('GetQuestsData (foreground) :: databaseID=%s' % self.normalizedName) if DO_DEBUG else None
 		self.callback(self.result)
 
-class GetQuestsDataKeyed(BackgroundTask.BackgroundTask):
-	"""
-	Queries the database for quest data and returns the data keyed by the specified key.
-	"""
-	pass
 
 class UpdateQuestsData(BackgroundTask.BackgroundTask):
 	"""
@@ -491,6 +561,7 @@ class GetInventoryData(BackgroundTask.BackgroundTask):
 	"""
 	Queries the database for inventory data.
 	"""
+	
 	def __init__(self, databaseID, callback):
 		self.databaseID = databaseID
 		self.callback = callback
@@ -504,7 +575,7 @@ class GetInventoryData(BackgroundTask.BackgroundTask):
 			os.makedirs(self.filepath)
 		filename = os.path.join(self.filepath, "%s" % self.databaseID)
 		if not os.path.isfile(filename):
-			self.result = self.__initEmptyInventory()   # dict
+			self.result = self.__initEmptyInventory()  # dict
 			
 			try:
 				with open(filename, 'wb') as file:
@@ -514,7 +585,7 @@ class GetInventoryData(BackgroundTask.BackgroundTask):
 		else:
 			try:
 				with open(filename, 'rb') as file:
-					self.result = file.read()   # str
+					self.result = file.read()  # str
 				self.result = eval(self.result)  # dict
 			except Exception as e:
 				raise Exception("GetInventoryData :: Error occurred while fetching inventory data=%s" % e)
@@ -526,11 +597,13 @@ class GetInventoryData(BackgroundTask.BackgroundTask):
 	def doMainThreadTask(self, bgTaskMgr):
 		# TRACE_MSG('GetInventoryData (foreground) :: databaseID=%s' % self.databaseID)
 		self.callback(self.result)
-	
+
+
 class SetInventoryData(BackgroundTask.BackgroundTask):
 	"""
 	Updates the inventory data in the database.
 	"""
+	
 	def __init__(self, databaseID, data, callback):
 		self.databaseID = databaseID
 		self.data = data
@@ -561,6 +634,7 @@ class GetStatsData(BackgroundTask.BackgroundTask):
 	"""
 	Queries player database for stats data.
 	"""
+	
 	def __init__(self, databaseID, callback):
 		self.databaseID = databaseID
 		self.callback = callback
@@ -600,10 +674,12 @@ class GetStatsData(BackgroundTask.BackgroundTask):
 		# TRACE_MSG('GetStatsData (foreground) :: databaseID=%s' % self.databaseID)
 		self.callback(self.result)
 
+
 class SetStatsData(BackgroundTask.BackgroundTask):
 	"""
 	Updates stats data in player database.
 	"""
+	
 	def __init__(self, databaseID, data, callback):
 		self.databaseID = databaseID
 		self.data = data
@@ -617,7 +693,8 @@ class SetStatsData(BackgroundTask.BackgroundTask):
 		if not os.path.exists(self.filepath):
 			os.makedirs(self.filepath)
 		filename = os.path.join(self.filepath, "%s" % self.databaseID)
-		self.data[('eventsData', '_r')][EVENT_CLIENT_DATA.NOTIFICATIONS] = cPickle.loads(zlib.decompress(self.data[('eventsData', '_r')][EVENT_CLIENT_DATA.NOTIFICATIONS]))
+		self.data[('eventsData', '_r')][EVENT_CLIENT_DATA.NOTIFICATIONS] = cPickle.loads(
+			zlib.decompress(self.data[('eventsData', '_r')][EVENT_CLIENT_DATA.NOTIFICATIONS]))
 		try:
 			with open(filename, 'wb') as file:
 				pprint.pprint(self.data, stream=file)
