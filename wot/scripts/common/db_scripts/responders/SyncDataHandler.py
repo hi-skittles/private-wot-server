@@ -1,5 +1,5 @@
 from twisted.internet import defer
-from bwdebug import TRACE_MSG, DEBUG_MSG
+from bwdebug import TRACE_MSG
 import db_scripts.DatabaseHandler as DBHandler
 
 

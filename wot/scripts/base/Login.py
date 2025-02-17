@@ -26,7 +26,7 @@ class Login(BigWorld.Proxy):
 
     def onEnqueued(self, STRING, UINT64):
         DEBUG_MSG('Login::onEnqueued', STRING, UINT64)
-        BigWorld.addTimer(self.onQueueTurn, 0, 5, 0)
+        BigWorld.addTimer(self.onQueueTurn, 0, 2, 0)
         
     def callback1(self, baseRef, databaseID, wasActive):
         DEBUG_MSG('Login::callback1', baseRef, databaseID, wasActive)

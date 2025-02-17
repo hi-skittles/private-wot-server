@@ -1,27 +1,20 @@
-import ast
 from twisted.internet import defer
-
-import BigWorld
-
-from adisp import async, process
-from bwdebug import TRACE_MSG, DEBUG_MSG
-import logging
-
+from bwdebug import TRACE_MSG
 import db_scripts.DatabaseHandler as DBHandler
 
 
-def get_stats(databaseID, callback):
-	TRACE_MSG('StatsHandler : get_stats :: databaseID=%s' % databaseID)
+def get_stats(normalizedName, columns, callback):
+	TRACE_MSG('StatsHandler : get_stats :: normalizedName=%s' % normalizedName)
 	deferred = defer.Deferred()
 	deferred.addCallback(callback)
-	task = DBHandler.GetStatsData(databaseID, callback)
+	task = DBHandler.GetStatsData(normalizedName, callback, columns)
 	DBHandler.add_task(task)
 	return deferred
 
-def update_stats(databaseID, data, callback):
-	TRACE_MSG('StatsHandler : set_stats :: databaseID=%s' % databaseID)
+def update_stats(normalizedName, data, columns, callback):
+	TRACE_MSG('StatsHandler : set_stats :: normalizedName=%s' % normalizedName)
 	deferred = defer.Deferred()
 	deferred.addCallback(callback)
-	task = DBHandler.SetStatsData(databaseID, data, callback)
+	task = DBHandler.SetStatsData(normalizedName, data, callback, columns)
 	DBHandler.add_task(task)
 	return deferred

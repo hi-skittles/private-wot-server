@@ -1,6 +1,6 @@
 <root>
 
-	<enabled> true </enabled>
+	<enabled> false </enabled>
 
 	<!-- XMPP Chat example -->
 	<xmppServer>

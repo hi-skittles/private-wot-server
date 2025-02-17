@@ -1,12 +1,9 @@
-import cPickle
-import time
-import zlib
+import cPickle, time, zlib
 
 from Requests import AccountUpdates
 from adisp import async, process
-from bwdebug import DEBUG_MSG, TRACE_MSG, ERROR_MSG
-import items
-from db_scripts.responders import SyncDataHandler, InventoryHandler, StatsHandler, ShopHandler, DossierHandler
+from bwdebug import DEBUG_MSG, ERROR_MSG
+from db_scripts.responders import QuestsHandler, InventoryHandler, StatsHandler, ShopHandler, DossierHandler
 from collections import namedtuple
 
 import BigWorld
@@ -263,7 +260,7 @@ def addIntUserSettings(proxy, requestID, settings):
     
     # this stores the result of the callback into rdata variable instead of having to write a callback function above
     # any variables normally passed into the async method instead get passed as such, minus the actual callback arg: foo(arg1, arg2, callback) -> data = yield async(foo)(arg1, arg2)
-    rdata = yield async(StatsHandler.get_stats, cbname='callback')(proxy.databaseID)
+    rdata = yield async(StatsHandler.get_stats, cbname='callback')(proxy.normalizedName, 'intUserSettings')
     
     # processing settings
     cdata = {'rev': requestID, 'prevRev': requestID - 1, 'intUserSettings': {}}
@@ -275,7 +272,7 @@ def addIntUserSettings(proxy, requestID, settings):
     proxy.client.update(cPickle.dumps(cdata))
     # send new settings to db
     # named "nothing" here because this method will return True if successful
-    nothing = yield async(StatsHandler.update_stats, cbname='callback')(proxy.databaseID, rdata)
+    nothing = yield async(StatsHandler.update_stats, cbname='callback')(proxy.normalizedName, rdata, 'intUserSettings')
     
     proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
 
@@ -302,8 +299,24 @@ def syncData(proxy, requestID, revision, crc, _):
     # intUserSettings if updating only partial setting. the weird tuple, ('intUserSettings', '_r'), as primary key if its a full sync
     
     data = {'rev': revision + 1, 'prevRev': revision}
-    rdata = yield async(SyncDataHandler.get_sync_data, cbname='callback')(proxy.normalizedName, proxy.databaseID)
-    data.update(rdata)
+    qrdata = yield async(QuestsHandler.get_quests, cbname='callback')(proxy.normalizedName, ['tokens', 'potapovQuests', 'quests'])
+    irdata = yield async(InventoryHandler.get_inventory, cbname='callback')(proxy.normalizedName, ['vehicle', 'vehicleChassis', 'vehicleTurret', 'vehicleGun', 'vehicleEngine', 'vehicleFuelTank', 'vehicleRadio', 'tankman', 'optionalDevice', 'shell', 'equipment'])
+    srdata = yield async(StatsHandler.get_stats, cbname='callback')(proxy.normalizedName, ['account', 'cache', 'economics', 'offers', 'stats', 'intUserSettings', 'eventsData'])
+    data.update(qrdata)
+    data.update(irdata)
+    data.update(srdata)
+    # DEBUG_MSG('AccountCommands.CMD_SYNC_DATA :: done???', data)
+    # _GUI_CTX = cPickle.dumps({
+    #     'databaseID': proxy.databaseID,
+    #     'logUXEvents': True,
+    #     'aogasStartedAt': time.time(),
+    #     'sessionStartedAt': time.time(),
+    #     'isAogasEnabled': True,
+    #     'collectUiStats': False,
+    #     'isLongDisconnectedFromCenter': False,
+    # })
+    # proxy.client.showGUI(_GUI_CTX)
+    # proxy.client.pushClientMessage("Thank you for downloading WoT Offline 9.7", SM_TYPE.FortificationStartUp)
     proxy.client.onCmdResponseExt(requestID, AccountCommands.RES_SUCCESS, '', cPickle.dumps(data))
     
 @baseRequest(AccountCommands.CMD_SYNC_SHOP)

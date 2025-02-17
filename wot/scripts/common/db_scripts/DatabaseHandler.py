@@ -1,10 +1,5 @@
-import cPickle
-import functools
-import pprint
-import time
-import zlib
+import zlib, os, cPickle, base64, time, pprint, functools
 from itertools import cycle
-import os
 
 import mysql.connector
 
@@ -19,8 +14,8 @@ from bwdebug import TRACE_MSG, DEBUG_MSG
 from constants import ACCOUNT_ATTR, EVENT_CLIENT_DATA
 from items import vehicles, ITEM_TYPE_INDICES
 
-threadManager = None
-DATABASE_NAME = "player_data_dev1"
+threadManager = None  # never manually change this value
+DATABASE_NAME = "player_data_dev1"  # player database
 DO_DEBUG = True  # set this to false if you don't want to see a bunch of debug messages
 
 """ TODO: Implement the following classes
@@ -47,7 +42,7 @@ def init():
 		                                       user='bigworld',
 		                                       password='bigworld',
 		                                       database=DATABASE_NAME)
-		threadManager.startThreads(15, connection_creator)
+		threadManager.startThreads(4, connection_creator)
 		TRACE_MSG('DatabaseHandler :: Initialized background thread manager.')
 	return True
 
@@ -166,15 +161,15 @@ def initEmptyInventory():
 		'compDescr': {}
 	}
 	
-	# data[ITEM_TYPE_INDICES['equipment']] = {}
-	# data[ITEM_TYPE_INDICES['optionalDevice']] = {}
-	# data[ITEM_TYPE_INDICES['shell']] = {}
-	# data[ITEM_TYPE_INDICES['vehicleChassis']] = {}
-	# data[ITEM_TYPE_INDICES['vehicleEngine']] = {}
-	# data[ITEM_TYPE_INDICES['vehicleFuelTank']] = {}
-	# data[ITEM_TYPE_INDICES['vehicleGun']] = {}
-	# data[ITEM_TYPE_INDICES['vehicleRadio']] = {}
-	# data[ITEM_TYPE_INDICES['vehicleTurret']] = {}
+	data[ITEM_TYPE_INDICES['equipment']] = {}
+	data[ITEM_TYPE_INDICES['optionalDevice']] = {}
+	data[ITEM_TYPE_INDICES['shell']] = {}
+	data[ITEM_TYPE_INDICES['vehicleChassis']] = {}
+	data[ITEM_TYPE_INDICES['vehicleEngine']] = {}
+	data[ITEM_TYPE_INDICES['vehicleFuelTank']] = {}
+	data[ITEM_TYPE_INDICES['vehicleGun']] = {}
+	data[ITEM_TYPE_INDICES['vehicleRadio']] = {}
+	data[ITEM_TYPE_INDICES['vehicleTurret']] = {}
 	
 	for value in unlocked_vehs:  # vehicles.g_list._VehicleList__ids.values()
 		value = vehicles.getVehicleType(value).id
@@ -357,6 +352,7 @@ def initEmptyStats():
 		}
 	}
 	
+	rdata[('eventsData', '_r')][9] = zlib.compress(cPickle.dumps(rdata[('eventsData', '_r')][9]))
 	return rdata
 
 
@@ -382,6 +378,9 @@ class GetFullSyncData(BackgroundTask.BackgroundTask):
 		self.quests_path = None
 		self.inventory_path = None
 		self.stats_path = None
+		self.stats = {}
+		self.quests = {}
+		self.inventory = {}
 	
 	def doBackgroundTask(self, bgTaskMgr, connection):
 		TRACE_MSG('GetFullSyncData (background) :: databaseID=%s' % self.databaseID)
@@ -394,59 +393,102 @@ class GetFullSyncData(BackgroundTask.BackgroundTask):
 				os.makedirs(f)
 		self.result = {}
 		
-		if DO_DEBUG: DEBUG_MSG('GetFullSyncData (stats) :: databaseID=%s' % self.databaseID)
-		stats_file = os.path.join(self.stats_path, "%s" % self.databaseID)
-		if not os.path.isfile(stats_file):
-			self.result.update(initEmptyStats())  # dict
-			self.result[('eventsData', '_r')][9] = zlib.compress(cPickle.dumps(self.result[('eventsData', '_r')][9]))
+		c = connection.cursor(dictionary=True)
+		c.execute("""SELECT * FROM stats WHERE email=%s""", (self.normalizedName,))
+		s_result = c.fetchone()
+		
+		if s_result is None:
+			self.stats.update(initEmptyStats())  # new dict
 			try:
-				with open(stats_file, 'wb') as file:
-					pprint.pprint(initEmptyStats(), stream=file)
+				c.execute(
+					"""INSERT INTO stats (email, account, cache, economics, offers, stats, intUserSettings, eventsData) VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+					(
+						self.normalizedName, self.stats['account'], self.stats['cache'], self.stats['economics'],
+						self.stats['offers'], self.stats['stats'], self.stats['intUserSettings'],
+						self.stats['eventsData']))
 			except Exception as e:
-				raise Exception("GetFullSyncData :: Error occurred while writing stats data (init)=%s" % e)
+				raise Exception("GetSyncData :: Error occurred while writing new stats data (initEmptyStats)=%s" % e)
 		else:
+			self.stats.update(s_result)  # dict
+			data = self.result
+			if DO_DEBUG: TRACE_MSG('AccountUpdates.__pCheck :: top')
+			current_time = int(time.time())
+			attrs = data['account']['attrs']  # checks only
+			premium_epoch = data['account']['premiumExpiryTime']  # checks only
+			
+			if (not attrs & ACCOUNT_ATTR.PREMIUM) and premium_epoch > current_time:
+				data['account']['attrs'] |= ACCOUNT_ATTR.PREMIUM
+			if attrs & ACCOUNT_ATTR.PREMIUM and premium_epoch < current_time:
+				data['account']['attrs'] &= ~ACCOUNT_ATTR.PREMIUM
+				data['account']['premiumExpiryTime'] = 0
+			# lookup mailbox by dbid, send in as sendPushNotifToClient('ur prem expired lul')
+			self.stats.update(s_result)  # dict
+			if DO_DEBUG: TRACE_MSG('AccountUpdates.__pCheck :: bottom')
+			
 			try:
-				with open(stats_file, 'rb') as file:
-					self.result.update(eval(file.read()))  # dict
-				
-				data = self.result
-				TRACE_MSG('AccountUpdates.__pCheck :: top')
-				current_time = int(time.time())
-				attrs = data['account']['attrs']  # checks only
-				premium_epoch = data['account']['premiumExpiryTime']  # checks only
-				
-				if (not attrs & ACCOUNT_ATTR.PREMIUM) and premium_epoch > current_time:
-					data['account']['attrs'] |= ACCOUNT_ATTR.PREMIUM
-				if attrs & ACCOUNT_ATTR.PREMIUM and premium_epoch < current_time:
-					data['account']['attrs'] &= ~ACCOUNT_ATTR.PREMIUM
-					data['account']['premiumExpiryTime'] = 0
-				#   lookup mailbox by dbid, send in as sendPushNotifToClient('ur prem expired lul')
-				try:
-					with open(stats_file, 'wb') as file:
-						pprint.pprint(self.result, stream=file)
-				except Exception as e:
-					raise Exception("SetStatsData :: Error occurred while writing stats data=%s" % e)
-				TRACE_MSG('AccountUpdates.__pCheck :: bottom')
-				
-				self.result[('eventsData', '_r')][9] = zlib.compress(
-					cPickle.dumps(self.result[('eventsData', '_r')][9]))
+				c.execute(
+					"""INSERT INTO stats (email, account, cache, economics, offers, stats, intUserSettings, eventsData) VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+					(
+						self.normalizedName, self.stats['account'], self.stats['cache'], self.stats['economics'],
+						self.stats['offers'], self.stats['stats'], self.stats['intUserSettings'],
+						self.stats['eventsData']))
 			except Exception as e:
-				raise Exception("GetFullSyncData :: Error occurred while fetching stats data=%s" % e)
+				raise Exception(
+					"GetSyncData :: Error occurred while writing stats data after premium check (__pCheck)=%s" % e)
+		
+		# if DO_DEBUG: DEBUG_MSG('GetFullSyncData (stats) :: databaseID=%s' % self.databaseID)
+		# stats_file = os.path.join(self.stats_path, "%s" % self.databaseID)
+		# if not os.path.isfile(stats_file):
+		# 	self.result.update(initEmptyStats())  # dict
+		# 	self.result[('eventsData', '_r')][9] = zlib.compress(cPickle.dumps(self.result[('eventsData', '_r')][9]))
+		# 	try:
+		# 		with open(stats_file, 'wb') as file:
+		# 			pprint.pprint(initEmptyStats(), stream=file)
+		# 	except Exception as e:
+		# 		raise Exception("GetFullSyncData :: Error occurred while writing stats data (init)=%s" % e)
+		# else:
+		# 	try:
+		# 		with open(stats_file, 'rb') as file:
+		# 			self.result.update(eval(file.read()))  # dict
+		#
+		# 		data = self.result
+		# 		TRACE_MSG('AccountUpdates.__pCheck :: top')
+		# 		current_time = int(time.time())
+		# 		attrs = data['account']['attrs']  # checks only
+		# 		premium_epoch = data['account']['premiumExpiryTime']  # checks only
+		#
+		# 		if (not attrs & ACCOUNT_ATTR.PREMIUM) and premium_epoch > current_time:
+		# 			data['account']['attrs'] |= ACCOUNT_ATTR.PREMIUM
+		# 		if attrs & ACCOUNT_ATTR.PREMIUM and premium_epoch < current_time:
+		# 			data['account']['attrs'] &= ~ACCOUNT_ATTR.PREMIUM
+		# 			data['account']['premiumExpiryTime'] = 0
+		# 		#   lookup mailbox by dbid, send in as sendPushNotifToClient('ur prem expired lul')
+		#
+		# 		try:
+		# 			with open(stats_file, 'wb') as file:
+		# 				pprint.pprint(self.result, stream=file)
+		# 		except Exception as e:
+		# 			raise Exception("SetStatsData :: Error occurred while writing stats data=%s" % e)
+		# 		TRACE_MSG('AccountUpdates.__pCheck :: bottom')
+		#
+		# 		self.result[('eventsData', '_r')][9] = zlib.compress(
+		# 			cPickle.dumps(self.result[('eventsData', '_r')][9]))
+		# 	except Exception as e:
+		# 		raise Exception("GetFullSyncData :: Error occurred while fetching stats data=%s" % e)
 		
 		if DO_DEBUG: DEBUG_MSG('GetFullSyncData (quests) :: normalizedName=%s' % self.normalizedName)
 		c = connection.cursor(dictionary=True)
 		c.execute("""SELECT * FROM quests WHERE email=%s""", (self.normalizedName,))
 		q_result = c.fetchone()
 		if q_result is None:
-			self.result.update(initEmptyQuests())  # dict
-			
+			self.quests.update(initEmptyQuests())  # dict
 			try:
 				c.execute("""INSERT INTO quests (email, tokens, potapovQuests, quests) VALUES (?, ?, ?, ?)""", (
-					self.normalizedName, self.result['tokens'], self.result['potapovQuests'], self.result['quests']))
+					self.normalizedName, self.quests['tokens'], self.quests['potapovQuests'], self.quests['quests']))
 			except Exception as e:
 				raise Exception("GetQuestsData :: Error occurred while writing quests data (init)=%s" % e)
 		else:
-			self.result.update(q_result)  # dict
+			self.quests.update(q_result)  # dict
 		
 		# if DO_DEBUG: DEBUG_MSG('GetFullSyncData (quests) :: databaseID=%s' % self.databaseID)
 		# quests_file = os.path.join(self.quests_path, "%s" % self.databaseID)
@@ -465,7 +507,6 @@ class GetFullSyncData(BackgroundTask.BackgroundTask):
 		# 		self.result.update(eval(foo))  # dict
 		# 	except Exception as e:
 		# 		raise Exception("GetFullSyncData :: Error occurred while fetching quests data=%s" % e)
-		DEBUG_MSG("does result have quests? %s" % self.result)
 		
 		if DO_DEBUG: DEBUG_MSG('GetFullSyncData (inventory) :: databaseID=%s' % self.databaseID)
 		inventory_file = os.path.join(self.inventory_path, "%s" % self.databaseID)
@@ -497,59 +538,42 @@ class GetQuestsData(BackgroundTask.BackgroundTask):
 	Queries the database for quest data as a background task.
 	"""
 	
-	def __init__(self, normalizedName, callback, *columns):
+	def __init__(self, normalizedName, callback, columns):
 		self.normalizedName = normalizedName
 		self.columns = columns
 		self.callback = callback
-		self.result = None
+		self.result = {}
 	
 	def doBackgroundTask(self, bgTaskMgr, connection):
-		DEBUG_MSG('GetQuestsData (background) :: databaseID=%s' % self.normalizedName) if DO_DEBUG else None
-		
-		if self.columns:
+		if DO_DEBUG: DEBUG_MSG('GetQuestsData (background) :: normalizedName=%s' % self.normalizedName)
+		if not self.columns: raise Exception("GetQuestsData :: No columns specified")
+		if self.columns != '*':
 			self.columns = ', '.join(self.columns)
-		else:
-			self.columns = '*'
-		query = """SELECT %s FROM quests WHERE email=%%s""" % self.columns
-		# params = [self.normalizedName]
-		# results = []
-		
-		# for col, value in self.conditions.items():
-		# 	query += " AND %s = ?" % col
-		# 	params.append(value)
-		
 		c = connection.cursor(dictionary=True)
-		results = c.execute(query, (self.normalizedName,))
-		self.result = c.fetchone()
-		# for v in params:
-		# 	c.execute(query, v)
-		# 	results.append(c.fetchone())
-		
-		if results is None:  # TODO: return error; accounts will be made with template data during creation process instead
-			self.result = self.__initEmptyQuests()  # dict
-			
+		c.execute("""SELECT {} FROM quests WHERE email=%s""".format(self.columns), (self.normalizedName,))
+		q_result = c.fetchone()
+		if q_result is None:
+			self.result.update(initEmptyQuests())  # dict
 			try:
-				c.execute("""INSERT INTO quests (email, tokens, potapovQuests, quests) VALUES (?, ?, ?, ?)""", (
-					self.normalizedName, self.result['tokens'], self.result['potapovQuests'], self.result['quests']))
+				c.execute("""INSERT INTO quests (email, tokens, potapovQuests, quests) VALUES (%s, %s, %s, %s)""", (
+					self.normalizedName, base64.b64encode(cPickle.dumps(self.result['tokens'])),
+					base64.b64encode(cPickle.dumps(self.result['potapovQuests'])),
+					base64.b64encode(cPickle.dumps(self.result['quests']))))
+				connection.commit()
 			except Exception as e:
-				raise Exception("GetQuestsData :: Error occurred while writing quest data (init)=%s" % e)
-		# else:
-		# 	try:
-		# 		with open(filename, 'rb') as file:
-		# 			self.result = file.read()  # str
-		# 		self.result = eval(self.result)  # dict
-		# 	except Exception as e:
-		# 		raise Exception("GetQuestsData :: Error occurred while fetching inventory data=%s" % e)
+				raise Exception("GetQuestsData :: Error occurred while writing quests data (init)=%s" % e)
+		else:
+			for k, v in q_result.items():
+				self.result.update({str(k): cPickle.loads(base64.b64decode(v))})  # dict
+			DEBUG_MSG(self.result)
 		bgTaskMgr.addMainThreadTask(self)
 	
-	def __initEmptyQuests(self):
-		return initEmptyQuests()
-	
 	def doMainThreadTask(self, bgTaskMgr):
-		DEBUG_MSG('GetQuestsData (foreground) :: databaseID=%s' % self.normalizedName) if DO_DEBUG else None
+		if DO_DEBUG: DEBUG_MSG('GetQuestsData (foreground) :: normalizedName=%s' % self.normalizedName)
 		self.callback(self.result)
 
 
+# TODO: implement UpdateQuestsData
 class UpdateQuestsData(BackgroundTask.BackgroundTask):
 	"""
 	Updates the quests data in the database.
@@ -562,71 +586,82 @@ class GetInventoryData(BackgroundTask.BackgroundTask):
 	Queries the database for inventory data.
 	"""
 	
-	def __init__(self, databaseID, callback):
-		self.databaseID = databaseID
+	def __init__(self, normalizedName, callback, columns):
+		self.normalizedName = normalizedName
+		self.columns = columns
 		self.callback = callback
-		self.result = None
-		self.filepath = None
+		self.result = {'inventory': {}}
 	
-	def doBackgroundTask(self, bgTaskMgr, threadData):
-		# TRACE_MSG('GetInventoryData (background) :: databaseID=%s' % self.databaseID)
-		self.filepath = ResMgr.resolveToAbsolutePath('server/database_files/inventory/')
-		if not os.path.exists(self.filepath):
-			os.makedirs(self.filepath)
-		filename = os.path.join(self.filepath, "%s" % self.databaseID)
-		if not os.path.isfile(filename):
-			self.result = self.__initEmptyInventory()  # dict
-			
+	def doBackgroundTask(self, bgTaskMgr, connection):
+		if DO_DEBUG: DEBUG_MSG('GetInventoryData (background) :: normalizedName=%s' % self.normalizedName)
+		if not self.columns: raise Exception("GetInventoryData :: No columns specified")
+		if self.columns != '*':
+			self.columns = ', '.join(self.columns)
+		c = connection.cursor(dictionary=True)
+		c.execute("""SELECT {} FROM inventory WHERE email=%s""".format(self.columns), (self.normalizedName,))
+		i_result = c.fetchone()
+		if i_result is None:
+			self.result.update(initEmptyInventory())  # dict
 			try:
-				with open(filename, 'wb') as file:
-					pprint.pprint(self.result, stream=file)
+				c.execute(
+					"""INSERT INTO inventory (email, vehicle, vehicleChassis, vehicleTurret, vehicleGun, vehicleEngine, vehicleFuelTank, vehicleRadio, tankman, optionalDevice, shell, equipment) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+					(
+						self.normalizedName,
+						base64.b64encode(cPickle.dumps(self.result['inventory'][ITEM_TYPE_INDICES['vehicle']])),
+						base64.b64encode(cPickle.dumps({})),
+						base64.b64encode(cPickle.dumps({})),
+						base64.b64encode(cPickle.dumps({})),
+						base64.b64encode(cPickle.dumps({})),
+						base64.b64encode(cPickle.dumps({})),
+						base64.b64encode(cPickle.dumps({})),
+						base64.b64encode(cPickle.dumps(self.result['inventory'][ITEM_TYPE_INDICES['tankman']])),
+						base64.b64encode(cPickle.dumps({})),
+						base64.b64encode(cPickle.dumps({})),
+						base64.b64encode(cPickle.dumps({}))))
+				connection.commit()
 			except Exception as e:
 				raise Exception("GetInventoryData :: Error occurred while writing inventory data (init)=%s" % e)
 		else:
-			try:
-				with open(filename, 'rb') as file:
-					self.result = file.read()  # str
-				self.result = eval(self.result)  # dict
-			except Exception as e:
-				raise Exception("GetInventoryData :: Error occurred while fetching inventory data=%s" % e)
+			for k, v in i_result.items():
+				self.result['inventory'].update({str(k): cPickle.loads(base64.b64decode(v))})  # dict
+				self.result['inventory'][ITEM_TYPE_INDICES[k]] = self.result['inventory'].pop(str(k))
 		bgTaskMgr.addMainThreadTask(self)
 	
-	def __initEmptyInventory(self):
-		return initEmptyInventory()
-	
 	def doMainThreadTask(self, bgTaskMgr):
-		# TRACE_MSG('GetInventoryData (foreground) :: databaseID=%s' % self.databaseID)
+		if DO_DEBUG: TRACE_MSG('GetInventoryData (foreground) :: databaseID=%s' % self.normalizedName)
 		self.callback(self.result)
 
 
 class SetInventoryData(BackgroundTask.BackgroundTask):
 	"""
 	Updates the inventory data in the database.
+	Data keys must match order of columns.
 	"""
 	
-	def __init__(self, databaseID, data, callback):
-		self.databaseID = databaseID
+	def __init__(self, normalizedName, data, callback, columns):
+		self.normalizedName = normalizedName
+		self.columns = columns
 		self.data = data
 		self.callback = callback
-		self.result = None
-		self.filepath = None
+		self.result = {}
 	
-	def doBackgroundTask(self, bgTaskMgr, threadData):
-		# TRACE_MSG('SetInventoryData (background) :: databaseID=%s' % self.databaseID)
-		self.filepath = ResMgr.resolveToAbsolutePath('server/database_files/inventory/')
-		if not os.path.exists(self.filepath):
-			os.makedirs(self.filepath)
-		filename = os.path.join(self.filepath, "%s" % self.databaseID)
-		try:
-			with open(filename, 'wb') as file:
-				pprint.pprint(self.data, stream=file)
-			self.result = True
-		except Exception as e:
-			raise Exception("SetInventoryData :: Error occurred while writing inventory data=%s" % e)
+	def doBackgroundTask(self, bgTaskMgr, connection):
+		if DO_DEBUG: TRACE_MSG('SetInventoryData (background) :: normalizedName=%s' % self.normalizedName)
+		if not self.columns: raise Exception("SetInventoryData :: No columns specified")
+		if set(self.data.keys()) != set(self.columns): raise Exception(
+			"SetInventoryData :: Data keys do not match columns")
+		if self.result['inventory']: self.result = self.result.pop('inventory')
+		c = connection.cursor(dictionary=True)
+		for col in self.columns:
+			c.execute("""
+			UPDATE inventory
+			SET %s=%s
+			WHERE email=%s""", (col, base64.b64encode(cPickle.dumps(self.data[col])), self.normalizedName,))
+		connection.commit()
 		bgTaskMgr.addMainThreadTask(self)
 	
 	def doMainThreadTask(self, bgTaskMgr):
-		# TRACE_MSG('SetInventoryData (foreground) :: databaseID=%s' % self.databaseID)
+		if DO_DEBUG: TRACE_MSG('SetInventoryData (foreground) :: normalizedName=%s' % self.normalizedName)
 		self.callback(self.result)
 
 
@@ -635,43 +670,70 @@ class GetStatsData(BackgroundTask.BackgroundTask):
 	Queries player database for stats data.
 	"""
 	
-	def __init__(self, databaseID, callback):
-		self.databaseID = databaseID
+	def __init__(self, normalizedName, callback, columns):
+		self.normalizedName = normalizedName
+		self.columns = columns
 		self.callback = callback
-		self.result = None
-		self.filepath = None
+		self.result = {}
 	
-	def doBackgroundTask(self, bgTaskMgr, threadData):
-		# TRACE_MSG('GetStatsData (background) :: databaseID=%s' % self.databaseID)
-		self.filepath = ResMgr.resolveToAbsolutePath('server/database_files/stats/')
-		if not os.path.exists(self.filepath):
-			os.makedirs(self.filepath)
-		filename = os.path.join(self.filepath, "%s" % self.databaseID)
-		if not os.path.isfile(filename):
-			self.result = self.__initEmptyStats()  # dict
+	def doBackgroundTask(self, bgTaskMgr, connection):
+		if DO_DEBUG: TRACE_MSG('GetStatsData (background) :: normalizedName=%s' % self.normalizedName)
+		if not self.columns: raise Exception("GetStatsData :: No columns specified")
+		if DO_DEBUG: DEBUG_MSG('GetStatsData column check :: columns=%s || {} {}'.format(" " in self.columns, type(
+			self.columns)) % self.columns)
+		if self.columns != '*' and type(self.columns) == list:
+			self.columns = ', '.join(self.columns)
+		c = connection.cursor(dictionary=True)
+		if DO_DEBUG: DEBUG_MSG('GetStatsData column check :: columns=%s' % self.columns)
+		c.execute("""SELECT {} FROM stats WHERE email=%s""".format(self.columns), (self.normalizedName,))
+		s_result = c.fetchone()
+		if s_result is None:
+			self.result.update(initEmptyStats())  # dict
 			try:
-				with open(filename, 'wb') as file:
-					pprint.pprint(self.result, stream=file)
-				self.result[('eventsData', '_r')][EVENT_CLIENT_DATA.NOTIFICATIONS] = zlib.compress(
-					cPickle.dumps(self.result[('eventsData', '_r')][EVENT_CLIENT_DATA.NOTIFICATIONS]))
+				c.execute(
+					"""INSERT INTO stats (email, account, cache, economics, offers, stats, intUserSettings, eventsData) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""",
+					(
+						self.normalizedName,
+						base64.b64encode(cPickle.dumps(self.result['account'])),
+						base64.b64encode(cPickle.dumps(self.result['cache'])),
+						base64.b64encode(cPickle.dumps(self.result['economics'])),
+						base64.b64encode(cPickle.dumps(self.result['offers'])),
+						base64.b64encode(cPickle.dumps(self.result['stats'])),
+						base64.b64encode(cPickle.dumps(self.result[('intUserSettings', '_r')])),
+						base64.b64encode(cPickle.dumps(self.result[('eventsData', '_r')]))))
+				connection.commit()
 			except Exception as e:
 				raise Exception("GetStatsData :: Error occurred while writing stats data (init)=%s" % e)
-		else:
-			try:
-				with open(filename, 'rb') as file:
-					self.result = file.read()  # str
-				self.result = eval(self.result)  # dict
-				self.result[('eventsData', '_r')][EVENT_CLIENT_DATA.NOTIFICATIONS] = zlib.compress(
-					cPickle.dumps(self.result[('eventsData', '_r')][EVENT_CLIENT_DATA.NOTIFICATIONS]))
-			except Exception as e:
-				raise Exception("GetStatsData :: Error occurred while fetching stats data=%s" % e)
+			self.result[('eventsData', '_r')][EVENT_CLIENT_DATA.NOTIFICATIONS] = zlib.compress(
+				cPickle.dumps(self.result[('eventsData', '_r')][EVENT_CLIENT_DATA.NOTIFICATIONS]))
+		else:  # all of this shit is hacky
+			for k, v in s_result.items():
+				if k == 'intUserSettings': k = ('intUserSettings', '_r')
+				if k == 'eventsData': k = ('eventsData', '_r')
+				self.result.update({str(k): cPickle.loads(base64.b64decode(v))})  # dict
+			if self.result.get(('intUserSettings', '_r'), False): self.result[
+				('intUserSettings', '_r')] = self.result.pop("('intUserSettings', '_r')")
+			if self.result.get(('eventsData', '_r'), False): self.result[('eventsData', '_r')] = self.result.pop(
+				"('eventsData', '_r')")
+			# self.result[('eventsData', '_r')][EVENT_CLIENT_DATA.NOTIFICATIONS] = zlib.compress(cPickle.dumps(self.result[('eventsData', '_r')][EVENT_CLIENT_DATA.NOTIFICATIONS]))
+			
+			if self.result.get('account', False):
+				if DO_DEBUG: TRACE_MSG('GetStatsData.__pCheck :: top')
+				current_time = int(time.time())
+				attrs = self.result['account']['attrs']  # checks only
+				premium_epoch = self.result['account']['premiumExpiryTime']  # checks only
+				
+				if (not attrs & ACCOUNT_ATTR.PREMIUM) and premium_epoch > current_time:
+					self.result['account']['attrs'] |= ACCOUNT_ATTR.PREMIUM
+				if attrs & ACCOUNT_ATTR.PREMIUM and premium_epoch < current_time:
+					self.result['account']['attrs'] &= ~ACCOUNT_ATTR.PREMIUM
+					self.result['account']['premiumExpiryTime'] = 0
+				# lookup mailbox by dbid, send in as sendPushNotifToClient('ur prem expired lul')
+				if DO_DEBUG: TRACE_MSG('GetStatsData.__pCheck :: bottom')
 		bgTaskMgr.addMainThreadTask(self)
 	
-	def __initEmptyStats(self):
-		return initEmptyStats()
-	
 	def doMainThreadTask(self, bgTaskMgr):
-		# TRACE_MSG('GetStatsData (foreground) :: databaseID=%s' % self.databaseID)
+		if DO_DEBUG: TRACE_MSG('GetStatsData (foreground) :: normalizedName=%s' % self.normalizedName)
 		self.callback(self.result)
 
 
@@ -680,31 +742,32 @@ class SetStatsData(BackgroundTask.BackgroundTask):
 	Updates stats data in player database.
 	"""
 	
-	def __init__(self, databaseID, data, callback):
-		self.databaseID = databaseID
+	def __init__(self, normalizedName, data, callback, columns):
+		self.normalizedName = normalizedName
+		self.columns = columns
 		self.data = data
 		self.callback = callback
-		self.result = None
-		self.filepath = None
+		self.result = {}
 	
-	def doBackgroundTask(self, bgTaskMgr, threadData):
-		# TRACE_MSG('SetStatsData (background) :: databaseID=%s' % self.databaseID)
-		self.filepath = ResMgr.resolveToAbsolutePath('server/database_files/stats/')
-		if not os.path.exists(self.filepath):
-			os.makedirs(self.filepath)
-		filename = os.path.join(self.filepath, "%s" % self.databaseID)
-		self.data[('eventsData', '_r')][EVENT_CLIENT_DATA.NOTIFICATIONS] = cPickle.loads(
-			zlib.decompress(self.data[('eventsData', '_r')][EVENT_CLIENT_DATA.NOTIFICATIONS]))
-		try:
-			with open(filename, 'wb') as file:
-				pprint.pprint(self.data, stream=file)
-			self.result = True
-		except Exception as e:
-			raise Exception("SetStatsData :: Error occurred while writing stats data=%s" % e)
+	def doBackgroundTask(self, bgTaskMgr, connection):
+		if DO_DEBUG: TRACE_MSG('SetStatsData (background) :: normalizedName=%s' % self.normalizedName)
+		if not self.columns: raise Exception("SetStatsData :: No columns specified")
+		if ('intUserSettings', '_r') in self.data: self.data['intUserSettings'] = self.data.pop(
+			('intUserSettings', '_r'))
+		if ('eventsData', '_r') in self.data: self.data['eventsData'] = self.data.pop(('eventsData', '_r'))
+		if set(self.data.keys()) != set(self.columns): raise Exception(
+			"SetStatsData :: Data keys do not match columns")
+		c = connection.cursor(dictionary=True)
+		for col in self.columns:
+			c.execute("""
+			UPDATE stats
+			SET %s=%s
+			WHERE email=%s""", (col, base64.b64encode(cPickle.dumps(self.data[col])), self.normalizedName,))
+		connection.commit()
 		bgTaskMgr.addMainThreadTask(self)
 	
 	def doMainThreadTask(self, bgTaskMgr):
-		# TRACE_MSG('SetStatsData (foreground) :: databaseID=%s' % self.databaseID)
+		if DO_DEBUG: TRACE_MSG('SetStatsData (foreground) :: normalizedName=%s' % self.normalizedName)
 		self.callback(self.result)
 
 
@@ -716,7 +779,7 @@ class GetDossierData(BackgroundTask.BackgroundTask):
 	def __init__(self, databaseID, callback):
 		self.databaseID = databaseID
 		self.callback = callback
-		self.result = None
+		self.result = {}
 		self.filepath = None
 	
 	def doBackgroundTask(self, bgTaskMgr, threadData):

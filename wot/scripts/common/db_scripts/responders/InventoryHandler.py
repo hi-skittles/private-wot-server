@@ -1,25 +1,20 @@
-import ast
 from twisted.internet import defer
-
-import BigWorld
-from bwdebug import TRACE_MSG, DEBUG_MSG
-import logging
-
+from bwdebug import TRACE_MSG
 import db_scripts.DatabaseHandler as DBHandler
 
 
-def get_inventory(databaseID, callback):
-	TRACE_MSG('InventoryHandler : get_inventory :: databaseID=%s' % databaseID)
+def get_inventory(normalizedName, columns, callback):
+	TRACE_MSG('InventoryHandler : get_inventory :: normalizedName=%s' % normalizedName)
 	deferred = defer.Deferred()
 	deferred.addCallback(callback)
-	task = DBHandler.GetInventoryData(databaseID, callback)
+	task = DBHandler.GetInventoryData(normalizedName, callback, columns)
 	DBHandler.add_task(task)
 	return deferred
 
-def set_inventory(databaseID, data, callback):
-	TRACE_MSG('InventoryHandler : set_inventory :: databaseID=%s' % databaseID)
+def set_inventory(normalizedName, data, columns, callback):
+	TRACE_MSG('InventoryHandler : set_inventory :: normalizedName=%s' % normalizedName)
 	deferred = defer.Deferred()
 	deferred.addCallback(callback)
-	task = DBHandler.SetInventoryData(databaseID, data, callback)
+	task = DBHandler.SetInventoryData(normalizedName, data, callback, columns)
 	DBHandler.add_task(task)
 	return deferred
