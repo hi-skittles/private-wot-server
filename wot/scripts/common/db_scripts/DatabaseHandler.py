@@ -653,10 +653,9 @@ class SetInventoryData(BackgroundTask.BackgroundTask):
 		if self.result['inventory']: self.result = self.result.pop('inventory')
 		c = connection.cursor(dictionary=True)
 		for col in self.columns:
-			c.execute("""
-			UPDATE inventory
-			SET %s=%s
-			WHERE email=%s""", (col, base64.b64encode(cPickle.dumps(self.data[col])), self.normalizedName,))
+			q = "UPDATE inventory SET {}='{}' WHERE email='{}'".format(col, base64.b64encode(cPickle.dumps(self.data[col])),
+			                                                       self.normalizedName)
+			c.execute(q)
 		connection.commit()
 		bgTaskMgr.addMainThreadTask(self)
 	
@@ -679,12 +678,9 @@ class GetStatsData(BackgroundTask.BackgroundTask):
 	def doBackgroundTask(self, bgTaskMgr, connection):
 		if DO_DEBUG: TRACE_MSG('GetStatsData (background) :: normalizedName=%s' % self.normalizedName)
 		if not self.columns: raise Exception("GetStatsData :: No columns specified")
-		if DO_DEBUG: DEBUG_MSG('GetStatsData column check :: columns=%s || {} {}'.format(" " in self.columns, type(
-			self.columns)) % self.columns)
 		if self.columns != '*' and type(self.columns) == list:
 			self.columns = ', '.join(self.columns)
 		c = connection.cursor(dictionary=True)
-		if DO_DEBUG: DEBUG_MSG('GetStatsData column check :: columns=%s' % self.columns)
 		c.execute("""SELECT {} FROM stats WHERE email=%s""".format(self.columns), (self.normalizedName,))
 		s_result = c.fetchone()
 		if s_result is None:
@@ -710,10 +706,10 @@ class GetStatsData(BackgroundTask.BackgroundTask):
 			for k, v in s_result.items():
 				if k == 'intUserSettings': k = ('intUserSettings', '_r')
 				if k == 'eventsData': k = ('eventsData', '_r')
-				self.result.update({str(k): cPickle.loads(base64.b64decode(v))})  # dict
-			if self.result.get(('intUserSettings', '_r'), False): self.result[
+				self.result.update({k: cPickle.loads(base64.b64decode(v))})  # dict
+			if self.result.get("('intUserSettings', '_r')", False): self.result[
 				('intUserSettings', '_r')] = self.result.pop("('intUserSettings', '_r')")
-			if self.result.get(('eventsData', '_r'), False): self.result[('eventsData', '_r')] = self.result.pop(
+			if self.result.get("('eventsData', '_r')", False): self.result[('eventsData', '_r')] = self.result.pop(
 				"('eventsData', '_r')")
 			# self.result[('eventsData', '_r')][EVENT_CLIENT_DATA.NOTIFICATIONS] = zlib.compress(cPickle.dumps(self.result[('eventsData', '_r')][EVENT_CLIENT_DATA.NOTIFICATIONS]))
 			
@@ -747,7 +743,7 @@ class SetStatsData(BackgroundTask.BackgroundTask):
 		self.columns = columns
 		self.data = data
 		self.callback = callback
-		self.result = {}
+		self.result = False
 	
 	def doBackgroundTask(self, bgTaskMgr, connection):
 		if DO_DEBUG: TRACE_MSG('SetStatsData (background) :: normalizedName=%s' % self.normalizedName)
@@ -755,15 +751,13 @@ class SetStatsData(BackgroundTask.BackgroundTask):
 		if ('intUserSettings', '_r') in self.data: self.data['intUserSettings'] = self.data.pop(
 			('intUserSettings', '_r'))
 		if ('eventsData', '_r') in self.data: self.data['eventsData'] = self.data.pop(('eventsData', '_r'))
-		if set(self.data.keys()) != set(self.columns): raise Exception(
-			"SetStatsData :: Data keys do not match columns")
 		c = connection.cursor(dictionary=True)
 		for col in self.columns:
-			c.execute("""
-			UPDATE stats
-			SET %s=%s
-			WHERE email=%s""", (col, base64.b64encode(cPickle.dumps(self.data[col])), self.normalizedName,))
+			q = "UPDATE stats SET {}='{}' WHERE email='{}'".format(col, base64.b64encode(cPickle.dumps(self.data[col])),
+			                                                  self.normalizedName)
+			c.execute(q)
 		connection.commit()
+		self.result = True
 		bgTaskMgr.addMainThreadTask(self)
 	
 	def doMainThreadTask(self, bgTaskMgr):

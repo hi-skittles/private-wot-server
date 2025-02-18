@@ -1,0 +1,33 @@
+<root>
+	<Properties>
+		<persistentProp>
+			<Type>		ENUM			</Type>
+			<Flags>		OTHER_CLIENTS	</Flags>
+			<Default>	-1				</Default>	<!-- See PersistentEntity.py -->
+			<Persistent>	true			</Persistent>
+			<Editable>		true			</Editable>
+		</persistentProp>
+
+		<ownerID>
+			<Type>		INT32			</Type>
+			<Flags>		OTHER_CLIENTS	</Flags>
+			<Default>	0				</Default>
+		</ownerID>
+		
+		<baseProp>
+			<Type>		ENUM			</Type>
+			<Flags>		BASE	</Flags>
+			<Default>	-1				</Default>
+			<Persistent>	false			</Persistent>
+			<Editable>		true			</Editable>
+		</baseProp>
+
+		<singleIndexTest>
+			<Type>		INT8		</Type>
+			<Flags>		BASE	</Flags>
+			<Indexed>	True	</Indexed>
+			<Default>	10				</Default>
+			<Persistent>	true			</Persistent>
+		</singleIndexTest>
+	</Properties>
+</root>

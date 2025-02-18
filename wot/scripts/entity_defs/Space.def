@@ -1,0 +1,21 @@
+<root>
+	<Properties>
+		<spaceDir>
+			<Type>			STRING			</Type>
+			<Flags>			BASE			</Flags>
+			<Persistent>	true			</Persistent>
+		</spaceDir>
+	</Properties>
+
+	<ClientMethods>
+	</ClientMethods>
+
+	<CellMethods>
+		<addGeometryMapping>
+			<Arg> STRING </Arg> <!-- The path to the geometry to map -->
+		</addGeometryMapping>
+	</CellMethods>
+
+	<BaseMethods>
+	</BaseMethods>
+</root>

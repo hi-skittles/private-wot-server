@@ -36,6 +36,7 @@ class Login(BigWorld.Proxy):
         else:
             DEBUG_MSG('Login::callback1: baseRef false')
             self.onAccountClientReleased(BigWorld.createEntity('Account', {'normalizedName': self.accountDBID_s}))
+            BigWorld.createEntity('Avatar', {'name': BigWorld.entities.get(2403).normalizedName, 'account': BigWorld.entities.get(2403)})
 
     def onQueueTurn(self, id, userArg):
         self.ownClient.receiveLoginQueueNumber(self.loginPriority)

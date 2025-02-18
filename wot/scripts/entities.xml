@@ -9,6 +9,12 @@
     <FlockExotic/>
     <Login/>
     <DetachedTurret/>
+    <TestEntity/>
+    <PersistentEntity/>
   </ClientServerEntities>
-  <ServerOnlyEntities></ServerOnlyEntities>
+  <ServerOnlyEntities>
+    <Space/>
+    <Simple/>
+    <WithIdentifier/>
+  </ServerOnlyEntities>
 </root>

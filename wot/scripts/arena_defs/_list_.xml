@@ -1,5 +1,5 @@
 <_list_.xml>
-  <map>
+  <!-- <map>
     <id>	1	</id>
     <name>	01_karelia	</name>
   </map>
@@ -134,12 +134,12 @@
   <map>
     <id>	52	</id>
     <name>	60_asia_miao	</name>
-  </map>
+  </map> -->
   <map>
     <id>	53	</id>
     <name>	00_tank_tutorial	</name>
   </map>
-  <map>
+  <!-- <map>
     <id>	55	</id>
     <name>	63_tundra	</name>
   </map>
@@ -178,5 +178,5 @@
   <map>
     <id>	70	</id>
     <name>	101_dday	</name>
-  </map>
+  </map> -->
 </_list_.xml>

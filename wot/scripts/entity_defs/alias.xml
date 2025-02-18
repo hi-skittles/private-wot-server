@@ -1,4 +1,30 @@
 <alias.xml>
+    <NestedArray> FIXED_DICT
+        <Properties>
+            <inner>
+                <Type> ARRAY <of> INT32 </of> </Type>
+            </inner>
+        </Properties>
+        <AllowNone> True </AllowNone>
+    </NestedArray>
+
+    <ENUM>          INT8        </ENUM>
+
+    <FRIENDIDX>			UINT8		</FRIENDIDX>
+    <BOOL>				UINT8
+        <!-- BOOL uses the ENUM widget to show True for 1 and False for 0
+        -->
+        <Widget>	ENUM
+            <enum>
+                <value>	0	</value>
+                <display>	False	</display>
+            </enum>
+            <enum>
+                <value>	1	</value>
+                <display>	True	</display>
+            </enum>
+        </Widget>
+    </BOOL>
   <BOOL>	UINT8	</BOOL>
   <OBJECT_ID>	INT32	</OBJECT_ID>
   <SHOT_ID>	INT32	</SHOT_ID>

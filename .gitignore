@@ -53,4 +53,8 @@ bigworld/
 scripts/entity_defs/
 scripts/db/
 
+*.privkey
+*.pubkey
+*.key
+
 */build_*

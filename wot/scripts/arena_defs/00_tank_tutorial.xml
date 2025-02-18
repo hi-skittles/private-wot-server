@@ -1,4 +1,4 @@
-<00_tank_tutorial.xml>
+<root>
   <name>	#arenas:00_tank_tutorial/name	</name>
   <description>	#arenas:00_tank_tutorial/description	</description>
   <geometry>	spaces/00_tank_tutorial	</geometry>
@@ -37,4 +37,4 @@
   </water>
   <explicitRequestOnly>	true	</explicitRequestOnly>
   <maxPlayersInTeam>	1	</maxPlayersInTeam>
-</00_tank_tutorial.xml>
+</root>
