@@ -547,7 +547,7 @@ class GetQuestsData(BackgroundTask.BackgroundTask):
 	def doBackgroundTask(self, bgTaskMgr, connection):
 		if DO_DEBUG: DEBUG_MSG('GetQuestsData (background) :: normalizedName=%s' % self.normalizedName)
 		if not self.columns: raise Exception("GetQuestsData :: No columns specified")
-		if self.columns != '*':
+		if self.columns != '*' and type(self.columns) == list and len(self.columns) > 0:
 			self.columns = ', '.join(self.columns)
 		c = connection.cursor(dictionary=True)
 		c.execute("""SELECT {} FROM quests WHERE email=%s""".format(self.columns), (self.normalizedName,))
@@ -595,7 +595,7 @@ class GetInventoryData(BackgroundTask.BackgroundTask):
 	def doBackgroundTask(self, bgTaskMgr, connection):
 		if DO_DEBUG: DEBUG_MSG('GetInventoryData (background) :: normalizedName=%s' % self.normalizedName)
 		if not self.columns: raise Exception("GetInventoryData :: No columns specified")
-		if self.columns != '*':
+		if self.columns != '*' and type(self.columns) == list and len(self.columns) > 0:
 			self.columns = ', '.join(self.columns)
 		c = connection.cursor(dictionary=True)
 		c.execute("""SELECT {} FROM inventory WHERE email=%s""".format(self.columns), (self.normalizedName,))
@@ -648,8 +648,6 @@ class SetInventoryData(BackgroundTask.BackgroundTask):
 	def doBackgroundTask(self, bgTaskMgr, connection):
 		if DO_DEBUG: TRACE_MSG('SetInventoryData (background) :: normalizedName=%s' % self.normalizedName)
 		if not self.columns: raise Exception("SetInventoryData :: No columns specified")
-		if set(self.data.keys()) != set(self.columns): raise Exception(
-			"SetInventoryData :: Data keys do not match columns")
 		if self.result['inventory']: self.result = self.result.pop('inventory')
 		c = connection.cursor(dictionary=True)
 		for col in self.columns:
@@ -678,7 +676,7 @@ class GetStatsData(BackgroundTask.BackgroundTask):
 	def doBackgroundTask(self, bgTaskMgr, connection):
 		if DO_DEBUG: TRACE_MSG('GetStatsData (background) :: normalizedName=%s' % self.normalizedName)
 		if not self.columns: raise Exception("GetStatsData :: No columns specified")
-		if self.columns != '*' and type(self.columns) == list:
+		if self.columns != '*' and type(self.columns) == list and len(self.columns) > 0:
 			self.columns = ', '.join(self.columns)
 		c = connection.cursor(dictionary=True)
 		c.execute("""SELECT {} FROM stats WHERE email=%s""".format(self.columns), (self.normalizedName,))
