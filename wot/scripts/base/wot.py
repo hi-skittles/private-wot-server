@@ -79,11 +79,22 @@ def onAppShutDown(state):
 	WARNING_MSG("wot.base.onAppShutDown: state={}".format(str(state)))
 	if state == 0:
 		DatabaseHandler.fini()
-	# CronUpdaters.fini()
-	for entity in BigWorld.entities.values():
-		if getattr(entity, 'ownClient', False): entity.ownClient.onKickedFromServer("Server restarting/shutting down", False, 0)
-		if getattr(entity, 'databaseID', False): entity.destroy()
-		else: Base.destroyCellEntity(entity)
+		for entity in BigWorld.entities.values():
+			if getattr(entity, 'ownClient', False):
+				if entity.className == 'Account':
+					entity.kickSelf("Server restarting/shutting down", False, 0)
+					entity.onClientDeath()
+					continue
+				entity.ownClient.onKickedFromServer("Server restarting/shutting down", False, 0)
+				entity.destroy()
+				continue
+			if getattr(entity, 'databaseID', False):
+				entity.destroy()
+				continue
+			if entity.hasCell:
+				Base.destroyCellEntity(entity)
+				continue
+			else: WARNING_MSG("Entity %s has no databaseID and no cell, can't destroy it" % entity)
 
 
 def onCellAppDeath(addr):

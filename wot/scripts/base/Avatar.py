@@ -7,7 +7,7 @@ class Avatar(BigWorld.Proxy):
 	def __init__(self):
 		BigWorld.Proxy.__init__(self)
 		self.cellData["position"] = (0, 0, 0)
-		self.createCellEntity(BigWorld.globalBases["00_tank_tutorial"].cell)
+		# self.createCellEntity(BigWorld.globalBases["00_tank_tutorial"].cell)
 	
 	def onClientDeath(self):
 		# When the client disconnects, we want to make sure our cell entity
@@ -24,6 +24,7 @@ class Avatar(BigWorld.Proxy):
 	def setClientReady(self):
 		# Exposed tag
 		DEBUG_MSG("Avatar::setClientReady")
+		self.createCellEntity(BigWorld.globalBases["00_tank_tutorial"].cell)
 	
 	def leaveArena(self, CLIENT_STATISTICS):
 		# Exposed tag

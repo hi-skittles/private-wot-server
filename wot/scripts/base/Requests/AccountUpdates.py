@@ -154,8 +154,8 @@ def __buySlot(data):
 
 #   stats :: vehTypeXP, freeXP, unlocks
 def __unlockItem(vehTypeCompDescr, unlockIdx, data):
+	DEBUG_MSG("AccountCommands.CMD_UNLOCK :: begin", vehTypeCompDescr, unlockIdx, len(data))
 	try:
-		print "AccountCommands.CMD_UNLOCK :: begin", vehTypeCompDescr, unlockIdx
 		vehicleType = vehicles.getVehicleType(vehTypeCompDescr)
 		itemToUnlock = f7(vehicleType.unlocksDescrs)[unlockIdx]
 		xpCost, itemCD = itemToUnlock[0], itemToUnlock[1]

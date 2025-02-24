@@ -5,7 +5,7 @@ SHOULD_ACCEPT_UNKNOWN_USERS = \
 SHOULD_REMEMBER_UNKNOWN_USERS = \
 	BWConfig.readBool( "billingSystem/shouldRememberUnknownUsers", False )
 ENTITY_TYPE_FOR_UNKNOWN_USERS = \
-	BWConfig.readString( "billingSystem/entityTypeForUnknownUsers", "Account" )
+	BWConfig.readString( "billingSystem/entityTypeForUnknownUsers", "Login" )
 
 print "shouldAcceptUnknownUsers =", SHOULD_ACCEPT_UNKNOWN_USERS
 print "shouldRememberUnknownUsers =", SHOULD_REMEMBER_UNKNOWN_USERS

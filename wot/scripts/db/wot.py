@@ -1,6 +1,6 @@
 from bwdebug import DEBUG_MSG
 
-BILLING_SYSTEM = ""
+BILLING_SYSTEM = "mysql"
 
 if BILLING_SYSTEM == "mysql":
 	from mysql_billing import BillingSystem as connectToBillingSystem

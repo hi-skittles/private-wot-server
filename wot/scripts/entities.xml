@@ -9,12 +9,12 @@
     <FlockExotic/>
     <Login/>
     <DetachedTurret/>
-    <TestEntity/>
-    <PersistentEntity/>
+<!--    <TestEntity/>-->
+<!--    <PersistentEntity/>-->
   </ClientServerEntities>
   <ServerOnlyEntities>
     <Space/>
-    <Simple/>
-    <WithIdentifier/>
+<!--    <Simple/>-->
+<!--    <WithIdentifier/>-->
   </ServerOnlyEntities>
 </root>

@@ -7,7 +7,7 @@
 
 	<baseApp>
 <!--		<warnOnNoDef> true </warnOnNoDef>-->
-		<shouldResolveMailBoxes> true </shouldResolveMailBoxes>
+		<shouldResolveMailBoxes> false </shouldResolveMailBoxes>
 		<verboseExternalInterface> false </verboseExternalInterface>
 <!--		<packetLog>-->
 <!--			<enable> false </enable> &lt;!&ndash; true &ndash;&gt;-->

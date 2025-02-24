@@ -2,9 +2,10 @@ import cPickle, time, zlib
 
 from Requests import AccountUpdates
 from adisp import async, process
-from bwdebug import DEBUG_MSG, ERROR_MSG
+from bwdebug import DEBUG_MSG, ERROR_MSG, TRACE_MSG
 from db_scripts.responders import QuestsHandler, InventoryHandler, StatsHandler, ShopHandler, DossierHandler
 from collections import namedtuple
+from items import ITEM_TYPE_INDICES
 
 import BigWorld
 import AccountCommands
@@ -32,14 +33,12 @@ BASE_REQUESTS = {}
 
 
 # RequestResult = namedtuple('RequestResult', ['resultID', 'errorStr', 'data'])
-
 def baseRequest(cmdID):
 	def wrapper(func):
 		def requester(proxy, requestID, *args):
 			result = func(proxy, requestID, *args)
 		
 		# return proxy, requestID, result.resultID, result.errorStr, result.data
-		
 		BASE_REQUESTS[cmdID] = requester
 		return func
 	
@@ -52,6 +51,19 @@ def packStream(proxy, requestID, data):
 	return proxy.streamStringToClient(data, desc, requestID)
 
 
+@baseRequest(AccountCommands.CMD_REQ_PREBATTLES)
+def reqPrebattles(proxy, requestID, args):
+	DEBUG_MSG('AccountCommands.CMD_REQ_PREBATTLES :: ', args)
+	proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Deprecated')
+
+
+@baseRequest(AccountCommands.CMD_ENQUEUE_TUTORIAL)
+def enqueueTutorial(proxy, requestID, int1, int2, int3):
+	DEBUG_MSG('AccountCommands.CMD_ENQUEUE_TUTORIAL :: ', int1, int2, int3)
+	proxy.onTutorialEnqueued('string', int1)
+	proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, 'Deprecated')
+
+
 @baseRequest(AccountCommands.CMD_BUY_VEHICLE)
 @process
 def buyVehicle(proxy, requestID, args):
@@ -59,14 +71,12 @@ def buyVehicle(proxy, requestID, args):
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_WRONG_ARGS, 'Invalid arguments')
 		return
 	
-	shopRev, vehTypeCompDescr, int1, int2, int3 = args
-	flags = int1
-	crew_level = int2
-	DEBUG_MSG('AccountCommands.CMD_BUY_VEHICLE :: ', shopRev, vehTypeCompDescr, int1, int2, int3)
-	s_data = yield async(StatsHandler.get_stats, cbname='callback')(proxy.databaseID)
-	i_data = yield async(InventoryHandler.get_inventory, cbname='callback')(proxy.databaseID)
-	result, msg, s_data, i_data = AccountUpdates.__buyVehicle(s_data, i_data, shopRev, vehTypeCompDescr, int1, int2,
-	                                                          int3)
+	shopRev, vehTypeCompDescr, flags, crew_level, int3 = args
+	DEBUG_MSG('AccountCommands.CMD_BUY_VEHICLE :: ', shopRev, vehTypeCompDescr, flags, crew_level, int3)
+	s_data = yield async(StatsHandler.get_stats, cbname='callback')(proxy.normalizedName, ['stats', 'economics'])
+	i_data = yield async(InventoryHandler.get_inventory, cbname='callback')(proxy.normalizedName, ['vehicle', 'tankman'])
+	result, msg, s_data, i_data = AccountUpdates.__buyVehicle(s_data, i_data, shopRev, vehTypeCompDescr, flags,
+	                                                          crew_level, int3)
 	
 	# this is the only thing the client needs in .update ...
 	cdata = {'rev': requestID, 'prevRev': requestID - 1,
@@ -83,15 +93,23 @@ def buyVehicle(proxy, requestID, args):
 	if result > 0:
 		DEBUG_MSG('AccountCommands.CMD_BUY_VEHICLE :: success=%s' % result)
 		
-		cdata['inventory'][1]['compDescr'] = i_data['inventory'][1]['compDescr']
-		cdata['inventory'][1]['crew'] = i_data['inventory'][1]['crew']
-		cdata['inventory'][1]['eqs'] = i_data['inventory'][1]['eqs']
-		cdata['inventory'][1]['eqsLayout'] = i_data['inventory'][1]['eqsLayout']
-		cdata['inventory'][1]['settings'] = i_data['inventory'][1]['settings']
-		cdata['inventory'][1]['shellsLayout'] = i_data['inventory'][1]['shellsLayout']
+		cdata['inventory'][ITEM_TYPE_INDICES['vehicle']]['compDescr'] = \
+			i_data['inventory'][ITEM_TYPE_INDICES['vehicle']]['compDescr']
+		cdata['inventory'][ITEM_TYPE_INDICES['vehicle']]['crew'] = i_data['inventory'][ITEM_TYPE_INDICES['vehicle']][
+			'crew']
+		cdata['inventory'][ITEM_TYPE_INDICES['vehicle']]['eqs'] = i_data['inventory'][ITEM_TYPE_INDICES['vehicle']][
+			'eqs']
+		cdata['inventory'][ITEM_TYPE_INDICES['vehicle']]['eqsLayout'] = \
+			i_data['inventory'][ITEM_TYPE_INDICES['vehicle']]['eqsLayout']
+		cdata['inventory'][ITEM_TYPE_INDICES['vehicle']]['settings'] = \
+			i_data['inventory'][ITEM_TYPE_INDICES['vehicle']]['settings']
+		cdata['inventory'][ITEM_TYPE_INDICES['vehicle']]['shellsLayout'] = \
+			i_data['inventory'][ITEM_TYPE_INDICES['vehicle']]['shellsLayout']
 		
-		cdata['inventory'][8]['compDescr'] = i_data['inventory'][8]['compDescr']
-		cdata['inventory'][8]['vehicle'] = i_data['inventory'][8]['vehicle']
+		cdata['inventory'][ITEM_TYPE_INDICES['tankman']]['compDescr'] = \
+			i_data['inventory'][ITEM_TYPE_INDICES['tankman']]['compDescr']
+		cdata['inventory'][ITEM_TYPE_INDICES['tankman']]['vehicle'] = i_data['inventory'][ITEM_TYPE_INDICES['tankman']][
+			'vehicle']
 		
 		cdata['stats']['gold'] = s_data['stats']['gold']
 		cdata['stats']['credits'] = s_data['stats']['credits']
@@ -109,8 +127,10 @@ def buyVehicle(proxy, requestID, args):
 			proxy.client.update(cPickle.dumps(cdata))
 			proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
 			# ...whereas we still store the full dict to db
-			yield async(StatsHandler.update_stats, cbname='callback')(proxy.databaseID, s_data)
-			yield async(InventoryHandler.set_inventory, cbname='callback')(proxy.databaseID, i_data)
+			proxy.writeToDB()
+			yield async(StatsHandler.update_stats, cbname='callback')(proxy.normalizedName, s_data, ['stats', 'economics'])
+			yield async(InventoryHandler.set_inventory, cbname='callback')(proxy.normalizedName, i_data,
+			                                                               ['vehicle', 'tankman'])
 		else:
 			ERROR_MSG('AccountCommands.CMD_BUY_VEHICLE :: None value in cdata=%s' % invalid_data)
 			proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'None value in cdata')
@@ -124,7 +144,7 @@ def buyVehicle(proxy, requestID, args):
 def buySlot(proxy, requestID, int1, _, __):
 	DEBUG_MSG('AccountCommands.CMD_BUY_SLOT :: ', int1)
 	shopRev = int1
-	rdata = yield async(StatsHandler.get_stats, cbname='callback')(proxy.databaseID)
+	rdata = yield async(StatsHandler.get_stats, cbname='callback')(proxy.normalizedName, 'stats')
 	result, msg, udata = AccountUpdates.__buySlot(rdata)
 	
 	# this is the only thing the client needs in .update ...
@@ -137,7 +157,8 @@ def buySlot(proxy, requestID, int1, _, __):
 		proxy.client.update(cPickle.dumps(cdata))
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
 		# ...whereas we still store the full dict to db
-		yield async(StatsHandler.update_stats, cbname='callback')(proxy.databaseID, udata)
+		proxy.writeToDB()
+		yield async(StatsHandler.update_stats, cbname='callback')(proxy.normalizedName, udata, ['stats'])
 	else:
 		DEBUG_MSG('AccountCommands.CMD_BUY_SLOT :: failure=%s' % result)
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, msg)
@@ -165,7 +186,7 @@ def exchangeFreeXP(proxy, requestID, args):
 	DEBUG_MSG('AccountCommands.CMD_FREE_XP_CONV')
 	wantedXP = args[1]
 	vehTypeDescrs = args[2:]
-	rdata = yield async(StatsHandler.get_stats, cbname='callback')(proxy.databaseID)
+	rdata = yield async(StatsHandler.get_stats, cbname='callback')(proxy.normalizedName, 'stats')
 	result, msg, udata = AccountUpdates.__exchangeFreeXP(wantedXP, rdata, vehTypeDescrs)
 	
 	cdata = {'rev': requestID, 'prevRev': requestID - 1, 'stats': {'gold': None, 'freeXP': None, 'vehTypeXP': None}}
@@ -179,7 +200,8 @@ def exchangeFreeXP(proxy, requestID, args):
 		
 		proxy.client.update(cPickle.dumps(cdata))
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
-		yield async(StatsHandler.update_stats, cbname='callback')(proxy.databaseID, udata)
+		proxy.writeToDB()
+		yield async(StatsHandler.update_stats, cbname='callback')(proxy.normalizedName, udata, ['stats'])
 	else:
 		DEBUG_MSG('AccountCommands.CMD_FREE_XP_CONV :: failure=%s' % result)
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, msg)
@@ -189,19 +211,22 @@ def exchangeFreeXP(proxy, requestID, args):
 @process
 def unlockItem(proxy, requestID, vehTypeCompDescr, unlockIdx, int1):
 	DEBUG_MSG('AccountCommands.CMD_UNLOCK :: ', vehTypeCompDescr, unlockIdx, int1)
-	rdata = yield async(StatsHandler.get_stats, cbname='callback')(proxy.databaseID)
+	rdata = yield async(StatsHandler.get_stats, cbname='callback')(proxy.normalizedName, ['stats', 'economics'])
 	oldEliteVehicles = rdata['stats']['eliteVehicles']
 	result, msg, udata = AccountUpdates.__unlockItem(vehTypeCompDescr, unlockIdx, rdata)
 	
 	# this is the only thing the client needs in .update ...
 	cdata = {'rev': requestID, 'prevRev': requestID - 1,
-	         'stats': {'vehTypeXP': None, 'freeXP': None, 'unlocks': None, 'eliteVehicles': None}}
+	         'stats': {'vehTypeXP': None, 'freeXP': None, 'unlocks': None, 'eliteVehicles': None},
+	         'economics': {'eliteVehicles': None}
+	         }
 	
 	if result > 0:
 		DEBUG_MSG('AccountCommands.CMD_UNLOCK :: success=%s' % result)
 		cdata['stats']['vehTypeXP'] = udata['stats']['vehTypeXP']
 		cdata['stats']['freeXP'] = udata['stats']['freeXP']
 		cdata['stats']['unlocks'] = udata['stats']['unlocks']
+		cdata['economics']['eliteVehicles'] = udata['economics']['eliteVehicles']
 		
 		if oldEliteVehicles != udata['stats']['eliteVehicles']:
 			cdata['stats']['eliteVehicles'] = udata['stats']['eliteVehicles']
@@ -212,7 +237,8 @@ def unlockItem(proxy, requestID, vehTypeCompDescr, unlockIdx, int1):
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
 		
 		# ...whereas we still store the full dict to db
-		yield async(StatsHandler.update_stats, cbname='callback')(proxy.databaseID, udata)
+		proxy.writeToDB()
+		yield async(StatsHandler.update_stats, cbname='callback')(proxy.normalizedName, udata, ['stats', 'economics'])
 	else:
 		DEBUG_MSG('AccountCommands.CMD_UNLOCK :: failure=%s' % result)
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, msg)
@@ -223,7 +249,7 @@ def unlockItem(proxy, requestID, vehTypeCompDescr, unlockIdx, int1):
 def exchangeCredits(proxy, requestID, int1, int2, int3):
 	DEBUG_MSG('AccountCommands.CMD_EXCHANGE :: credits=%s' % int2)
 	credits = int2
-	rdata = yield async(StatsHandler.get_stats, cbname='callback')(proxy.databaseID)
+	rdata = yield async(StatsHandler.get_stats, cbname='callback')(proxy.normalizedName, 'stats')
 	result, msg, udata = AccountUpdates.__exchangeGold(credits, rdata)
 	
 	# this is the only thing the client needs in .update ...
@@ -238,7 +264,8 @@ def exchangeCredits(proxy, requestID, int1, int2, int3):
 		proxy.client.update(cPickle.dumps(cdata))
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
 		# ...whereas we still store the full dict to db
-		yield async(StatsHandler.update_stats, cbname='callback')(proxy.databaseID, udata)
+		proxy.writeToDB()
+		yield async(StatsHandler.update_stats, cbname='callback')(proxy.normalizedName, udata, ['stats'])
 	else:
 		DEBUG_MSG('AccountCommands.CMD_EXCHANGE :: failure=%s' % result)
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, msg)
@@ -250,7 +277,8 @@ def premium(proxy, requestID, int1, int2, int3):
 	DEBUG_MSG('AccountCommands.CMD_PREMIUM :: days=%s' % int2)
 	shopRev = int1
 	extend_by_days = int2
-	rdata = yield async(StatsHandler.get_stats, cbname='callback')(proxy.databaseID)
+	rdata = yield async(StatsHandler.get_stats, cbname='callback')(proxy.normalizedName, ['account', 'stats'])
+	TRACE_MSG('[premium]', rdata)
 	result, msg, udata = AccountUpdates.__addPremiumTime(extend_by_days, rdata)
 	
 	# this is the only thing the client needs in .update ...
@@ -266,7 +294,8 @@ def premium(proxy, requestID, int1, int2, int3):
 		proxy.client.update(cPickle.dumps(cdata))
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
 		# ...whereas we still store the full dict to db
-		yield async(StatsHandler.update_stats, cbname='callback')(proxy.databaseID, udata)
+		proxy.writeToDB()
+		yield async(StatsHandler.update_stats, cbname='callback')(proxy.normalizedName, udata, ['account', 'stats'])
 	else:
 		DEBUG_MSG('AccountCommands.CMD_PREMIUM :: failure=%s' % result)
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, msg)
@@ -296,6 +325,7 @@ def addIntUserSettings(proxy, requestID, settings):
 	proxy.client.update(cPickle.dumps(cdata))
 	if n:
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
+		proxy.writeToDB()
 	else:
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Server error')
 
@@ -303,8 +333,8 @@ def addIntUserSettings(proxy, requestID, settings):
 @baseRequest(AccountCommands.CMD_REQ_SERVER_STATS)
 def serverStats(proxy, requestID, int1, int2, int3):
 	data = {
-		'clusterCCU': len(BigWorld.entities.keys()),
-		'regionCCU': len(BigWorld.entities.keys())
+		'clusterCCU': len([entity for entity in BigWorld.entities.values() if entity.className == 'Account']),
+		'regionCCU': len([entity for entity in BigWorld.entities.values() if entity.className == 'Account'])
 	}
 	proxy.client.receiveServerStats(data)
 	proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
@@ -313,7 +343,7 @@ def serverStats(proxy, requestID, int1, int2, int3):
 @baseRequest(AccountCommands.CMD_COMPLETE_TUTORIAL)
 def completeTutorial(proxy, requestID, revision, dataLen, dataCrc):
 	DEBUG_MSG('AccountCommands.CMD_COMPLETE_TUTORIAL :: ', revision, dataLen, dataCrc)
-	proxy.client.onCmdResponseExt(requestID, AccountCommands.RES_SUCCESS, '', {})
+	proxy.client.onCmdResponseExt(requestID, AccountCommands.RES_FAILURE, '', {})
 
 
 # inventory[inventory, cache], stats[stats, account, economics, cache], questProgress[quests, tokens, potapovQuests], trader[offers], intUserSettings[(see comment below for more info)], clubs[cache[relatedToClubs, cybersportSeasonInProgress]]

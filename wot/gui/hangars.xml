@@ -1,7 +1,0 @@
-<hangars.xml>
-  <shadow_model_name>	content/Environment/envH_shadowPlane/gw.model	</shadow_model_name>
-  <shadow_default_texture_name>	content/Environment/envH_shadowPlane/GW_shad.dds	</shadow_default_texture_name>
-  <shadow_empty_texture_name>	system/maps/aid_null.dds	</shadow_empty_texture_name>
-  <igrPremHangarPath>	spaces/hangar_premium_IGR	</igrPremHangarPath>
-  <igrPremHangarPathCN>	spaces/hangar_premium_IGR_CN	</igrPremHangarPathCN>
-</hangars.xml>
