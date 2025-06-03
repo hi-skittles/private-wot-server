@@ -5,16 +5,15 @@ import mysql.connector
 
 import AccountCommands
 from bwdebug import INFO_MSG, TRACE_MSG, DEBUG_MSG, WARNING_MSG
-import ResMgr
-import BackgroundTask
-import items
-import nations
+import ResMgr, BackgroundTask
+from server_constants import DATABASE_CONST
+import items, nations
 from constants import ACCOUNT_ATTR, EVENT_CLIENT_DATA
 from items import vehicles, ITEM_TYPE_INDICES
 
 threadManager = None  # never manually change this value
-DATABASE_NAME = "player_data_dev1"  # player table name
-DO_DEBUG = True  # set this to false if you don't want to see a bunch of debug messages
+DATABASE_NAME = DATABASE_CONST.DB_PRIMARY_DATABASE_NAME
+DO_DEBUG = DATABASE_CONST.DB_DO_EXTRA_DEBUG
 
 
 def init():
@@ -25,6 +24,21 @@ def init():
 		database=DATABASE_NAME
 	)
 	if connection.is_connected(): INFO_MSG("[DatabaseHandler] connected to %s" % connection.server_host)
+	
+	try:
+		connection.cursor(buffered=True).execute("""SELECT * FROM inventory LIMIT 1""")
+	except mysql.connector.errors.Error:
+		WARNING_MSG("[DatabaseHandler] Inventory table does not exist. Creating...")
+		connection.cursor(buffered=True).execute(
+			"""CREATE TABLE IF NOT EXISTS inventory (email VARCHAR(255) PRIMARY KEY UNIQUE NOT NULL,
+			`%s` LONGBLOB, `%s` LONGBLOB, `%s` LONGBLOB, `%s` LONGBLOB, `%s` LONGBLOB, `%s` LONGBLOB, `%s` LONGBLOB, `%s` LONGBLOB, `%s` LONGBLOB, `%s` LONGBLOB, `%s` LONGBLOB, updated_at timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP) charset=utf8""",
+			(ITEM_TYPE_INDICES['vehicle'], ITEM_TYPE_INDICES['vehicleChassis'], ITEM_TYPE_INDICES['vehicleTurret'],
+			 ITEM_TYPE_INDICES['vehicleGun'], ITEM_TYPE_INDICES['vehicleEngine'], ITEM_TYPE_INDICES['vehicleFuelTank'],
+			 ITEM_TYPE_INDICES['vehicleRadio'], ITEM_TYPE_INDICES['tankman'], ITEM_TYPE_INDICES['optionalDevice'],
+			 ITEM_TYPE_INDICES['shell'], ITEM_TYPE_INDICES['equipment']))
+	finally:
+		connection.commit()
+	
 	global threadManager
 	if threadManager is None:
 		threadManager = BackgroundTask.Manager("DatabaseHandler")
@@ -33,7 +47,7 @@ def init():
 		                                       user='bigworld',
 		                                       password='bigworld',
 		                                       database=DATABASE_NAME)
-		threadManager.startThreads(4, connection_creator)
+		threadManager.startThreads(5, connection_creator)
 		INFO_MSG('[DatabaseHandler] initialized background thread manager.')
 	return True
 
@@ -368,7 +382,8 @@ class GetQuestsData(BackgroundTask.BackgroundTask):
 		self.result = {}
 	
 	def doBackgroundTask(self, bgTaskMgr, connection):
-		if DO_DEBUG: DEBUG_MSG('[DatabaseHandler] GetQuestsData (background) :: normalizedName=%s' % self.normalizedName)
+		if DO_DEBUG: DEBUG_MSG(
+			'[DatabaseHandler] GetQuestsData (background) :: normalizedName=%s' % self.normalizedName)
 		if not self.columns: raise Exception("GetQuestsData :: No columns specified")
 		if self.columns != '*' and type(self.columns) == list and len(self.columns) > 0:
 			self.columns = ', '.join(self.columns)
@@ -392,7 +407,8 @@ class GetQuestsData(BackgroundTask.BackgroundTask):
 		bgTaskMgr.addMainThreadTask(self)
 	
 	def doMainThreadTask(self, bgTaskMgr):
-		if DO_DEBUG: DEBUG_MSG('[DatabaseHandler] GetQuestsData (foreground) :: normalizedName=%s' % self.normalizedName)
+		if DO_DEBUG: DEBUG_MSG(
+			'[DatabaseHandler] GetQuestsData (foreground) :: normalizedName=%s' % self.normalizedName)
 		self.callback(self.result)
 
 
@@ -416,18 +432,31 @@ class GetInventoryData(BackgroundTask.BackgroundTask):
 		self.result = {'inventory': {}}
 	
 	def doBackgroundTask(self, bgTaskMgr, connection):
-		if DO_DEBUG: DEBUG_MSG('[DatabaseHandler] GetInventoryData (background) :: normalizedName=%s' % self.normalizedName)
-		if not self.columns: raise Exception("GetInventoryData :: No columns specified")
+		if DO_DEBUG: DEBUG_MSG(
+			'[DatabaseHandler] GetInventoryData (background) :: normalizedName=%s' % self.normalizedName)
+		if not self.columns: raise Exception("[DatabaseHandler] GetInventoryData :: No columns specified")
+		# since the indices are fucking stupid and integers,
 		if self.columns != '*' and type(self.columns) == list and len(self.columns) > 0:
-			self.columns = ', '.join(self.columns)
+			for i in range(len(self.columns)):
+				self.columns[i] = str(self.columns[i])
+			self.columns = '`' + '`, `'.join(self.columns) + '`'
 		c = connection.cursor(dictionary=True)
-		c.execute("""SELECT {} FROM inventory WHERE email=%s""".format(self.columns), (self.normalizedName,))
+		try:
+			c.execute("""SELECT {} FROM inventory WHERE email=%s""".format(self.columns), (self.normalizedName,))
+		except mysql.connector.errors.Error as e:
+			raise Exception("[DatabaseHandler] GetInventoryData :: Error occurred while querying inventory data\n%s" % e)
 		i_result = c.fetchone()
 		if i_result is None:
 			self.result.update(initEmptyInventory())  # dict
 			try:
 				c.execute(
-					"""INSERT INTO inventory (email, vehicle, vehicleChassis, vehicleTurret, vehicleGun, vehicleEngine, vehicleFuelTank, vehicleRadio, tankman, optionalDevice, shell, equipment) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+					"""INSERT INTO inventory (email, `{}`, `{}`, `{}`, `{}`, `{}`, `{}`, `{}`, `{}`, `{}`, `{}`, `{}`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""".format(
+						ITEM_TYPE_INDICES['vehicle'], ITEM_TYPE_INDICES['vehicleChassis'],
+						ITEM_TYPE_INDICES['vehicleTurret'], ITEM_TYPE_INDICES['vehicleGun'],
+						ITEM_TYPE_INDICES['vehicleEngine'], ITEM_TYPE_INDICES['vehicleFuelTank'],
+						ITEM_TYPE_INDICES['vehicleRadio'], ITEM_TYPE_INDICES['tankman'],
+						ITEM_TYPE_INDICES['optionalDevice'], ITEM_TYPE_INDICES['shell'], ITEM_TYPE_INDICES['equipment']
+					),
 					(
 						self.normalizedName,
 						base64.b64encode(cPickle.dumps(self.result['inventory'][ITEM_TYPE_INDICES['vehicle']])),
@@ -445,8 +474,8 @@ class GetInventoryData(BackgroundTask.BackgroundTask):
 				raise Exception("GetInventoryData :: Error occurred while writing inventory data (init)=%s" % e)
 		else:
 			for k, v in i_result.items():
-				self.result['inventory'].update({str(k): cPickle.loads(base64.b64decode(v))})  # dict
-				self.result['inventory'][ITEM_TYPE_INDICES[k]] = self.result['inventory'].pop(str(k))
+				self.result['inventory'].update({int(k): cPickle.loads(base64.b64decode(v))})  # dict
+				# self.result['inventory'][ITEM_TYPE_INDICES[k]] = self.result['inventory'].pop(str(k))
 		c.close()
 		connection.commit()
 		bgTaskMgr.addMainThreadTask(self)
@@ -470,19 +499,21 @@ class SetInventoryData(BackgroundTask.BackgroundTask):
 		self.result = {}
 	
 	def doBackgroundTask(self, bgTaskMgr, connection):
-		if DO_DEBUG: TRACE_MSG('[DatabaseHandler] SetInventoryData (background) :: normalizedName=%s' % self.normalizedName)
+		if DO_DEBUG: TRACE_MSG(
+			'[DatabaseHandler] SetInventoryData (background) :: normalizedName=%s' % self.normalizedName)
 		if not self.columns: raise Exception("SetInventoryData :: No columns specified")
 		if self.data['inventory']: self.data = self.data.pop('inventory')
 		c = connection.cursor(dictionary=True)
 		for col in self.columns:
-			c.execute("UPDATE inventory SET {}=%s WHERE email=%s".format(col),
+			c.execute("UPDATE inventory SET `{}`=%s WHERE email=%s".format(str(col)),
 			          (base64.b64encode(cPickle.dumps(self.data[col])), self.normalizedName))
 		c.close()
 		connection.commit()
 		bgTaskMgr.addMainThreadTask(self)
 	
 	def doMainThreadTask(self, bgTaskMgr):
-		if DO_DEBUG: TRACE_MSG('[DatabaseHandler] SetInventoryData (foreground) :: normalizedName=%s' % self.normalizedName)
+		if DO_DEBUG: TRACE_MSG(
+			'[DatabaseHandler] SetInventoryData (foreground) :: normalizedName=%s' % self.normalizedName)
 		self.callback(self.result)
 
 

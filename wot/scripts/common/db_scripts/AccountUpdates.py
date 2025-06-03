@@ -7,7 +7,7 @@ from bwdebug import DEBUG_MSG, ERROR_MSG, TRACE_MSG
 from constants import ACCOUNT_ATTR
 import time
 
-from db_scripts.responders.ShopHandler import premiumPrices, creditsPrice, slotsPrices, freeXPRate
+from db_scripts.handlers.ShopHandler import premiumPrices, creditsPrice, slotsPrices, freeXPRate
 from items import vehicles, ITEM_TYPE_INDICES
 from debug_utils import LOG_CURRENT_EXCEPTION
 from wot import vehicle_prices
@@ -32,7 +32,6 @@ def subtract_want_equally(want, values):
 	# calculate the equal part to subtract from each element
 	equal_part = want // n
 	remainder = want % n
-	print equal_part, remainder
 	
 	# create a copy of the array to avoid modifying the original one
 	new_values = values[:]
@@ -281,7 +280,7 @@ def __exchangeFreeXP(wantedXP, data, vehTypeDesrcs):
 		if new_gold_balance < 0:
 			return -1, 'Not enough gold', None
 		
-		if 65281 not in vehTypeDesrcs:  # Observer in dict -> freeXP convert without any elite tanks XP -> just take gold and give freeXP
+		if 65281 not in vehTypeDesrcs:  # TODO: Observer in dict -> freeXP convert without any elite tanks XP -> just take gold and give freeXP
 			vehicleXPs = []
 			for vehicle in vehTypeDesrcs:
 				vehicleXPs.append(data['stats']['vehTypeXP'][vehicle])

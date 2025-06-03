@@ -3,10 +3,10 @@ from BigWorld import Proxy
 import cPickle
 import AccountCommands
 
-from Requests.ClientRequests import BASE_REQUESTS
+from Requests.AccountRequests import BASE_REQUESTS
 from adisp import async, process
 from bwdebug import DEBUG_MSG, TRACE_MSG, ERROR_MSG, INFO_MSG
-from db_scripts.responders import StatsHandler
+from db_scripts.handlers import StatsHandler
 
 
 def onComplete(entity):
@@ -68,7 +68,7 @@ class Account(BigWorld.Proxy):
 			'wallet': (False, False)
 		}
 		self.syncProperties()
-		self.writeToDB()   # all accounts are persistent
+		self.writeToDB()  # all accounts are persistent
 	
 	@process
 	def syncProperties(self):
@@ -78,6 +78,7 @@ class Account(BigWorld.Proxy):
 		self.autoBanTime = data['account']['autoBanTime']
 		self.globalRating = data['account']['globalRating']
 		self.attrs = data['account']['attrs']
+		del data
 	
 	def onLogOnAttempt(self, ip, port, password):
 		DEBUG_MSG('Account.onLogOnAttempt', ip, port, password)

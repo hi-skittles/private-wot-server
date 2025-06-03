@@ -37,7 +37,6 @@ def onInit(isReload):
 	HierarchyCheck.checkTypes()
 	WARNING_MSG("wot.base.onInit: isReload={}".format(str(isReload)))
 	DatabaseHandler.init()
-	# CronUpdaters.init()
 	
 	global vehicle_prices
 	items.init(True, vehicle_prices)

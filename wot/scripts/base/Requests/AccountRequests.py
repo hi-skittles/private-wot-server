@@ -1,10 +1,9 @@
 import cPickle, time, zlib
 
-from Requests import AccountUpdates
+from db_scripts import AccountUpdates
 from adisp import async, process
 from bwdebug import DEBUG_MSG, ERROR_MSG, TRACE_MSG
-from db_scripts.responders import QuestsHandler, InventoryHandler, StatsHandler, ShopHandler, DossierHandler
-from collections import namedtuple
+from db_scripts.handlers import QuestsHandler, InventoryHandler, StatsHandler, ShopHandler, DossierHandler
 from items import ITEM_TYPE_INDICES
 
 import BigWorld
@@ -51,17 +50,44 @@ def packStream(proxy, requestID, data):
 	return proxy.streamStringToClient(data, desc, requestID)
 
 
+#
+
+
+@baseRequest(AccountCommands.CMD_CHANGE_HANGAR)
+@process
+def changeHangar(proxy, requestID, arr):
+	DEBUG_MSG('AccountCommands.CMD_CHANGE_HANGAR :: paths=%s' % arr)
+	basic_name, premium_name = arr
+	if basic_name == '' and premium_name == '':
+		basic_name = 'hangar_v2'
+		premium_name = 'hangar_premium_v2'
+	elif premium_name == '':
+		premium_name = basic_name
+	
+	rdata = yield async(StatsHandler.get_stats, cbname='callback')(proxy.normalizedName, 'eventsData')
+	TRACE_MSG('MAXIMUS %s ' % rdata[('eventsData', '_r')])
+	udata = rdata
+	udata[('eventsData', '_r')][9] = zlib.compress(
+		cPickle.dumps([{'type': 'cmd_change_hangar', 'data': 'spaces/' + basic_name, 'text': {}, 'requiredTokens': []},
+		               {'type': 'cmd_change_hangar_prem', 'data': 'spaces/' + premium_name, 'text': {},
+		                'requiredTokens': []}]))
+	cdata = {'rev': requestID, 'prevRev': requestID - 1, ('eventsData', '_r'): udata[('eventsData', '_r')]}
+	proxy.client.update(cPickle.dumps(cdata))
+	proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
+	yield async(StatsHandler.update_stats, cbname='callback')(proxy.normalizedName, udata, ['eventsData'])
+
+
 @baseRequest(AccountCommands.CMD_REQ_PREBATTLES)
 def reqPrebattles(proxy, requestID, args):
 	DEBUG_MSG('AccountCommands.CMD_REQ_PREBATTLES :: ', args)
-	proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Deprecated')
+	proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'NYI')
 
 
 @baseRequest(AccountCommands.CMD_ENQUEUE_TUTORIAL)
 def enqueueTutorial(proxy, requestID, int1, int2, int3):
 	DEBUG_MSG('AccountCommands.CMD_ENQUEUE_TUTORIAL :: ', int1, int2, int3)
 	proxy.onTutorialEnqueued('string', int1)
-	proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, 'Deprecated')
+	proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, 'NYI')
 
 
 @baseRequest(AccountCommands.CMD_BUY_VEHICLE)
@@ -74,7 +100,9 @@ def buyVehicle(proxy, requestID, args):
 	shopRev, vehTypeCompDescr, flags, crew_level, int3 = args
 	DEBUG_MSG('AccountCommands.CMD_BUY_VEHICLE :: ', shopRev, vehTypeCompDescr, flags, crew_level, int3)
 	s_data = yield async(StatsHandler.get_stats, cbname='callback')(proxy.normalizedName, ['stats', 'economics'])
-	i_data = yield async(InventoryHandler.get_inventory, cbname='callback')(proxy.normalizedName, ['vehicle', 'tankman'])
+	i_data = yield async(InventoryHandler.get_inventory, cbname='callback')(proxy.normalizedName,
+	                                                                        [ITEM_TYPE_INDICES['vehicle'],
+	                                                                         ITEM_TYPE_INDICES['tankman']])
 	result, msg, s_data, i_data = AccountUpdates.__buyVehicle(s_data, i_data, shopRev, vehTypeCompDescr, flags,
 	                                                          crew_level, int3)
 	
@@ -128,9 +156,11 @@ def buyVehicle(proxy, requestID, args):
 			proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
 			# ...whereas we still store the full dict to db
 			proxy.writeToDB()
-			yield async(StatsHandler.update_stats, cbname='callback')(proxy.normalizedName, s_data, ['stats', 'economics'])
+			yield async(StatsHandler.update_stats, cbname='callback')(proxy.normalizedName, s_data,
+			                                                          ['stats', 'economics'])
 			yield async(InventoryHandler.set_inventory, cbname='callback')(proxy.normalizedName, i_data,
-			                                                               ['vehicle', 'tankman'])
+			                                                               [ITEM_TYPE_INDICES['vehicle'],
+			                                                                ITEM_TYPE_INDICES['tankman']])
 		else:
 			ERROR_MSG('AccountCommands.CMD_BUY_VEHICLE :: None value in cdata=%s' % invalid_data)
 			proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'None value in cdata')
@@ -358,11 +388,17 @@ def syncData(proxy, requestID, revision, crc, _):
 	qrdata = yield async(QuestsHandler.get_quests, cbname='callback')(proxy.normalizedName,
 	                                                                  ['tokens', 'potapovQuests', 'quests'])
 	irdata = yield async(InventoryHandler.get_inventory, cbname='callback')(proxy.normalizedName,
-	                                                                        ['vehicle', 'vehicleChassis',
-	                                                                         'vehicleTurret', 'vehicleGun',
-	                                                                         'vehicleEngine', 'vehicleFuelTank',
-	                                                                         'vehicleRadio', 'tankman',
-	                                                                         'optionalDevice', 'shell', 'equipment'])
+	                                                                        [ITEM_TYPE_INDICES['vehicle'],
+	                                                                         ITEM_TYPE_INDICES['vehicleChassis'],
+	                                                                         ITEM_TYPE_INDICES['vehicleTurret'],
+	                                                                         ITEM_TYPE_INDICES['vehicleGun'],
+	                                                                         ITEM_TYPE_INDICES['vehicleEngine'],
+	                                                                         ITEM_TYPE_INDICES['vehicleFuelTank'],
+	                                                                         ITEM_TYPE_INDICES['vehicleRadio'],
+	                                                                         ITEM_TYPE_INDICES['tankman'],
+	                                                                         ITEM_TYPE_INDICES['optionalDevice'],
+	                                                                         ITEM_TYPE_INDICES['shell'],
+	                                                                         ITEM_TYPE_INDICES['equipment']])
 	srdata = yield async(StatsHandler.get_stats, cbname='callback')(proxy.normalizedName,
 	                                                                ['account', 'cache', 'economics', 'offers', 'stats',
 	                                                                 'intUserSettings', 'eventsData'])
@@ -381,8 +417,9 @@ def syncData(proxy, requestID, revision, crc, _):
 		'isLongDisconnectedFromCenter': False,
 	})
 	proxy.client.showGUI(_GUI_CTX)
-	proxy.client.pushClientMessage("Thank you for downloading WoT Offline 9.7", SM_TYPE.FortificationStartUp)
+	proxy.client.pushClientMessage("WoT Offline 9.7", SM_TYPE.FortificationStartUp)
 	proxy.client.onCmdResponseExt(requestID, AccountCommands.RES_SUCCESS, '', cPickle.dumps(data))
+	del data
 
 
 @baseRequest(AccountCommands.CMD_SYNC_SHOP)
