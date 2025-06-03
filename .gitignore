@@ -34,11 +34,7 @@ wot/scripts/client/*
 
 wot/server/database_files/*
 
-bigworld/scripts/client/*
-bigworld/system/*
-bigworld/helpers/*
-bigworld/materials/*
-bigworld/scripts/common/Lib/*
+bigworld/*
 
 fantasydemo/*
 
@@ -58,3 +54,11 @@ scripts/db/
 *.key
 
 */build_*
+/simple_space/spaces/
+/simple_space/sets/
+/simple_space/server/
+/simple_space/loginapp.pubkey
+/bigworld/particles/
+/bigworld/shaders/
+/bigworld/shaders/
+/bigworld/particles/
