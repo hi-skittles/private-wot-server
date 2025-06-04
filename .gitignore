@@ -43,6 +43,8 @@ wot/gui/flash/video/*
 
 tools/
 
+*.old
+
 wot/server/
 fantasydemo/
 bigworld/
@@ -61,3 +63,8 @@ scripts/db/
 /bigworld/particles/
 /bigworld/shaders/
 
+/simple_space/
+/wot/scripts/common/Lib/
+/wot/scripts/common/pydev/
+/wot/scripts/common/site-packages/
+/wot/spaces/
