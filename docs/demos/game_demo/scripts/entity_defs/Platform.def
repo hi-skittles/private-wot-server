@@ -1,0 +1,29 @@
+<root>
+	<Volatile>	
+	</Volatile>
+	
+	<Properties>
+	</Properties>
+	
+	<ClientMethods>
+		<kill/>
+	</ClientMethods>
+	
+	<BaseMethods>
+	</BaseMethods>
+	
+	<CellMethods>
+		<enableControl>
+			<Exposed/>
+			<Arg> INT32 </Arg>
+		</enableControl>
+		
+		<disableControl>
+			<Exposed/>
+		</disableControl>
+		
+		<kill>
+			<Exposed/>
+		</kill>
+	</CellMethods>
+</root>
