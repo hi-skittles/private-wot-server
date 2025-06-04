@@ -1,7 +1,0 @@
-<controlpoint.xml>
-  <ControlPoint>
-    <radius>	50	</radius>
-    <pointsPerSecond>	1.0	</pointsPerSecond>
-    <maxPointsPerSecond>	3.0	</maxPointsPerSecond>
-  </ControlPoint>
-</controlpoint.xml>

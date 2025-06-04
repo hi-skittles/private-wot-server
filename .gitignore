@@ -68,3 +68,5 @@ scripts/db/
 /wot/scripts/common/pydev/
 /wot/scripts/common/site-packages/
 /wot/spaces/
+/bigworld/shaders/
+/.junie/

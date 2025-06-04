@@ -9,6 +9,8 @@ import struct
 import itertools
 import ResMgr
 from Math import Vector2, Vector3
+from typing import Union, Tuple, Optional
+
 import nations, items
 from items import _xml
 from debug_utils import *
@@ -54,9 +56,11 @@ OBLIGATORY_HB_TAGS = frozenset(('secret', 'cannot_be_sold', 'historical_battles'
 PREMIUM_IGR_TAGS = frozenset(('premiumIGR',))
 NUM_OPTIONAL_DEVICE_SLOTS = 3
 NUM_EQUIPMENT_SLOTS = 3
-CAMOUFLAGE_KINDS = {'winter': 0,
- 'summer': 1,
- 'desert': 2}
+CAMOUFLAGE_KINDS = {
+    'winter': 0,
+    'summer': 1,
+    'desert': 2
+}
 
 class HORN_COOLDOWN():
     WINDOW = 25.0
@@ -100,9 +104,9 @@ def init(preloadEverything, pricesToCollect):
     # type: (bool, dict or None) -> None
     """Initialize vehicle caches and optional price collection.
 
-    :param preloadEverything: when ``True`` all resources are loaded
+    :param preloadEverything: When ``True`` all resources are loaded
         immediately.
-    :param pricesToCollect: destination dictionary for price data or
+    :param pricesToCollect: Destination dictionary for price data or
         ``None`` to skip collecting prices.
     :return: ``None``
     """
@@ -146,7 +150,7 @@ def init(preloadEverything, pricesToCollect):
 
 def reload():
     # type: () -> None
-    """Reload vehicle definitions and reinitialize caches."""
+    """Reload vehicle definitions and reinitialize caches. Client only."""
     import vehicle_extras
     vehicle_extras.reload()
     from sys import modules
@@ -159,7 +163,7 @@ class VehicleDescr(object):
 
     def __init__(self, compactDescr=None, typeID=None, typeName=None):
         # type: (str or None, tuple or None, str or None) -> None
-        """Create vehicle description from identifiers or compact descriptor.
+        """Create a vehicle description from identifiers or compact descriptor.
 
         Exactly one of ``compactDescr``, ``typeID`` or ``typeName`` should be
         provided.  When ``compactDescr`` is ``None`` the method builds one using
@@ -224,10 +228,10 @@ class VehicleDescr(object):
         # type: (int, int or None, int, int) -> None
         """Apply a camouflage to the vehicle.
 
-        :param position: slot index or camouflage kind.
-        :param camouflageID: camouflage identifier or ``None`` to remove.
-        :param startTime: activation timestamp in seconds.
-        :param durationDays: duration of the camouflage in days.
+        :param position: Slot index or camouflage kind.
+        :param camouflageID: Camouflage identifier or ``None`` to remove.
+        :param startTime: Activation timestamp in seconds.
+        :param durationDays: Duration of the camouflage in days.
         """
         p = self.camouflages
         if camouflageID is None:
@@ -258,10 +262,10 @@ class VehicleDescr(object):
         # type: (int, int or None, int, int) -> None
         """Set or clear a player emblem on the vehicle.
 
-        :param position: emblem slot index.
-        :param emblemID: emblem identifier or ``None`` to remove.
-        :param startTime: activation start time (minutes aligned).
-        :param durationDays: number of days the emblem remains active.
+        :param position: Emblem slot index.
+        :param emblemID: Emblem identifier or ``None`` to remove.
+        :param startTime: Activation start time (minutes aligned).
+        :param durationDays: Number of days the emblem remains active.
         """
         p = self.playerEmblems
         p[position]
@@ -297,11 +301,11 @@ class VehicleDescr(object):
         # type: (int, int or None, int, int, int) -> None
         """Apply or remove a player inscription.
 
-        :param position: inscription slot index.
-        :param inscriptionID: inscription identifier or ``None`` to remove.
-        :param startTime: activation start time.
-        :param durationDays: number of days the inscription remains.
-        :param color: colour index used for the inscription.
+        :param position: Inscription slot index.
+        :param inscriptionID: Inscription identifier or ``None`` to remove.
+        :param startTime: Activation start time.
+        :param durationDays: Number of days the inscription remains.
+        :param color: Colour index used for the inscription.
         """
         p = self.playerInscriptions
         p[position]
@@ -350,10 +354,10 @@ class VehicleDescr(object):
         assert False
 
     def mayInstallTurret(self, turretCompactDescr, gunCompactDescr, positionIndex=0):
-        # type: (int, int, int) -> tuple
+        # type: (int, int, int) -> Union[None, Tuple[bool, str], Tuple[bool, None]]
         """Check turret and gun compatibility with the vehicle.
 
-        :return: tuple ``(is_ok, reason)`` where ``reason`` is ``None`` when
+        :return: Tuple ``(is_ok, reason)`` where ``reason`` is ``None`` when
             installation is possible.
         """
         selfType = self.type
@@ -405,7 +409,7 @@ class VehicleDescr(object):
         # type: (int, int, int) -> list
         """Install a new turret (and optionally gun) on the vehicle.
 
-        :return: list of compact descriptors of removed components.
+        :return: List of compact descriptors of removed components.
         """
         turretID = parseIntCompactDescr(turretCompactDescr)[2]
         if gunCompactDescr == 0:
@@ -427,7 +431,7 @@ class VehicleDescr(object):
         return removed
 
     def mayInstallComponent(self, compactDescr, positionIndex=0):
-        # type: (int, int) -> tuple
+        # type: (int, int) -> Union[None, Tuple[bool, str], Tuple[bool, None]]
         """Check whether a component can be installed.
 
         :return: tuple ``(is_ok, reason)`` similar to :meth:`mayInstallTurret`.
@@ -490,7 +494,7 @@ class VehicleDescr(object):
 
     def installComponent(self, compactDescr, positionIndex=0):
         # type: (int, int) -> tuple
-        """Install the specified component and return removed one."""
+        """Install the specified component and return the removed one."""
         itemTypeID, nationID, compID = parseIntCompactDescr(compactDescr)
         itemTypeName = items.ITEM_TYPE_NAMES[itemTypeID]
         if nationID != self.type.id[0]:
@@ -520,7 +524,7 @@ class VehicleDescr(object):
         return (prevDescr['compactDescr'],)
 
     def mayInstallOptionalDevice(self, compactDescr, slotIdx):
-        # type: (int, int) -> tuple
+        # type: (int, int) -> Union[None, Tuple[bool, str], Tuple[bool, None]]
         """Check whether an optional device can be installed in the slot."""
         itemTypeID, _, deviceID = parseIntCompactDescr(compactDescr)
         if items.ITEM_TYPE_NAMES[itemTypeID] != 'optionalDevice':
@@ -562,7 +566,7 @@ class VehicleDescr(object):
             return ((prevDevice.compactDescr,), ()) if prevDevice['removable'] else ((), (prevDevice.compactDescr,))
 
     def mayRemoveOptionalDevice(self, slotIdx):
-        # type: (int) -> tuple
+        # type: (int) -> Optional[Tuple[bool, Union[None, str]]]
         """Check if optional device removal is allowed."""
         prevDevices = self.optionalDevices
         devices = list(prevDevices)
