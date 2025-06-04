@@ -97,6 +97,15 @@ EmblemSlot = namedtuple('EmblemSlot', ['rayStart',
  'emblemId'])
 
 def init(preloadEverything, pricesToCollect):
+    # type: (bool, dict or None) -> None
+    """Initialize vehicle caches and optional price collection.
+
+    :param preloadEverything: when ``True`` all resources are loaded
+        immediately.
+    :param pricesToCollect: destination dictionary for price data or
+        ``None`` to skip collecting prices.
+    :return: ``None``
+    """
     global g_list
     global g_cache
     global _g_prices
@@ -136,6 +145,8 @@ def init(preloadEverything, pricesToCollect):
 
 
 def reload():
+    # type: () -> None
+    """Reload vehicle definitions and reinitialize caches."""
     import vehicle_extras
     vehicle_extras.reload()
     from sys import modules
@@ -147,6 +158,13 @@ def reload():
 class VehicleDescr(object):
 
     def __init__(self, compactDescr=None, typeID=None, typeName=None):
+        # type: (str or None, tuple or None, str or None) -> None
+        """Create vehicle description from identifiers or compact descriptor.
+
+        Exactly one of ``compactDescr``, ``typeID`` or ``typeName`` should be
+        provided.  When ``compactDescr`` is ``None`` the method builds one using
+        the cache and initial equipment of the vehicle type.
+        """
         if compactDescr is None:
             if typeID is not None:
                 nationID, vehicleTypeID = typeID
@@ -203,6 +221,14 @@ class VehicleDescr(object):
     boundingRadius = property(__get_boundingRadius)
 
     def setCamouflage(self, position, camouflageID, startTime, durationDays):
+        # type: (int, int or None, int, int) -> None
+        """Apply a camouflage to the vehicle.
+
+        :param position: slot index or camouflage kind.
+        :param camouflageID: camouflage identifier or ``None`` to remove.
+        :param startTime: activation timestamp in seconds.
+        :param durationDays: duration of the camouflage in days.
+        """
         p = self.camouflages
         if camouflageID is None:
             startTime = _CUSTOMIZATION_EPOCH
@@ -229,6 +255,14 @@ class VehicleDescr(object):
         return
 
     def setPlayerEmblem(self, position, emblemID, startTime, durationDays):
+        # type: (int, int or None, int, int) -> None
+        """Set or clear a player emblem on the vehicle.
+
+        :param position: emblem slot index.
+        :param emblemID: emblem identifier or ``None`` to remove.
+        :param startTime: activation start time (minutes aligned).
+        :param durationDays: number of days the emblem remains active.
+        """
         p = self.playerEmblems
         p[position]
         defEmblemID = self.type.defaultPlayerEmblemID
@@ -260,6 +294,15 @@ class VehicleDescr(object):
         return
 
     def setPlayerInscription(self, position, inscriptionID, startTime, durationDays, color):
+        # type: (int, int or None, int, int, int) -> None
+        """Apply or remove a player inscription.
+
+        :param position: inscription slot index.
+        :param inscriptionID: inscription identifier or ``None`` to remove.
+        :param startTime: activation start time.
+        :param durationDays: number of days the inscription remains.
+        :param color: colour index used for the inscription.
+        """
         p = self.playerInscriptions
         p[position]
         if inscriptionID is None:
@@ -289,6 +332,8 @@ class VehicleDescr(object):
         return
 
     def getComponentsByType(self, itemTypeName, positionIndex=0):
+        # type: (str, int) -> tuple
+        """Return installed component and available list for given type."""
         if itemTypeName == 'vehicleChassis':
             return (self.chassis, self.type.chassis)
         if itemTypeName == 'vehicleEngine':
@@ -305,6 +350,12 @@ class VehicleDescr(object):
         assert False
 
     def mayInstallTurret(self, turretCompactDescr, gunCompactDescr, positionIndex=0):
+        # type: (int, int, int) -> tuple
+        """Check turret and gun compatibility with the vehicle.
+
+        :return: tuple ``(is_ok, reason)`` where ``reason`` is ``None`` when
+            installation is possible.
+        """
         selfType = self.type
         selfTurrets = self.turrets
         itemTypeID, nationID, turretID = parseIntCompactDescr(turretCompactDescr)
@@ -351,6 +402,11 @@ class VehicleDescr(object):
             return (True, None)
 
     def installTurret(self, turretCompactDescr, gunCompactDescr, positionIndex=0):
+        # type: (int, int, int) -> list
+        """Install a new turret (and optionally gun) on the vehicle.
+
+        :return: list of compact descriptors of removed components.
+        """
         turretID = parseIntCompactDescr(turretCompactDescr)[2]
         if gunCompactDescr == 0:
             gunID = self.turrets[positionIndex][1]['id'][1]
@@ -371,6 +427,11 @@ class VehicleDescr(object):
         return removed
 
     def mayInstallComponent(self, compactDescr, positionIndex=0):
+        # type: (int, int) -> tuple
+        """Check whether a component can be installed.
+
+        :return: tuple ``(is_ok, reason)`` similar to :meth:`mayInstallTurret`.
+        """
         itemTypeID, nationID, compID = parseIntCompactDescr(compactDescr)
         itemTypeName = items.ITEM_TYPE_NAMES[itemTypeID]
         selfType = self.type
@@ -428,6 +489,8 @@ class VehicleDescr(object):
             return (True, None)
 
     def installComponent(self, compactDescr, positionIndex=0):
+        # type: (int, int) -> tuple
+        """Install the specified component and return removed one."""
         itemTypeID, nationID, compID = parseIntCompactDescr(compactDescr)
         itemTypeName = items.ITEM_TYPE_NAMES[itemTypeID]
         if nationID != self.type.id[0]:
@@ -457,6 +520,8 @@ class VehicleDescr(object):
         return (prevDescr['compactDescr'],)
 
     def mayInstallOptionalDevice(self, compactDescr, slotIdx):
+        # type: (int, int) -> tuple
+        """Check whether an optional device can be installed in the slot."""
         itemTypeID, _, deviceID = parseIntCompactDescr(compactDescr)
         if items.ITEM_TYPE_NAMES[itemTypeID] != 'optionalDevice':
             return (False, 'wrong item type')
@@ -484,6 +549,8 @@ class VehicleDescr(object):
             return (True, None)
 
     def installOptionalDevice(self, compactDescr, slotIdx):
+        # type: (int, int) -> tuple
+        """Install an optional device and return removed or destroyed device."""
         device = g_cache.optionalDevices()[parseIntCompactDescr(compactDescr)[2]]
         devices = self.optionalDevices
         prevDevice = devices[slotIdx]
@@ -495,6 +562,8 @@ class VehicleDescr(object):
             return ((prevDevice.compactDescr,), ()) if prevDevice['removable'] else ((), (prevDevice.compactDescr,))
 
     def mayRemoveOptionalDevice(self, slotIdx):
+        # type: (int) -> tuple
+        """Check if optional device removal is allowed."""
         prevDevices = self.optionalDevices
         devices = list(prevDevices)
         self.optionalDevices = devices
@@ -511,6 +580,8 @@ class VehicleDescr(object):
         return (True, None)
 
     def removeOptionalDevice(self, slotIdx):
+        # type: (int) -> tuple
+        """Remove an optional device from the vehicle."""
         device = self.optionalDevices[slotIdx]
         self.optionalDevices[slotIdx] = None
         self.__updateAttributes()
@@ -520,6 +591,8 @@ class VehicleDescr(object):
             return ((device.compactDescr,), ()) if device['removable'] else ((), (device.compactDescr,))
 
     def makeCompactDescr(self):
+        # type: () -> str
+        """Serialize current vehicle state into compact descriptor."""
         type = self.type
         pack = struct.pack
         components = pack('<4H', self.chassis['id'][1], self.engine['id'][1], self.fuelTank['id'][1], self.radio['id'][1])
@@ -557,6 +630,8 @@ class VehicleDescr(object):
         return _combineVehicleCompactDescr(type, components, optionalDeviceSlots, optionalDevices, emblemPositions, emblems, inscriptions, camouflages, self.__hornID)
 
     def getCost(self, itemPrices):
+        # type: (dict) -> tuple
+        """Calculate total purchase cost of the vehicle."""
         type = self.type
         cost = itemPrices[type.compactDescr]
         for idx in xrange(len(self.turrets)):
@@ -575,6 +650,8 @@ class VehicleDescr(object):
         return cost
 
     def getMaxRepairCost(self):
+        # type: () -> float
+        """Return maximal possible repair cost for the vehicle."""
         type = self.type
         cost = self.maxHealth * type.repairCost
         for turretDescr, gunDescr in self.turrets:
@@ -584,6 +661,8 @@ class VehicleDescr(object):
         return cost
 
     def getDevices(self):
+        # type: () -> tuple
+        """Return tuples with default, installed and optional device CDs."""
         defComps = []
         instComps = []
         type = self.type
@@ -609,6 +688,8 @@ class VehicleDescr(object):
         return (defComps, instComps, optDevices)
 
     def getHitTesters(self):
+        # type: () -> list
+        """Return hit tester objects for all vehicle parts."""
         hitTesters = [self.chassis['hitTester'], self.hull['hitTester']]
         for turretDescr, gunDescr in self.turrets:
             hitTesters.append(turretDescr['hitTester'])
@@ -617,6 +698,8 @@ class VehicleDescr(object):
         return hitTesters
 
     def prerequisites(self):
+        # type: () -> list
+        """Return resource prerequisites required by this vehicle."""
         prereqs = set()
         for effGroup in self.type.effects.values():
             for keyPoints, effects, readyPrereqs in effGroup:
@@ -669,6 +752,8 @@ class VehicleDescr(object):
         return list(prereqs)
 
     def keepPrereqs(self, prereqs):
+        # type: (list) -> None
+        """Filter and cache prerequisite resources needed by the vehicle."""
         if not prereqs:
             return
         else:
@@ -1002,6 +1087,8 @@ class VehicleDescr(object):
 class VehicleType(object):
 
     def __init__(self, nationID, basicInfo, xmlPath):
+        # type: (int, dict, str) -> None
+        """Read vehicle type description from XML configuration."""
         self.name = basicInfo['name']
         self.id = (nationID, basicInfo['id'])
         self.compactDescr = basicInfo['compactDescr']
@@ -1178,6 +1265,8 @@ class VehicleType(object):
 class Cache(object):
 
     def __init__(self):
+        # type: () -> None
+        """Initialize empty vehicle component caches."""
         self.__vehicles = {}
         self.__commonConfig = None
         self.__chassis = [ None for i in nations.NAMES ]
@@ -1213,9 +1302,13 @@ class Cache(object):
         return
 
     def clearPrereqs(self):
+        # type: () -> None
+        """Stub for API compatibility."""
         pass
 
     def vehicle(self, nationID, vehicleTypeID):
+        # type: (int, int) -> object
+        """Return :class:`VehicleType` instance for given nation and id."""
         id = (nationID, vehicleTypeID)
         vt = self.__vehicles.get(id)
         if vt:
@@ -1229,48 +1322,78 @@ class Cache(object):
         return vt
 
     def chassis(self, nationID):
+        # type: (int) -> dict
+        """Return cached chassis descriptors for a nation."""
         return self.__getList(nationID, 'chassis')
 
     def chassisIDs(self, nationID):
+        # type: (int) -> dict
+        """Return mapping of chassis names to ids."""
         return self.__getList(nationID, 'chassisIDs')
 
     def engines(self, nationID):
+        # type: (int) -> dict
+        """Return engine descriptors for a nation."""
         return self.__getList(nationID, 'engines')
 
     def engineIDs(self, nationID):
+        # type: (int) -> dict
+        """Return mapping of engine names to ids."""
         return self.__getList(nationID, 'engineIDs')
 
     def fuelTanks(self, nationID):
+        # type: (int) -> dict
+        """Return fuel tank descriptors for a nation."""
         return self.__getList(nationID, 'fuelTanks')
 
     def fuelTankIDs(self, nationID):
+        # type: (int) -> dict
+        """Return mapping of fuel tank names to ids."""
         return self.__getList(nationID, 'fuelTankIDs')
 
     def radios(self, nationID):
+        # type: (int) -> dict
+        """Return radio descriptors for a nation."""
         return self.__getList(nationID, 'radios')
 
     def radioIDs(self, nationID):
+        # type: (int) -> dict
+        """Return mapping of radio names to ids."""
         return self.__getList(nationID, 'radioIDs')
 
     def turrets(self, nationID):
+        # type: (int) -> dict
+        """Return turret descriptors for a nation."""
         return self.__getList(nationID, 'turrets')
 
     def turretIDs(self, nationID):
+        # type: (int) -> dict
+        """Return mapping of turret names to ids."""
         return self.__getList(nationID, 'turretIDs')
 
     def guns(self, nationID):
+        # type: (int) -> dict
+        """Return gun descriptors for a nation."""
         return self.__getList(nationID, 'guns')
 
     def gunIDs(self, nationID):
+        # type: (int) -> dict
+        """Return mapping of gun names to ids."""
         return self.__getList(nationID, 'gunIDs')
 
     def shells(self, nationID):
+        # type: (int) -> dict
+        """Return shell descriptors for a nation."""
         return self.__getList(nationID, 'shells')
 
     def shellIDs(self, nationID):
+        # type: (int) -> dict
+        """Return mapping of shell names to ids."""
         return self.__getList(nationID, 'shellIDs')
 
     def customization(self, nationID):
+        # type: (int) -> dict
+        """Return customization data for the given nation."""
         descr = self.__customization[nationID]
         if descr is None:
             nationName = nations.NAMES[nationID]
@@ -1283,18 +1406,24 @@ class Cache(object):
         return descr
 
     def horns(self):
+        # type: () -> dict
+        """Load and cache horn descriptors."""
         descr = self.__horns
         if descr is None:
             descr = self.__horns = _readHorns(_VEHICLE_TYPE_XML_PATH + 'common/horns.xml')
         return descr
 
     def playerEmblems(self):
+        # type: () -> tuple
+        """Return player emblem groups and related data."""
         descr = self.__playerEmblems
         if descr is None:
             descr = self.__playerEmblems = _readPlayerEmblems(_VEHICLE_TYPE_XML_PATH + 'common/player_emblems.xml')
         return descr
 
     def optionalDevices(self):
+        # type: () -> dict
+        """Return optional device descriptors."""
         descr = self.__optionalDevices
         if descr is None:
             from items import artefacts
@@ -1303,6 +1432,8 @@ class Cache(object):
         return descr
 
     def optionalDeviceIDs(self):
+        # type: () -> dict
+        """Return mapping of optional device names to ids."""
         descr = self.__optionalDeviceIDs
         if descr is None:
             from items import artefacts
@@ -1311,6 +1442,8 @@ class Cache(object):
         return descr
 
     def equipments(self):
+        # type: () -> dict
+        """Return equipment descriptors."""
         descr = self.__equipments
         if descr is None:
             from items import artefacts
@@ -1319,6 +1452,8 @@ class Cache(object):
         return descr
 
     def equipmentIDs(self):
+        # type: () -> dict
+        """Return mapping of equipment names to ids."""
         descr = self.__equipmentIDs
         if descr is None:
             from items import artefacts
@@ -1328,6 +1463,8 @@ class Cache(object):
 
     @property
     def shotEffects(self):
+        # type: () -> dict
+        """Return shot effect descriptors."""
         descr = self.__shotEffects
         if descr is None:
             self.__shotEffectsIndexes, self.__shotEffects = _readShotEffectGroups(_VEHICLE_TYPE_XML_PATH + 'common/shot_effects.xml')
@@ -1336,6 +1473,8 @@ class Cache(object):
 
     @property
     def shotEffectsIndexes(self):
+        # type: () -> dict
+        """Return mapping from effect names to indexes."""
         descr = self.__shotEffectsIndexes
         if descr is None:
             self.__shotEffectsIndexes, self.__shotEffects = _readShotEffectGroups(_VEHICLE_TYPE_XML_PATH + 'common/shot_effects.xml')
@@ -1344,6 +1483,8 @@ class Cache(object):
 
     @property
     def damageStickers(self):
+        # type: () -> dict
+        """Return damage sticker configuration."""
         descr = self.__damageStickers
         if descr is None:
             descr = self.__damageStickers = _readDamageStickers(_VEHICLE_TYPE_XML_PATH + 'common/damage_stickers.xml')
@@ -1351,6 +1492,8 @@ class Cache(object):
 
     @property
     def commonConfig(self):
+        # type: () -> dict
+        """Load and cache common vehicle configuration."""
         descr = self.__commonConfig
         if descr is None:
             commonXmlPath = _VEHICLE_TYPE_XML_PATH + 'common/vehicle.xml'
@@ -1430,6 +1573,8 @@ class Cache(object):
 class VehicleList(object):
 
     def __init__(self):
+        # type: () -> None
+        """Read vehicle lists for all nations."""
         self.__ids = {}
         list = []
         for nation in nations.NAMES:
@@ -1450,12 +1595,18 @@ class VehicleList(object):
         return
 
     def getList(self, nationID):
+        # type: (int) -> dict
+        """Return dictionary of vehicle descriptors for a nation."""
         return self.__nations[nationID]
 
     def isVehicleExisting(self, name):
+        # type: (str) -> bool
+        """Check if vehicle with given name exists in any nation."""
         return name in self.__ids
 
     def getIDsByVehName(self, name):
+        # type: (str) -> tuple
+        """Return nation and id pair for vehicle short name."""
         for nation in nations.NAMES:
             fullName = '%s:%s' % (nation, name)
             if fullName in self.__ids:
@@ -1464,6 +1615,8 @@ class VehicleList(object):
         raise Exception, "unknown vehicle name '%s'" % name
 
     def getIDsByName(self, name):
+        # type: (str) -> tuple
+        """Return nation and id pair for full vehicle type name."""
         ids = self.__ids.get(name)
         if ids is None:
             raise Exception, "unknown vehicle type name '%s'" % name
@@ -1536,15 +1689,21 @@ class VehicleList(object):
 
 
 def makeIntCompactDescrByID(itemTypeName, nationID, itemID):
+    # type: (str, int, int) -> int
+    """Build integer compact descriptor from item identifiers."""
     header = items.ITEM_TYPES[itemTypeName] + (nationID << 4)
     return (itemID << 8) + header
 
 
 def parseIntCompactDescr(compactDescr):
+    # type: (int) -> tuple
+    """Split integer compact descriptor into type, nation and id."""
     return (compactDescr & 15, compactDescr >> 4 & 15, compactDescr >> 8 & 65535)
 
 
 def parseVehicleCompactDescr(compactDescr):
+    # type: (str) -> tuple
+    """Return nation and vehicle type id from packed descriptor."""
     header, vehicleTypeID = struct.unpack('2B', compactDescr[0:2])
     return (header >> 4 & 15, vehicleTypeID)
 
@@ -1552,11 +1711,15 @@ def parseVehicleCompactDescr(compactDescr):
 __ITEM_TYPE_VEHICLE = items.ITEM_TYPES.vehicle
 
 def getVehicleTypeCompactDescr(compactDescr):
+    # type: (str) -> int
+    """Return compact descriptor for vehicle type only."""
     nationID, vehicleTypeID = parseVehicleCompactDescr(compactDescr)
     return __ITEM_TYPE_VEHICLE + (nationID << 4) + (vehicleTypeID << 8)
 
 
 def getDictDescr(compactDescr):
+    # type: (int) -> dict
+    """Return descriptor dictionary for given compact descriptor."""
     try:
         itemTypeID = compactDescr & 15
         nationID = compactDescr >> 4 & 15
@@ -1580,6 +1743,8 @@ _dictDescrGetters = {'shell': lambda nationID, compTypeID: g_cache.shells(nation
  'vehicleFuelTank': lambda nationID, compTypeID: g_cache.fuelTanks(nationID)[compTypeID]}
 
 def getVehicleType(compactDescr):
+    # type: (object) -> VehicleType
+    """Return :class:`VehicleType` for compact descriptor or integer."""
     cdType = type(compactDescr)
     if cdType is types.IntType or cdType is types.LongType:
         nationID = compactDescr >> 4 & 15
@@ -1591,6 +1756,8 @@ def getVehicleType(compactDescr):
 
 
 def getVehicleClass(compactDescr):
+    # type: (object) -> str
+    """Return vehicle class tag for compact descriptor."""
     for vehClass in VEHICLE_CLASS_TAGS & getVehicleType(compactDescr).tags:
         return vehClass
 
@@ -1598,6 +1765,8 @@ def getVehicleClass(compactDescr):
 
 
 def stripCustomizationFromVehicleCompactDescr(compactDescr, stripEmblems=True, stripInscriptions=True, stripCamouflages=True, keepInfinite=False):
+    # type: (str, bool, bool, bool, bool) -> tuple
+    """Remove customization info from vehicle compact descriptor."""
     type, components, optionalDevicesSlots, optionalDevices, emblemSlots, emblems, inscriptions, camouflages, horn = _splitVehicleCompactDescr(compactDescr)
     resEmblems = {}
     if stripEmblems and emblems:
@@ -1649,6 +1818,8 @@ def stripCustomizationFromVehicleCompactDescr(compactDescr, stripEmblems=True, s
 
 
 def isShellSuitableForGun(shellCompactDescr, gunDescr):
+    # type: (int, dict) -> bool
+    """Check whether shell can be fired by the given gun."""
     itemTypeID, nationID, shellTypeID = parseIntCompactDescr(shellCompactDescr)
     assert itemTypeID == items.ITEM_TYPES.shell
     shellID = (nationID, shellTypeID)
@@ -1660,6 +1831,8 @@ def isShellSuitableForGun(shellCompactDescr, gunDescr):
 
 
 def getEmptyAmmoForGun(gunDescr):
+    # type: (dict) -> list
+    """Return empty ammo layout for the gun."""
     ammo = []
     for shot in gunDescr['shots']:
         ammo.append(shot['shell']['compactDescr'])
@@ -1672,16 +1845,21 @@ def getEmptyAmmoForGun(gunDescr):
 
 
 def getDefaultAmmoForGun(gunDescr):
+    # type: (dict) -> list
+    """Return default ammo setup for the gun."""
     return _getAmmoForGun(gunDescr, None)
 
 
 def getUniformAmmoForGun(gunDescr):
+    # type: (dict) -> list
+    """Return ammo where all shell types have equal share."""
     shots = len(gunDescr['shots'])
     defaultPortion = 1.0 / shots if shots else 1.0
     return _getAmmoForGun(gunDescr, defaultPortion)
 
 
 def _getAmmoForGun(gunDescr, defaultPortion=None):
+    # type: (dict, float or None) -> list
     ammo = []
     maxCount = gunDescr['maxAmmo']
     clipSize = gunDescr['clip'][0]
@@ -1705,6 +1883,8 @@ def _getAmmoForGun(gunDescr, defaultPortion=None):
 
 
 def getUnlocksSources():
+    # type: () -> dict
+    """Return mapping from item CDs to vehicle types unlocking them."""
     res = {}
     for nationID in xrange(len(nations.NAMES)):
         for vehicleTypeID in g_list.getList(nationID).iterkeys():
@@ -1717,6 +1897,8 @@ def getUnlocksSources():
 
 
 def _readComponents(xmlPath, reader, nationID, itemTypeName):
+    # type: (str, object, int, str) -> tuple
+    """Read component descriptors from XML file."""
     section = ResMgr.openSection(xmlPath)
     if section is None:
         _xml.raiseWrongXml(None, xmlPath, 'can not open or read')
@@ -1753,6 +1935,21 @@ def _readComponents(xmlPath, reader, nationID, itemTypeName):
 
 
 def _readInstallableComponents(xmlCtx, section, subsectionName, nationID, reader, localReader, cachedDescrs, cachedIDs, unlocksDescrs, parentItem=None):
+    # type: (tuple, object, str, int, callable, callable, dict, dict, list, object or None) -> tuple
+    """Parse components that can be installed on a vehicle.
+
+    :param xmlCtx: context for XML error messages.
+    :param section: owning XML section.
+    :param subsectionName: name of subsection containing component refs.
+    :param nationID: nation index the components belong to.
+    :param reader: callable parsing shared component data.
+    :param localReader: callable parsing local overrides.
+    :param cachedDescrs: dictionary with shared descriptors.
+    :param cachedIDs: mapping from component names to ids.
+    :param unlocksDescrs: list collecting unlock descriptors.
+    :param parentItem: optional parent item used by readers.
+    :return: tuple of descriptors for each component found.
+    """
     res = []
     for sname, subsection in _xml.getChildren(xmlCtx, section, subsectionName):
         ctx = (xmlCtx, subsectionName + '/' + sname)
@@ -1776,6 +1973,15 @@ def _readInstallableComponents(xmlCtx, section, subsectionName, nationID, reader
 
 
 def _readTags(xmlCtx, section, subsectionName, itemTypeName):
+    # type: (tuple, object, str, str) -> frozenset
+    """Read tag set from the given XML subsection.
+
+    :param xmlCtx: parent XML context for error reporting.
+    :param section: source XML section.
+    :param subsectionName: subsection containing tag list.
+    :param itemTypeName: vehicle component type name.
+    :return: a frozenset of validated tag strings.
+    """
     if itemTypeName != 'vehicle':
         tagNames = [] #_xml.readString(xmlCtx, section, subsectionName).split()
     else:
@@ -1791,6 +1997,15 @@ def _readTags(xmlCtx, section, subsectionName, itemTypeName):
 
 
 def _readLevel(xmlCtx, section):
+    # type: (tuple, object) -> int
+    """Read vehicle component level from XML.
+
+    Validates that the level is within the expected range ``1..10``.
+
+    :param xmlCtx: XML context for errors.
+    :param section: XML section containing ``level`` tag.
+    :return: integer level value.
+    """
     level = section.readInt('level', 1)
     if not 1 <= level <= 10:
         _xml.raiseWrongSection(xmlCtx, 'level')
@@ -1798,6 +2013,13 @@ def _readLevel(xmlCtx, section):
 
 
 def _readIGRType(xmlCtx, section):
+    # type: (tuple, object) -> int
+    """Read IGR type value from XML section.
+
+    :param xmlCtx: current XML context.
+    :param section: source XML section.
+    :return: integer value from :data:`IGR_TYPE` constants.
+    """
     igrType = section.readInt('igrType', IGR_TYPE.NONE)
     if not IGR_TYPE.NONE <= igrType <= IGR_TYPE.PREMIUM:
         _xml.raiseWrongSection(xmlCtx, 'igrType')
@@ -1805,6 +2027,13 @@ def _readIGRType(xmlCtx, section):
 
 
 def _readNations(xmlCtx, section):
+    # type: (tuple, object) -> tuple or None
+    """Return list of nation indices read from XML.
+
+    :param xmlCtx: XML context for errors.
+    :param section: section which may contain ``nations`` list.
+    :return: tuple of nation indexes or ``None`` if subsection missing.
+    """
     if not section.has_key('nations'):
         return
     else:
@@ -1820,6 +2049,16 @@ def _readNations(xmlCtx, section):
 
 
 def _readHull(xmlCtx, section):
+    # type: (tuple, object) -> dict
+    """Read hull descriptor from XML configuration.
+
+    The hull is shared between multiple vehicle variants and includes
+    information about models, hit testers and armor.
+
+    :param xmlCtx: context for XML error reporting.
+    :param section: XML section describing the hull.
+    :return: dictionary with parsed parameters.
+    """
     res = {'variantName': '',
      'hitTester': _readHitTester(xmlCtx, section, 'hitTester'),
      'materials': _readArmor(xmlCtx, section, 'armor'),
@@ -1867,6 +2106,16 @@ _defFakeTurrets = {'lobby': (),
  'battle': ()}
 
 def __readTurretHardPoints(section, numTurrets):
+    # type: (object, int) -> tuple
+    """Return tuple of turret joint nodes for the hull.
+
+    When no explicit list is provided, a default joint name is repeated for
+    ``numTurrets`` slots.
+
+    :param section: hull XML section containing ``turretHardPoints``.
+    :param numTurrets: expected number of turrets.
+    :return: tuple with hard point identifiers.
+    """
     thpSection = section['turretHardPoints']
     defaultJointHP = intern('HP_turretJoint')
     resultSeq = None
@@ -1880,6 +2129,13 @@ def __readTurretHardPoints(section, numTurrets):
 
 
 def _readHullVariants(xmlCtx, section, defHull, chassis, turrets):
+    # type: (tuple, object, dict, tuple, tuple) -> tuple
+    """Parse alternative hull variants from XML.
+
+    Variants may override models or match specific chassis/turret combinations.
+
+    :return: tuple of variant descriptor dictionaries.
+    """
     res = []
     numTurrets = len(defHull['turretPositions'])
     for variantName, section in section.items():
@@ -1982,6 +2238,14 @@ def _readHullVariants(xmlCtx, section, defHull, chassis, turrets):
 
 
 def _readChassis(xmlCtx, section, compactDescr, unlocksDescrs=None, parentItem=None):
+    # type: (tuple, object, int, list or None, object or None) -> dict
+    """Read a chassis descriptor.
+
+    :param compactDescr: compact descriptor of the chassis.
+    :param unlocksDescrs: list to collect unlock info, or ``None``.
+    :param parentItem: optional parent descriptor used for context.
+    :return: dictionary describing chassis parameters.
+    """
     res = {'tags': _readTags(xmlCtx, section, 'tags', 'vehicleChassis'),
      'level': _readLevel(xmlCtx, section),
      'hullPosition': _xml.readVector3(xmlCtx, section, 'hullPosition'),
@@ -2179,6 +2443,14 @@ def _readChassis(xmlCtx, section, compactDescr, unlocksDescrs=None, parentItem=N
 
 
 def _readChassisLocals(xmlCtx, section, sharedDescr, unlocksDescrs, parentItem=None):
+    # type: (tuple, object, dict, list, object or None) -> dict
+    """Parse local chassis overrides for a specific vehicle.
+
+    When no parameters are overridden the shared descriptor is returned
+    unchanged.
+
+    :return: chassis descriptor dictionary.
+    """
     hasOverride = False
     if IS_CLIENT:
         sharedCam = (sharedDescr.get('camouflageTiling'), sharedDescr.get('camouflageExclusionMask'))
@@ -2201,6 +2473,12 @@ def _readChassisLocals(xmlCtx, section, sharedDescr, unlocksDescrs, parentItem=N
 
 
 def _readEngine(xmlCtx, section, compactDescr, unlocksDescrs=None, parentItem=None):
+    # type: (tuple, object, int, list or None, object or None) -> dict
+    """Read engine parameters for a vehicle.
+
+    :param compactDescr: compact descriptor of this engine.
+    :return: dictionary describing engine characteristics.
+    """
     res = {'tags': _readTags(xmlCtx, section, 'tags', 'vehicleEngine'),
      'level': _readLevel(xmlCtx, section),
      'power': 550.0, #_xml.readPositiveFloat(xmlCtx, section, 'power') * HP_TO_WATTS,
@@ -2223,6 +2501,8 @@ def _readEngine(xmlCtx, section, compactDescr, unlocksDescrs=None, parentItem=No
 
 
 def _readFuelTank(xmlCtx, section, compactDescr, unlocksDescrs=None, parentItem=None):
+    # type: (tuple, object, int, list or None, object or None) -> dict
+    """Read fuel tank descriptor from XML."""
     res = {'tags': _readTags(xmlCtx, section, 'tags', 'vehicleEngine'),
      'level': _readLevel(xmlCtx, section),
      'weight': 20} #_xml.readPositiveFloat(xmlCtx, section, 'weight')}
@@ -2235,6 +2515,8 @@ def _readFuelTank(xmlCtx, section, compactDescr, unlocksDescrs=None, parentItem=
 
 
 def _readRadio(xmlCtx, section, compactDescr, unlocksDescrs=None, parentItem=None):
+    # type: (tuple, object, int, list or None, object or None) -> dict
+    """Read radio parameters from XML."""
     res = {'tags': _readTags(xmlCtx, section, 'tags', 'vehicleEngine'),
      'level': _readLevel(xmlCtx, section),
      'weight': 20, #_xml.readNonNegativeFloat(xmlCtx, section, 'weight'),
@@ -2248,6 +2530,8 @@ def _readRadio(xmlCtx, section, compactDescr, unlocksDescrs=None, parentItem=Non
 
 
 def _readTurret(xmlCtx, section, compactDescr, unlocksDescrs=None, parentItem=None):
+    # type: (tuple, object, int, list or None, object or None) -> dict
+    """Read turret descriptor including guns list."""
     res = {'tags': _readTags(xmlCtx, section, 'tags', 'vehicleTurret'),
      'level': _readLevel(xmlCtx, section),
      'hitTester': _readHitTester(xmlCtx, section, 'hitTester'),
@@ -2294,6 +2578,8 @@ def _readTurret(xmlCtx, section, compactDescr, unlocksDescrs=None, parentItem=No
 
 
 def _readTurretLocals(xmlCtx, section, sharedDescr, unlocksDescrs, parentItem=None):
+    # type: (tuple, object, dict, list, object or None) -> dict
+    """Read turret parameters overridden for a specific vehicle."""
     hasOverride = False
     nationID = sharedDescr['id'][0]
     if not section.has_key('guns'):
@@ -2323,6 +2609,8 @@ def _readTurretLocals(xmlCtx, section, sharedDescr, unlocksDescrs, parentItem=No
 
 
 def _readGun(xmlCtx, section, compactDescr, unlocksDescrs=None, turretCompactDescr=None):
+    # type: (tuple, object, int, list or None, int or None) -> dict
+    """Read gun descriptor from XML."""
     res = {'tags': _readTags(xmlCtx, section, 'tags', 'vehicleGun'),
      'level': _readLevel(xmlCtx, section),
      'rotationSpeed': radians(20.0), #_xml.readPositiveFloat(xmlCtx, section, 'rotationSpeed')),
@@ -2419,6 +2707,8 @@ def _readGun(xmlCtx, section, compactDescr, unlocksDescrs=None, turretCompactDes
 
 
 def _readGunLocals(xmlCtx, section, sharedDescr, unlocksDescrs, turretCompactDescr):
+    # type: (tuple, object, dict, list, int) -> dict
+    """Read gun overrides relative to the shared descriptor."""
     hasOverride = False
     if not section.has_key('turretYawLimits'):
         turretYawLimits = sharedDescr['turretYawLimits']
@@ -2588,12 +2878,19 @@ def _readGunLocals(xmlCtx, section, sharedDescr, unlocksDescrs, turretCompactDes
 
 
 def _readGunClipBurst(xmlCtx, section, type):
+    # type: (tuple, object, str) -> tuple
+    """Read gun burst or clip definition."""
     count = _xml.readInt(xmlCtx, section, type + '/count', 1)
     interval = 60.0 / _xml.readPositiveFloat(xmlCtx, section, type + '/rate')
     return (count, interval if count > 1 else 0.0)
 
 
 def _readGunPitchExtraLimits(xmlCtx, section, descToUpdate):
+    # type: (tuple, object, dict) -> bool
+    """Read extra gun pitch limit sections.
+
+    :return: ``True`` if any limits were read.
+    """
     readSomething = False
     extraAngle = 0.0
     if section.has_key('front'):
@@ -2625,6 +2922,8 @@ def _readGunPitchExtraLimits(xmlCtx, section, descToUpdate):
 
 
 def _readShells(xmlPath, nationID):
+    # type: (str, int) -> tuple
+    """Load shell definitions for given nation."""
     section = ResMgr.openSection(xmlPath)
     if section is None:
         _xml.raiseWrongXml(None, xmlPath, 'can not open or read')
@@ -2658,6 +2957,8 @@ def _readShells(xmlPath, nationID):
 
 
 def _readShell(xmlCtx, section, name, nationID, shellTypeID, icons):
+    # type: (tuple, object, str, int, int, dict) -> dict
+    """Parse single shell description."""
     compactDescr = makeIntCompactDescrByID('shell', nationID, shellTypeID)
     res = {'itemTypeName': 'shell',
      'name': name,
@@ -2706,6 +3007,8 @@ _shellKinds = ('HOLLOW_CHARGE',
  'ARMOR_PIERCING_CR')
 
 def _readShot(xmlCtx, section, nationID, projectileSpeedFactor):
+    # type: (tuple, object, int, float) -> dict
+    """Read a gun shot entry."""
     nationName = nations.NAMES[nationID]
     if nationName == 'ussr':
         shellName = '_76mm_UBR-354A' #section.name
@@ -2735,6 +3038,8 @@ def _readShot(xmlCtx, section, nationID, projectileSpeedFactor):
 
 
 def _defaultLocalReader(xmlCtx, section, sharedDescr, unlocksDescrs, parentItem=None):
+    # type: (tuple, object, dict, list, object or None) -> dict
+    """Fallback reader used when component has only unlocks."""
     if not section.has_key('unlocks'):
         return sharedDescr
     descr = sharedDescr.copy()
@@ -2743,12 +3048,16 @@ def _defaultLocalReader(xmlCtx, section, sharedDescr, unlocksDescrs, parentItem=
 
 
 def _readModels(xmlCtx, section, subsectionName):
+    # type: (tuple, object, str) -> dict
+    """Read model paths for undamaged/destroyed/exploded states."""
     return {'undamaged': _xml.readNonEmptyString(xmlCtx, section, subsectionName + '/undamaged'),
      'destroyed': _xml.readNonEmptyString(xmlCtx, section, subsectionName + '/destroyed'),
      'exploded': _xml.readNonEmptyString(xmlCtx, section, subsectionName + '/exploded')}
 
 
 def _readGunShotDispersionFactors(xmlCtx, section, subsectionName):
+    # type: (tuple, object, str) -> dict
+    """Read dispersion factor configuration for a gun."""
     res = {'turretRotation': 20.0 / radians(1.0), #_xml.readNonNegativeFloat(xmlCtx, section, subsectionName + '/turretRotation') / radians(1.0),
      'afterShot': 20.0, #_xml.readNonNegativeFloat(xmlCtx, section, subsectionName + '/afterShot'),
      'whileGunDamaged': 20.0} #_xml.readNonNegativeFloat(xmlCtx, section, subsectionName + '/whileGunDamaged')}
@@ -2761,6 +3070,8 @@ def _readGunShotDispersionFactors(xmlCtx, section, subsectionName):
 
 
 def _readArmor(xmlCtx, section, subsectionName):
+    # type: (tuple, object, str) -> dict
+    """Read material armor definitions."""
     res = {}
     if IS_BASEAPP:
         return res
@@ -2821,6 +3132,8 @@ _g_boolMatInfoParams = ('useArmorHomogenization',
  'continueTraceIfNoHit')
 
 def _readPrimaryArmor(xmlCtx, section, subsectionName, materials):
+    # type: (tuple, object, str, dict) -> tuple
+    """Read the tuple of primary armor values."""
     if not section.has_key(subsectionName):
         return (materials.get(1, _defMaterialInfo).armor, materials.get(3, _defMaterialInfo).armor, materials.get(2, _defMaterialInfo).armor)
     else:
@@ -2839,6 +3152,8 @@ def _readPrimaryArmor(xmlCtx, section, subsectionName, materials):
 
 
 def _readFakeTurretIndices(xmlCtx, section, subsectionName, numTurrets):
+    # type: (tuple, object, str, int) -> tuple
+    """Read indices of fake turrets for the hull."""
     res = _xml.readTupleOfInts(xmlCtx, section, subsectionName)
     for idx in res:
         if not 0 <= idx < numTurrets:
@@ -2848,6 +3163,8 @@ def _readFakeTurretIndices(xmlCtx, section, subsectionName, numTurrets):
 
 
 def _readDeviceHealthParams(xmlCtx, section, subsectionName='', withHysteresis=True):
+    # type: (tuple, object, str, bool) -> dict
+    """Read health parameters for a device."""
     if subsectionName:
         section = _xml.getSubsection(xmlCtx, section, subsectionName)
         xmlCtx = (xmlCtx, subsectionName)
@@ -2869,6 +3186,8 @@ def _readDeviceHealthParams(xmlCtx, section, subsectionName='', withHysteresis=T
 
 
 def _readHitTester(xmlCtx, section, subsectionName):
+    # type: (tuple, object, str) -> object or None
+    """Create a :class:`ModelHitTester` from the subsection."""
     if IS_BASEAPP or IS_WEB:
         return None
     else:
@@ -2886,6 +3205,8 @@ def _readHitTester(xmlCtx, section, subsectionName):
 
 
 def _readLodDist(xmlCtx, section, subsectionName):
+    # type: (tuple, object, str) -> float
+    """Translate LOD level name into a numeric distance."""
     name = _xml.readNonEmptyString(xmlCtx, section, subsectionName)
     dist = g_cache.commonConfig['lodLevels'].get(name)
     if dist is None:
@@ -2894,6 +3215,8 @@ def _readLodDist(xmlCtx, section, subsectionName):
 
 
 def _readUserText(res, section):
+    # type: (dict, object) -> None
+    """Populate ``userString`` and ``description`` fields."""
     makeString = i18n.makeString
     res['userString'] = makeString(section.readString('userString'))
     res['description'] = makeString(section.readString('description'))
@@ -2905,6 +3228,8 @@ def _readUserText(res, section):
 
 
 def _readCrew(xmlCtx, section, subsectionName):
+    # type: (tuple, object, str) -> tuple
+    """Read crew role configuration."""
     section = _xml.getSubsection(xmlCtx, section, subsectionName)
     xmlCtx = (xmlCtx, subsectionName)
     from items.tankmen import ROLES
@@ -2933,6 +3258,8 @@ def _readCrew(xmlCtx, section, subsectionName):
 
 
 def _readVehicleHorns(xmlCtx, section, subsectionName):
+    # type: (tuple, object, str) -> tuple
+    """Read horn price and volume factors."""
     section = _xml.getSubsection(xmlCtx, section, subsectionName)
     xmlCtx = (xmlCtx, subsectionName)
     volumeFactor = _xml.readPositiveFloat(xmlCtx, section, 'volumeFactor')
@@ -2942,6 +3269,8 @@ def _readVehicleHorns(xmlCtx, section, subsectionName):
 
 
 def _readPriceForItem(xmlCtx, section, compactDescr):
+    # type: (tuple, object, int) -> None
+    """Store price information if price collection is enabled."""
     pricesDest = _g_prices
     if pricesDest is not None:
         pricesDest['itemPrices'][compactDescr] = (5021, 0) #_xml.readPrice(xmlCtx, section, 'price')
@@ -2951,6 +3280,8 @@ def _readPriceForItem(xmlCtx, section, compactDescr):
 
 
 def _readUnlocks(xmlCtx, section, subsectionName, unlocksDescrs, *requiredItems):
+    # type: (tuple, object, str, list, *int) -> list
+    """Read unlock descriptors and append them to ``unlocksDescrs``."""
     if unlocksDescrs is None or IS_CELLAPP:
         return []
     else:
@@ -2988,6 +3319,8 @@ _ALLOWED_EMBLEM_SLOTS = ('player',
  'fixedInscription')
 
 def _readEmblemSlots(xmlCtx, section, subsectionName):
+    # type: (tuple, object, str) -> list
+    """Read emblem slot descriptors."""
     slots = []
     for sname, subsection in _xml.getChildren(xmlCtx, section, subsectionName):
         if sname not in _ALLOWED_EMBLEM_SLOTS:
@@ -3000,6 +3333,8 @@ def _readEmblemSlots(xmlCtx, section, subsectionName):
 
 
 def __readEffectsTimeLine(xmlCtx, section):
+    # type: (tuple, object) -> EffectsList.EffectsTimeLinePrereqs
+    """Convert an effect section into a time line object."""
     try:
         effectsTimeLine = EffectsList.effectsFromSection(section)
     except Exception as x:
@@ -3009,6 +3344,8 @@ def __readEffectsTimeLine(xmlCtx, section):
 
 
 def _readEffectGroups(xmlPath, withSubgroups=False):
+    # type: (str, bool) -> dict
+    """Load a mapping of effect group names to effects."""
     res = {}
     section = ResMgr.openSection(xmlPath)
     if section is None:
@@ -3037,6 +3374,8 @@ def _readEffectGroups(xmlPath, withSubgroups=False):
 
 
 def _readExhaustEffectsGroups(xmlPath):
+    # type: (str) -> dict
+    """Load exhaust particle effect groups."""
     res = {}
     section = ResMgr.openSection(xmlPath)
     defaultEffect = None
@@ -3052,6 +3391,8 @@ def _readExhaustEffectsGroups(xmlPath):
 
 
 def _readChassisEffectGroups(xmlPath):
+    # type: (str) -> dict
+    """Read particle effect groups used by chassis."""
     res = {}
     section = ResMgr.openSection(xmlPath + '/particles')
     if section is None:
@@ -3090,6 +3431,8 @@ def _readChassisEffectGroups(xmlPath):
 
 
 def _readShotEffectGroups(xmlPath):
+    # type: (str) -> tuple
+    """Read mapping of shot effects used by shells."""
     res = ({}, [])
     section = ResMgr.openSection(xmlPath)
     if section is None:
@@ -3113,6 +3456,8 @@ def _readShotEffectGroups(xmlPath):
 
 
 def _readShotEffects(xmlCtx, section):
+    # type: (tuple, object) -> dict
+    """Parse visual and physical shot effects."""
     res = {}
     res['targetStickers'] = {}
     v = section.readString('targetStickers/armorResisted')
@@ -3190,6 +3535,8 @@ def _readShotEffects(xmlCtx, section):
 
 
 def _readDamageStickers(xmlPath):
+    # type: (str) -> dict
+    """Load damage sticker descriptors."""
     section = ResMgr.openSection(xmlPath)
     if section is None:
         _xml.raiseWrongXml(None, xmlPath, 'can not open or read')
@@ -3231,6 +3578,8 @@ def _readDamageStickers(xmlPath):
 
 
 def _readDamageStickerTextureParams(xmlCtx, section, raiseError):
+    # type: (tuple, object, bool) -> dict or None
+    """Read texture parameters for a damage sticker."""
     if not section.has_key('texName'):
         if raiseError:
             _xml.raiseWrongXml(xmlCtx, section.name, 'texName for damage sticker is not specified')
@@ -3251,6 +3600,8 @@ def _readDamageStickerTextureParams(xmlCtx, section, raiseError):
 
 
 def _readCommonConfig(xmlCtx, section):
+    # type: (tuple, object) -> dict
+    """Read configuration shared between all vehicles."""
     res = {}
     hornCooldownParams = {'window': _xml.readNonNegativeFloat(xmlCtx, section, 'miscParams/hornCooldown/window'),
      'clientWindowExpansion': _xml.readNonNegativeFloat(xmlCtx, section, 'miscParams/hornCooldown/clientWindowExpansion'),
@@ -3302,6 +3653,8 @@ def _readCommonConfig(xmlCtx, section):
 
 
 def _readVehicleModulesWeights(xmlContext, section):
+    # type: (tuple, object) -> dict
+    """Read optional weighting factors for vehicle modules."""
     weights = {}
     if not section.has_key('balance/byVehicleModule'):
         return weights
@@ -3314,6 +3667,8 @@ def _readVehicleModulesWeights(xmlContext, section):
 
 
 def _readExtras(xmlCtx, section, subsectionName):
+    # type: (tuple, object, str) -> tuple
+    """Load custom extras scripts and return tuple of extras."""
     import vehicle_extras as mod
     noneExtra = mod.NoneExtra('_NoneExtra', 0, '', None)
     extras = [noneExtra]
@@ -3338,6 +3693,8 @@ def _readExtras(xmlCtx, section, subsectionName):
 
 
 def _readDeviceTypes(xmlCtx, section, subsectionName, extrasDict):
+    # type: (tuple, object, str, dict) -> tuple
+    """Map extras names to device and tankman type indices."""
     resDevices = {}
     resTankmen = {}
     for res, kindName, typeNames in ((resDevices, 'devices', VEHICLE_DEVICE_TYPE_NAMES), (resTankmen, 'tankmen', VEHICLE_TANKMAN_TYPE_NAMES)):
@@ -3352,6 +3709,8 @@ def _readDeviceTypes(xmlCtx, section, subsectionName, extrasDict):
 
 
 def _readMaterials(xmlCtx, section, subsectionName, extrasDict):
+    # type: (tuple, object, str, dict or None) -> tuple
+    """Load material definitions and extras mapping."""
     materials = {}
     autoDamageKindMaterials = set()
     for materialKindName, subsection in _xml.getChildren(xmlCtx, section, subsectionName):
@@ -3384,6 +3743,8 @@ def _readMaterials(xmlCtx, section, subsectionName, extrasDict):
 
 
 def _readArtefacts(xmlPath):
+    # type: (str) -> tuple
+    """Load optional devices and equipment descriptors."""
     import artefacts
     section = ResMgr.openSection(xmlPath)
     if section is None:
@@ -3416,6 +3777,8 @@ def _readArtefacts(xmlPath):
 
 
 def _joinCustomizationParams(nationID, commonDescr, customDescr):
+    # type: (int, dict, dict) -> dict
+    """Merge nation specific customization with common defaults."""
     if 'inscriptionColors' not in customDescr:
         if 'inscriptionColors' not in commonDescr:
             raise Exception, 'inscriptionColors is not specified for nation=%s' % (nations.NAMES[nationID],)
@@ -3435,6 +3798,8 @@ def _joinCustomizationParams(nationID, commonDescr, customDescr):
 
 
 def _readCustomization(xmlPath, nationID, idsRange):
+    # type: (str, int, tuple) -> dict
+    """Read camouflage and inscription customization."""
     section = ResMgr.openSection(xmlPath)
     if section is None:
         _xml.raiseWrongXml(None, xmlPath, 'can not open or read')
@@ -3493,6 +3858,8 @@ def _readCustomization(xmlPath, nationID, idsRange):
 
 
 def _readCamouflage(xmlCtx, section, ids, groups, nationID, priceFactors, notInShops, idsRange):
+    # type: (tuple, object, dict, dict, int, list or None, set or None, tuple) -> tuple
+    """Read a single camouflage descriptor."""
     id = _xml.readInt(xmlCtx, section, 'id', *idsRange)
     if id in ids:
         _xml.raiseWrongXml(xmlCtx, 'id', 'camouflage ID is not unique')
@@ -3530,6 +3897,8 @@ def _readCamouflage(xmlCtx, section, ids, groups, nationID, priceFactors, notInS
 
 
 def _readColors(xmlCtx, section, sectionName, requiredSize):
+    # type: (tuple, object, str, int) -> tuple
+    """Read a fixed number of RGBA colors."""
     res = []
     if not IS_CLIENT:
         for sname, subsection in _xml.getChildren(xmlCtx, section, sectionName):
@@ -3545,6 +3914,8 @@ def _readColors(xmlCtx, section, sectionName, requiredSize):
 
 
 def _readColor(xmlCtx, section, sectionName):
+    # type: (tuple, object, str) -> int
+    """Return color as packed ARGB integer."""
     rgbaTuple = _xml.readTupleOfInts(xmlCtx, section, sectionName, 4)
     for c in rgbaTuple:
         if not 0 <= c < 256:
@@ -3554,6 +3925,8 @@ def _readColor(xmlCtx, section, sectionName):
 
 
 def _readCamouflageTilingAndMask(xmlCtx, section, sectionName, default=None):
+    # type: (tuple, object, str, tuple or None) -> tuple
+    """Return tiling tuple and optional mask name."""
     tilingKey = sectionName + '/tiling'
     if not default or section.has_key(tilingKey):
         tiling = _xml.readTupleOfFloats(xmlCtx, section, tilingKey, 4)
@@ -3572,6 +3945,8 @@ def _readCamouflageTilingAndMask(xmlCtx, section, sectionName, default=None):
 
 
 def _readNationVehiclesByNames(xmlCtx, section, sectionName, defNationID):
+    # type: (tuple, object, str, int or None) -> frozenset
+    """Return a set of vehicle compact descriptors listed in the section."""
     section = section[sectionName]
     if section is None:
         return frozenset()
@@ -3603,6 +3978,8 @@ VehicleValue = namedtuple('VehicleValue', ['vehicle_name',
  'subsection'])
 
 def _vehicleValues(xmlCtx, section, sectionName, defNationID):
+    # type: (tuple, object, str, int) -> object
+    """Yield vehicles parsed from a section."""
     section = section[sectionName]
     if section is None:
         return
@@ -3622,6 +3999,8 @@ def _vehicleValues(xmlCtx, section, sectionName, defNationID):
 
 
 def _readCamouflageTilings(xmlCtx, section, sectionName, defNationID):
+    # type: (tuple, object, str, int) -> dict
+    """Read camouflage tiling parameters per vehicle."""
     res = {}
     for v in _vehicleValues(xmlCtx, section, sectionName, defNationID):
         tiling = _xml.readTupleOfFloats(v.ctx, v.subsection, '', 4)
@@ -3633,6 +4012,8 @@ def _readCamouflageTilings(xmlCtx, section, sectionName, defNationID):
 
 
 def _readHorns(xmlPath):
+    # type: (str) -> dict
+    """Read vehicle horn descriptors."""
     section = ResMgr.openSection(xmlPath)
     if section is None:
         _xml.raiseWrongXml(None, xmlPath, 'can not open or read')
@@ -3670,6 +4051,8 @@ def _readHorns(xmlPath):
 
 
 def _readPlayerEmblems(xmlPath):
+    # type: (str) -> tuple
+    """Load player emblem groups and individual emblems."""
     section = ResMgr.openSection(xmlPath)
     if section is None:
         _xml.raiseWrongXml(None, xmlPath, 'can not open or read')
@@ -3741,6 +4124,8 @@ def _readPlayerEmblems(xmlPath):
 
 
 def _readPlayerInscriptions(xmlCtx, section, subsectionName, priceFactors, notInShops, idsRange):
+    # type: (tuple, object, str, dict or None, set or None, tuple) -> tuple
+    """Read inscription groups and items."""
     section = _xml.getSubsection(xmlCtx, section, subsectionName)
     xmlCtx = (xmlCtx, subsectionName)
     groups = {}
@@ -3797,6 +4182,8 @@ def _readPlayerInscriptions(xmlCtx, section, subsectionName, priceFactors, notIn
 
 
 def _readVehicleEffects(xmlCtx, section, subsectionName, defaultEffects=None):
+    # type: (tuple, object, str, dict or None) -> dict
+    """Load vehicle effect configuration."""
     res = {}
     section = _xml.getSubsection(xmlCtx, section, subsectionName)
     xmlCtx = (xmlCtx, subsectionName)
@@ -3838,6 +4225,8 @@ def _readVehicleEffects(xmlCtx, section, subsectionName, defaultEffects=None):
 
 
 def _readTurretDetachmentEffects(xmlCtx, section, subsectionName, defaultEffects=None):
+    # type: (tuple, object, str, dict or None) -> dict
+    """Read effects triggered on turret detachment."""
     if defaultEffects is None:
         defaultEffects = {}
     res = {}
@@ -3897,6 +4286,8 @@ if IS_CLIENT:
      'flaming')
 
 def _readChassisEffects(xmlCtx, section, subsectionName):
+    # type: (tuple, object, str) -> str
+    """Map effect name from chassis section to cache."""
     effName = _xml.readNonEmptyString(xmlCtx, section, subsectionName)
     eff = g_cache._chassisEffects.get(effName)
     if eff is None:
@@ -3905,6 +4296,8 @@ def _readChassisEffects(xmlCtx, section, subsectionName):
 
 
 def _extractNeededPrereqs(prereqs, resourceNames):
+    # type: (dict, list) -> list
+    """Filter prerequisite resources to ones that exist."""
     resourceNames = frozenset(resourceNames)
     res = []
     for name in resourceNames:
@@ -3917,6 +4310,8 @@ def _extractNeededPrereqs(prereqs, resourceNames):
 
 
 def _readAODecals(xmlCtx, section, secname):
+    # type: (tuple, object, str) -> list
+    """Read AO decal matrices from the model section."""
     res = []
     if section.has_key(secname):
         for subname, subsection in _xml.getChildren(xmlCtx, section, secname):
@@ -3927,6 +4322,8 @@ def _readAODecals(xmlCtx, section, secname):
 
 
 def _descrByID(descrList, id):
+    # type: (list, int) -> dict
+    """Return descriptor from list by component id."""
     for descr in descrList:
         if descr['id'][1] == id:
             return descr
@@ -3935,6 +4332,8 @@ def _descrByID(descrList, id):
 
 
 def _findDescrByID(descrList, id):
+    # type: (list, int) -> dict or None
+    """Return descriptor or ``None`` if not found."""
     for descr in descrList:
         if descr['id'][1] == id:
             return descr
@@ -3943,10 +4342,14 @@ def _findDescrByID(descrList, id):
 
 
 def _collectComponents(compactDescrs, compList):
+    # type: (set, list) -> None
+    """Add component compact descriptors to the destination set."""
     compactDescrs.update([ x['compactDescr'] for x in compList ])
 
 
 def _collectReqItemsRecursively(destSet, rootSet, reqItems):
+    # type: (set, tuple, dict) -> None
+    """Recursively collect required items into ``destSet``."""
     for compactDescr in rootSet:
         if compactDescr not in destSet:
             destSet.add(compactDescr)
@@ -3954,6 +4357,8 @@ def _collectReqItemsRecursively(destSet, rootSet, reqItems):
 
 
 def _selectCrewExtras(crewRoles, extrasDict):
+    # type: (tuple, dict) -> tuple
+    """Return tuple of health extras for given crew roles."""
     res = []
     idxsInRoles = {}
     for role in crewRoles:
@@ -3968,14 +4373,20 @@ def _selectCrewExtras(crewRoles, extrasDict):
 
 
 def _getMaxCompRepairCost(descr):
+    # type: (dict) -> float
+    """Calculate maximum repair cost for a component."""
     return (descr['maxHealth'] - descr['maxRegenHealth']) * descr['repairCost']
 
 
 def _summPriceDiff(price, priceAdd, priceSub):
+    # type: (tuple, tuple, tuple) -> tuple
+    """Return ``price`` with additions and subtractions applied."""
     return (price[0] + priceAdd[0] - priceSub[0], price[1] + priceAdd[1] - priceSub[1])
 
 
 def _splitVehicleCompactDescr(compactDescr):
+    # type: (str) -> tuple
+    """Unpack vehicle compact descriptor into its parts."""
     header = ord(compactDescr[0])
     assert header & 15 == items.ITEM_TYPES.vehicle
     vehicleTypeID = ord(compactDescr[1])
@@ -4041,6 +4452,8 @@ def _splitVehicleCompactDescr(compactDescr):
 
 
 def _combineVehicleCompactDescr(type, components, optionalDeviceSlots, optionalDevices, emblemPositions, emblems, inscriptions, camouflages, horn):
+    # type: (VehicleType, str, int, str, int, str, str, str, int or None) -> str
+    """Pack vehicle descriptor parts into a compact descriptor."""
     header = items.ITEM_TYPES.vehicle + (type.id[0] << 4)
     vehicleTypeID = type.id[1]
     flags = optionalDeviceSlots
@@ -4062,15 +4475,21 @@ def _combineVehicleCompactDescr(type, components, optionalDeviceSlots, optionalD
 
 
 def _packIDAndDuration(id, startTime, durationDays):
+    # type: (int, int, int) -> str
+    """Pack ID with start time and duration into binary form."""
     return struct.pack('<HI', id, (startTime - _CUSTOMIZATION_EPOCH) / 60 | durationDays << 24)
 
 
 def _unpackIDAndDuration(cd):
+    # type: (str) -> tuple
+    """Inverse of :func:`_packIDAndDuration`."""
     id, times = struct.unpack('<HI', cd)
     return (id, (times & 16777215) * 60 + _CUSTOMIZATION_EPOCH, times >> 24)
 
 
 def _isWeightAllowedToChange(newWeights, prevWeights):
+    # type: (tuple, tuple) -> bool
+    """Return ``True`` if new weight arrangement is allowed."""
     newReserve = newWeights[1] - newWeights[0]
     return newReserve >= 0.0 or newReserve >= prevWeights[1] - prevWeights[0]
 
