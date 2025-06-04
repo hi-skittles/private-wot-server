@@ -201,7 +201,7 @@ def __unlockItem(vehTypeCompDescr, unlockIdx, data):
 
 
 #   prem checker (used in Account.py)
-# TODO: make this run every hour for each account that is logged in.
+#   TODO: make this run every hour for each account that is logged in??? no idea best way to do this
 def __pCheck(data):
 	TRACE_MSG('AccountUpdates.__pCheck :: top')
 	current_time = int(time.time())
