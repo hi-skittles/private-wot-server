@@ -36,7 +36,7 @@
 	<billingSystem>
 		<shouldAcceptUnknownUsers> false </shouldAcceptUnknownUsers>
 		<shouldRememberUnknownUsers> true </shouldRememberUnknownUsers>
-		<entityTypeForUnknownUsers> Login </entityTypeForUnknownUsers>
+		<entityTypeForUnknownUsers> Account </entityTypeForUnknownUsers>
 		<authenticateViaBaseEntity> false </authenticateViaBaseEntity>
 		<isPasswordHashed>	true	</isPasswordHashed>
 		<type>	standard 	</type>
