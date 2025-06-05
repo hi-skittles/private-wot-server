@@ -1,0 +1,18 @@
+# Python bytecode 2.7 (decompiled from Python 2.7)
+# Embedded file name: scripts/client/gui/Scaleform/daapi/view/meta/PromoPremiumIgrWindowMeta.py
+# Compiled at: 2014-09-30 08:36:19
+from gui.Scaleform.framework.entities.DAAPIModule import DAAPIModule
+
+class PromoPremiumIgrWindowMeta(DAAPIModule):
+
+    def as_setTitleS(self, value):
+        return self.flashObject.as_setTitle(value) if self._isDAAPIInited() else None
+
+    def as_setTextS(self, value):
+        return self.flashObject.as_setText(value) if self._isDAAPIInited() else None
+
+    def as_setWindowTitleS(self, value):
+        return self.flashObject.as_setWindowTitle(value) if self._isDAAPIInited() else None
+
+    def as_setApplyButtonLabelS(self, value):
+        return self.flashObject.as_setApplyButtonLabel(value) if self._isDAAPIInited() else None

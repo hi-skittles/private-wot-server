@@ -1,0 +1,4 @@
+# Python bytecode 2.7 (decompiled from Python 2.7)
+# Embedded file name: scripts/client/LightFx/__init__.py
+# Compiled at: 2011-05-06 05:14:27
+pass

@@ -1,0 +1,254 @@
+# Python bytecode 2.7 (decompiled from Python 2.7)
+# Embedded file name: scripts/client/gui/server_events/awards.py
+# Compiled at: 2015-02-14 08:52:24
+import random
+from collections import namedtuple
+import BigWorld
+import constants
+import potapov_quests
+from helpers import i18n
+from gui.shared.utils import findFirst
+from gui.server_events import g_eventsCache
+from gui.Scaleform.locale.MENU import MENU
+from gui.Scaleform.locale.RES_ICONS import RES_ICONS
+from gui.Scaleform.daapi.view.lobby.AwardWindow import AwardAbstract, packRibbonInfo
+from gui.Scaleform.framework.managers.TextManager import TextType
+
+def _canSeeQuest(questID):
+    if potapov_quests.g_cache.hasPotapovQuest(questID):
+        tileID = g_eventsCache.potapov.getQuests()[questID].getTileID()
+        if g_eventsCache.potapov.getTiles()[tileID].isUnlocked():
+            return True
+    return False
+
+
+class AchievementsAward(AwardAbstract):
+
+    def __init__(self, achieves):
+        assert hasattr(achieves, '__iter__')
+        self.__achieves = achieves
+
+    def getWindowTitle(self):
+        return i18n.makeString(MENU.AWARDWINDOW_TITLE_NEWMEDALS)
+
+    def getBackgroundImage(self):
+        return RES_ICONS.MAPS_ICONS_REFERRAL_AWARDBACK
+
+    def getAwardImage(self):
+        return RES_ICONS.MAPS_ICONS_REFERRAL_AWARD_CREDITS_GLOW
+
+    def getHeader(self):
+        return self.app.utilsManager.textManager.getText(TextType.HIGH_TITLE, i18n.makeString(MENU.AWARDWINDOW_QUESTS_MEDALS_HEADER))
+
+    def getDescription(self):
+        descr = []
+        for achieve in self.__achieves:
+            noteInfo = achieve.getNotificationInfo()
+            if len(noteInfo):
+                descr.append(noteInfo)
+
+        return self.app.utilsManager.textManager.getText(TextType.MAIN_TEXT, '\n\n'.join(descr))
+
+    def getExtraFields(self):
+        result = []
+        for a in self.__achieves:
+            result.append({'type': a.getRecordName()[1],
+             'block': a.getBlock(),
+             'icon': {'big': a.getBigIcon(),
+                      'small': a.getSmallIcon()}})
+
+        return {'achievements': result}
+
+
+class TokenAward(AwardAbstract):
+
+    def __init__(self, potapovQuest, tokenID, count):
+        self.__potapovQuest = potapovQuest
+        self.__tokenID = tokenID
+        self.__tokenCount = count
+
+    def getWindowTitle(self):
+        return i18n.makeString(MENU.AWARDWINDOW_TITLE_TOKENS)
+
+    def getBackgroundImage(self):
+        return RES_ICONS.MAPS_ICONS_REFERRAL_AWARDBACK
+
+    def getAwardImage(self):
+        return RES_ICONS.MAPS_ICONS_QUESTS_TOKEN256
+
+    def getHeader(self):
+        return self.app.utilsManager.textManager.getText(TextType.HIGH_TITLE, i18n.makeString(MENU.AWARDWINDOW_QUESTS_TOKENS_HEADER, count=self.__tokenCount))
+
+    def getDescription(self):
+        return self.app.utilsManager.textManager.getText(TextType.MAIN_TEXT, i18n.makeString(MENU.AWARDWINDOW_QUESTS_TOKENS_DESCRIPTION))
+
+    def handleBodyButton(self):
+        from gui.server_events import events_dispatcher as quests_events
+        nextQuestID = int(self.__potapovQuest.getID()) + 1
+        if _canSeeQuest(nextQuestID):
+            quests_events.showEventsWindow(nextQuestID, constants.EVENT_TYPE.POTAPOV_QUEST)
+
+    def getBodyButtonText(self):
+        return i18n.makeString(MENU.AWARDWINDOW_TAKENEXTBUTTON)
+
+    def getButtonStates(self):
+        if not self.__potapovQuest.isFinal():
+            return super(TokenAward, self).getButtonStates()
+        else:
+            nextQuestID = int(self.__potapovQuest.getID()) + 1
+            return (False, True, _canSeeQuest(nextQuestID))
+
+
+class VehicleAward(AwardAbstract):
+
+    def __init__(self, vehicle):
+        self.__vehicle = vehicle
+
+    def getWindowTitle(self):
+        return i18n.makeString(MENU.AWARDWINDOW_TITLE_NEWVEHICLE)
+
+    def getBackgroundImage(self):
+        return RES_ICONS.MAPS_ICONS_REFERRAL_AWARDBACK
+
+    def getAwardImage(self):
+        return self.__vehicle.iconUniqueLight
+
+    def getHeader(self):
+        return self.app.utilsManager.textManager.getText(TextType.HIGH_TITLE, i18n.makeString(MENU.AWARDWINDOW_QUESTS_VEHICLE_HEADER, vehicleName=self.__vehicle.userName))
+
+    def getDescription(self):
+        return self.app.utilsManager.textManager.getText(TextType.MAIN_TEXT, i18n.makeString(MENU.AWARDWINDOW_QUESTS_VEHICLE_DESCRIPTION))
+
+
+class TankwomanAward(AwardAbstract):
+
+    def __init__(self, questID, tankmanData):
+        self.__questID = questID
+        self.__tankmanData = tankmanData
+
+    def getWindowTitle(self):
+        return i18n.makeString(MENU.AWARDWINDOW_TITLE_NEWTANKMAN)
+
+    def getBackgroundImage(self):
+        return RES_ICONS.MAPS_ICONS_REFERRAL_AWARDBACK
+
+    def getAwardImage(self):
+        return RES_ICONS.MAPS_ICONS_QUESTS_TANKMANFEMALEORANGE
+
+    def getHeader(self):
+        return self.app.utilsManager.textManager.getText(TextType.HIGH_TITLE, i18n.makeString(MENU.AWARDWINDOW_QUESTS_TANKMANFEMALE_HEADER))
+
+    def getDescription(self):
+        return self.app.utilsManager.textManager.getText(TextType.MAIN_TEXT, i18n.makeString(MENU.AWARDWINDOW_QUESTS_TANKMANFEMALE_DESCRIPTION))
+
+    def getOkButtonText(self):
+        return i18n.makeString(MENU.AWARDWINDOW_RECRUITBUTTON)
+
+    def handleOkButton(self):
+        from gui.server_events import events_dispatcher as quests_events
+        quests_events.showTankwomanRecruitWindow(self.__questID, self.__tankmanData.isPremium, self.__tankmanData.fnGroupID, self.__tankmanData.lnGroupID, self.__tankmanData.iGroupID)
+
+
+class RegularAward(AwardAbstract):
+    _BG_IMG_BY_VEH_TYPE = {'lightTank': RES_ICONS.MAPS_ICONS_QUESTS_LTAWARDBACK,
+     'mediumTank': RES_ICONS.MAPS_ICONS_QUESTS_MTAWARDBACK,
+     'heavyTank': RES_ICONS.MAPS_ICONS_QUESTS_HTAWARDBACK,
+     'AT-SPG': RES_ICONS.MAPS_ICONS_QUESTS_AT_SPGAWARDBACK,
+     'SPG': RES_ICONS.MAPS_ICONS_QUESTS_SPGAWARDBACK}
+
+    class _BonusFormatter(object):
+        _BonusFmt = namedtuple('_BonusFmt', 'icon value')
+
+        def __call__(self, bonus):
+            return []
+
+    class _SimpleFormatter(_BonusFormatter):
+
+        def __init__(self, icon):
+            self._icon = icon
+
+        def __call__(self, bonus):
+            return [self._BonusFmt(self._icon, BigWorld.wg_getIntegralFormat(bonus.getValue()))]
+
+    class _SimpleNoValueFormatter(_SimpleFormatter):
+
+        def __call__(self, bonus):
+            return [self._BonusFmt(self._icon, '')]
+
+    class _ItemsFormatter(_BonusFormatter):
+
+        def __call__(self, bonus):
+            result = []
+            for item, count in bonus.getItems().iteritems():
+                if item is not None and count:
+                    result.append(self._BonusFmt(item.icon, BigWorld.wg_getIntegralFormat(count)))
+
+            return result
+
+    def __init__(self, potapovQuest, isMainReward=False, isAddReward=False):
+        assert True in (isMainReward, isAddReward)
+        self.__potapovQuest = potapovQuest
+        self.__isMainReward = isMainReward
+        self.__isAddReward = isAddReward
+        self.__formatters = {'gold': self._SimpleFormatter(RES_ICONS.MAPS_ICONS_LIBRARY_GOLDICONBIG),
+         'credits': self._SimpleFormatter(RES_ICONS.MAPS_ICONS_LIBRARY_CREDITSICONBIG_1),
+         'freeXP': self._SimpleFormatter(RES_ICONS.MAPS_ICONS_LIBRARY_FREEXPICONBIG),
+         'premium': self._SimpleNoValueFormatter(RES_ICONS.MAPS_ICONS_LIBRARY_PREMDAYICONBIG),
+         'items': self._ItemsFormatter()}
+
+    def getWindowTitle(self):
+        return i18n.makeString(MENU.AWARDWINDOW_TITLE_TASKCOMPLETE)
+
+    def getBackgroundImage(self):
+        vehType = findFirst(None, self.__potapovQuest.getVehicleClasses())
+        return self._BG_IMG_BY_VEH_TYPE[vehType] if vehType in self._BG_IMG_BY_VEH_TYPE else random.choice(self._BG_IMG_BY_VEH_TYPE.values())
+
+    def getAwardImage(self):
+        pass
+
+    def getHeader(self):
+        return i18n.makeString(MENU.AWARDWINDOW_QUESTS_TASKCOMPLETE_HEADER, taskName=self.__potapovQuest.getUserName())
+
+    def getDescription(self):
+        return i18n.makeString(MENU.AWARDWINDOW_QUESTS_TASKCOMPLETE_DESCRIPTION)
+
+    def getAdditionalText(self):
+        if self.__isAddReward:
+            _getText = self.app.utilsManager.textManager.getText
+            result = []
+            for b in self.__potapovQuest.getBonuses(isMain=False):
+                if b.isShowInGUI():
+                    result.append(b.format())
+
+            return _getText(TextType.MAIN_TEXT, i18n.makeString(MENU.AWARDWINDOW_QUESTS_TASKCOMPLETE_ADDITIONAL, award=', '.join(result)))
+        else:
+            return i18n.makeString(MENU.AWARDWINDOW_QUESTS_TASKCOMPLETE_ADDITIONALNOTCOMPLETE)
+
+    def getButtonStates(self):
+        nextQuestID = int(self.__potapovQuest.getID()) + 1
+        return (False, True, _canSeeQuest(nextQuestID))
+
+    def getBodyButtonText(self):
+        return i18n.makeString(MENU.AWARDWINDOW_TAKENEXTBUTTON)
+
+    def getRibbonInfo(self):
+        if self.__isMainReward:
+            return packRibbonInfo(awardForCompleteText=i18n.makeString(MENU.AWARDWINDOW_QUESTS_TASKCOMPLETE_AWARDFORCOMLETE), awards=self.__getMainRewards())
+        else:
+            return packRibbonInfo(awardReceivedText=i18n.makeString(MENU.AWARDWINDOW_QUESTS_TASKCOMPLETE_AWARDRECIEVED))
+
+    def handleBodyButton(self):
+        from gui.server_events import events_dispatcher as quests_events
+        nextQuestID = int(self.__potapovQuest.getID()) + 1
+        if _canSeeQuest(nextQuestID):
+            quests_events.showEventsWindow(nextQuestID, constants.EVENT_TYPE.POTAPOV_QUEST)
+
+    def __getMainRewards(self):
+        result = []
+        for b in self.__potapovQuest.getBonuses(isMain=True):
+            formatter = self.__formatters.get(b.getName(), lambda *args: [])
+            for bonus in formatter(b):
+                result.append({'itemSource': bonus.icon,
+                 'value': bonus.value})
+
+        return result

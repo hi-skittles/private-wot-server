@@ -1,0 +1,26 @@
+# Python bytecode 2.7 (decompiled from Python 2.7)
+# Embedded file name: scripts/client/gui/Scaleform/daapi/view/lobby/trainings/sf_settings.py
+# Compiled at: 2014-10-01 05:21:17
+from debug_utils import LOG_DEBUG
+from gui.Scaleform.framework.managers.loaders import PackageBusinessHandler
+from gui.Scaleform.framework import ViewSettings, GroupedViewSettings, ViewTypes, ScopeTemplates
+from gui.Scaleform.genConsts.PREBATTLE_ALIASES import PREBATTLE_ALIASES
+from gui.shared import EVENT_BUS_SCOPE
+
+def getViewSettings():
+    from gui.Scaleform.daapi.view.lobby import trainings
+    return [ViewSettings(PREBATTLE_ALIASES.TRAINING_LIST_VIEW_PY, trainings.Trainings, 'trainingForm.swf', ViewTypes.LOBBY_SUB, PREBATTLE_ALIASES.TRAINING_LIST_VIEW_PY, ScopeTemplates.DEFAULT_SCOPE), ViewSettings(PREBATTLE_ALIASES.TRAINING_ROOM_VIEW_PY, trainings.TrainingRoom, 'trainingRoom.swf', ViewTypes.LOBBY_SUB, PREBATTLE_ALIASES.TRAINING_ROOM_VIEW_PY, ScopeTemplates.DEFAULT_SCOPE), GroupedViewSettings(PREBATTLE_ALIASES.TRAINING_SETTINGS_WINDOW_PY, trainings.TrainingSettingsWindow, 'trainingWindow.swf', ViewTypes.WINDOW, PREBATTLE_ALIASES.TRAINING_SETTINGS_WINDOW_PY, None, ScopeTemplates.DEFAULT_SCOPE)]
+
+
+def getBusinessHandlers():
+    return [_TrainingPackageBusinessHandler()]
+
+
+class _TrainingPackageBusinessHandler(PackageBusinessHandler):
+
+    def __init__(self):
+        listeners = [(PREBATTLE_ALIASES.TRAINING_LIST_VIEW_PY, self.__showViewSimple), (PREBATTLE_ALIASES.TRAINING_ROOM_VIEW_PY, self.__showViewSimple), (PREBATTLE_ALIASES.TRAINING_SETTINGS_WINDOW_PY, self.__showViewSimple)]
+        super(_TrainingPackageBusinessHandler, self).__init__(listeners, EVENT_BUS_SCOPE.LOBBY)
+
+    def __showViewSimple(self, event):
+        self.app.loadView(event.eventType, event.name, event.ctx)
