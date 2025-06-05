@@ -4,7 +4,7 @@ from itertools import cycle
 import mysql.connector
 
 import AccountCommands
-from bwdebug import INFO_MSG, TRACE_MSG, WARNING_MSG
+from bwdebug import INFO_MSG, WARNING_MSG
 import bwdebug
 import ResMgr, BackgroundTask
 from server_constants import DATABASE_CONST
@@ -29,98 +29,99 @@ def check_tables(connection=None):
 	
 	#   quests table
 	try:
-		connection.cursor(buffered=True).execute("""SELECT *
-                                                    FROM quests
-                                                    LIMIT 1""")
-	except mysql.connector.errors.Error:
-		WARNING_MSG("[DatabaseHandler] quests table does not exist. creating...")
 		connection.cursor(buffered=True).execute(
-			"""CREATE TABLE IF NOT EXISTS quests
+			operation="""CREATE TABLE IF NOT EXISTS quests
                (
-                   email      VARCHAR(255) PRIMARY KEY UNIQUE     NOT NULL,
-                   `%s`       MEDIUMBLOB                          NOT NULL,
-                   `%s`       MEDIUMBLOB                          NOT NULL,
-                   `%s`       MEDIUMBLOB                          NOT NULL,
-                   updated_at timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP,
-                   # constraint quests_pk
-                   #     unique (email)
-               ) charset = utf8""",
-			('tokens', 'potapovQuests', 'quests'))
+                   email     VARCHAR(255) PRIMARY KEY UNIQUE      NOT NULL,
+                   {0}       MEDIUMBLOB default ''                NOT NULL,
+                   {1}       MEDIUMBLOB default ''                NOT NULL,
+                   {2}       MEDIUMBLOB default ''                NOT NULL,
+                   updated_at timestamp  default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP
+               ) charset = utf8""".format("tokens", "potapovQuests", "quests"))
+	except mysql.connector.errors.Error as e:
+		WARNING_MSG(
+			"[DatabaseHandler] could not create missing quests table. check your database connection & sql permissions.")
+		raise RuntimeError("[DatabaseHandler] critical error creating quests table.\n%s" % e)
 	finally:
 		connection.commit()
+		DEBUG_MSG("[DatabaseHandler] quests table checked/created successfully.")
 	
 	#   inventory table
 	try:
-		connection.cursor(buffered=True).execute("""SELECT *
-                                                    FROM inventory
-                                                    LIMIT 1""")
-	except mysql.connector.errors.Error:
-		WARNING_MSG("[DatabaseHandler] inventory table does not exist. creating...")
 		connection.cursor(buffered=True).execute(
-			"""CREATE TABLE IF NOT EXISTS inventory
-               (
-                   email      VARCHAR(255) PRIMARY KEY UNIQUE     NOT NULL,
-                   `%s`       LONGBLOB,
-                   `%s`       LONGBLOB,
-                   `%s`       LONGBLOB,
-                   `%s`       LONGBLOB,
-                   `%s`       LONGBLOB,
-                   `%s`       LONGBLOB,
-                   `%s`       LONGBLOB,
-                   `%s`       LONGBLOB,
-                   `%s`       LONGBLOB,
-                   `%s`       LONGBLOB,
-                   `%s`       LONGBLOB,
-                   updated_at timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP
-               ) charset = utf8""",
-			(ITEM_TYPE_INDICES['vehicle'], ITEM_TYPE_INDICES['vehicleChassis'], ITEM_TYPE_INDICES['vehicleTurret'],
-			 ITEM_TYPE_INDICES['vehicleGun'], ITEM_TYPE_INDICES['vehicleEngine'], ITEM_TYPE_INDICES['vehicleFuelTank'],
-			 ITEM_TYPE_INDICES['vehicleRadio'], ITEM_TYPE_INDICES['tankman'], ITEM_TYPE_INDICES['optionalDevice'],
-			 ITEM_TYPE_INDICES['shell'], ITEM_TYPE_INDICES['equipment']))
+			operation="""CREATE TABLE IF NOT EXISTS inventory
+                         (
+                             email      VARCHAR(255) PRIMARY KEY UNIQUE     NOT NULL,
+                             `%s`       LONGBLOB  default '',
+                             `%s`       LONGBLOB  default '',
+                             `%s`       LONGBLOB  default '',
+                             `%s`       LONGBLOB  default '',
+                             `%s`       LONGBLOB  default '',
+                             `%s`       LONGBLOB  default '',
+                             `%s`       LONGBLOB  default '',
+                             `%s`       LONGBLOB  default '',
+                             `%s`       LONGBLOB  default '',
+                             `%s`       LONGBLOB  default '',
+                             `%s`       LONGBLOB  default '',
+                             updated_at timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP
+                         ) charset = utf8""",
+			params=(ITEM_TYPE_INDICES['vehicle'], ITEM_TYPE_INDICES['vehicleChassis'],
+			        ITEM_TYPE_INDICES['vehicleTurret'],
+			        ITEM_TYPE_INDICES['vehicleGun'], ITEM_TYPE_INDICES['vehicleEngine'],
+			        ITEM_TYPE_INDICES['vehicleFuelTank'],
+			        ITEM_TYPE_INDICES['vehicleRadio'], ITEM_TYPE_INDICES['tankman'],
+			        ITEM_TYPE_INDICES['optionalDevice'],
+			        ITEM_TYPE_INDICES['shell'], ITEM_TYPE_INDICES['equipment'],))
+	except mysql.connector.errors.Error as e:
+		WARNING_MSG(
+			"[DatabaseHandler] could not create missing inventory table. check your database connection & sql permissions.")
+		raise RuntimeError("[DatabaseHandler] critical error creating inventory table.\n%s" % e)
 	finally:
 		connection.commit()
+		DEBUG_MSG("[DatabaseHandler] inventory table checked/created successfully.")
 	
 	#   dossier table
 	try:
-		connection.cursor(buffered=True).execute("""SELECT *
-                                                    FROM dossier
-                                                    LIMIT 1""")
-	except mysql.connector.errors.Error:
-		WARNING_MSG("[DatabaseHandler] dossier table does not exist. creating...")
 		connection.cursor(buffered=True).execute(
-			"""CREATE TABLE IF NOT EXISTS dossier
+			operation="""CREATE TABLE IF NOT EXISTS dossier
                (
-                   email      VARCHAR(255) PRIMARY KEY UNIQUE     NOT NULL,
-                   `%s`       MEDIUMBLOB                          NOT NULL,
-                   updated_at timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP
-               ) charset = utf8""",
-			'dossier')
+                   email      VARCHAR(255) PRIMARY KEY UNIQUE      NOT NULL,
+                   {0}       MEDIUMBLOB default ''                NOT NULL,
+                   updated_at timestamp  default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP
+               ) charset = utf8""".format("dossier"))
+	except mysql.connector.errors.Error as e:
+		WARNING_MSG(
+			"[DatabaseHandler] could not create missing dossier table. check your database connection & sql permissions.")
+		raise RuntimeError("[DatabaseHandler] critical error creating dossier table.\n%s" % e)
 	finally:
 		connection.commit()
+		DEBUG_MSG("[DatabaseHandler] dossier table checked/created successfully.")
 	
 	#   stats table
 	try:
-		connection.cursor(buffered=True).execute("""SELECT *
-                                                    FROM stats
-                                                    LIMIT 1""")
-	except mysql.connector.errors.Error:
-		WARNING_MSG("[DatabaseHandler] stats table does not exist. creating...")
 		connection.cursor(buffered=True).execute(
-			"""CREATE TABLE IF NOT EXISTS stats
+			operation="""CREATE TABLE IF NOT EXISTS stats
                (
-                   email      VARCHAR(255) PRIMARY KEY UNIQUE     NOT NULL,
-                   `%s`       MEDIUMBLOB                          NOT NULL,
-                   `%s`       MEDIUMBLOB                          NOT NULL,
-                   `%s`       MEDIUMBLOB                          NOT NULL,
-                   `%s`       MEDIUMBLOB                          NOT NULL,
-                   `%s`       MEDIUMBLOB                          NOT NULL,
-                   `%s`       MEDIUMBLOB                          NOT NULL,
-                   `%s`       MEDIUMBLOB                          NOT NULL,
-                   updated_at timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP
-               ) charset = utf8""",
-			('account', 'cache', 'economics', 'offers', 'stats', 'intUserSettings', 'eventsData'))
+                   email      VARCHAR(255) PRIMARY KEY UNIQUE      NOT NULL,
+                   {0}         MEDIUMBLOB default ''                NOT NULL,
+                   {1}         MEDIUMBLOB default ''                NOT NULL,
+                   {2}         MEDIUMBLOB default ''                NOT NULL,
+                   {3}         MEDIUMBLOB default ''                NOT NULL,
+                   {4}         MEDIUMBLOB default ''                NOT NULL,
+                   {5}         MEDIUMBLOB default ''                NOT NULL,
+                   {6}         MEDIUMBLOB default ''                NOT NULL,
+                   updated_at timestamp  default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP
+               ) charset = utf8""".format(
+				'account', 'cache', 'economics', 'offers', 'stats', 'intUserSettings', 'eventsData'))
+	except mysql.connector.errors.Error as e:
+		WARNING_MSG(
+			"[DatabaseHandler] could not create missing dossier table. check your database connection & sql permissions.")
+		raise RuntimeError("[DatabaseHandler] critical error creating stats table.\n%s" % e)
 	finally:
 		connection.commit()
+		DEBUG_MSG("[DatabaseHandler] stats table checked/created successfully.")
+	
+	DEBUG_MSG("[DatabaseHandler] all player data tables checked/created successfully =)")
 
 
 def init():
@@ -153,10 +154,7 @@ def init():
 	if connection.is_connected(): INFO_MSG(
 		"[DatabaseHandler] connected to player database @ %s" % connection.server_host)
 	
-	try:
-		check_tables(connection)
-	except Exception as e:
-		return False
+	check_tables(connection)
 	
 	global threadManager
 	if threadManager is None:
@@ -249,7 +247,7 @@ def unlocked_veh_co_de(for_stats=True):
 
 
 def initEmptyQuests():
-	TRACE_MSG('[DatabaseHandler] initEmptyQuests')
+	DEBUG_MSG('[DatabaseHandler] initEmptyQuests')
 	rdata = {
 		'tokens': {'count': 0, 'expiryTime': 0},
 		'potapovQuests': {'compDescr': '', 'slots': 0, 'selected': [], 'rewards': {}, 'unlocked': {}},
@@ -259,7 +257,7 @@ def initEmptyQuests():
 
 
 def initEmptyInventory():
-	TRACE_MSG('[DatabaseHandler] initEmptyInventory')
+	DEBUG_MSG('[DatabaseHandler] initEmptyInventory')
 	unlocked_vehs = unlocked_veh_co_de(for_stats=False)
 	
 	data = dict((k, {}) for k in ITEM_TYPE_INDICES)
@@ -331,7 +329,7 @@ def initEmptyInventory():
 
 
 def initEmptyStats():
-	TRACE_MSG('[DatabaseHandler] initEmptyStats')
+	DEBUG_MSG('[DatabaseHandler] initEmptyStats')
 	unlocked_vehs = unlocked_veh_co_de(for_stats=True)
 	
 	unlocksSet = set()
@@ -481,7 +479,7 @@ def initEmptyStats():
 
 
 def initEmptyDossier():
-	TRACE_MSG('[DatabaseHandler] initEmptyDossier')
+	DEBUG_MSG('[DatabaseHandler] initEmptyDossier')
 	rdata = {(12345, 1622547800, 'dossierCompDescr1'), (67890, 1622547900, 'dossierCompDescr2'),
 	         (13579, 1622548000, 'dossierCompDescr3')}
 	return rdata
@@ -601,7 +599,7 @@ class GetInventoryData(BackgroundTask.BackgroundTask):
 		bgTaskMgr.addMainThreadTask(self)
 	
 	def doMainThreadTask(self, bgTaskMgr):
-		TRACE_MSG('[DatabaseHandler] GetInventoryData (foreground) :: databaseID=%s' % self.normalizedName)
+		DEBUG_MSG('[DatabaseHandler] GetInventoryData (foreground) :: databaseID=%s' % self.normalizedName)
 		self.callback(self.result)
 
 
@@ -619,7 +617,7 @@ class SetInventoryData(BackgroundTask.BackgroundTask):
 		self.result = {}
 	
 	def doBackgroundTask(self, bgTaskMgr, connection):
-		TRACE_MSG(
+		DEBUG_MSG(
 			'[DatabaseHandler] SetInventoryData (background) :: normalizedName=%s' % self.normalizedName)
 		if not self.columns: raise Exception("SetInventoryData :: No columns specified")
 		if self.data['inventory']: self.data = self.data.pop('inventory')
@@ -632,7 +630,7 @@ class SetInventoryData(BackgroundTask.BackgroundTask):
 		bgTaskMgr.addMainThreadTask(self)
 	
 	def doMainThreadTask(self, bgTaskMgr):
-		TRACE_MSG(
+		DEBUG_MSG(
 			'[DatabaseHandler] SetInventoryData (foreground) :: normalizedName=%s' % self.normalizedName)
 		self.callback(self.result)
 
@@ -649,7 +647,7 @@ class GetStatsData(BackgroundTask.BackgroundTask):
 		self.result = {}
 	
 	def doBackgroundTask(self, bgTaskMgr, connection):
-		TRACE_MSG('[DatabaseHandler] GetStatsData (background) :: normalizedName=%s' % self.normalizedName)
+		DEBUG_MSG('[DatabaseHandler] GetStatsData (background) :: normalizedName=%s' % self.normalizedName)
 		if not self.columns: raise Exception("GetStatsData :: No columns specified")
 		if self.columns != '*' and type(self.columns) == list and len(self.columns) > 0:
 			self.columns = ', '.join(self.columns)
@@ -703,7 +701,7 @@ class GetStatsData(BackgroundTask.BackgroundTask):
 		bgTaskMgr.addMainThreadTask(self)
 	
 	def doMainThreadTask(self, bgTaskMgr):
-		TRACE_MSG('[DatabaseHandler] GetStatsData (foreground) :: normalizedName=%s' % self.normalizedName)
+		DEBUG_MSG('[DatabaseHandler] GetStatsData (foreground) :: normalizedName=%s' % self.normalizedName)
 		self.callback(self.result)
 
 
@@ -720,7 +718,7 @@ class SetStatsData(BackgroundTask.BackgroundTask):
 		self.result = False
 	
 	def doBackgroundTask(self, bgTaskMgr, connection):
-		TRACE_MSG('[DatabaseHandler] SetStatsData (background) :: normalizedName=%s' % self.normalizedName)
+		DEBUG_MSG('[DatabaseHandler] SetStatsData (background) :: normalizedName=%s' % self.normalizedName)
 		if not self.columns: raise Exception("SetStatsData :: No columns specified")
 		if ('intUserSettings', '_r') in self.data: self.data['intUserSettings'] = self.data.pop(
 			('intUserSettings', '_r'))
@@ -737,7 +735,7 @@ class SetStatsData(BackgroundTask.BackgroundTask):
 		bgTaskMgr.addMainThreadTask(self)
 	
 	def doMainThreadTask(self, bgTaskMgr):
-		TRACE_MSG('[DatabaseHandler] SetStatsData (foreground) :: normalizedName=%s' % self.normalizedName)
+		DEBUG_MSG('[DatabaseHandler] SetStatsData (foreground) :: normalizedName=%s' % self.normalizedName)
 		self.callback(self.result)
 
 
@@ -753,7 +751,7 @@ class GetDossierData(BackgroundTask.BackgroundTask):
 		self.filepath = None
 	
 	def doBackgroundTask(self, bgTaskMgr, threadData):
-		TRACE_MSG('[DatabaseHandler] GetDossierData (background) :: databaseID=%s' % self.databaseID)
+		DEBUG_MSG('[DatabaseHandler] GetDossierData (background) :: databaseID=%s' % self.databaseID)
 		self.filepath = ResMgr.resolveToAbsolutePath('server/database_files/dossier/')
 		if not os.path.exists(self.filepath):
 			os.makedirs(self.filepath)
@@ -779,5 +777,5 @@ class GetDossierData(BackgroundTask.BackgroundTask):
 		return initEmptyDossier()
 	
 	def doMainThreadTask(self, bgTaskMgr):
-		TRACE_MSG('GetDossierData (foreground) :: databaseID=%s' % self.databaseID)
+		DEBUG_MSG('GetDossierData (foreground) :: databaseID=%s' % self.databaseID)
 		self.callback(self.result)
