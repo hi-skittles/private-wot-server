@@ -4,7 +4,8 @@ from itertools import cycle
 import mysql.connector
 
 import AccountCommands
-from bwdebug import INFO_MSG, TRACE_MSG, DEBUG_MSG, WARNING_MSG
+from bwdebug import INFO_MSG, TRACE_MSG, WARNING_MSG
+import bwdebug
 import ResMgr, BackgroundTask
 from server_constants import DATABASE_CONST
 import items, nations
@@ -14,30 +15,148 @@ from items import vehicles, ITEM_TYPE_INDICES
 threadManager = None  # never manually change this value
 DATABASE_NAME = DATABASE_CONST.DB_PRIMARY_DATABASE_NAME
 DO_DEBUG = DATABASE_CONST.DB_DO_EXTRA_DEBUG
+DEBUG_MSG = bwdebug.DEBUG_MSG
+if not DO_DEBUG:
+	DEBUG_MSG = lambda *args, **kwargs: None
 
 
-def init():
-	connection = mysql.connector.connect(
-		host='localhost',
-		user='bigworld',
-		password='bigworld',
-		database=DATABASE_NAME
-	)
-	if connection.is_connected(): INFO_MSG("[DatabaseHandler] connected to %s" % connection.server_host)
+def check_tables(connection=None):
+	"""
+	Checks if the required tables exist in the database.
+	"""
+	if not connection:
+		raise RuntimeError("[DatabaseHandler] check_tables() called without a connection object.")
 	
+	#   quests table
 	try:
-		connection.cursor(buffered=True).execute("""SELECT * FROM inventory LIMIT 1""")
+		connection.cursor(buffered=True).execute("""SELECT *
+                                                    FROM quests
+                                                    LIMIT 1""")
 	except mysql.connector.errors.Error:
-		WARNING_MSG("[DatabaseHandler] Inventory table does not exist. Creating...")
+		WARNING_MSG("[DatabaseHandler] quests table does not exist. creating...")
 		connection.cursor(buffered=True).execute(
-			"""CREATE TABLE IF NOT EXISTS inventory (email VARCHAR(255) PRIMARY KEY UNIQUE NOT NULL,
-			`%s` LONGBLOB, `%s` LONGBLOB, `%s` LONGBLOB, `%s` LONGBLOB, `%s` LONGBLOB, `%s` LONGBLOB, `%s` LONGBLOB, `%s` LONGBLOB, `%s` LONGBLOB, `%s` LONGBLOB, `%s` LONGBLOB, updated_at timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP) charset=utf8""",
+			"""CREATE TABLE IF NOT EXISTS quests
+               (
+                   email      VARCHAR(255) PRIMARY KEY UNIQUE     NOT NULL,
+                   `%s`       MEDIUMBLOB                          NOT NULL,
+                   `%s`       MEDIUMBLOB                          NOT NULL,
+                   `%s`       MEDIUMBLOB                          NOT NULL,
+                   updated_at timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP,
+                   # constraint quests_pk
+                   #     unique (email)
+               ) charset = utf8""",
+			('tokens', 'potapovQuests', 'quests'))
+	finally:
+		connection.commit()
+	
+	#   inventory table
+	try:
+		connection.cursor(buffered=True).execute("""SELECT *
+                                                    FROM inventory
+                                                    LIMIT 1""")
+	except mysql.connector.errors.Error:
+		WARNING_MSG("[DatabaseHandler] inventory table does not exist. creating...")
+		connection.cursor(buffered=True).execute(
+			"""CREATE TABLE IF NOT EXISTS inventory
+               (
+                   email      VARCHAR(255) PRIMARY KEY UNIQUE     NOT NULL,
+                   `%s`       LONGBLOB,
+                   `%s`       LONGBLOB,
+                   `%s`       LONGBLOB,
+                   `%s`       LONGBLOB,
+                   `%s`       LONGBLOB,
+                   `%s`       LONGBLOB,
+                   `%s`       LONGBLOB,
+                   `%s`       LONGBLOB,
+                   `%s`       LONGBLOB,
+                   `%s`       LONGBLOB,
+                   `%s`       LONGBLOB,
+                   updated_at timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP
+               ) charset = utf8""",
 			(ITEM_TYPE_INDICES['vehicle'], ITEM_TYPE_INDICES['vehicleChassis'], ITEM_TYPE_INDICES['vehicleTurret'],
 			 ITEM_TYPE_INDICES['vehicleGun'], ITEM_TYPE_INDICES['vehicleEngine'], ITEM_TYPE_INDICES['vehicleFuelTank'],
 			 ITEM_TYPE_INDICES['vehicleRadio'], ITEM_TYPE_INDICES['tankman'], ITEM_TYPE_INDICES['optionalDevice'],
 			 ITEM_TYPE_INDICES['shell'], ITEM_TYPE_INDICES['equipment']))
 	finally:
 		connection.commit()
+	
+	#   dossier table
+	try:
+		connection.cursor(buffered=True).execute("""SELECT *
+                                                    FROM dossier
+                                                    LIMIT 1""")
+	except mysql.connector.errors.Error:
+		WARNING_MSG("[DatabaseHandler] dossier table does not exist. creating...")
+		connection.cursor(buffered=True).execute(
+			"""CREATE TABLE IF NOT EXISTS dossier
+               (
+                   email      VARCHAR(255) PRIMARY KEY UNIQUE     NOT NULL,
+                   `%s`       MEDIUMBLOB                          NOT NULL,
+                   updated_at timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP
+               ) charset = utf8""",
+			'dossier')
+	finally:
+		connection.commit()
+	
+	#   stats table
+	try:
+		connection.cursor(buffered=True).execute("""SELECT *
+                                                    FROM stats
+                                                    LIMIT 1""")
+	except mysql.connector.errors.Error:
+		WARNING_MSG("[DatabaseHandler] stats table does not exist. creating...")
+		connection.cursor(buffered=True).execute(
+			"""CREATE TABLE IF NOT EXISTS stats
+               (
+                   email      VARCHAR(255) PRIMARY KEY UNIQUE     NOT NULL,
+                   `%s`       MEDIUMBLOB                          NOT NULL,
+                   `%s`       MEDIUMBLOB                          NOT NULL,
+                   `%s`       MEDIUMBLOB                          NOT NULL,
+                   `%s`       MEDIUMBLOB                          NOT NULL,
+                   `%s`       MEDIUMBLOB                          NOT NULL,
+                   `%s`       MEDIUMBLOB                          NOT NULL,
+                   `%s`       MEDIUMBLOB                          NOT NULL,
+                   updated_at timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP
+               ) charset = utf8""",
+			('account', 'cache', 'economics', 'offers', 'stats', 'intUserSettings', 'eventsData'))
+	finally:
+		connection.commit()
+
+
+def init():
+	# check for database existence
+	connection_test = mysql.connector.connect(
+		host='localhost',
+		user='bigworld',
+		password='bigworld',
+	)
+	try:
+		connection_test.cursor(buffered=True).execute("""USE %s""" % DATABASE_NAME)
+	except mysql.connector.errors.Error as e:
+		WARNING_MSG("[DatabaseHandler] database %s does not exist. creating..." % DATABASE_NAME)
+		try:
+			connection_test.cursor(buffered=True).execute("""CREATE DATABASE IF NOT EXISTS %s""" % DATABASE_NAME)
+		except mysql.connector.errors.Error as e:
+			WARNING_MSG("[DatabaseHandler] critical error creating database %s: %s" % (DATABASE_NAME, e))
+			return False
+	connection_test.cursor().close()
+	connection_test.close()
+	del connection_test
+	DEBUG_MSG("[DatabaseHandler] database %s exists.\tdel connection_test" % DATABASE_NAME)
+	
+	connection = mysql.connector.connect(
+		host='localhost',
+		user='bigworld',
+		password='bigworld',
+		database=DATABASE_NAME
+	)
+	if connection.is_connected(): INFO_MSG(
+		"[DatabaseHandler] connected to player database @ %s" % connection.server_host)
+	
+	try:
+		check_tables(connection)
+	except Exception as e:
+		return False
 	
 	global threadManager
 	if threadManager is None:
@@ -130,7 +249,7 @@ def unlocked_veh_co_de(for_stats=True):
 
 
 def initEmptyQuests():
-	if DO_DEBUG: TRACE_MSG('[DatabaseHandler] initEmptyQuests')
+	TRACE_MSG('[DatabaseHandler] initEmptyQuests')
 	rdata = {
 		'tokens': {'count': 0, 'expiryTime': 0},
 		'potapovQuests': {'compDescr': '', 'slots': 0, 'selected': [], 'rewards': {}, 'unlocked': {}},
@@ -140,7 +259,7 @@ def initEmptyQuests():
 
 
 def initEmptyInventory():
-	if DO_DEBUG: TRACE_MSG('[DatabaseHandler] initEmptyInventory')
+	TRACE_MSG('[DatabaseHandler] initEmptyInventory')
 	unlocked_vehs = unlocked_veh_co_de(for_stats=False)
 	
 	data = dict((k, {}) for k in ITEM_TYPE_INDICES)
@@ -212,7 +331,7 @@ def initEmptyInventory():
 
 
 def initEmptyStats():
-	if DO_DEBUG: TRACE_MSG('[DatabaseHandler] initEmptyStats')
+	TRACE_MSG('[DatabaseHandler] initEmptyStats')
 	unlocked_vehs = unlocked_veh_co_de(for_stats=True)
 	
 	unlocksSet = set()
@@ -362,7 +481,7 @@ def initEmptyStats():
 
 
 def initEmptyDossier():
-	if DO_DEBUG: TRACE_MSG('[DatabaseHandler] initEmptyDossier')
+	TRACE_MSG('[DatabaseHandler] initEmptyDossier')
 	rdata = {(12345, 1622547800, 'dossierCompDescr1'), (67890, 1622547900, 'dossierCompDescr2'),
 	         (13579, 1622548000, 'dossierCompDescr3')}
 	return rdata
@@ -382,8 +501,7 @@ class GetQuestsData(BackgroundTask.BackgroundTask):
 		self.result = {}
 	
 	def doBackgroundTask(self, bgTaskMgr, connection):
-		if DO_DEBUG: DEBUG_MSG(
-			'[DatabaseHandler] GetQuestsData (background) :: normalizedName=%s' % self.normalizedName)
+		DEBUG_MSG('[DatabaseHandler] GetQuestsData (background) :: normalizedName=%s' % self.normalizedName)
 		if not self.columns: raise Exception("GetQuestsData :: No columns specified")
 		if self.columns != '*' and type(self.columns) == list and len(self.columns) > 0:
 			self.columns = ', '.join(self.columns)
@@ -393,10 +511,11 @@ class GetQuestsData(BackgroundTask.BackgroundTask):
 		if q_result is None:
 			self.result.update(initEmptyQuests())  # dict
 			try:
-				c.execute("""INSERT INTO quests (email, tokens, potapovQuests, quests) VALUES (%s, %s, %s, %s)""", (
-					self.normalizedName, base64.b64encode(cPickle.dumps(self.result['tokens'])),
-					base64.b64encode(cPickle.dumps(self.result['potapovQuests'])),
-					base64.b64encode(cPickle.dumps(self.result['quests']))))
+				c.execute("""INSERT INTO quests (email, tokens, potapovQuests, quests)
+                             VALUES (%s, %s, %s, %s)""", (
+					          self.normalizedName, base64.b64encode(cPickle.dumps(self.result['tokens'])),
+					          base64.b64encode(cPickle.dumps(self.result['potapovQuests'])),
+					          base64.b64encode(cPickle.dumps(self.result['quests']))))
 			except Exception as e:
 				raise Exception("GetQuestsData :: Error occurred while writing quests data (init)=%s" % e)
 		else:
@@ -407,7 +526,7 @@ class GetQuestsData(BackgroundTask.BackgroundTask):
 		bgTaskMgr.addMainThreadTask(self)
 	
 	def doMainThreadTask(self, bgTaskMgr):
-		if DO_DEBUG: DEBUG_MSG(
+		DEBUG_MSG(
 			'[DatabaseHandler] GetQuestsData (foreground) :: normalizedName=%s' % self.normalizedName)
 		self.callback(self.result)
 
@@ -432,7 +551,7 @@ class GetInventoryData(BackgroundTask.BackgroundTask):
 		self.result = {'inventory': {}}
 	
 	def doBackgroundTask(self, bgTaskMgr, connection):
-		if DO_DEBUG: DEBUG_MSG(
+		DEBUG_MSG(
 			'[DatabaseHandler] GetInventoryData (background) :: normalizedName=%s' % self.normalizedName)
 		if not self.columns: raise Exception("[DatabaseHandler] GetInventoryData :: No columns specified")
 		# since the indices are fucking stupid and integers,
@@ -444,7 +563,8 @@ class GetInventoryData(BackgroundTask.BackgroundTask):
 		try:
 			c.execute("""SELECT {} FROM inventory WHERE email=%s""".format(self.columns), (self.normalizedName,))
 		except mysql.connector.errors.Error as e:
-			raise Exception("[DatabaseHandler] GetInventoryData :: Error occurred while querying inventory data\n%s" % e)
+			raise Exception(
+				"[DatabaseHandler] GetInventoryData :: Error occurred while querying inventory data\n%s" % e)
 		i_result = c.fetchone()
 		if i_result is None:
 			self.result.update(initEmptyInventory())  # dict
@@ -475,13 +595,13 @@ class GetInventoryData(BackgroundTask.BackgroundTask):
 		else:
 			for k, v in i_result.items():
 				self.result['inventory'].update({int(k): cPickle.loads(base64.b64decode(v))})  # dict
-				# self.result['inventory'][ITEM_TYPE_INDICES[k]] = self.result['inventory'].pop(str(k))
+		# self.result['inventory'][ITEM_TYPE_INDICES[k]] = self.result['inventory'].pop(str(k))
 		c.close()
 		connection.commit()
 		bgTaskMgr.addMainThreadTask(self)
 	
 	def doMainThreadTask(self, bgTaskMgr):
-		if DO_DEBUG: TRACE_MSG('[DatabaseHandler] GetInventoryData (foreground) :: databaseID=%s' % self.normalizedName)
+		TRACE_MSG('[DatabaseHandler] GetInventoryData (foreground) :: databaseID=%s' % self.normalizedName)
 		self.callback(self.result)
 
 
@@ -499,7 +619,7 @@ class SetInventoryData(BackgroundTask.BackgroundTask):
 		self.result = {}
 	
 	def doBackgroundTask(self, bgTaskMgr, connection):
-		if DO_DEBUG: TRACE_MSG(
+		TRACE_MSG(
 			'[DatabaseHandler] SetInventoryData (background) :: normalizedName=%s' % self.normalizedName)
 		if not self.columns: raise Exception("SetInventoryData :: No columns specified")
 		if self.data['inventory']: self.data = self.data.pop('inventory')
@@ -512,7 +632,7 @@ class SetInventoryData(BackgroundTask.BackgroundTask):
 		bgTaskMgr.addMainThreadTask(self)
 	
 	def doMainThreadTask(self, bgTaskMgr):
-		if DO_DEBUG: TRACE_MSG(
+		TRACE_MSG(
 			'[DatabaseHandler] SetInventoryData (foreground) :: normalizedName=%s' % self.normalizedName)
 		self.callback(self.result)
 
@@ -529,18 +649,19 @@ class GetStatsData(BackgroundTask.BackgroundTask):
 		self.result = {}
 	
 	def doBackgroundTask(self, bgTaskMgr, connection):
-		if DO_DEBUG: TRACE_MSG('[DatabaseHandler] GetStatsData (background) :: normalizedName=%s' % self.normalizedName)
+		TRACE_MSG('[DatabaseHandler] GetStatsData (background) :: normalizedName=%s' % self.normalizedName)
 		if not self.columns: raise Exception("GetStatsData :: No columns specified")
 		if self.columns != '*' and type(self.columns) == list and len(self.columns) > 0:
 			self.columns = ', '.join(self.columns)
 		c = connection.cursor(dictionary=True)
 		c.execute("""SELECT {} FROM stats WHERE email=%s""".format(self.columns), (self.normalizedName,))
 		s_result = c.fetchone()
-		if s_result is None:
+		if s_result is None:  # TODO: not a good way to check if a user exists; if the specified column does not exist, new data will be created & possibly throw an sql error
 			self.result.update(initEmptyStats())  # dict
 			try:
 				c.execute(
-					"""INSERT INTO stats (email, account, cache, economics, offers, stats, intUserSettings, eventsData) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""",
+					"""INSERT INTO stats (email, account, cache, economics, offers, stats, intUserSettings, eventsData)
+                       VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""",
 					(
 						self.normalizedName,
 						base64.b64encode(cPickle.dumps(self.result['account'])),
@@ -566,7 +687,7 @@ class GetStatsData(BackgroundTask.BackgroundTask):
 			# self.result[('eventsData', '_r')][EVENT_CLIENT_DATA.NOTIFICATIONS] = zlib.compress(cPickle.dumps(self.result[('eventsData', '_r')][EVENT_CLIENT_DATA.NOTIFICATIONS]))
 			
 			if self.result.get('account', False):
-				if DO_DEBUG: INFO_MSG('[DatabaseHandler] GetStatsData premiumcheck :: top')
+				INFO_MSG('[DatabaseHandler] GetStatsData premiumcheck :: top')
 				current_time = int(time.time())
 				attrs = self.result['account']['attrs']  # checks only
 				premium_epoch = self.result['account']['premiumExpiryTime']  # checks only
@@ -576,13 +697,13 @@ class GetStatsData(BackgroundTask.BackgroundTask):
 				if attrs & ACCOUNT_ATTR.PREMIUM and premium_epoch < current_time:
 					self.result['account']['attrs'] &= ~ACCOUNT_ATTR.PREMIUM
 					self.result['account']['premiumExpiryTime'] = 0
-				if DO_DEBUG: INFO_MSG('[DatabaseHandler] GetStatsData premiumcheck :: bottom')
+				INFO_MSG('[DatabaseHandler] GetStatsData premiumcheck :: bottom')
 		c.close()
 		connection.commit()
 		bgTaskMgr.addMainThreadTask(self)
 	
 	def doMainThreadTask(self, bgTaskMgr):
-		if DO_DEBUG: TRACE_MSG('[DatabaseHandler] GetStatsData (foreground) :: normalizedName=%s' % self.normalizedName)
+		TRACE_MSG('[DatabaseHandler] GetStatsData (foreground) :: normalizedName=%s' % self.normalizedName)
 		self.callback(self.result)
 
 
@@ -599,7 +720,7 @@ class SetStatsData(BackgroundTask.BackgroundTask):
 		self.result = False
 	
 	def doBackgroundTask(self, bgTaskMgr, connection):
-		if DO_DEBUG: TRACE_MSG('[DatabaseHandler] SetStatsData (background) :: normalizedName=%s' % self.normalizedName)
+		TRACE_MSG('[DatabaseHandler] SetStatsData (background) :: normalizedName=%s' % self.normalizedName)
 		if not self.columns: raise Exception("SetStatsData :: No columns specified")
 		if ('intUserSettings', '_r') in self.data: self.data['intUserSettings'] = self.data.pop(
 			('intUserSettings', '_r'))
@@ -616,7 +737,7 @@ class SetStatsData(BackgroundTask.BackgroundTask):
 		bgTaskMgr.addMainThreadTask(self)
 	
 	def doMainThreadTask(self, bgTaskMgr):
-		if DO_DEBUG: TRACE_MSG('[DatabaseHandler] SetStatsData (foreground) :: normalizedName=%s' % self.normalizedName)
+		TRACE_MSG('[DatabaseHandler] SetStatsData (foreground) :: normalizedName=%s' % self.normalizedName)
 		self.callback(self.result)
 
 
@@ -632,7 +753,7 @@ class GetDossierData(BackgroundTask.BackgroundTask):
 		self.filepath = None
 	
 	def doBackgroundTask(self, bgTaskMgr, threadData):
-		if DO_DEBUG: TRACE_MSG('[DatabaseHandler] GetDossierData (background) :: databaseID=%s' % self.databaseID)
+		TRACE_MSG('[DatabaseHandler] GetDossierData (background) :: databaseID=%s' % self.databaseID)
 		self.filepath = ResMgr.resolveToAbsolutePath('server/database_files/dossier/')
 		if not os.path.exists(self.filepath):
 			os.makedirs(self.filepath)
