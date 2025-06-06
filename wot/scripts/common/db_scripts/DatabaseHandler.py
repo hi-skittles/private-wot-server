@@ -466,15 +466,20 @@ def initEmptyStats():
 		                            107: 536870912, 108: 512, 109: 891, 110: 536870912, 111: 644, 112: 3, 114: 3,
 		                            115: 3, 31001: 51815706, 31002: 536870912, 31003: 132, 500: 0},
 		('eventsData', '_r'): {
-			EVENT_CLIENT_DATA.NOTIFICATIONS: [
-				{'id': 1, 'message': 'Event 1', 'timestamp': 1633036800, 'type': '', 'data': {}},
-				{'id': 2, 'message': 'Event 2', 'timestamp': 1633123200, 'type': '', 'data': {}},
-			],
+			EVENT_CLIENT_DATA.NOTIFICATIONS: [{
+				'type': 'promo_action',
+				'data': 'youtube.com',
+				'text': {
+					'en': 'Sample Promo Action',
+					'ru': 'Russian text'
+				},
+				'requiredTokens': []
+			}],
 			EVENT_CLIENT_DATA.NOTIFICATIONS_REV: 1
 		}
 	}
 	
-	rdata[('eventsData', '_r')][9] = zlib.compress(cPickle.dumps(rdata[('eventsData', '_r')][9]))
+	rdata[('eventsData', '_r')][EVENT_CLIENT_DATA.NOTIFICATIONS] = zlib.compress(cPickle.dumps(rdata[('eventsData', '_r')][EVENT_CLIENT_DATA.NOTIFICATIONS]))
 	return rdata
 
 

@@ -8,4 +8,8 @@ class DATABASE_CONST:
 	LOGIN_DB_DTABLE_NAME = 'accounts1'
 	LOGIN_DB_TABLE_NAME = LOGIN_DB_DTABLE_NAME if DB_IS_DEV else LOGIN_DB_PTABLE_NAME
 	LOGIN_DB_DO_EXTRA_DEBUG = True
-	#   #
+
+
+class BASEAPP_CONST:
+	BA_DO_DEBUG = True
+	MAX_ONLINE_ACCOUNTS = 1000  # maximum number of online accounts

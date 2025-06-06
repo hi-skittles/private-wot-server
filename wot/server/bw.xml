@@ -34,7 +34,7 @@
 	<parentFile> server/development_defaults.xml </parentFile>
 
 	<billingSystem>
-		<shouldAcceptUnknownUsers> false </shouldAcceptUnknownUsers>
+		<shouldAcceptUnknownUsers> true </shouldAcceptUnknownUsers>
 		<shouldRememberUnknownUsers> true </shouldRememberUnknownUsers>
 		<entityTypeForUnknownUsers> Account </entityTypeForUnknownUsers>
 		<authenticateViaBaseEntity> false </authenticateViaBaseEntity>

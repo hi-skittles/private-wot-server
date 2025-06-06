@@ -6,6 +6,7 @@ from adisp import async, process
 import bwdebug
 from db_scripts.handlers import QuestsHandler, InventoryHandler, StatsHandler, ShopHandler, DossierHandler
 from items import ITEM_TYPE_INDICES
+from server_constants import BASEAPP_CONST
 
 import BigWorld
 import AccountCommands
@@ -14,26 +15,14 @@ from enumerations import Enumeration
 ### STATIC
 
 
-SM_TYPE = Enumeration(
-	'System message type',
-	['Error',
-	 'Warning',
-	 'Information',
-	 'GameGreeting',
-	 'PowerLevel',
-	 'FinancialTransactionWithGold',
-	 'FinancialTransactionWithCredits',
-	 'FortificationStartUp',
-	 'PurchaseForGold',
-	 'DismantlingForGold',
-	 'PurchaseForCredits',
-	 'Selling',
-	 'Remove',
-	 'Repair',
-	 'CustomizationForGold',
-	 'CustomizationForCredits'])
+SM_TYPE = Enumeration('System message type',
+                      ['Error', 'Warning', 'Information', 'GameGreeting', 'PowerLevel', 'FinancialTransactionWithGold',
+                       'FinancialTransactionWithCredits', 'FortificationStartUp', 'PurchaseForGold',
+                       'DismantlingForGold', 'PurchaseForCredits', 'Selling', 'Remove', 'Repair',
+                       'CustomizationForGold', 'CustomizationForCredits'])
 BASE_REQUESTS = {}
-DO_DEBUG = True #set to false to see less server console shit
+DO_DEBUG = BASEAPP_CONST.BA_DO_DEBUG
+
 
 ### HELPERS
 
@@ -59,7 +48,6 @@ def packStream(proxy, requestID, data):
 
 DEBUG_MSG = bwdebug.DEBUG_MSG
 if not DO_DEBUG:
-	# if you don't want to see debug messages, then redefine the function to do nothing
 	DEBUG_MSG = lambda *args, **kwargs: None
 
 
@@ -79,9 +67,9 @@ def changeHangar(proxy, requestID, arr):
 	
 	rdata = yield async(StatsHandler.get_stats, cbname='callback')(proxy.normalizedName, 'eventsData')
 	udata = rdata
-	udata[('eventsData', '_r')][EVENT_CLIENT_DATA.NOTIFICATIONS] = zlib.compress(
-		cPickle.dumps([{'type': 'cmd_change_hangar', 'data': 'spaces/' + basic_name, 'text': {}, 'requiredTokens': []},
-		               {'type': 'cmd_change_hangar_prem', 'data': 'spaces/' + premium_name, 'text': {}, 'requiredTokens': []}]))
+	udata[('eventsData', '_r')][EVENT_CLIENT_DATA.NOTIFICATIONS] = zlib.compress(cPickle.dumps(
+		[{'type': 'cmd_change_hangar', 'data': 'spaces/' + basic_name, 'text': {}, 'requiredTokens': []},
+		 {'type': 'cmd_change_hangar_prem', 'data': 'spaces/' + premium_name, 'text': {}, 'requiredTokens': []}]))
 	cdata = {'rev': requestID, 'prevRev': requestID - 1, ('eventsData', '_r'): udata[('eventsData', '_r')]}
 	proxy.client.update(cPickle.dumps(cdata))
 	proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
@@ -137,31 +125,12 @@ def buyVehicle(proxy, requestID, args):
 	                                                          crew_level, int3)
 	
 	# initialisation
-	cdata = {
-		'rev': requestID,
-		'prevRev': requestID - 1,
-		'inventory': {
-			ITEM_TYPE_INDICES['vehicle']: {
-				'compDescr': None,
-				'crew': None,
-				'eqs': None,
-				'eqsLayout': None,
-				'settings': None,
-				'shellsLayout': None
-			},
-			ITEM_TYPE_INDICES['tankman']: {
-				'compDescr': None,
-				'vehicle': None
-			}
-		},
-		'stats': {
-			'gold': None,
-			'maxResearchedLevelByNation': None,
-			'vehTypeXP': None,
-			'unlocks': None,
-			'credits': None
-		}
-	}
+	cdata = {'rev': requestID, 'prevRev': requestID - 1, 'inventory': {
+		ITEM_TYPE_INDICES['vehicle']: {'compDescr': None, 'crew': None, 'eqs': None, 'eqsLayout': None,
+		                               'settings': None, 'shellsLayout': None},
+		ITEM_TYPE_INDICES['tankman']: {'compDescr': None, 'vehicle': None}},
+	         'stats': {'gold': None, 'maxResearchedLevelByNation': None, 'vehTypeXP': None, 'unlocks': None,
+	                   'credits': None}}
 	
 	if result > 0:
 		DEBUG_MSG('AccountCommands.CMD_BUY_VEHICLE :: success=%s' % result)
@@ -197,7 +166,7 @@ def buyVehicle(proxy, requestID, args):
 			                                                               [ITEM_TYPE_INDICES['vehicle'],
 			                                                                ITEM_TYPE_INDICES['tankman']])
 		else:
-			ERROR_MSG('AccountCommands.CMD_BUY_VEHICLE :: None value in cdata=%s' % invalid_data)
+			bwdebug.ERROR_MSG('AccountCommands.CMD_BUY_VEHICLE :: None value in cdata=%s' % invalid_data)
 			proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'None value in cdata')
 	else:
 		DEBUG_MSG('AccountCommands.CMD_BUY_VEHICLE :: failure=', result, msg)
@@ -283,8 +252,7 @@ def unlockItem(proxy, requestID, vehTypeCompDescr, unlockIdx, int1):
 	# this is the only thing the client needs in .update ...
 	cdata = {'rev': requestID, 'prevRev': requestID - 1,
 	         'stats': {'vehTypeXP': None, 'freeXP': None, 'unlocks': None, 'eliteVehicles': None},
-	         'economics': {'eliteVehicles': None}
-	         }
+	         'economics': {'eliteVehicles': None}}
 	
 	if result > 0:
 		DEBUG_MSG('AccountCommands.CMD_UNLOCK :: success=%s' % result)
@@ -343,7 +311,7 @@ def premium(proxy, requestID, int1, int2, int3):
 	shopRev = int1
 	extend_by_days = int2
 	rdata = yield async(StatsHandler.get_stats, cbname='callback')(proxy.normalizedName, ['account', 'stats'])
-	TRACE_MSG('[premium]', rdata)
+	DEBUG_MSG('[premium]', rdata)
 	result, msg, udata = AccountUpdates.__addPremiumTime(extend_by_days, rdata)
 	
 	# this is the only thing the client needs in .update ...
@@ -397,10 +365,8 @@ def addIntUserSettings(proxy, requestID, settings):
 
 @baseRequest(AccountCommands.CMD_REQ_SERVER_STATS)
 def serverStats(proxy, requestID, int1, int2, int3):
-	data = {
-		'clusterCCU': len([entity for entity in BigWorld.entities.values() if entity.className == 'Account']),
-		'regionCCU': len([entity for entity in BigWorld.entities.values() if entity.className == 'Account'])
-	}
+	data = {'clusterCCU': len([entity for entity in BigWorld.entities.values() if entity.className == 'Account']),
+	        'regionCCU': len([entity for entity in BigWorld.entities.values() if entity.className == 'Account'])}
 	proxy.client.receiveServerStats(data)
 	proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
 
@@ -442,15 +408,9 @@ def syncData(proxy, requestID, revision, crc, _):
 	data.update(srdata)
 	
 	# show gui to client
-	_GUI_CTX = cPickle.dumps({
-		'databaseID': proxy.databaseID,
-		'logUXEvents': True,
-		'aogasStartedAt': time.time(),
-		'sessionStartedAt': time.time(),
-		'isAogasEnabled': True,
-		'collectUiStats': False,
-		'isLongDisconnectedFromCenter': False,
-	})
+	_GUI_CTX = cPickle.dumps({'databaseID': proxy.databaseID, 'logUXEvents': True, 'aogasStartedAt': time.time(),
+	                          'sessionStartedAt': time.time(), 'isAogasEnabled': True, 'collectUiStats': False,
+	                          'isLongDisconnectedFromCenter': False, })
 	proxy.client.showGUI(_GUI_CTX)
 	proxy.client.pushClientMessage("WoT Offline 9.7", SM_TYPE.FortificationStartUp)
 	proxy.client.onCmdResponseExt(requestID, AccountCommands.RES_SUCCESS, '', cPickle.dumps(data))

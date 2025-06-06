@@ -121,8 +121,11 @@ class _EventsCache(object):
         actions = self.__getActionsData()
         filterFunc = filterFunc or (lambda a: True)
         result = {}
+        print 'actions = ', actions
         for aData in actions:
+            print 'aData1 = ', aData
             if 'id' in aData:
+                print 'aData2 = ', True
                 a = self._makeAction(aData['id'], aData)
                 if not filterFunc(a):
                     continue

@@ -3,7 +3,9 @@ import cPickle
 import BigWorld
 import AccountCommands
 import traceback
-from bwdecorators import functionWatcher, functionWatcherParameter
+
+import util
+from bwdecorators import functionWatcher, functionWatcherParameter, watcher
 from Account import Account
 
 from enumerations import Enumeration

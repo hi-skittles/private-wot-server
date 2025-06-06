@@ -1,4 +1,5 @@
 import functools, hashlib, socket, struct, mysql.connector
+from random import randint
 
 import BigWorld, BackgroundTask, ResMgr
 from server_constants import DATABASE_CONST
@@ -6,12 +7,14 @@ from bwdebug import DEBUG_MSG, INFO_MSG, WARNING_MSG
 from billing_system_settings import SHOULD_ACCEPT_UNKNOWN_USERS
 from billing_system_settings import SHOULD_REMEMBER_UNKNOWN_USERS
 from billing_system_settings import ENTITY_TYPE_FOR_UNKNOWN_USERS
+from server_constants import BASEAPP_CONST
 
 NUM_THREADS = 4
 IS_DEV = DATABASE_CONST.DB_IS_DEV
 DO_EXTRA_DEBUG = DATABASE_CONST.LOGIN_DB_DO_EXTRA_DEBUG
 TABLE_NAME = DATABASE_CONST.LOGIN_DB_TABLE_NAME
 DATABASE_NAME = DATABASE_CONST.LOGIN_DB_DATABASE_NAME
+MAX_ONLINE_ACCOUNTS = BASEAPP_CONST.MAX_ONLINE_ACCOUNTS
 
 
 def hashPassword(password):
@@ -44,10 +47,22 @@ class GetTask(BackgroundTask.BackgroundTask):
 		if result:
 			if hashPassword(self.password) == result[1]:
 				if DO_EXTRA_DEBUG: DEBUG_MSG('[BillingSystem] User %s logged in' % self.logOnName)
-				if True:  # len([e for e in BigWorld.entities.values() if e.className == 'Account'])
+				
+				try:
 					self.response.loadEntityByName('Account', self.logOnName, False)
-				else:
-					self.response.loadEntityByName('Login', self.logOnName, False)
+				except:
+					BigWorld.createEntity('Account', {
+						'normalizedName': self.logOnName,
+						'name': self.logOnName.split('@')[0] + str(randint(1000, 9999))
+					})
+					self.response.loadEntityByName('Account', self.logOnName, False)
+				
+				# count = BigWorld.getWatcher("stats/onlineAccounts") or 0
+				# if True:    # count >= MAX_ONLINE_ACCOUNTS
+				# 	self.response.loadEntityByName('Login', self.logOnName, False)
+				# else:
+				# 	self.response.loadEntityByName('Account', self.logOnName, False)
+			
 			else:
 				self.response.failureInvalidPassword()
 		elif SHOULD_ACCEPT_UNKNOWN_USERS:

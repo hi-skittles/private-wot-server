@@ -1,3 +1,5 @@
+from random import randint
+
 import BigWorld
 from BigWorld import Proxy
 import cPickle
@@ -68,6 +70,9 @@ class Account(BigWorld.Proxy):
 			'wallet': (False, False)
 		}
 		self.syncProperties()
+		if not len(self.name) > 0:
+			ERROR_MSG('Account.__init__ :: username (name) is empty')
+			self.name = self.normalizedName.split('@')[0] + str(randint(1000, 9999))
 		self.writeToDB()  # all accounts are persistent
 	
 	@process

@@ -22,17 +22,17 @@ class Login(BigWorld.Proxy):
 		TRACE_MSG('Login::onLogOnAttempt  ', ip, port, password)
 	
 	def callback1(self, baseRef, databaseID, wasActive):
-		DEBUG_MSG('Login::callback1', baseRef, databaseID, wasActive)
+		DEBUG_MSG('Login::callback1:', baseRef, databaseID, wasActive)
 		if baseRef:
 			DEBUG_MSG('Login::callback1: baseRef true')
 			self.onAccountClientReleased(baseRef)
 		else:
 			DEBUG_MSG('Login::callback1: baseRef false')
 			self.onAccountClientReleased(BigWorld.createEntity('Account', {'normalizedName': self.accountDBID_s,
-			                                                               'name': self.normalizedName.split('@')[
-				                                                                       0] + str(
-				                                                               random.randint(1000, 9999))}))
-		# BigWorld.createEntity('Avatar', {'name': BigWorld.entities.get(2403).normalizedName, 'account': BigWorld.entities.get(2403)})
+			                                                               'name': self.accountDBID_s.split('@')[0] +
+			                                                                       str(random.randint(1000, 9999))}))
+	
+	# BigWorld.createEntity('Avatar', {'name': BigWorld.entities.get(2403).normalizedName, 'account': BigWorld.entities.get(2403)})
 	
 	def onEnqueued(self, STRING, UINT64):
 		DEBUG_MSG('Login::onEnqueued', STRING, UINT64)
@@ -58,5 +58,4 @@ class Login(BigWorld.Proxy):
 	def onAccountClientReleased(self, MAILBOX):
 		DEBUG_MSG('Login::onAccountClientReleased', MAILBOX)
 		self.giveClientTo(MAILBOX)
-		self.destroy()
-	# self.deleteBaseByDBID('Login', self.databaseID)
+		self.destroy()  # self.deleteBaseByDBID('Login', self.databaseID)
