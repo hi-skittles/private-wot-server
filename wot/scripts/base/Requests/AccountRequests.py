@@ -214,6 +214,79 @@ def buyAndEquipItem(proxy, requestID, *args):
 	proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, '')
 
 
+@baseRequest(AccountCommands.CMD_BUY_AND_EQUIP_TMAN)
+@process
+def buyAndEquipTankman(proxy, requestID, int1, int2, int3, int4):
+	"""Recruit and immediately equip a tankman to a vehicle slot."""
+	DEBUG_MSG('AccountCommands.CMD_BUY_AND_EQUIP_TMAN :: ', int1, int2, int3, int4)
+	
+	shopRev = int1
+	vehInvID = int2
+	slotIdx = int3
+	costTypeIdx = int4
+	
+	shop = ShopHandler.get_shop()
+	costInfo = shop['tankmanCost'][costTypeIdx]
+	
+	s_data = yield async(StatsHandler.get_stats, cbname='callback')(proxy.normalizedName, 'stats')
+	i_data = yield async(InventoryHandler.get_inventory, cbname='callback')(proxy.normalizedName,
+	                                                                        [ITEM_TYPE_INDICES['vehicle'],
+	                                                                         ITEM_TYPE_INDICES['tankman']])
+	
+	vehicle_data = i_data['inventory'][ITEM_TYPE_INDICES['vehicle']]
+	tankman_data = i_data['inventory'][ITEM_TYPE_INDICES['tankman']]
+	
+	if vehInvID not in vehicle_data['compDescr']:
+		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Vehicle not found')
+		return
+	
+	from items import vehicles, tankmen
+	veh_descr = vehicles.VehicleDescr(compactDescr=vehicle_data['compDescr'][vehInvID])
+	crew_roles = veh_descr.type.crewRoles
+	if slotIdx >= len(crew_roles):
+		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Invalid crew slot')
+		return
+	
+	if s_data['stats']['credits'] < costInfo['credits'] or s_data['stats']['gold'] < costInfo['gold']:
+		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Not enough resources')
+		return
+	
+	s_data['stats']['credits'] -= costInfo['credits']
+	s_data['stats']['gold'] -= costInfo['gold']
+	
+	nationID, vehTypeID = veh_descr.type.id
+	new_descr = tankmen.generateTankmen(nationID, vehTypeID, [crew_roles[slotIdx]], costInfo['isPremium'],
+	                                    costInfo['roleLevel'], [])[0]
+	
+	existing_ids = tankman_data['compDescr'].keys()
+	new_id = max(existing_ids) + 1 if existing_ids else 1
+	tankman_data['vehicle'][new_id] = vehInvID
+	tankman_data['compDescr'][new_id] = new_descr
+	
+	crew_list = vehicle_data['crew'].get(vehInvID, [])
+	if len(crew_list) < len(crew_roles):
+		crew_list += [None] * (len(crew_roles) - len(crew_list))
+	crew_list[slotIdx] = new_id
+	vehicle_data['crew'][vehInvID] = crew_list
+	
+	cdata = {'rev': requestID, 'prevRev': requestID - 1,
+	         'inventory': {
+		         ITEM_TYPE_INDICES['vehicle']: {'crew': vehicle_data['crew']},
+		         ITEM_TYPE_INDICES['tankman']: {'compDescr': tankman_data['compDescr'],
+		                                        'vehicle': tankman_data['vehicle']}
+	         },
+	         'stats': {'gold': s_data['stats']['gold'], 'credits': s_data['stats']['credits']}}
+	
+	proxy.client.update(cPickle.dumps(cdata))
+	proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
+	proxy.writeToDB()
+	yield async(StatsHandler.update_stats, cbname='callback')(proxy.normalizedName, s_data, ['stats'])
+	yield async(InventoryHandler.set_inventory, cbname='callback')(proxy.normalizedName, i_data,
+	                                                               [ITEM_TYPE_INDICES['vehicle'],
+	                                                                ITEM_TYPE_INDICES['tankman']])
+	del shop, s_data, i_data,
+
+
 @baseRequest(AccountCommands.CMD_FREE_XP_CONV)
 @process
 def exchangeFreeXP(proxy, requestID, args):
