@@ -77,14 +77,14 @@ def get_shop():
 			                'isPremium': False,
 			                'baseRoleLoss': 0.10000000149011612,
 			                'gold': 0,
-			                'credits': 20000,  # 20000
+			                'credits': 10000,  # 20000
 			                'classChangeRoleLoss': 0.10000000149011612,
 			                'roleLevel': 75
 		                },
 		                {
 			                'isPremium': True,
 			                'baseRoleLoss': 0.0,
-			                'gold': 100,  # 200
+			                'gold': 50,  # 200
 			                'credits': 0,
 			                'classChangeRoleLoss': 0.0,
 			                'roleLevel': 100

@@ -393,7 +393,7 @@ def initEmptyStats():
 			'crystalExchangeRate': 200,
 			'applyAdditionalXPCount': 1,
 			'accOnline': 200,
-			'berths': 40,
+			'berths': 20,
 			'credits': 10000000,
 			'gold': 100000,
 			'crystal': 1000,
