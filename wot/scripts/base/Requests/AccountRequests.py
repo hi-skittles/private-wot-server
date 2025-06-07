@@ -21,7 +21,7 @@ SM_TYPE = Enumeration('System message type',
                        'DismantlingForGold', 'PurchaseForCredits', 'Selling', 'Remove', 'Repair',
                        'CustomizationForGold', 'CustomizationForCredits'])
 BASE_REQUESTS = {}
-DO_DEBUG = BASEAPP_CONST.BA_DO_DEBUG
+DO_DEBUG = False
 
 
 ### HELPERS
@@ -47,6 +47,7 @@ def packStream(proxy, requestID, data):
 
 
 DEBUG_MSG = bwdebug.DEBUG_MSG
+TRACE_MSG = bwdebug.TRACE_MSG
 if not DO_DEBUG:
 	DEBUG_MSG = lambda *args, **kwargs: None
 
@@ -236,27 +237,49 @@ def buyAndEquipTankman(proxy, requestID, int1, int2, int3, int4):
 	vehicle_data = i_data['inventory'][ITEM_TYPE_INDICES['vehicle']]
 	tankman_data = i_data['inventory'][ITEM_TYPE_INDICES['tankman']]
 	
+	# TRACE_MSG('vehicle_data=%s\nvehicle_data["compDescr"]=%s' % (vehicle_data, vehicle_data["compDescr"]))
+	# TRACE_MSG('tankman_data=%s\n')
+	
 	if vehInvID not in vehicle_data['compDescr']:
-		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Vehicle not found')
+		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Vehicle not found. Cheating?')
 		return
 	
 	from items import vehicles, tankmen
 	veh_descr = vehicles.VehicleDescr(compactDescr=vehicle_data['compDescr'][vehInvID])
+	TRACE_MSG('dir(veh_descr)=%s\n.type=%s' % (dir(veh_descr), veh_descr.type))
 	crew_roles = veh_descr.type.crewRoles
 	if slotIdx >= len(crew_roles):
-		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Invalid crew slot')
+		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Invalid crew slot. Cheating?')
 		return
 	
 	if s_data['stats']['credits'] < costInfo['credits'] or s_data['stats']['gold'] < costInfo['gold']:
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Not enough resources')
 		return
 	
+	#   add previous to barracks, if any
+	crew_list = vehicle_data['crew'].get(vehInvID, [])
+	# TRACE_MSG('crew_list=%s' % crew_list)
+	if len(crew_list) < len(crew_roles):
+		crew_list += [None] * (len(crew_roles) - len(crew_list))
+	# TRACE_MSG('crew_list after padding=%s' % crew_list)
+	
+	old_tman_id = crew_list[slotIdx] if slotIdx < len(crew_list) else None
+	if old_tman_id is not None:
+		barracks_count = len([v for v in tankman_data['vehicle'].values() if v <= 0])
+		free_berths = s_data['stats']['berths'] - barracks_count
+		if free_berths <= 0:
+			proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'No free berths')
+			return
+		tankman_data['vehicle'][old_tman_id] = 0
+	#
+	
 	s_data['stats']['credits'] -= costInfo['credits']
 	s_data['stats']['gold'] -= costInfo['gold']
 	
-	nationID, vehTypeID = veh_descr.type.id
+	nationID, vehTypeID = veh_descr.type.id # reference tank
 	new_descr = tankmen.generateTankmen(nationID, vehTypeID, [crew_roles[slotIdx]], costInfo['isPremium'],
 	                                    costInfo['roleLevel'], [])[0]
+	# TRACE_MSG('new_descr=%s' % new_descr)
 	
 	existing_ids = tankman_data['compDescr'].keys()
 	new_id = max(existing_ids) + 1 if existing_ids else 1
@@ -284,7 +307,7 @@ def buyAndEquipTankman(proxy, requestID, int1, int2, int3, int4):
 	yield async(InventoryHandler.set_inventory, cbname='callback')(proxy.normalizedName, i_data,
 	                                                               [ITEM_TYPE_INDICES['vehicle'],
 	                                                                ITEM_TYPE_INDICES['tankman']])
-	del shop, s_data, i_data,
+	del shop, s_data, i_data, vehicles, tankmen # PLEASE START CLEANING UP =D
 
 
 @baseRequest(AccountCommands.CMD_FREE_XP_CONV)
