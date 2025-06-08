@@ -114,6 +114,7 @@ class Account(BigWorld.Proxy):
 			return
 		if self._cmdInProgress:
 			self._cmdQueue.append((requestID, cmd, args))
+			DEBUG_MSG('Server.request :: ', requestID, cmd, args, 'queued')
 			return
 		self.__executeCmd(requestID, cmd, *args)
 	
@@ -127,15 +128,17 @@ class Account(BigWorld.Proxy):
 			else:
 				DEBUG_MSG('Server.requestFail (unknown)', requestID, cmd, args)
 				self.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Unknown command')
+				self.commandFinished_(requestID)
 		except AttributeError as a:
 			DEBUG_MSG('Server.requestFail :: ', requestID, cmd, args, a)
 			self.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, a.__str__())
+			self.commandFinished_(requestID)
 		# finally:
 		# 	self.__commandFinished()
 	
 	def commandFinished_(self, requestID):
 		self._cmdInProgress = False
-		# DEBUG_MSG('Request %s finished' % requestID)
+		DEBUG_MSG('Request %s finished' % requestID)
 		if self._cmdQueue:
 			rID, c, a = self._cmdQueue.popleft()
 			self.__executeCmd(rID, c, *a)

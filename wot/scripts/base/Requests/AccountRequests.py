@@ -330,11 +330,135 @@ def vehicleCamouflage(proxy, requestID, *args):
 @baseRequest(AccountCommands.CMD_EQUIP_OPTDEV)
 @process
 def equipOptDevice(proxy, requestID, *args):
-	# NYI
-	DEBUG_MSG('CMD_EQUIP_OPTDEV', requestID, *args)
-	proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'nyi')
-	proxy.commandFinished_(requestID)
+	shopRev, vehInvID, deviceCompDescr, slotIdx, isPaidRemoval = args[0]
+	DEBUG_MSG('CMD_EQUIP_OPTDEV=', shopRev, vehInvID, deviceCompDescr, slotIdx, isPaidRemoval)
 	
+	shop = ShopHandler.get_shop()
+	
+	s_data = yield async(StatsHandler.get_stats, cbname='callback')(proxy.normalizedName, 'stats')
+	i_data = yield async(InventoryHandler.get_inventory, cbname='callback')(proxy.normalizedName,
+	                                                                        [ITEM_TYPE_INDICES['vehicle'],
+	                                                                         ITEM_TYPE_INDICES['optionalDevice']])
+	
+	if deviceCompDescr: is_installing = True
+	else: is_installing = False
+	DEBUG_MSG('is_installing=', is_installing)
+	
+	vehicles_data = i_data['inventory'][ITEM_TYPE_INDICES['vehicle']]
+	DEBUG_MSG('vehicles_data=', vehicles_data)
+	if vehInvID not in vehicles_data['compDescr']:
+		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Vehicle not found')
+		proxy.commandFinished_(requestID)
+		return
+	
+	inv_items = i_data['inventory'][ITEM_TYPE_INDICES['optionalDevice']]
+	DEBUG_MSG('inv_items=', inv_items)
+	if inv_items.get(deviceCompDescr, 0) <= 0 and is_installing:
+		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Item not found. Cheating?')
+		proxy.commandFinished_(requestID)
+		return
+	
+	from items.vehicles import VehicleDescr
+	from items import getTypeOfCompactDescr
+	
+	vehicle = VehicleDescr(compactDescr=vehicles_data['compDescr'][vehInvID])
+	can_, can_msg = vehicle.mayInstallOptionalDevice(deviceCompDescr, slotIdx) if is_installing else \
+		vehicle.mayRemoveOptionalDevice(slotIdx)
+	DEBUG_MSG('can_=%s, can_msg=%s' % (can_, can_msg))
+	
+	if not can_:
+		msg = 'Item incompatible with current vehicle' if can_msg == 'not for current vehicle' else can_msg
+		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, msg)
+		proxy.commandFinished_(requestID)
+		return
+	
+	i_r_on_veh = vehicle.installOptionalDevice(deviceCompDescr, slotIdx) if is_installing else \
+		vehicle.removeOptionalDevice(slotIdx)
+	DEBUG_MSG('i_r_on_veh=', i_r_on_veh)
+	if is_installing:
+		DEBUG_MSG('if is_installing')
+		if not i_r_on_veh[0] and not i_r_on_veh[1]:
+			DEBUG_MSG('no previous device installed')
+			inv_items[deviceCompDescr] = inv_items.get(deviceCompDescr, 0) - 1  # subtract NEW item from inventory
+		elif i_r_on_veh[0]: # previous device is removable and does not require paidRemoval
+			DEBUG_MSG('i_r_on_veh[0]')
+			inv_items[deviceCompDescr] = inv_items.get(deviceCompDescr, 0) - 1  # subtract NEW item from inventory
+			
+			prev_compDescr = i_r_on_veh[0][0]
+			prev_device_type = getTypeOfCompactDescr(prev_compDescr)
+			i_data['inventory'][prev_device_type][prev_compDescr] = i_data['inventory'][prev_device_type].get(prev_compDescr, 0) + 1    # demounted item goes back to inventory
+		elif i_r_on_veh[1]: # previous device is not removable and requires paidRemoval
+			DEBUG_MSG('i_r_on_veh[1]')
+			inv_items[deviceCompDescr] = inv_items.get(deviceCompDescr, 0) - 1  # subtract NEW item count from inventory
+			
+			if not isPaidRemoval:
+				DEBUG_MSG('previous complex device destroyed')
+			else:
+				removalCost = shop.get('paidRemovalCost', 10)
+				if s_data['stats']['gold'] < removalCost:
+					proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Not enough gold')
+					proxy.commandFinished_(requestID)
+					return
+				s_data['stats']['gold'] -= removalCost
+				
+				prev_compDescr = i_r_on_veh[1][0]
+				prev_device_type = getTypeOfCompactDescr(prev_compDescr)
+				i_data['inventory'][prev_device_type][prev_compDescr] = i_data['inventory'][prev_device_type].get(prev_compDescr, 0) + 1    # demounted item goes back to inventory
+				DEBUG_MSG('complex device %s of type %s demounted' % (prev_compDescr, prev_device_type))
+	
+	if not is_installing:
+		DEBUG_MSG('if not is_installing')
+		if not i_r_on_veh[0] and not i_r_on_veh[1]:
+			DEBUG_MSG('no device existed in slot %s' % slotIdx)
+			#   nothing was removed as there was no device installed in that slot
+			proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Nothing to remove. Cheating?')
+			proxy.commandFinished_(requestID)
+			return
+		elif i_r_on_veh[0]: # previous device is removable and does not require paidRemoval
+			
+			DEBUG_MSG('i_r_on_veh[0]')
+			prev_compDescr = i_r_on_veh[0][0]
+			prev_device_type = getTypeOfCompactDescr(prev_compDescr)
+			i_data['inventory'][prev_device_type][prev_compDescr] = i_data['inventory'][prev_device_type].get(prev_compDescr, 0) + 1    # demounted item goes back to inventory
+		elif i_r_on_veh[1]: # previous device is not removable and requires paidRemoval
+			
+			DEBUG_MSG('i_r_on_veh[1]')
+			if not isPaidRemoval:
+				DEBUG_MSG('complex device destroyed')
+			else:
+				removalCost = shop.get('paidRemovalCost', 10)
+				if s_data['stats']['gold'] < removalCost:
+					proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Not enough gold')
+					proxy.commandFinished_(requestID)
+					return
+				s_data['stats']['gold'] -= removalCost
+				
+				prev_compDescr = i_r_on_veh[1][0]
+				prev_device_type = getTypeOfCompactDescr(prev_compDescr)
+				i_data['inventory'][prev_device_type][prev_compDescr] = i_data['inventory'][prev_device_type].get(prev_compDescr, 0) + 1    # demounted item goes back to inventory
+				DEBUG_MSG('complex device %s of type %s demounted' % (prev_compDescr, prev_device_type))
+	
+	DEBUG_MSG('inv_items=', inv_items)
+	
+	vehicles_data['compDescr'][vehInvID] = vehicle.makeCompactDescr()
+	
+	cdata = {'rev': requestID, 'prevRev': requestID - 1,
+	         'inventory': {
+		         ITEM_TYPE_INDICES['vehicle']: {'compDescr': {vehInvID: vehicles_data['compDescr'][vehInvID]}},
+		         ITEM_TYPE_INDICES['optionalDevice']: inv_items
+	         },
+	         'stats': {'gold': s_data['stats']['gold']}}
+	
+	proxy.client.update(cPickle.dumps(cdata))
+	proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
+	proxy.writeToDB()
+	yield async(StatsHandler.update_stats, cbname='callback')(proxy.normalizedName, s_data, ['stats'])
+	yield async(InventoryHandler.set_inventory, cbname='callback')(proxy.normalizedName, i_data,
+	                                                               [ITEM_TYPE_INDICES['vehicle'],
+	                                                                ITEM_TYPE_INDICES['optionalDevice']])
+	proxy.commandFinished_(requestID)
+	del s_data, i_data, VehicleDescr, getTypeOfCompactDescr, vehicle, cdata
+
 
 @baseRequest(AccountCommands.CMD_SELL_ITEM)
 @process
@@ -506,8 +630,8 @@ def buyAndEquipItem(proxy, requestID, *args):
 	yield async(StatsHandler.update_stats, cbname='callback')(proxy.normalizedName, s_data, ['stats'])
 	yield async(InventoryHandler.set_inventory, cbname='callback')(proxy.normalizedName, i_data,
 	                                                               [ITEM_TYPE_INDICES['vehicle'], itemType])
-	del shop, s_data, i_data, vehicles_data, inv_items, eqs, eqsLayout, cdata  # PLEASE START CLEANING UP =D
 	proxy.commandFinished_(requestID)
+	del shop, s_data, i_data, vehicles_data, inv_items, eqs, eqsLayout, cdata  # PLEASE START CLEANING UP =D
 
 
 @baseRequest(AccountCommands.CMD_BUY_AND_EQUIP_TMAN)
