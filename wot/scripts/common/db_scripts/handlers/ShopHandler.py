@@ -31,7 +31,7 @@ freeXPRate = __returnFreeXPConversionRate()
 shopRev = __returnShopRev()
 
 def get_shop():
-	TRACE_MSG('ShopHandler : get_shop')
+	# TRACE_MSG('ShopHandler : get_shop')
 	return {
 		'rev': shopRev,
 		'crystalExchangeRate': 200,

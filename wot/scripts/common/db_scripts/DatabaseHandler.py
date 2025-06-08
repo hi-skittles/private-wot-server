@@ -419,7 +419,8 @@ def initEmptyStats():
 			'restrictions': {},
 			'oldVehInvID': 0,
 			'accOffline': 75,
-			'dossier': '',
+			'dossier': {(12345, 1622547800, 'dossierCompDescr1'), (67890, 1622547900, 'dossierCompDescr2'),
+			            (13579, 1622548000, 'dossierCompDescr3')},
 			'multipliedXPVehs': [],
 			'tutorialsCompleted': 33553532,
 			'playLimits': ((86400, '24'), (604800, '168')),  # ((86400, ''), (604800, ''))

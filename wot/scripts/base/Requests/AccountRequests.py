@@ -22,7 +22,7 @@ SM_TYPE = Enumeration('System message type',
                        'DismantlingForGold', 'PurchaseForCredits', 'Selling', 'Remove', 'Repair',
                        'CustomizationForGold', 'CustomizationForCredits'])
 BASE_REQUESTS = {}
-DO_DEBUG = False
+DO_DEBUG = True
 
 
 ### HELPERS
@@ -203,9 +203,139 @@ def buySlot(proxy, requestID, int1, _, __):
 @baseRequest(AccountCommands.CMD_VEH_CAMOUFLAGE)
 @process
 def vehicleCamouflage(proxy, requestID, *args):
-	int1, int2, int3, int4, int5 = args[0]
-	DEBUG_MSG('AccountCommands.CMD_VEH_CAMOUFLAGE :: ', int1, int2, int3, int4, int5)
-	proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, '')
+	shopRev, vehInvID, camouflageKind, camouflageID, periodDays = args[0]
+	DEBUG_MSG('AccountCommands.CMD_VEH_CAMOUFLAGE :: ', shopRev, vehInvID, camouflageKind, camouflageID, periodDays)
+	
+	s_data = yield async(StatsHandler.get_stats, cbname='callback')(proxy.normalizedName, 'stats')
+	i_data = yield async(InventoryHandler.get_inventory, cbname='callback')(proxy.normalizedName,
+	                                                                        [ITEM_TYPE_INDICES['vehicle']])
+	
+	vehicles_data = i_data['inventory'][ITEM_TYPE_INDICES['vehicle']]
+	if vehInvID not in vehicles_data['compDescr']:
+		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Vehicle not found')
+		return
+	
+	tank_descr = vehicles.VehicleDescr(compactDescr=vehicles_data['compDescr'][vehInvID])
+	old_camo = tank_descr.camouflages[camouflageKind]
+	#   old_camo will always exist, but the ID will just be None if there was no previous camouflage
+	old_camouflageID, old_camouflage_start_time, old_camouflage_duration_days = old_camo
+	DEBUG_MSG('old_camo=', tank_descr.camouflages)
+	
+	shop = ShopHandler.get_shop()
+	shop_items = shop.get('items', {})
+	
+	if camouflageID > 0:
+		DEBUG_MSG('camouflageID > 0.. buying camo')
+		priceInfo = shop.get('camouflageCost', {}).get(periodDays)
+		DEBUG_MSG('priceInfo=', priceInfo)
+		if priceInfo is None:
+			proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Invalid period')
+			return
+		cost, useGold = priceInfo
+		factor = shop_items.get('vehicleCamouflagePriceFactors', {}).get(tank_descr.type.compactDescr, 1.0)
+		nationFactors = shop_items.get('camouflagePriceFactors', [])
+		if tank_descr.type.customizationNationID < len(nationFactors):
+			factor *= nationFactors[tank_descr.type.customizationNationID].get(camouflageID, 1.0)
+		DEBUG_MSG('factor=', factor)
+		creditsCost = int(cost * factor) if not useGold else 0
+		goldCost = int(cost * factor) if useGold else 0
+		DEBUG_MSG('creditsCost=', creditsCost, 'goldCost=', goldCost)
+		
+		if s_data['stats']['credits'] < creditsCost or s_data['stats']['gold'] < goldCost:
+			proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Not enough resources')
+			return
+		
+		tank_descr.setCamouflage(camouflageKind, camouflageID, time.time(), periodDays)
+		s_data['stats']['credits'] -= creditsCost
+		s_data['stats']['gold'] -= goldCost
+		
+		if old_camouflageID:
+			DEBUG_MSG('old_camo exists during a buy.. removing previous camo')
+			old_priceInfo = shop.get('camouflageCost', {}).get(old_camouflage_duration_days)
+			DEBUG_MSG('old_priceInfo=', old_priceInfo)
+			if old_priceInfo is None:
+				proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Invalid period')
+				return
+			cost, useGold = old_priceInfo
+			old_factor = shop_items.get('vehicleCamouflagePriceFactors', {}).get(tank_descr.type.compactDescr, 1.0)
+			nationFactors = shop_items.get('camouflagePriceFactors', [])
+			if tank_descr.type.customizationNationID < len(nationFactors):
+				old_factor *= nationFactors[tank_descr.type.customizationNationID].get(old_camouflageID, 1.0)
+			DEBUG_MSG('old_factor=', old_factor)
+			creditsCost = int(cost * old_factor) if not useGold else 0
+			goldCost = int(cost * old_factor) if useGold else 0
+			DEBUG_MSG('old_creditsCost=', creditsCost, 'old_goldCost=', goldCost)
+			
+			DEBUG_MSG('Refunding previous camo')
+			if old_camouflage_duration_days == 0:
+				s_data['stats']['credits'] += creditsCost
+				s_data['stats']['gold'] += goldCost
+	
+	if camouflageID == 0:
+		DEBUG_MSG('camouflageID == 0.. removing camo')
+		old_priceInfo = shop.get('camouflageCost', {}).get(old_camouflage_duration_days)
+		DEBUG_MSG('old_priceInfo=', old_priceInfo)
+		if old_priceInfo is None:
+			proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Invalid period')
+			return
+		cost, useGold = old_priceInfo
+		old_factor = shop_items.get('vehicleCamouflagePriceFactors', {}).get(tank_descr.type.compactDescr, 1.0)
+		nationFactors = shop_items.get('camouflagePriceFactors', [])
+		if tank_descr.type.customizationNationID < len(nationFactors):
+			old_factor *= nationFactors[tank_descr.type.customizationNationID].get(old_camouflageID, 1.0)
+		DEBUG_MSG('old_factor=', old_factor)
+		creditsCost = int(cost * old_factor) if not useGold else 0
+		goldCost = int(cost * old_factor) if useGold else 0
+		DEBUG_MSG('old_creditsCost=', creditsCost, 'old_goldCost=', goldCost)
+		
+		DEBUG_MSG('Refunding previous camo')
+		tank_descr.setCamouflage(position=camouflageKind, camouflageID=None, startTime=None, durationDays=None)
+		if old_camouflage_duration_days == 0:
+			s_data['stats']['credits'] += creditsCost
+			s_data['stats']['gold'] += goldCost
+
+	vehicles_data['compDescr'][vehInvID] = tank_descr.makeCompactDescr()
+	vehicles_data['customizationExpiryTime'][vehInvID] = int(time.time() + periodDays * 24 * 3600)
+	
+	cdata = {'rev': requestID, 'prevRev': requestID - 1,
+	         'inventory': {
+		         ITEM_TYPE_INDICES['vehicle']: {
+			         'compDescr': {vehInvID: vehicles_data['compDescr'][vehInvID]},
+			         'customizationExpiryTime': {vehInvID: vehicles_data['customizationExpiryTime'][vehInvID]}
+		         }
+	         },
+	         'stats': {'gold': s_data['stats']['gold'], 'credits': s_data['stats']['credits']}}
+	
+	proxy.client.update(cPickle.dumps(cdata))
+	proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
+	proxy.writeToDB()
+	yield async(StatsHandler.update_stats, cbname='callback')(proxy.normalizedName, s_data, ['stats'])
+	yield async(InventoryHandler.set_inventory, cbname='callback')(proxy.normalizedName, i_data,
+	                                                               [ITEM_TYPE_INDICES['vehicle']])
+
+
+@baseRequest(AccountCommands.CMD_EQUIP_OPTDEV)
+@process
+def equipOptDevice(proxy, requestID, *args):
+	# NYI
+	DEBUG_MSG('CMD_EQUIP_OPTDEV', requestID, *args)
+	proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'nyi')
+	
+
+@baseRequest(AccountCommands.CMD_SELL_ITEM)
+@process
+def sellItem(proxy, requestID, int1, int2, int3, int4):
+	# NYI
+	DEBUG_MSG('CMD_SELL_ITEM', requestID, int1, int2, int3, int4)
+	proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'nyi')
+
+
+@baseRequest(AccountCommands.CMD_EQUIP)
+@process
+def equip(proxy, requestID, int1, int2, int3):
+	# NYI
+	DEBUG_MSG('CMD_EQUIP', requestID, int1, int2, int3)
+	proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'nyi')
 
 
 @baseRequest(AccountCommands.CMD_BUY_AND_EQUIP_ITEM)
@@ -227,6 +357,7 @@ def buyAndEquipItem(proxy, requestID, *args):
 	
 	try:
 		itemType = getTypeOfCompactDescr(compDescr)
+		TRACE_MSG('itemType=%s' % itemType)
 	except Exception:
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Invalid item type')
 		return
