@@ -4,7 +4,7 @@ import items.vehicles as vehicles
 from constants import EVENT_CLIENT_DATA, ITEM_DEFS_PATH
 from db_scripts import AccountUpdates
 from adisp import async, process
-import bwdebug
+from bwdebug import *
 from db_scripts.handlers import QuestsHandler, InventoryHandler, StatsHandler, ShopHandler, DossierHandler
 from items import ITEM_TYPE_INDICES
 from server_constants import BASEAPP_CONST
@@ -47,8 +47,6 @@ def packStream(proxy, requestID, data):
 	return proxy.streamStringToClient(data, desc, requestID)
 
 
-DEBUG_MSG = bwdebug.DEBUG_MSG
-TRACE_MSG = bwdebug.TRACE_MSG
 if not DO_DEBUG:
 	DEBUG_MSG = lambda *args, **kwargs: None
 
@@ -76,12 +74,14 @@ def changeHangar(proxy, requestID, arr):
 	proxy.client.update(cPickle.dumps(cdata))
 	proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
 	yield async(StatsHandler.update_stats, cbname='callback')(proxy.normalizedName, udata, ['eventsData'])
+	proxy.commandFinished_(requestID)
 
 
 @baseRequest(AccountCommands.CMD_REQ_PREBATTLES)
 def reqPrebattles(proxy, requestID, args):
 	DEBUG_MSG('AccountCommands.CMD_REQ_PREBATTLES :: ', args)
 	proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'NYI')
+	proxy.commandFinished_(requestID)
 
 
 @baseRequest(AccountCommands.CMD_ENQUEUE_TUTORIAL)
@@ -89,6 +89,7 @@ def enqueueTutorial(proxy, requestID, int1, int2, int3):
 	DEBUG_MSG('AccountCommands.CMD_ENQUEUE_TUTORIAL :: ', int1, int2, int3)
 	proxy.onTutorialEnqueued('string', int1)
 	proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, 'NYI')
+	proxy.commandFinished_(requestID)
 
 
 @baseRequest(AccountCommands.CMD_BUY_VEHICLE)
@@ -115,6 +116,7 @@ def buyVehicle(proxy, requestID, args):
 	"""
 	if len(args) != 5:
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_WRONG_ARGS, 'Invalid arguments')
+		proxy.commandFinished_(requestID)
 		return
 	
 	shopRev, vehTypeCompDescr, flags, crew_level, int3 = args
@@ -167,12 +169,15 @@ def buyVehicle(proxy, requestID, args):
 			yield async(InventoryHandler.set_inventory, cbname='callback')(proxy.normalizedName, i_data,
 			                                                               [ITEM_TYPE_INDICES['vehicle'],
 			                                                                ITEM_TYPE_INDICES['tankman']])
+			proxy.commandFinished_(requestID)
 		else:
-			bwdebug.ERROR_MSG('AccountCommands.CMD_BUY_VEHICLE :: None value in cdata=%s' % invalid_data)
+			ERROR_MSG('AccountCommands.CMD_BUY_VEHICLE :: None value in cdata=%s' % invalid_data)
 			proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'None value in cdata')
+			proxy.commandFinished_(requestID)
 	else:
 		DEBUG_MSG('AccountCommands.CMD_BUY_VEHICLE :: failure=', result, msg)
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_WRONG_ARGS, msg)
+		proxy.commandFinished_(requestID)
 
 
 @baseRequest(AccountCommands.CMD_BUY_SLOT)
@@ -195,9 +200,11 @@ def buySlot(proxy, requestID, int1, _, __):
 		# ...whereas we still store the full dict to db
 		proxy.writeToDB()
 		yield async(StatsHandler.update_stats, cbname='callback')(proxy.normalizedName, udata, ['stats'])
+		proxy.commandFinished_(requestID)
 	else:
 		DEBUG_MSG('AccountCommands.CMD_BUY_SLOT :: failure=%s' % result)
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, msg)
+		proxy.commandFinished_(requestID)
 
 
 @baseRequest(AccountCommands.CMD_VEH_CAMOUFLAGE)
@@ -213,6 +220,7 @@ def vehicleCamouflage(proxy, requestID, *args):
 	vehicles_data = i_data['inventory'][ITEM_TYPE_INDICES['vehicle']]
 	if vehInvID not in vehicles_data['compDescr']:
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Vehicle not found')
+		proxy.commandFinished_(requestID)
 		return
 	
 	tank_descr = vehicles.VehicleDescr(compactDescr=vehicles_data['compDescr'][vehInvID])
@@ -230,6 +238,7 @@ def vehicleCamouflage(proxy, requestID, *args):
 		DEBUG_MSG('priceInfo=', priceInfo)
 		if priceInfo is None:
 			proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Invalid period')
+			proxy.commandFinished_(requestID)
 			return
 		cost, useGold = priceInfo
 		factor = shop_items.get('vehicleCamouflagePriceFactors', {}).get(tank_descr.type.compactDescr, 1.0)
@@ -243,6 +252,7 @@ def vehicleCamouflage(proxy, requestID, *args):
 		
 		if s_data['stats']['credits'] < creditsCost or s_data['stats']['gold'] < goldCost:
 			proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Not enough resources')
+			proxy.commandFinished_(requestID)
 			return
 		
 		tank_descr.setCamouflage(camouflageKind, camouflageID, time.time(), periodDays)
@@ -255,6 +265,7 @@ def vehicleCamouflage(proxy, requestID, *args):
 			DEBUG_MSG('old_priceInfo=', old_priceInfo)
 			if old_priceInfo is None:
 				proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Invalid period')
+				proxy.commandFinished_(requestID)
 				return
 			cost, useGold = old_priceInfo
 			old_factor = shop_items.get('vehicleCamouflagePriceFactors', {}).get(tank_descr.type.compactDescr, 1.0)
@@ -277,6 +288,7 @@ def vehicleCamouflage(proxy, requestID, *args):
 		DEBUG_MSG('old_priceInfo=', old_priceInfo)
 		if old_priceInfo is None:
 			proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Invalid period')
+			proxy.commandFinished_(requestID)
 			return
 		cost, useGold = old_priceInfo
 		old_factor = shop_items.get('vehicleCamouflagePriceFactors', {}).get(tank_descr.type.compactDescr, 1.0)
@@ -312,6 +324,7 @@ def vehicleCamouflage(proxy, requestID, *args):
 	yield async(StatsHandler.update_stats, cbname='callback')(proxy.normalizedName, s_data, ['stats'])
 	yield async(InventoryHandler.set_inventory, cbname='callback')(proxy.normalizedName, i_data,
 	                                                               [ITEM_TYPE_INDICES['vehicle']])
+	proxy.commandFinished_(requestID)
 
 
 @baseRequest(AccountCommands.CMD_EQUIP_OPTDEV)
@@ -320,6 +333,7 @@ def equipOptDevice(proxy, requestID, *args):
 	# NYI
 	DEBUG_MSG('CMD_EQUIP_OPTDEV', requestID, *args)
 	proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'nyi')
+	proxy.commandFinished_(requestID)
 	
 
 @baseRequest(AccountCommands.CMD_SELL_ITEM)
@@ -328,6 +342,7 @@ def sellItem(proxy, requestID, int1, int2, int3, int4):
 	# NYI
 	DEBUG_MSG('CMD_SELL_ITEM', requestID, int1, int2, int3, int4)
 	proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'nyi')
+	proxy.commandFinished_(requestID)
 
 
 @baseRequest(AccountCommands.CMD_EQUIP)
@@ -336,6 +351,7 @@ def equip(proxy, requestID, int1, int2, int3):
 	# NYI
 	DEBUG_MSG('CMD_EQUIP', requestID, int1, int2, int3)
 	proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'nyi')
+	proxy.commandFinished_(requestID)
 
 
 @baseRequest(AccountCommands.CMD_BUY_AND_EQUIP_ITEM)
@@ -353,6 +369,7 @@ def buyAndEquipItem(proxy, requestID, *args):
 	price = shop.get('items', {}).get('itemPrices', {}).get(compDescr)
 	if price is None:
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Item not found')
+		proxy.commandFinished_(requestID)
 		return
 	
 	try:
@@ -360,6 +377,7 @@ def buyAndEquipItem(proxy, requestID, *args):
 		TRACE_MSG('itemType=%s' % itemType)
 	except Exception:
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Invalid item type')
+		proxy.commandFinished_(requestID)
 		return
 	itemInfo = getTypeInfoByIndex(itemType)
 	
@@ -372,16 +390,23 @@ def buyAndEquipItem(proxy, requestID, *args):
 	creditsCost, goldCost = price
 	if s_data['stats']['credits'] < creditsCost or s_data['stats']['gold'] < goldCost:
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Not enough resources')
+		proxy.commandFinished_(requestID)
 		return
 	
 	vehicles_data = i_data['inventory'][ITEM_TYPE_INDICES['vehicle']]
 	if vehInvID not in vehicles_data['compDescr']:
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Vehicle not found')
+		proxy.commandFinished_(requestID)
 		return
 	tank = vehicles_data['compDescr'][vehInvID]
 	
 	inv_items = i_data['inventory'][itemType]
 	inv_items[compDescr] = inv_items.get(compDescr, 0) + 1  # add item count
+	
+	if itemType == ITEM_TYPE_INDICES['vehicleChassis']:
+		vehicle = VehicleDescr(compactDescr=tank)
+		can_install, can_install_msg = vehicle.mayInstallComponent(compactDescr=compDescr, positionIndex=slotIdx)
+		TRACE_MSG('can_install=%s, can_install_msg=%s' % (can_install, can_install_msg))
 	
 	if itemType == ITEM_TYPE_INDICES['equipment']:
 		eqs = vehicles_data['eqs'].get(vehInvID, [])
@@ -406,6 +431,7 @@ def buyAndEquipItem(proxy, requestID, *args):
 				removalCost = shop.get('paidRemovalCost', 10)
 				if s_data['stats']['gold'] < removalCost:
 					proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Not enough gold')
+					proxy.commandFinished_(requestID)
 					return
 				s_data['stats']['gold'] -= removalCost
 	
@@ -420,9 +446,11 @@ def buyAndEquipItem(proxy, requestID, *args):
 		if not can_install:
 			if can_install_msg == 'not for current vehicle':
 				proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Item incompatible with current vehicle')
+				proxy.commandFinished_(requestID)
 				return
 			else:
 				proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, can_install_msg)
+				proxy.commandFinished_(requestID)
 				return
 		else:
 			install_on_veh = vehicle.installOptionalDevice(compDescr, slotIdx)
@@ -435,6 +463,7 @@ def buyAndEquipItem(proxy, requestID, *args):
 					removalCost = shop.get('paidRemovalCost', 10)
 					if s_data['stats']['gold'] < removalCost:
 						proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Not enough gold')
+						proxy.commandFinished_(requestID)
 						return
 					s_data['stats']['gold'] -= removalCost
 					i_data['inventory'][prev_device_type][prev_compDescr] = i_data['inventory'][prev_device_type].get(prev_compDescr) + 1 # demount it
@@ -449,6 +478,7 @@ def buyAndEquipItem(proxy, requestID, *args):
 					removalCost = shop.get('paidRemovalCost', 10)
 					if s_data['stats']['gold'] < removalCost:
 						proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Not enough gold')
+						proxy.commandFinished_(requestID)
 						return
 					s_data['stats']['gold'] -= removalCost
 					i_data['inventory'][prev_device_type][prev_compDescr] = i_data['inventory'][prev_device_type].get(prev_compDescr) + 1 # demount it
@@ -477,6 +507,7 @@ def buyAndEquipItem(proxy, requestID, *args):
 	yield async(InventoryHandler.set_inventory, cbname='callback')(proxy.normalizedName, i_data,
 	                                                               [ITEM_TYPE_INDICES['vehicle'], itemType])
 	del shop, s_data, i_data, vehicles_data, inv_items, eqs, eqsLayout, cdata  # PLEASE START CLEANING UP =D
+	proxy.commandFinished_(requestID)
 
 
 @baseRequest(AccountCommands.CMD_BUY_AND_EQUIP_TMAN)
@@ -506,6 +537,7 @@ def buyAndEquipTankman(proxy, requestID, int1, int2, int3, int4):
 	
 	if vehInvID not in vehicle_data['compDescr']:
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Vehicle not found. Cheating?')
+		proxy.commandFinished_(requestID)
 		return
 	
 	from items import vehicles, tankmen
@@ -514,10 +546,12 @@ def buyAndEquipTankman(proxy, requestID, int1, int2, int3, int4):
 	crew_roles = veh_descr.type.crewRoles
 	if slotIdx >= len(crew_roles):
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Invalid crew slot. Cheating?')
+		proxy.commandFinished_(requestID)
 		return
 	
 	if s_data['stats']['credits'] < costInfo['credits'] or s_data['stats']['gold'] < costInfo['gold']:
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Not enough resources')
+		proxy.commandFinished_(requestID)
 		return
 	
 	#   add previous to barracks, if any
@@ -533,6 +567,7 @@ def buyAndEquipTankman(proxy, requestID, int1, int2, int3, int4):
 		free_berths = s_data['stats']['berths'] - barracks_count
 		if free_berths <= 0:
 			proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'No free berths')
+			proxy.commandFinished_(requestID)
 			return
 		tankman_data['vehicle'][old_tman_id] = 0
 	#
@@ -572,6 +607,7 @@ def buyAndEquipTankman(proxy, requestID, int1, int2, int3, int4):
 	                                                               [ITEM_TYPE_INDICES['vehicle'],
 	                                                                ITEM_TYPE_INDICES['tankman']])
 	del shop, s_data, i_data, vehicles, tankmen, cdata # PLEASE START CLEANING UP =D
+	proxy.commandFinished_(requestID)
 
 
 @baseRequest(AccountCommands.CMD_FREE_XP_CONV)
@@ -596,9 +632,11 @@ def exchangeFreeXP(proxy, requestID, args):
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
 		proxy.writeToDB()
 		yield async(StatsHandler.update_stats, cbname='callback')(proxy.normalizedName, udata, ['stats'])
+		proxy.commandFinished_(requestID)
 	else:
 		DEBUG_MSG('AccountCommands.CMD_FREE_XP_CONV :: failure=%s' % result)
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, msg)
+		proxy.commandFinished_(requestID)
 
 
 @baseRequest(AccountCommands.CMD_UNLOCK)
@@ -632,9 +670,11 @@ def unlockItem(proxy, requestID, vehTypeCompDescr, unlockIdx, int1):
 		# ...whereas we still store the full dict to db
 		proxy.writeToDB()
 		yield async(StatsHandler.update_stats, cbname='callback')(proxy.normalizedName, udata, ['stats', 'economics'])
+		proxy.commandFinished_(requestID)
 	else:
 		DEBUG_MSG('AccountCommands.CMD_UNLOCK :: failure=%s' % result)
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, msg)
+		proxy.commandFinished_(requestID)
 
 
 @baseRequest(AccountCommands.CMD_EXCHANGE)
@@ -659,9 +699,11 @@ def exchangeCredits(proxy, requestID, int1, int2, int3):
 		# ...whereas we still store the full dict to db
 		proxy.writeToDB()
 		yield async(StatsHandler.update_stats, cbname='callback')(proxy.normalizedName, udata, ['stats'])
+		proxy.commandFinished_(requestID)
 	else:
 		DEBUG_MSG('AccountCommands.CMD_EXCHANGE :: failure=%s' % result)
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, msg)
+		proxy.commandFinished_(requestID)
 
 
 @baseRequest(AccountCommands.CMD_PREMIUM)
@@ -689,9 +731,11 @@ def premium(proxy, requestID, int1, int2, int3):
 		# ...whereas we still store the full dict to db
 		proxy.writeToDB()
 		yield async(StatsHandler.update_stats, cbname='callback')(proxy.normalizedName, udata, ['account', 'stats'])
+		proxy.commandFinished_(requestID)
 	else:
 		DEBUG_MSG('AccountCommands.CMD_PREMIUM :: failure=%s' % result)
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, msg)
+		proxy.commandFinished_(requestID)
 
 
 @baseRequest(AccountCommands.CMD_ADD_INT_USER_SETTINGS)
@@ -719,8 +763,10 @@ def addIntUserSettings(proxy, requestID, settings):
 	if n:
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
 		proxy.writeToDB()
+		proxy.commandFinished_(requestID)
 	else:
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Server error')
+		proxy.commandFinished_(requestID)
 
 
 @baseRequest(AccountCommands.CMD_REQ_SERVER_STATS)
@@ -729,12 +775,14 @@ def serverStats(proxy, requestID, int1, int2, int3):
 	        'regionCCU': len([entity for entity in BigWorld.entities.values() if entity.className == 'Account'])}
 	proxy.client.receiveServerStats(data)
 	proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
+	proxy.commandFinished_(requestID)
 
 
 @baseRequest(AccountCommands.CMD_COMPLETE_TUTORIAL)
 def completeTutorial(proxy, requestID, revision, dataLen, dataCrc):
 	DEBUG_MSG('AccountCommands.CMD_COMPLETE_TUTORIAL :: ', revision, dataLen, dataCrc)
 	proxy.client.onCmdResponseExt(requestID, AccountCommands.RES_FAILURE, '', {})
+	proxy.commandFinished_(requestID)
 
 
 # inventory[inventory, cache], stats[stats, account, economics, cache], questProgress[quests, tokens, potapovQuests], trader[offers], intUserSettings[(see comment below for more info)], clubs[cache[relatedToClubs, cybersportSeasonInProgress]]
@@ -775,6 +823,7 @@ def syncData(proxy, requestID, revision, crc, _):
 	proxy.client.pushClientMessage("WoT Offline 9.7", SM_TYPE.FortificationStartUp)
 	proxy.client.onCmdResponseExt(requestID, AccountCommands.RES_SUCCESS, '', cPickle.dumps(data))
 	del data
+	proxy.commandFinished_(requestID)
 
 
 @baseRequest(AccountCommands.CMD_SYNC_SHOP)
@@ -792,10 +841,12 @@ def syncShop(proxy, requestID, revision, dataLen, dataCrc):
 		DEBUG_MSG(
 			'AccountCommands.CMD_SYNC_SHOP :: revisions do not match, but other shit matches so oh well use cache')
 		proxy.client.onCmdResponseExt(requestID, AccountCommands.RES_CACHE, '', cPickle.dumps({'shopRev': 2}))
+		proxy.commandFinished_(requestID)
 	else:
 		DEBUG_MSG('AccountCommands.CMD_SYNC_SHOP :: client requested full sync, sending full shop data to client')
 		packStream(proxy, requestID, shop)
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_STREAM, '')
+		proxy.commandFinished_(requestID)
 
 
 @baseRequest(AccountCommands.CMD_SYNC_DOSSIERS)
@@ -807,6 +858,7 @@ def syncDossiers(proxy, requestID, version, maxChangeTime, _):
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_STREAM, '')
 	
 	DossierHandler.get_dossiers(proxy.databaseID, callback)
+	proxy.commandFinished_(requestID)
 
 
 @baseRequest(-32767)
@@ -823,6 +875,7 @@ def sendGUI(proxy, requestID, _):
 	# proxy.client.showGUI(_GUI_CTX)
 	# proxy.client.pushClientMessage("Thank you for downloading WoT Offline 9.7", SM_TYPE.FortificationStartUp)
 	proxy.client.onCmdResponse(requestID, AccountCommands.RES_NON_PLAYER, 'Deprecated')
+	proxy.commandFinished_(requestID)
 
 
 def sendPushNotifToClient(proxy, no_type, message):
@@ -834,36 +887,31 @@ def setLanguage(proxy, requestID, language):
 	DEBUG_MSG('AccountCommands.CMD_SET_LANGUAGE :: ', language)
 	packStream(proxy, requestID, language)
 	proxy.client.onCmdResponse(requestID, AccountCommands.RES_STREAM, '')
+	proxy.commandFinished_(requestID)
 
 
 @baseRequest(AccountCommands.CMD_VERIFY_FIN_PSWD)
 def verifyFinPswd(proxy, requestID, password):
 	DEBUG_MSG('AccountCommands.CMD_VERIFY_FIN_PSWD :: ', password)
 	proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Invalid or NYI')
+	proxy.commandFinished_(requestID)
 
 
 @baseRequest(AccountCommands.CMD_REQ_PLAYER_INFO)
 def reqPlayerInfo(proxy, requestID, databaseID):
 	DEBUG_MSG('AccountCommands.CMD_REQ_PLAYER_INFO :: ', databaseID)
+	proxy.commandFinished_(requestID)
 	pass
 
 
 @baseRequest(AccountCommands.CMD_REQ_VEHICLE_DOSSIER)
-def reqVehicleDossier(proxy, databaseID, vehTypeCompDescr):
+def reqVehicleDossier(proxy, requestID, databaseID, vehTypeCompDescr):
 	DEBUG_MSG('AccountCommands.CMD_REQ_VEHICLE_DOSSIER :: ', vehTypeCompDescr)
+	proxy.commandFinished_(requestID)
 
 
 @baseRequest(AccountCommands.CMD_REQ_ACCOUNT_DOSSIER)
 def reqAccountDossier(proxy, requestID, databaseID):
 	DEBUG_MSG('AccountCommands.CMD_REQ_ACCOUNT_DOSSIER :: databaseID=%s' % databaseID)
+	proxy.commandFinished_(requestID)
 	pass
-
-
-def getAccountInfoFromDBID():
-	pass
-	return
-
-
-def getDossierFromDBID():
-	pass
-	return

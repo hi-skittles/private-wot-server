@@ -3,8 +3,9 @@ from random import randint
 import BigWorld
 from BigWorld import Proxy
 import cPickle
-import AccountCommands
+from collections import deque
 
+import AccountCommands
 from Requests.AccountRequests import BASE_REQUESTS
 from adisp import async, process
 from bwdebug import DEBUG_MSG, TRACE_MSG, ERROR_MSG, INFO_MSG
@@ -70,10 +71,75 @@ class Account(BigWorld.Proxy):
 			'wallet': (False, False)
 		}
 		self.syncProperties()
+		self._cmdQueue = deque()
+		self._cmdInProgress = False
 		if not len(self.name) > 0:
 			ERROR_MSG('Account.__init__ :: username (name) is empty')
 			self.name = self.normalizedName.split('@')[0] + str(randint(1000, 9999))
 		self.writeToDB()  # all accounts are persistent
+	
+	def doCmdStr(self, requestID, cmd, str):
+		DEBUG_MSG('Server.doCmdStr', requestID, cmd, str)
+		self.doCmd(requestID, cmd, str)
+	
+	def doCmdIntStr(self, requestID, cmd, int, str):
+		DEBUG_MSG('Server.doCmdIntStr', requestID, cmd, int, str)
+		self.doCmd(requestID, cmd, int, str)
+	
+	def doCmdInt3(self, requestID, cmd, int1, int2, int3):
+		DEBUG_MSG('Server.doCmdInt3', requestID, cmd, int1, int2,
+		          int3) if cmd != AccountCommands.CMD_REQ_SERVER_STATS else None
+		self.doCmd(requestID, cmd, int1, int2, int3)
+	
+	def doCmdInt4(self, requestID, cmd, int1, int2, int3, int4):
+		DEBUG_MSG('Server.doCmdInt4', requestID, cmd, int1, int2, int3, int4)
+		self.doCmd(requestID, cmd, int1, int2, int3, int4)
+	
+	def doCmdInt2Str(self, requestID, cmd, int1, int2, str):
+		DEBUG_MSG('Server.doCmdInt2Str', requestID, cmd, int1, int2, str)
+		self.doCmd(requestID, cmd, int1, int2, str)
+	
+	def doCmdIntArr(self, requestID, cmd, arr):
+		DEBUG_MSG('Server.doCmdIntArr', requestID, cmd, arr)
+		self.doCmd(requestID, cmd, arr)
+	
+	def doCmdIntArrStrArr(self, requestID, cmd, intArr, strArr):
+		DEBUG_MSG('Server.doCmdIntArrStrArr', requestID, cmd, intArr, strArr)
+		self.doCmd(requestID, cmd, intArr, strArr)
+	
+	def doCmd(self, requestID, cmd, *args):
+		# DEBUG_MSG('self._cmdInProgress', self._cmdInProgress, self._cmdQueue)
+		if not self.hasClient:
+			ERROR_MSG('Server.requestError :: ', requestID, cmd, args)
+			return
+		if self._cmdInProgress:
+			self._cmdQueue.append((requestID, cmd, args))
+			return
+		self.__executeCmd(requestID, cmd, *args)
+	
+	def __executeCmd(self, requestID, cmd, *args):
+		self._cmdInProgress = True
+		cmdCall = BASE_REQUESTS.get(cmd)
+		try:
+			if cmdCall:
+				DEBUG_MSG('Server.request :: ', requestID, cmd, args) if cmd != AccountCommands.CMD_REQ_SERVER_STATS else None
+				cmdCall(self, requestID, *args)
+			else:
+				DEBUG_MSG('Server.requestFail (unknown)', requestID, cmd, args)
+				self.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Unknown command')
+		except AttributeError as a:
+			DEBUG_MSG('Server.requestFail :: ', requestID, cmd, args, a)
+			self.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, a.__str__())
+		# finally:
+		# 	self.__commandFinished()
+	
+	def commandFinished_(self, requestID):
+		self._cmdInProgress = False
+		# DEBUG_MSG('Request %s finished' % requestID)
+		if self._cmdQueue:
+			rID, c, a = self._cmdQueue.popleft()
+			self.__executeCmd(rID, c, *a)
+			# BigWorld.callback(0, lambda : self.__executeCmd(rID, c, *a))
 	
 	@process
 	def syncProperties(self):
@@ -194,52 +260,6 @@ class Account(BigWorld.Proxy):
 	def onBattleResultsReceived(self, INT32, STRING):
 		DEBUG_MSG('Server.onBattleResultsReceived', INT32, STRING)
 		pass
-	
-	def doCmdStr(self, requestID, cmd, str):
-		DEBUG_MSG('Server.doCmdStr', requestID, cmd, str)
-		self.doCmd(requestID, cmd, str)
-	
-	def doCmdIntStr(self, requestID, cmd, int, str):
-		DEBUG_MSG('Server.doCmdIntStr', requestID, cmd, int, str)
-		self.doCmd(requestID, cmd, int, str)
-	
-	def doCmdInt3(self, requestID, cmd, int1, int2, int3):
-		DEBUG_MSG('Server.doCmdInt3', requestID, cmd, int1, int2,
-		          int3) if cmd != AccountCommands.CMD_REQ_SERVER_STATS else None
-		self.doCmd(requestID, cmd, int1, int2, int3)
-	
-	def doCmdInt4(self, requestID, cmd, int1, int2, int3, int4):
-		DEBUG_MSG('Server.doCmdInt4', requestID, cmd, int1, int2, int3, int4)
-		self.doCmd(requestID, cmd, int1, int2, int3, int4)
-	
-	def doCmdInt2Str(self, requestID, cmd, int1, int2, str):
-		DEBUG_MSG('Server.doCmdInt2Str', requestID, cmd, int1, int2, str)
-		self.doCmd(requestID, cmd, int1, int2, str)
-	
-	def doCmdIntArr(self, requestID, cmd, arr):
-		DEBUG_MSG('Server.doCmdIntArr', requestID, cmd, arr)
-		self.doCmd(requestID, cmd, arr)
-	
-	def doCmdIntArrStrArr(self, requestID, cmd, intArr, strArr):
-		DEBUG_MSG('Server.doCmdIntArrStrArr', requestID, cmd, intArr, strArr)
-		self.doCmd(requestID, cmd, intArr, strArr)
-	
-	def doCmd(self, requestID, cmd, *args):
-		if not self.hasClient:
-			ERROR_MSG('Server.requestError :: ', requestID, cmd, args)
-			return
-		cmdCall = BASE_REQUESTS.get(cmd)
-		if cmdCall:
-			try:
-				TRACE_MSG('Server.request :: ', requestID, cmd,
-				          args) if cmd != AccountCommands.CMD_REQ_SERVER_STATS else None
-				cmdCall(self, requestID, *args)
-			except AttributeError as a:
-				DEBUG_MSG('Server.requestFail :: ', requestID, cmd, args, a)
-				self.ownClient.onCmdResponse(requestID, AccountCommands.RES_FAILURE, a.__str__())
-		else:
-			DEBUG_MSG('Server.requestFail (unknown)', requestID, cmd, args)
-			self.ownClient.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Unknown command')
 	
 	def makeTradeOfferByClient(self, INT16, STRING, UINT16, DB_ID, INT32, INT32_2, INT32_3, INT32_4):
 		# Exposed tag

@@ -152,6 +152,10 @@
       <Flags>	BASE_AND_CLIENT	</Flags>
     </serverSettings>
   </Properties>
+  <TempProperties>
+    <_cmdQueue />
+    <_cmdInProgress />
+  </TempProperties>
   <ClientMethods>
 
     <!-- MODDED LINE -->
