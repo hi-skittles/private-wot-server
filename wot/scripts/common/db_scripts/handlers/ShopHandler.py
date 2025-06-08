@@ -20,16 +20,20 @@ def __returnSlotsPrices():
 def __returnFreeXPConversionRate():
 	return (25, 1)
 
+def __returnShopRev():
+	return 3
+
 
 premiumPrices = __returnPremiumPrices()
 creditsPrice = __returnCreditsPrice()
 slotsPrices = __returnSlotsPrices()
 freeXPRate = __returnFreeXPConversionRate()
+shopRev = __returnShopRev()
 
 def get_shop():
 	TRACE_MSG('ShopHandler : get_shop')
 	return {
-		'rev': 2,
+		'rev': shopRev,
 		'crystalExchangeRate': 200,
 		'camouflageCost': {
 			0: (50, True),
@@ -89,7 +93,7 @@ def get_shop():
 			                'classChangeRoleLoss': 0.0,
 			                'roleLevel': 100
 		                }),
-		'paidRemovalCost': 10,
+		'paidRemovalCost': 1,
 		'dailyXPFactor': 5,  # 2
 		'changeRoleCost': 500,
 		'isEnabledBuyingGoldShellsForCredits': False,
@@ -988,7 +992,7 @@ def get_shop():
 		                         6145: (6100000, 0), 874: (5021, 0), 3605: (5021, 0), 18451: (5021, 0),
 		                         34818: (5021, 0), 23634: (5021, 0), 40001: (1, 0), 18724: (5021, 0),
 		                         35091: (5021, 0), 16210: (5021, 0), 1539: (5021, 0), 1812: (5021, 0),
-		                         18179: (5021, 0), 6418: (5021, 0), 24858: (5021, 0), 16129: (1370000, 0),
+		                         18179: (5021, 0), 6418: (3000, 1), 24858: (5021, 0), 16129: (1370000, 0),
 		                         3610: (5021, 0), 18452: (5021, 0), 1017: (5021, 0), 23635: (5021, 0),
 		                         5397: (5021, 0), 17493: (5021, 0), 1540: (5021, 0), 6723: (5021, 0),
 		                         1813: (5021, 0), 18180: (5021, 0), 59665: (0, 950), 16402: (5021, 0),
