@@ -367,7 +367,8 @@ def setAndFillLayouts(proxy, requestID, *args):
 		
 		shellsCDs = [shells[i] for i in range(0, len(shells), 2)]
 		shellsCounts = [shells[i+1] for i in range(0, len(shells), 2)]
-		prevShellsCounts = [i_data['inventory'][1]['shells'][vehInvID][i+1] for i in range(0, len(shells), 2)]
+                prevShells = i_data['inventory'][1]['shells'].get(vehInvID, [])
+                prevShellsCounts = [prevShells[i + 1] if i + 1 < len(prevShells) else 0 for i in range(0, len(shells), 2)]
 		
 		eqsCDs = [eqsList[i] for i in range(0, len(eqsList), 2)]
 		prevEqs = i_data['inventory'][1]['eqs'][vehInvID]
