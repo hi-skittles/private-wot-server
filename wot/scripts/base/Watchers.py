@@ -4,11 +4,13 @@ import BigWorld
 import AccountCommands
 import traceback
 
-import util
-from bwdecorators import functionWatcher, functionWatcherParameter, watcher
+from db_scripts import AccountUpdates
+from adisp import process, async
+from bwdecorators import functionWatcher, functionWatcherParameter
 from Account import Account
 
 from enumerations import Enumeration
+from db_scripts.handlers import StatsHandler
 
 SM_TYPE = Enumeration(
 	'System message type',
@@ -130,41 +132,41 @@ def changeHangarForPlayer(entityID, basic_name, premium_name):
 
 # Add gold to given player
 # -----------------------------------------------------------------------------
-# @functionWatcher( "command/wot:AddGold",
-# 		BigWorld.EXPOSE_BASE_APPS,
-# 		"WoT: Give gold to player" )
-# @functionWatcherParameter(str, "Player Name")
-# @functionWatcherParameter(int, "Gold")
-# @process
-# def addGold(name, gold):
-# 	entityx = None
-# 	try:
-# 		for idx, entity in BigWorld.entities.items():
-# 			if entity.name == name:
-# 				entityx = entity
-# 	except:
-# 		traceback.print_exc()
-# 		print "Failed to get Player's EntityID."
-# 		return
-#
-# 	rdata = yield async(StatsHandler.get_stats, cbname='callback')(entityx.normalizedName, 'stats')
-# 	result, msg, udata = AccountUpdates.__giveGoldWatcher(gold, rdata)
-#
-# 	cdata = {'rev': 1, 'prevRev': 0, 'stats': {'gold': None}}
-#
-# 	if result > 0:
-# 		print 'AccountCommands.CMD_EXCHANGE :: success=%s' % result
-# 		cdata['stats']['gold'] = udata['stats']['gold']
-#
-# 		entityx.client.update(cPickle.dumps(cdata))
-# 		yield async(StatsHandler.update_stats, cbname='callback')(entityx.normalizedName, udata, ['stats'])
-# 		print 'Successfully added %d gold to %s' % (gold, name)
-# 		entityx.client.pushClientMessage('Server: %d gold was added to your account.', SM_TYPE.FinancialTransactionWithGold)
-# 		return
-# 	else:
-# 		print 'AccountCommands.CMD_EXCHANGE :: failure=%s' % result
-# 		print 'Failed to add gold to %s' % name
-# 		return
+@functionWatcher( "command/wot:AddGold",
+		BigWorld.EXPOSE_BASE_APPS,
+		"WoT: Give gold to player" )
+@functionWatcherParameter(str, "Player Name")
+@functionWatcherParameter(int, "Gold")
+@process
+def addGold(name, gold):
+	entityx = None
+	try:
+		for entity in BigWorld.entities.values():
+			if entity.className == 'Account':
+				entityx = entity
+	except:
+		traceback.print_exc()
+		print "Failed to get Player's EntityID."
+		return
+
+	rdata = yield async(StatsHandler.get_stats, cbname='callback')(entityx.normalizedName, 'stats')
+	result, msg, udata = AccountUpdates.__giveGoldWatcher(gold, rdata)
+
+	cdata = {'rev': 1, 'prevRev': 0, 'stats': {'gold': None}}
+
+	if result > 0:
+		print 'AccountCommands.CMD_EXCHANGE :: success=%s' % result
+		cdata['stats']['gold'] = udata['stats']['gold']
+
+		entityx.client.update(cPickle.dumps(cdata))
+		yield async(StatsHandler.update_stats, cbname='callback')(entityx.normalizedName, udata, ['stats'])
+		print 'Successfully added %d gold to %s' % (gold, name)
+		entityx.client.pushClientMessage('Server: %d gold was added to your account.' % gold, SM_TYPE.FinancialTransactionWithGold)
+		return
+	else:
+		print 'AccountCommands.CMD_EXCHANGE :: failure=%s' % result
+		print 'Failed to add gold to %s' % name
+		return
 
 
 # @functionWatcher("command/onlinePlayers",

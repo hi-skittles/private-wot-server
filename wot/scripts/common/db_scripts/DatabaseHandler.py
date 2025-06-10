@@ -310,11 +310,11 @@ def initEmptyInventory():
 		data[ITEM_TYPE_INDICES['vehicle']]['settings'].update(
 			{i: AccountCommands.VEHICLE_SETTINGS_FLAG.AUTO_REPAIR | AccountCommands.VEHICLE_SETTINGS_FLAG.AUTO_LOAD})
 		data[ITEM_TYPE_INDICES['vehicle']]['compDescr'].update(compDescr)
-		data[ITEM_TYPE_INDICES['vehicle']]['eqs'].update({i: []})
-		data[ITEM_TYPE_INDICES['vehicle']]['eqsLayout'].update({i: []})
-		# data[ITEM_TYPE_INDICES['vehicle']]['shells'].update({i: vehicles.getDefaultAmmoForGun(vehicle.turrets[0][0]['guns'][0])})
+		data[ITEM_TYPE_INDICES['vehicle']]['eqs'].update({i: [0, 0, 0]})
+		data[ITEM_TYPE_INDICES['vehicle']]['eqsLayout'].update({i: [0, 0, 0]})
+		data[ITEM_TYPE_INDICES['vehicle']]['shells'].update({i: vehicles.getEmptyAmmoForGun(vehicle.turrets[0][0]['guns'][0])})
 		data[ITEM_TYPE_INDICES['vehicle']]['shellsLayout'].update(
-			{i: {turretGun: vehicles.getDefaultAmmoForGun(vehicle.turrets[0][0]['guns'][0])}})
+			{i: {turretGun: vehicles.getEmptyAmmoForGun(vehicle.turrets[0][0]['guns'][0])}})
 		
 		for tmanID in xrange(i_crew, len(tmanList) + i_crew):
 			data[ITEM_TYPE_INDICES['tankman']]['vehicle'][tmanID] = i
@@ -394,13 +394,13 @@ def initEmptyStats():
 			'applyAdditionalXPCount': 1,
 			'accOnline': 200,
 			'berths': 20,
-			'credits': 10000000,
-			'gold': 100000,
-			'crystal': 1000,
-			'freeXP': 100000,
+			'credits': 1000000000,
+			'gold': 50000000,
+			'crystal': 0,
+			'freeXP': 50000000000,
 			'finPswdAttemptsLeft': 9999,
 			'denunciationsLeft': 10,
-			'freeVehiclesLeft': 2,
+			'freeVehiclesLeft': 0,  # TODO: integrate with buying vehicle command
 			'refSystem': {'referrals': {}},
 			'slots': 10,
 			'battlesTillCaptcha': 9999999,
@@ -419,8 +419,7 @@ def initEmptyStats():
 			'restrictions': {},
 			'oldVehInvID': 0,
 			'accOffline': 75,
-			'dossier': {(12345, 1622547800, 'dossierCompDescr1'), (67890, 1622547900, 'dossierCompDescr2'),
-			            (13579, 1622548000, 'dossierCompDescr3')},
+			'dossier': '',
 			'multipliedXPVehs': [],
 			'tutorialsCompleted': 33553532,
 			'playLimits': ((86400, '24'), (604800, '168')),  # ((86400, ''), (604800, ''))
