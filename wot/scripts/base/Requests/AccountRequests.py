@@ -481,6 +481,7 @@ def buyItem(proxy, requestID, shopRev, itemCompDescr, count, int1):
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
 		yield async(InventoryHandler.set_inventory, cbname='callback')(proxy.normalizedName, i_data, [i for i in xrange(1, 12) if i != 8])
 		yield async(StatsHandler.update_stats, cbname='callback')(proxy.normalizedName, s_data, ['stats'])
+		proxy.commandFinished_(requestID)
 	except:
 		LOG_CURRENT_EXCEPTION()
 		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Internal server error')
@@ -490,10 +491,56 @@ def buyItem(proxy, requestID, shopRev, itemCompDescr, count, int1):
 @baseRequest(AccountCommands.CMD_SELL_ITEM)
 @process
 def sellItem(proxy, requestID, int1, int2, int3, int4):
-	# NYI
-	DEBUG_MSG('CMD_SELL_ITEM', requestID, int1, int2, int3, int4)
-	proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'nyi')
-	proxy.commandFinished_(requestID)
+	try:
+		DEBUG_MSG('CMD_SELL_ITEM', requestID, int1, int2, int3, int4)
+		shopRev, itemTypeIdx, compDescr, count = int1, int2, int3, int4
+		
+		if shopRev != ShopHandler.shopRev:
+			proxy.client.onCmdResponse(requestID, AccountCommands.RES_SHOP_DESYNC, 'Shop revision mismatch')
+			proxy.commandFinished_(requestID)
+			return
+		
+		shop = ShopHandler.get_shop()  # a lot of overhead.
+		price = shop.get('items', {}).get('itemPrices', {}).get(compDescr)
+		if price is None:
+			proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Item not found')
+			proxy.commandFinished_(requestID)
+			return
+		
+		s_data = yield async(StatsHandler.get_stats, cbname='callback')(proxy.normalizedName, 'stats')
+		i_data = yield async(InventoryHandler.get_inventory, cbname='callback')(proxy.normalizedName, [itemTypeIdx])
+		
+		inv_items = i_data['inventory'][itemTypeIdx]
+		if inv_items.get(compDescr, 0) < count:
+			proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Item not found')
+			proxy.commandFinished_(requestID)
+			return
+		
+		inv_items[compDescr] -= count
+		if inv_items[compDescr] <= 0:
+			inv_items[compDescr] = 0
+		
+		sell_factor = shop.get('sellPriceFactor', 0.75)
+		credits_gain = int(price[0] * sell_factor) * count
+		gold_gain = int(price[1] * sell_factor) * count
+		
+		s_data['stats']['credits'] += credits_gain
+		s_data['stats']['gold'] += gold_gain
+		
+		cdata = {'rev': requestID, 'prevRev': requestID - 1,
+		         'inventory': {itemTypeIdx: inv_items},
+		         'stats': {'credits': s_data['stats']['credits'], 'gold': s_data['stats']['gold']}}
+		
+		proxy.client.update(cPickle.dumps(cdata))
+		proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
+		proxy.writeToDB()
+		yield async(StatsHandler.update_stats, cbname='callback')(proxy.normalizedName, s_data, ['stats'])
+		yield async(InventoryHandler.set_inventory, cbname='callback')(proxy.normalizedName, i_data, [itemTypeIdx])
+		proxy.commandFinished_(requestID)
+	except:
+		LOG_CURRENT_EXCEPTION()
+		proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Internal server error')
+		proxy.commandFinished_(requestID)
 
 
 @baseRequest(AccountCommands.CMD_BUY_AND_EQUIP_ITEM)
@@ -547,8 +594,15 @@ def buyAndEquipItem(proxy, requestID, *args):
 	
 	if itemType == ITEM_TYPE_INDICES['vehicleChassis']:
 		vehicle = VehicleDescr(compactDescr=tank)
-		can_install, can_install_msg = vehicle.mayInstallComponent(compactDescr=compDescr, positionIndex=slotIdx)
-		TRACE_MSG('can_install=%s, can_install_msg=%s' % (can_install, can_install_msg))
+		can_install, can_install_reason = vehicle.mayInstallComponent(compactDescr=compDescr, positionIndex=slotIdx)
+		DEBUG_MSG('can_install=%s, can_install_reason=%s' % (can_install, can_install_reason))
+		
+		if not can_install:
+			proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, can_install_reason)
+			proxy.commandFinished_(requestID)
+			return
+		
+		
 	
 	if itemType == ITEM_TYPE_INDICES['equipment']:
 		eqs = vehicles_data['eqs'].get(vehInvID, [])
@@ -580,18 +634,17 @@ def buyAndEquipItem(proxy, requestID, *args):
 	if itemType == ITEM_TYPE_INDICES['optionalDevice']:
 		opt_devices = inv_items
 		# {'itemTypeName': 'optionalDevice', '_vehWeightFraction': 0.0, 'name': 'toolbox', '_StaticFactorDevice__factor': 1.25, '_StaticFactorDevice__attr': ['miscAttrs', 'repairSpeedFactor'], 'compactDescr': 249, '_maxWeightChange': 0.0, '_OptionalDevice__filter': None, 'removable': True, '_weight': 100.0, 'id': (15, 0)}
-		aretefact = vehicles.getDictDescr(compDescr)
+		# aretefact = vehicles.getDictDescr(compDescr)
 		vehicle = VehicleDescr(compactDescr=tank)
-		
-		can_install, can_install_msg = vehicle.mayInstallOptionalDevice(compDescr, slotIdx)
+		can_install, can_install_reason = vehicle.mayInstallOptionalDevice(compDescr, slotIdx)
 		
 		if not can_install:
-			if can_install_msg == 'not for current vehicle':
+			if can_install_reason == 'not for current vehicle':
 				proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Item incompatible with current vehicle')
 				proxy.commandFinished_(requestID)
 				return
 			else:
-				proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, can_install_msg)
+				proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, can_install_reason)
 				proxy.commandFinished_(requestID)
 				return
 		else:
@@ -652,44 +705,6 @@ def buyAndEquipItem(proxy, requestID, *args):
 	del shop, s_data, i_data, vehicles_data, inv_items, eqs, eqsLayout, cdata  # PLEASE START CLEANING UP =D
 
 
-@baseRequest(AccountCommands.CMD_CHANGE_HANGAR)
-@process
-def changeHangar(proxy, requestID, arr):
-	DEBUG_MSG('AccountCommands.CMD_CHANGE_HANGAR :: paths=%s' % arr)
-	basic_name, premium_name = arr
-	if basic_name == '' and premium_name == '':
-		basic_name = 'hangar_v2'
-		premium_name = 'hangar_premium_v2'
-	elif premium_name == '':
-		premium_name = basic_name
-	
-	rdata = yield async(StatsHandler.get_stats, cbname='callback')(proxy.normalizedName, 'eventsData')
-	udata = rdata
-	udata[('eventsData', '_r')][EVENT_CLIENT_DATA.NOTIFICATIONS] = zlib.compress(cPickle.dumps(
-		[{'type': 'cmd_change_hangar', 'data': 'spaces/' + basic_name, 'text': {}, 'requiredTokens': []},
-		 {'type': 'cmd_change_hangar_prem', 'data': 'spaces/' + premium_name, 'text': {}, 'requiredTokens': []}]))
-	cdata = {'rev': requestID, 'prevRev': requestID - 1, ('eventsData', '_r'): udata[('eventsData', '_r')]}
-	proxy.client.update(cPickle.dumps(cdata))
-	proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
-	yield async(StatsHandler.update_stats, cbname='callback')(proxy.normalizedName, udata, ['eventsData'])
-	proxy.commandFinished_(requestID)
-
-
-@baseRequest(AccountCommands.CMD_REQ_PREBATTLES)
-def reqPrebattles(proxy, requestID, args):
-	DEBUG_MSG('AccountCommands.CMD_REQ_PREBATTLES :: ', args)
-	proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'NYI')
-	proxy.commandFinished_(requestID)
-
-
-@baseRequest(AccountCommands.CMD_ENQUEUE_TUTORIAL)
-def enqueueTutorial(proxy, requestID, int1, int2, int3):
-	DEBUG_MSG('AccountCommands.CMD_ENQUEUE_TUTORIAL :: ', int1, int2, int3)
-	proxy.onTutorialEnqueued('string', int1)
-	proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, 'NYI')
-	proxy.commandFinished_(requestID)
-
-
 @baseRequest(AccountCommands.CMD_EQUIP_OPTDEV)
 @process
 def equipOptDevice(proxy, requestID, *args):
@@ -717,8 +732,10 @@ def equipOptDevice(proxy, requestID, *args):
 	                                                                        [ITEM_TYPE_INDICES['vehicle'],
 	                                                                         ITEM_TYPE_INDICES['optionalDevice']])
 	
-	if deviceCompDescr: is_installing = True
-	else: is_installing = False
+	if deviceCompDescr:
+		is_installing = True
+	else:
+		is_installing = False
 	DEBUG_MSG('is_installing=', is_installing)
 	
 	vehicles_data = i_data['inventory'][ITEM_TYPE_INDICES['vehicle']]
@@ -757,14 +774,15 @@ def equipOptDevice(proxy, requestID, *args):
 		if not i_r_on_veh[0] and not i_r_on_veh[1]:
 			DEBUG_MSG('no previous device installed')
 			inv_items[deviceCompDescr] = inv_items.get(deviceCompDescr, 0) - 1  # subtract NEW item from inventory
-		elif i_r_on_veh[0]: # previous device is removable and does not require paidRemoval
+		elif i_r_on_veh[0]:  # previous device is removable and does not require paidRemoval
 			DEBUG_MSG('i_r_on_veh[0]')
 			inv_items[deviceCompDescr] = inv_items.get(deviceCompDescr, 0) - 1  # subtract NEW item from inventory
 			
 			prev_compDescr = i_r_on_veh[0][0]
 			prev_device_type = getTypeOfCompactDescr(prev_compDescr)
-			i_data['inventory'][prev_device_type][prev_compDescr] = i_data['inventory'][prev_device_type].get(prev_compDescr, 0) + 1    # demounted item goes back to inventory
-		elif i_r_on_veh[1]: # previous device is not removable and requires paidRemoval
+			i_data['inventory'][prev_device_type][prev_compDescr] = i_data['inventory'][prev_device_type].get(
+				prev_compDescr, 0) + 1  # demounted item goes back to inventory
+		elif i_r_on_veh[1]:  # previous device is not removable and requires paidRemoval
 			DEBUG_MSG('i_r_on_veh[1]')
 			inv_items[deviceCompDescr] = inv_items.get(deviceCompDescr, 0) - 1  # subtract NEW item count from inventory
 			
@@ -780,7 +798,8 @@ def equipOptDevice(proxy, requestID, *args):
 				
 				prev_compDescr = i_r_on_veh[1][0]
 				prev_device_type = getTypeOfCompactDescr(prev_compDescr)
-				i_data['inventory'][prev_device_type][prev_compDescr] = i_data['inventory'][prev_device_type].get(prev_compDescr, 0) + 1    # demounted item goes back to inventory
+				i_data['inventory'][prev_device_type][prev_compDescr] = i_data['inventory'][prev_device_type].get(
+					prev_compDescr, 0) + 1  # demounted item goes back to inventory
 				DEBUG_MSG('complex device %s of type %s demounted' % (prev_compDescr, prev_device_type))
 	
 	if not is_installing:
@@ -791,13 +810,14 @@ def equipOptDevice(proxy, requestID, *args):
 			proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'Nothing to remove. Cheating?')
 			proxy.commandFinished_(requestID)
 			return
-		elif i_r_on_veh[0]: # previous device is removable and does not require paidRemoval
+		elif i_r_on_veh[0]:  # previous device is removable and does not require paidRemoval
 			
 			DEBUG_MSG('i_r_on_veh[0]')
 			prev_compDescr = i_r_on_veh[0][0]
 			prev_device_type = getTypeOfCompactDescr(prev_compDescr)
-			i_data['inventory'][prev_device_type][prev_compDescr] = i_data['inventory'][prev_device_type].get(prev_compDescr, 0) + 1    # demounted item goes back to inventory
-		elif i_r_on_veh[1]: # previous device is not removable and requires paidRemoval
+			i_data['inventory'][prev_device_type][prev_compDescr] = i_data['inventory'][prev_device_type].get(
+				prev_compDescr, 0) + 1  # demounted item goes back to inventory
+		elif i_r_on_veh[1]:  # previous device is not removable and requires paidRemoval
 			
 			DEBUG_MSG('i_r_on_veh[1]')
 			if not isPaidRemoval:
@@ -812,7 +832,8 @@ def equipOptDevice(proxy, requestID, *args):
 				
 				prev_compDescr = i_r_on_veh[1][0]
 				prev_device_type = getTypeOfCompactDescr(prev_compDescr)
-				i_data['inventory'][prev_device_type][prev_compDescr] = i_data['inventory'][prev_device_type].get(prev_compDescr, 0) + 1    # demounted item goes back to inventory
+				i_data['inventory'][prev_device_type][prev_compDescr] = i_data['inventory'][prev_device_type].get(
+					prev_compDescr, 0) + 1  # demounted item goes back to inventory
 				DEBUG_MSG('complex device %s of type %s demounted' % (prev_compDescr, prev_device_type))
 	
 	DEBUG_MSG('inv_items=', inv_items)
@@ -911,7 +932,7 @@ def buyAndEquipTankman(proxy, requestID, int1, int2, int3, int4):
 	s_data['stats']['credits'] -= costInfo['credits']
 	s_data['stats']['gold'] -= costInfo['gold']
 	
-	nationID, vehTypeID = veh_descr.type.id # reference tank
+	nationID, vehTypeID = veh_descr.type.id  # reference tank
 	new_descr = tankmen.generateTankmen(nationID, vehTypeID, [crew_roles[slotIdx]], costInfo['isPremium'],
 	                                    costInfo['roleLevel'], [])[0]
 	# TRACE_MSG('new_descr=%s' % new_descr)
@@ -942,7 +963,45 @@ def buyAndEquipTankman(proxy, requestID, int1, int2, int3, int4):
 	yield async(InventoryHandler.set_inventory, cbname='callback')(proxy.normalizedName, i_data,
 	                                                               [ITEM_TYPE_INDICES['vehicle'],
 	                                                                ITEM_TYPE_INDICES['tankman']])
-	del shop, s_data, i_data, vehicles, tankmen, cdata # PLEASE START CLEANING UP =D
+	del shop, s_data, i_data, vehicles, tankmen, cdata  # PLEASE START CLEANING UP =D
+	proxy.commandFinished_(requestID)
+
+
+@baseRequest(AccountCommands.CMD_CHANGE_HANGAR)
+@process
+def changeHangar(proxy, requestID, arr):
+	DEBUG_MSG('AccountCommands.CMD_CHANGE_HANGAR :: paths=%s' % arr)
+	basic_name, premium_name = arr
+	if basic_name == '' and premium_name == '':
+		basic_name = 'hangar_v2'
+		premium_name = 'hangar_premium_v2'
+	elif premium_name == '':
+		premium_name = basic_name
+	
+	rdata = yield async(StatsHandler.get_stats, cbname='callback')(proxy.normalizedName, 'eventsData')
+	udata = rdata
+	udata[('eventsData', '_r')][EVENT_CLIENT_DATA.NOTIFICATIONS] = zlib.compress(cPickle.dumps(
+		[{'type': 'cmd_change_hangar', 'data': 'spaces/' + basic_name, 'text': {}, 'requiredTokens': []},
+		 {'type': 'cmd_change_hangar_prem', 'data': 'spaces/' + premium_name, 'text': {}, 'requiredTokens': []}]))
+	cdata = {'rev': requestID, 'prevRev': requestID - 1, ('eventsData', '_r'): udata[('eventsData', '_r')]}
+	proxy.client.update(cPickle.dumps(cdata))
+	proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
+	yield async(StatsHandler.update_stats, cbname='callback')(proxy.normalizedName, udata, ['eventsData'])
+	proxy.commandFinished_(requestID)
+
+
+@baseRequest(AccountCommands.CMD_REQ_PREBATTLES)
+def reqPrebattles(proxy, requestID, args):
+	DEBUG_MSG('AccountCommands.CMD_REQ_PREBATTLES :: ', args)
+	proxy.client.onCmdResponse(requestID, AccountCommands.RES_FAILURE, 'NYI')
+	proxy.commandFinished_(requestID)
+
+
+@baseRequest(AccountCommands.CMD_ENQUEUE_TUTORIAL)
+def enqueueTutorial(proxy, requestID, int1, int2, int3):
+	DEBUG_MSG('AccountCommands.CMD_ENQUEUE_TUTORIAL :: ', int1, int2, int3)
+	proxy.onTutorialEnqueued('string', int1)
+	proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, 'NYI')
 	proxy.commandFinished_(requestID)
 
 

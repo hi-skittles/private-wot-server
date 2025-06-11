@@ -53,7 +53,7 @@ def subtract_want_equally(want, values):
 	return new_values
 
 
-####
+#### THIS FILE IS DEPRECATED
 
 # stats :: gold, maxResearchedLevelByNation, slots, vehTypeXP, unlocks
 # stats :: economics :: eliteVehicles
@@ -113,9 +113,13 @@ def __buyVehicle(s_data, i_data, shopRev, vehTypeCompDescr, flags, crew_level, i
 			vehicle_price[1] += crewCost * len(tmanList)
 		else:
 			vehicle_price[0] += crewCost * len(tmanList)
-	
 	else:
 		i_data['inventory'][ITEM_TYPE_INDICES['vehicle']]['crew'].update(list())
+	if flags & AccountCommands.BUY_VEHICLE_FLAG.SHELLS:
+		# TODO: complete this! see gui\shared\utils\gui_items.py lines 467 thru 473; CANNOT USE CLIENT METHODS HERE!!
+		# will have to change 'shells' and 'shellsLayout' based on this flag. main problem is calculating the price for the shells of .getDefaultAmmoForGun()
+		# do NOT use the similar logic found in setAndFillLayouts in AccountRequests.py
+		pass
 	
 	i_data['inventory'][ITEM_TYPE_INDICES['vehicle']]['settings'].update(
 		{i: AccountCommands.VEHICLE_SETTINGS_FLAG.AUTO_REPAIR | AccountCommands.VEHICLE_SETTINGS_FLAG.AUTO_LOAD})

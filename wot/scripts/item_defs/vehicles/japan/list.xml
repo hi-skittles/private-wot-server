@@ -105,7 +105,7 @@
     <shortUserString>	#japan_vehicles:Te_Ke_short	</shortUserString>
     <price>	750	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	lightTank HD	</tags>
     <level>	2	</level>
   </Te_Ke>
@@ -144,7 +144,7 @@
     <description>	#japan_vehicles:Ke_Ni_B_descr	</description>
     <price>	1000	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	lightTank secret enhancedSuspension_Christie_user wetCombatPack_class1_user	</tags>
     <level>	3	</level>
   </Ke_Ni_B>

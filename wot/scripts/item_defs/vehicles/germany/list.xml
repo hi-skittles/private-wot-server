@@ -662,7 +662,7 @@
     <userString>	#germany_vehicles:PzII_J	</userString>
     <shortUserString>	#germany_vehicles:PzII_J_short	</shortUserString>
     <description>	#germany_vehicles:PzII_J_descr	</description>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <price>	1000	  <gold></gold>
     </price>
     <tags>	lightTank enhancedTorsions1t_user	</tags>
@@ -747,7 +747,7 @@
     <description>	#germany_vehicles:PzIV_Hydro_descr	</description>
     <price>	2500	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	mediumTank enhancedLevers_user grousers_user mediumCaliberTankRammer_user wetCombatPack_class1_user	</tags>
     <level>	5	</level>
   </PzIV_Hydro>
@@ -767,7 +767,7 @@
     <description>	#germany_vehicles:E-25_descr	</description>
     <price>	6700	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	AT-SPG mediumAT-SPG enhancedBelwillWashers_user  mediumCaliberTankRammer_user wetCombatPack_class1_user	</tags>
     <level>	7	</level>
   </E-25>
@@ -798,7 +798,7 @@
     <description>	#germany_vehicles:Panther_M10_descr	</description>
     <price>	5750	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	mediumTank beast enhancedTorsions5t_user mediumCaliberTankRammer_user wetCombatPack_class1_user	</tags>
     <level>	7	</level>
   </Panther_M10>
@@ -808,7 +808,7 @@
     <shortUserString>	#germany_vehicles:PzIII_AusfJ_short	</shortUserString>
     <description>	#germany_vehicles:PzIII_AusfJ_descr	</description>
     <price>	138000	</price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	mediumTank secret enhancedTorsions3t_user grousers_user mediumCaliberTankRammer_user wetCombatPack_class1_user	</tags>
     <level>	4	</level>
   </PzIII_training>
@@ -818,7 +818,7 @@
     <shortUserString>	#germany_vehicles:PzVIB_Tiger_II_short	</shortUserString>
     <description>	#germany_vehicles:PzVIB_Tiger_II_descr	</description>
     <price>	50000	</price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	heavyTank secret enhancedTorsions5t_user largeCaliberTankRammer_user wetCombatPack_class2_user aimingStabilizer_Mk2_user	</tags>
     <level>	8	</level>
   </PzVIB_Tiger_II_training>
@@ -828,7 +828,7 @@
     <shortUserString>	#germany_vehicles:PzV_short	</shortUserString>
     <description>	#germany_vehicles:PzV_descr	</description>
     <price>	80000	</price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	mediumTank secret enhancedTorsions5t_user mediumCaliberTankRammer_user wetCombatPack_class1_user	</tags>
     <level>	7	</level>
   </PzV_training>
@@ -839,7 +839,7 @@
     <description>	#germany_vehicles:VK7201_descr	</description>
     <price>	22500	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	heavyTank special antifragmentationLining_superheavy_user enhancedTorsions5t_user largeCaliberTankRammer_user wetCombatPack_class2_user aimingStabilizer_Mk2_user	</tags>
     <level>	10	</level>
   </VK7201>
@@ -850,7 +850,7 @@
     <description>	#germany_vehicles:G100_Gtraktor_Krupp_descr	</description>
     <price>	950	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	mediumTank wetCombatPack_class1_user	</tags>
     <level>	3	</level>
   </G100_Gtraktor_Krupp>
@@ -871,7 +871,7 @@
     <description>	#germany_vehicles:G108_PzKpfwII_AusfD_descr	</description>
     <price>	750	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	lightTank enhancedTorsions1t_user HD	</tags>
     <level>	2	</level>
   </G108_PzKpfwII_AusfD>
@@ -904,7 +904,7 @@
     <description>	#germany_vehicles:G04_PzVI_Tiger_IA_descr	</description>
     <price>	7000	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	heavyTank secret beast enhancedTorsions5t_user largeCaliberTankRammer_user wetCombatPack_class2_user HD	</tags>
     <level>	7	</level>
   </G04_PzVI_Tiger_IA>
@@ -924,7 +924,7 @@
     <description>	#germany_vehicles:G107_PzKpfwIII_AusfK_descr	</description>
     <price>	1250	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	mediumTank secret enhancedTorsions3t_user grousers_user mediumCaliberTankRammer_user wetCombatPack_class1_user HD	</tags>
     <level>	5	</level>
   </G107_PzKpfwIII_AusfK>
@@ -935,7 +935,8 @@
     <description>	#germany_vehicles:G109_Steyr_WT_descr	</description>
     <price>	100	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
+    <sellForGold> true </sellForGold>
     <tags>	AT-SPG secret mediumAT-SPG noImprovedVentilation enhancedSprings_class2_user mediumCaliberTankRammer_user wetCombatPack_class1_user HD	</tags>
     <level>	7	</level>
   </G109_Steyr_WT>

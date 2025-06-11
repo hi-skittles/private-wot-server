@@ -21,7 +21,7 @@ def __returnFreeXPConversionRate():
 	return (25, 1)
 
 def __returnShopRev():
-	return 3
+	return 4
 
 def __tankmanCost():
 	return ({

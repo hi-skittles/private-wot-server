@@ -2,7 +2,6 @@ from random import randint
 
 import BigWorld
 from BigWorld import Proxy
-import cPickle
 from collections import deque
 
 import AccountCommands
