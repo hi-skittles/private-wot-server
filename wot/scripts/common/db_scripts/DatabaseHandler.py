@@ -522,8 +522,8 @@ class GetQuestsData(BackgroundTask.BackgroundTask):
 			except Exception as e:
 				raise Exception("GetQuestsData :: Error occurred while writing quests data (init)=%s" % e)
 		else:
-			for k, v in q_result.items():
-				self.result.update({str(k): cPickle.loads(base64.b64decode(v))})  # dict
+			for column_key, column_value in q_result.items():
+				self.result.update({str(column_key): cPickle.loads(base64.b64decode(column_value))})  # dict
 		c.close()
 		connection.commit()
 		bgTaskMgr.addMainThreadTask(self)
