@@ -1,9 +1,0 @@
-<root>
-	<Paths>
-		<!-- do not change these paths -->
-		<Path>.</Path>
-		<Path>../common</Path>
-		<Path>../../../fantasydemo/res</Path>
-		<Path>../../../bigworld/res</Path>
-	</Paths>
-</root>
