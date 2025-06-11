@@ -141,6 +141,7 @@ def init(preloadEverything, pricesToCollect):
         g_cache.playerEmblems()
         for nationID in xrange(len(nations.NAMES)):
             g_cache.customization(nationID)
+            g_cache.shells(nationID)
             for vehicleTypeID in g_list.getList(nationID).iterkeys():
                 g_cache.vehicle(nationID, vehicleTypeID)
 
@@ -1836,7 +1837,7 @@ def isShellSuitableForGun(shellCompactDescr, gunDescr):
 
 def getEmptyAmmoForGun(gunDescr):
     # type: (dict) -> list
-    """Return empty ammo layout for the gun."""
+    """Return an empty ammo layout for the gun."""
     ammo = []
     for shot in gunDescr['shots']:
         ammo.append(shot['shell']['compactDescr'])
@@ -1856,7 +1857,7 @@ def getDefaultAmmoForGun(gunDescr):
 
 def getUniformAmmoForGun(gunDescr):
     # type: (dict) -> list
-    """Return ammo where all shell types have equal share."""
+    """Return ammo where all shell types have an equal share."""
     shots = len(gunDescr['shots'])
     defaultPortion = 1.0 / shots if shots else 1.0
     return _getAmmoForGun(gunDescr, defaultPortion)
@@ -2615,13 +2616,41 @@ def _readTurretLocals(xmlCtx, section, sharedDescr, unlocksDescrs, parentItem=No
 def _readGun(xmlCtx, section, compactDescr, unlocksDescrs=None, turretCompactDescr=None):
     # type: (tuple, object, int, list or None, int or None) -> dict
     """Read gun descriptor from XML."""
-    res = {'tags': _readTags(xmlCtx, section, 'tags', 'vehicleGun'),
-     'level': _readLevel(xmlCtx, section),
-     'rotationSpeed': radians(20.0), #_xml.readPositiveFloat(xmlCtx, section, 'rotationSpeed')),
-     'weight': 20.0, #_xml.readPositiveFloat(xmlCtx, section, 'weight'),
-     'reloadTime': 12.0, #_xml.readPositiveFloat(xmlCtx, section, 'reloadTime'),
-     'aimingTime': 2.0, #_xml.readPositiveFloat(xmlCtx, section, 'aimingTime'),
-     'maxAmmo': 23} #_xml.readInt(xmlCtx, section, 'maxAmmo', 1)}
+    nationID, gunID = parseIntCompactDescr(compactDescr)[1:3]
+    
+    if not section.has_key('rotationSpeed') or not section.has_key('weight'):
+        gunName = section.name
+        nationName = nations.NAMES[nationID]
+        gunsPath = _VEHICLE_TYPE_XML_PATH + nationName + '/components/guns.xml'
+        gunsSection = ResMgr.openSection(gunsPath)
+        if gunsSection is None:
+            _xml.raiseWrongXml(None, gunsPath, 'can not open or read')
+        sharedSec = _xml.getSubsection((None, gunsPath), gunsSection, 'shared')
+        gunSec = sharedSec[gunName]
+        if gunSec is None:
+            _xml.raiseWrongXml(xmlCtx, 'gunSec', 'no gun exists')
+        gunCtx = (None, gunsPath + '/shared/' + gunName)
+        res = {
+            'tags': _readTags(xmlCtx, section, 'tags', 'vehicleGun'),
+            'level': _readLevel(xmlCtx, section),
+            'rotationSpeed': _xml.readPositiveFloat(gunCtx, gunSec, 'rotationSpeed'), #radians(20.0)
+            'weight': _xml.readPositiveFloat(gunCtx, gunSec, 'weight'), #20
+            'reloadTime': _xml.readPositiveFloat(gunCtx, gunSec, 'reloadTime'), #12.0
+            'aimingTime': _xml.readPositiveFloat(gunCtx, gunSec, 'aimingTime'), #2.0
+            'maxAmmo': _xml.readInt(gunCtx, gunSec, 'maxAmmo', 1) #23???
+        }
+        gunsSection = None
+        ResMgr.purge(gunsPath, True)
+    else:
+        res = {
+            'tags': _readTags(xmlCtx, section, 'tags', 'vehicleGun'),
+            'level': _readLevel(xmlCtx, section),
+            'rotationSpeed': _xml.readPositiveFloat(xmlCtx, section, 'rotationSpeed'), #radians(20.0)
+            'weight': _xml.readPositiveFloat(xmlCtx, section, 'weight'), #20
+            'reloadTime': _xml.readPositiveFloat(xmlCtx, section, 'reloadTime'), #12.0
+            'aimingTime': _xml.readPositiveFloat(xmlCtx, section, 'aimingTime'), #2.0
+            'maxAmmo': _xml.readInt(xmlCtx, section, 'maxAmmo', 1) #23???
+        }
     if not IS_CLIENT or IS_DEVELOPMENT:
         res['invisibilityFactorAtShot'] = 1.0 #_xml.readFraction(xmlCtx, section, 'invisibilityFactorAtShot')
         res['armorHomogenization'] = 1.0
@@ -2697,12 +2726,31 @@ def _readGun(xmlCtx, section, compactDescr, unlocksDescrs=None, turretCompactDes
     else:
         tags = tags.union(('clip',))
     res['tags'] = tags
-    nationID = parseIntCompactDescr(compactDescr)[1]
     v = []
     projSpeedFactor = g_cache.commonConfig['miscParams']['projectileSpeedFactor']
-    for sname, subsection in (('', None),): #_xml.getChildren(xmlCtx, section, 'shots'):
-        v.append(_readShot((xmlCtx, 'shots/' + sname), subsection, nationID, projSpeedFactor))
-
+    if section.has_key('shots'):
+        for sname, subsection in _xml.getChildren(xmlCtx, section, 'shots'):
+            v.append(_readShot((xmlCtx, 'shots/' + sname), subsection, nationID, projSpeedFactor))
+        if not v:
+            _xml.raiseWrongXml(xmlCtx, 'shots', 'no shots are specified')
+    else:
+        gunName = section.name
+        nationName = nations.NAMES[nationID]
+        gunsPath = _VEHICLE_TYPE_XML_PATH + nationName + '/components/guns.xml'
+        gunsSection = ResMgr.openSection(gunsPath)
+        if gunsSection is None:
+            _xml.raiseWrongXml(None, gunsPath, 'can not open or read')
+        sharedSec = _xml.getSubsection((None, gunsPath), gunsSection, 'shared')
+        gunSec = sharedSec[gunName]
+        if gunSec is None:
+            _xml.raiseWrongXml(xmlCtx, 'shots', 'no shots are specified')
+        if gunSec.has_key('shots'):
+            for sname, subsection in _xml.getChildren((None, gunsPath + '/shared/' + gunName), gunSec, 'shots'):
+                v.append(_readShot((xmlCtx, 'shots/' + sname), subsection, nationID, projSpeedFactor))
+        gunsSection = None
+        ResMgr.purge(gunsPath, True)
+        if not v:
+            _xml.raiseWrongXml(xmlCtx, 'shots', 'no shots are specified')
     if not v:
         _xml.raiseWrongXml(xmlCtx, 'shots', 'no shots are specified')
     res['shots'] = tuple(v)
@@ -3013,31 +3061,25 @@ _shellKinds = ('HOLLOW_CHARGE',
 def _readShot(xmlCtx, section, nationID, projectileSpeedFactor):
     # type: (tuple, object, int, float) -> dict
     """Read a gun shot entry."""
-    nationName = nations.NAMES[nationID]
-    if nationName == 'ussr':
-        shellName = '_76mm_UBR-354A' #section.name
-    elif nationName == 'germany':
-        shellName = '_7.92mm_AP'
-    elif nationName == 'usa':
-        shellName = '_12.7mm_AP_M2'
-    elif nationName == 'china':
-        shellName = '_13.2mm_Balle_P.'
-    elif nationName == 'france':
-        shellName = '_13.2mm_Balle_P.'
-    elif nationName == 'uk':
-        shellName = '_12.7mm_AP_M2'
-    elif nationName == 'japan':
-        shellName = '_13.2mm_AP'
+    shellName = section.name
     shellID = g_cache.shellIDs(nationID).get(shellName)
     if shellID is None:
         _xml.raiseWrongXml(xmlCtx, '', 'unknown shell type name')
     shellDescr = g_cache.shells(nationID)[shellID]
-    res = {'shell': shellDescr,
-     'defaultPortion': 0.0, #if not section.has_key('defaultPortion') else _xml.readFraction(xmlCtx, section, 'defaultPortion'),
-     'piercingPower': (100, 150), #_xml.readVector2(xmlCtx, section, 'piercingPower'),
-     'speed': 20.0 * projectileSpeedFactor, #_xml.readPositiveFloat(xmlCtx, section, 'speed') * projectileSpeedFactor,
-     'gravity': 20.0 * projectileSpeedFactor ** 2, #_xml.readNonNegativeFloat(xmlCtx, section, 'gravity') * projectileSpeedFactor ** 2,
-     'maxDistance': 2000}#_xml.readPositiveFloat(xmlCtx, section, 'maxDistance')}
+    res = {
+        'shell': shellDescr,
+        'defaultPortion': _xml.readFraction(xmlCtx, section, 'defaultPortion'), #if section.has_key('defaultPortion') else 0.0,
+        'piercingPower': _xml.readVector2(xmlCtx, section, 'piercingPower'), #if section.has_key('piercingPower') else (100, 150),
+        'speed': (_xml.readPositiveFloat(xmlCtx, section, 'speed')) * projectileSpeedFactor, #if section.has_key('speed') else 20.0
+        'gravity': (_xml.readNonNegativeFloat(xmlCtx, section, 'gravity')) * projectileSpeedFactor ** 2, #if section.has_key('gravity') else 20.0
+        'maxDistance': _xml.readPositiveFloat(xmlCtx, section, 'maxDistance') #if section.has_key('maxDistance') else 2000
+    }
+    # res = {'shell': shellDescr,
+    #  'defaultPortion': 0.0, #if not section.has_key('defaultPortion') else _xml.readFraction(xmlCtx, section, 'defaultPortion'),
+    #  'piercingPower': (100, 150), #_xml.readVector2(xmlCtx, section, 'piercingPower'),
+    #  'speed': 20.0 * projectileSpeedFactor, #_xml.readPositiveFloat(xmlCtx, section, 'speed') * projectileSpeedFactor,
+    #  'gravity': 20.0 * projectileSpeedFactor ** 2, #_xml.readNonNegativeFloat(xmlCtx, section, 'gravity') * projectileSpeedFactor ** 2,
+    #  'maxDistance': 2000}#_xml.readPositiveFloat(xmlCtx, section, 'maxDistance')}
     return res
 
 
@@ -3277,7 +3319,7 @@ def _readPriceForItem(xmlCtx, section, compactDescr):
     """Store price information if price collection is enabled."""
     pricesDest = _g_prices
     if pricesDest is not None:
-        pricesDest['itemPrices'][compactDescr] = (5021, 0) #_xml.readPrice(xmlCtx, section, 'price')
+        if section.has_key('price'): pricesDest['itemPrices'][compactDescr] = _xml.readPrice(xmlCtx, section, 'price')
         if section.readBool('notInShop', False):
             pricesDest['notInShopItems'].add(compactDescr)
     return

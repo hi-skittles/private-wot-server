@@ -13,3 +13,5 @@ class DATABASE_CONST:
 class BASEAPP_CONST:
 	BA_DO_DEBUG = True
 	MAX_ONLINE_ACCOUNTS = 1000  # maximum number of online accounts
+
+SELL_PRICE_FACTOR = 0.5

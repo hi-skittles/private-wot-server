@@ -96,6 +96,7 @@ def __buyVehicle(s_data, i_data, shopRev, vehTypeCompDescr, flags, crew_level, i
 	turretGun = (vehicles.makeIntCompactDescrByID('vehicleTurret', *vehicle.turrets[0][0]['id']),
 	             vehicles.makeIntCompactDescrByID('vehicleGun', *vehicle.turrets[0][0]['guns'][0]['id']))
 	
+	DEBUG_MSG('vehicle_price=%s' % str(vehicle_price))
 	if flags & AccountCommands.BUY_VEHICLE_FLAG.CREW:
 		crewLevel, crewCost, isCrewForGold = crewRecruitLevelsAndPrices[crew_level]
 		
@@ -115,19 +116,34 @@ def __buyVehicle(s_data, i_data, shopRev, vehTypeCompDescr, flags, crew_level, i
 			vehicle_price[0] += crewCost * len(tmanList)
 	else:
 		i_data['inventory'][ITEM_TYPE_INDICES['vehicle']]['crew'].update(list())
-	if flags & AccountCommands.BUY_VEHICLE_FLAG.SHELLS:
-		# TODO: complete this! see gui\shared\utils\gui_items.py lines 467 thru 473; CANNOT USE CLIENT METHODS HERE!!
-		# will have to change 'shells' and 'shellsLayout' based on this flag. main problem is calculating the price for the shells of .getDefaultAmmoForGun()
-		# do NOT use the similar logic found in setAndFillLayouts in AccountRequests.py
-		pass
 	
+	if flags & AccountCommands.BUY_VEHICLE_FLAG.SHELLS:
+		DEBUG_MSG('AccountCommands.CMD_BUY_VEHICLE :: buying vehicle with shells')
+		# add default ammo for the gun and include its price in the vehicle cost
+		shells = vehicles.getDefaultAmmoForGun(vehicle.turrets[0][0]['guns'][0])
+		DEBUG_MSG("AccountCommands.CMD_BUY_VEHICLE :: shells", shells)
+		DEBUG_MSG("vehicle.turrets[0][0]['guns'][0]=%s" % str(vehicle.turrets[0][0]['guns'][0]))
+		
+		# calculate the price for every shell count being purchased
+		for idx in range(0, len(shells), 2):
+			shell_cd = shells[idx]
+			shell_count = shells[idx + 1]
+			shell_price = vehicle_prices['itemPrices'].get(shell_cd, (0, 0))
+			vehicle_price[0] += shell_price[0] * shell_count
+			vehicle_price[1] += shell_price[1] * shell_count
+		
+		i_data['inventory'][ITEM_TYPE_INDICES['vehicle']]['shells'].update({i: shells})
+		i_data['inventory'][ITEM_TYPE_INDICES['vehicle']]['shellsLayout'].update({i: {turretGun: shells}})
+	else:
+		i_data['inventory'][ITEM_TYPE_INDICES['vehicle']]['shells'].update({i: vehicles.getEmptyAmmoForGun(vehicle.turrets[0][0]['guns'][0])})
+		i_data['inventory'][ITEM_TYPE_INDICES['vehicle']]['shellsLayout'].update({i: {turretGun: vehicles.getEmptyAmmoForGun(vehicle.turrets[0][0]['guns'][0])}})
+	
+	DEBUG_MSG('vehicle_price=%s' % str(vehicle_price))
 	i_data['inventory'][ITEM_TYPE_INDICES['vehicle']]['settings'].update(
 		{i: AccountCommands.VEHICLE_SETTINGS_FLAG.AUTO_REPAIR | AccountCommands.VEHICLE_SETTINGS_FLAG.AUTO_LOAD})
 	i_data['inventory'][ITEM_TYPE_INDICES['vehicle']]['compDescr'].update({i: newCompDescr})
 	i_data['inventory'][ITEM_TYPE_INDICES['vehicle']]['eqs'].update({i: [0, 0, 0]})
 	i_data['inventory'][ITEM_TYPE_INDICES['vehicle']]['eqsLayout'].update({i: [0, 0, 0]})
-	i_data['inventory'][ITEM_TYPE_INDICES['vehicle']]['shells'].update({i: vehicles.getEmptyAmmoForGun(vehicle.turrets[0][0]['guns'][0])})
-	i_data['inventory'][ITEM_TYPE_INDICES['vehicle']]['shellsLayout'].update({i: {turretGun: vehicles.getEmptyAmmoForGun(vehicle.turrets[0][0]['guns'][0])}})
 	
 	s_data['stats']['vehTypeXP'].update({newCompDescr: 0}) if newCompDescr not in veh_xp else None
 	

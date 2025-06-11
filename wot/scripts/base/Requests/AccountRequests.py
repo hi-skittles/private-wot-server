@@ -100,7 +100,7 @@ def buyVehicle(proxy, requestID, args):
 	cdata = {'rev': requestID, 'prevRev': requestID - 1,
 	         'inventory': {
 		         ITEM_TYPE_INDICES['vehicle']: {'compDescr': None, 'crew': None, 'eqs': None, 'eqsLayout': None,
-		                                        'settings': None, 'shellsLayout': None},
+		                                        'settings': None, 'shellsLayout': None, 'shells': None},
 		         ITEM_TYPE_INDICES['tankman']: {'compDescr': None, 'vehicle': None}},
 	         'stats': {'gold': None, 'maxResearchedLevelByNation': None, 'vehTypeXP': None, 'unlocks': None, 'credits': None}}
 	
@@ -109,7 +109,7 @@ def buyVehicle(proxy, requestID, args):
 		
 		# vehicle inventory data
 		vehicle_idx = ITEM_TYPE_INDICES['vehicle']
-		for field in ['compDescr', 'crew', 'eqs', 'eqsLayout', 'settings', 'shellsLayout']:
+		for field in ['compDescr', 'crew', 'eqs', 'eqsLayout', 'settings', 'shellsLayout', 'shells']:
 			cdata['inventory'][vehicle_idx][field] = i_data['inventory'][vehicle_idx][field]
 		
 		# tankman inventory data
