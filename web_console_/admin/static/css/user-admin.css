@@ -1,0 +1,48 @@
+
+input[type = "text"], input[type = "password"], select {
+	border: 1px solid #aaa;
+	border-radius: 2px;
+	/*width: 120px;*/
+	width: 152px;
+	margin: 2px 0px;
+	padding: 2px;
+}
+
+select + .chzn-container {
+	/*width: 126px;*/
+	min-width: 158px;
+	margin: 2px 0px;
+}
+
+.server-user-grey {
+	color: #888;
+}
+
+.server-user-container {
+	height: 30px;
+}
+
+.server-user-container > * {
+	padding: 5px;
+}
+
+.server-user-name {
+	display: inline-block;
+	color: #888;
+}
+
+.query-indicator {
+	display: none;
+}
+
+.query-in-progress .query-indicator {
+	display: inline-block;
+}
+
+.query-in-progress .server-user-name {
+	display: none;
+}
+
+.server-user-error {
+	color: red;
+}

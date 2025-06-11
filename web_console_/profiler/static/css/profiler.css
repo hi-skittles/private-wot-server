@@ -1,0 +1,378 @@
+.profiler-list-container {
+	display: inline-block;
+	margin-bottom: 12px;
+}
+
+.live-view {
+	position: relative;
+	width: 100%;
+}
+
+.profile-form-container {
+	position: relative;
+	/*width: 100%;*/
+	margin-bottom: 12px;
+	/*border-top: 1px solid #aaa;*/
+	padding: 0;
+	background: #fff;
+	z-index: 1;
+	min-width: 325px;
+}
+
+.stat-output-container {
+	min-height: 100px; /* required for FF to honour flex-box stuff */
+	overflow: auto;
+	/*padding: 5px;*/
+	z-index: 0;
+	position: relative;
+	border: 1px solid #ccc;
+	-webkit-box-shadow: inset 0px 0px 3px #eee;
+	-moz-box-shadow: inset 0px 0px 3px #eee;
+	-ms-box-shadow: inset 0px 0px 3px #eee;
+	-o-box-shadow: inset 0px 0px 3px #eee;
+	box-shadow: inset 0px 0px 3px #eee;
+}
+
+.flexboxed {
+	display: -webkit-box;
+	display: -moz-box;
+	display: flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-moz-box-orient: vertical;
+	-ms-box-orient: vertical;
+	-o-box-orient: vertical;
+	flex-box-orient: vertical;
+	flex-flow: column;
+
+	-webkit-flex-direction: column;
+	-moz-flex-direction: column;
+	flex-direction: column;
+
+	height: 100%;
+	width: 100%;
+}
+
+.flexboxed .profile-form-container {
+	-webkit-box-flex: 0;
+	-webkit-flex: 0;
+	-moz-box-flex: 0;
+	flex: 0;
+	flex: 0 1 auto;
+}
+
+.flexboxed .stat-output-header {
+	-webkit-box-flex: 0;
+	-webkit-flex: 0;
+	-moz-box-flex: 0;
+	flex: 0;
+}
+
+.flexboxed .stat-output-container {
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	-moz-box-flex: 1;
+	flex: 1;
+}
+
+
+.stat-output-pane {
+	position: absolute;
+	font-family: monospace;
+	white-space: pre;
+	font-size: 13px;
+	color: #111;
+	margin: 5px 5px;
+}
+
+.trace-viewer-panel {
+	overflow: hidden;
+	position: absolute;
+	top: 40px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~ options, controls and actions ~~~~~~~~~~~~~~~~~~~~~~*/
+button {
+	height: 26px;
+	vertical-align: baseline;
+}
+
+button:before {
+	padding-right: 5px;
+}
+
+.profile-options-controls {
+	background: #fafafa;
+	background: -webkit-linear-gradient( 65deg, #e0e0e0, #fafafa );
+	background: -moz-linear-gradient( 65deg, #e0e0e0, #fafafa );
+	background: -ms-linear-gradient( 65deg, #e0e0e0, #fafafa );
+	background: -o-linear-gradient( 65deg, #e0e0e0, #fafafa );
+	background: linear-gradient( 65deg, #e0e0e0, #fafafa );
+}
+
+.profile-options-controls:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.profile-options, .profile-controls {
+	display: inline-block;	
+	padding: 5px;
+	white-space: nowrap;
+	float: left;
+}
+
+.profile-actions, .record-settings {
+	padding: 5px;
+	white-space: nowrap;
+}
+
+.start-profile:before {
+	/* .icon-play */
+	font-family: FontAwesome;
+	content: "\f04b"; 
+}
+
+.stop-profile {
+	display: none;
+}
+
+.stop-profile:before {
+	/* .icon-stop */
+	font-family: FontAwesome;
+	content: "\f04d"; 
+}
+
+.start-record:before {
+	/* .icon-circle */
+	font-family: FontAwesome;
+	content: "\f111"; 
+}
+
+.cancel-record {
+	display: none;
+}
+
+.cancel-record:before {
+	/* .icon-circle */
+	font-family: FontAwesome;
+	content: "\f111"; 
+	color: red;
+}
+
+.profile-in-progress .start-profile {
+	display: none;
+}
+
+.profile-in-progress .stop-profile {
+	display: inline-block;
+}
+
+.profile-in-progress .start-record {
+	display: inline-block;
+}
+
+.profile-in-progress .start-record:before {
+	color: red;
+}
+
+.record-settings {
+	display: none;
+}
+
+.record-settings input[type="text"] {
+	border: 1px solid #aaa;
+	border-radius: 3px;
+	line-height: 15px;
+}
+
+.record-estimation-alert {
+	color: red;
+}
+
+.record-file-path, .record-file-name {
+	vertical-align: top;	
+	margin-right: 10px;
+}
+
+.record-status, .record-result{
+	display: none;
+	margin-left: 5px;
+}
+
+.record-status-text, .record-result-text{
+	display: inline-block;
+	font-weight: bold;
+}
+
+.record-status-text:after, .record-result-text:after {
+	/* .icon-info-sign */
+	font-family: FontAwesome;
+	content: "\f05a"; 
+	font-size: 10px;
+	color: #999;
+	padding-left: 3px;
+	padding-right: 10px;
+	vertical-align: super;
+}
+
+.record-spinner {
+	vertical-align: text-bottom;
+}
+
+.to-record .record-settings {
+	display: inline-block;
+}
+
+.record-in-progress .record-status {
+	display: inline-block;
+}
+
+.to-record .cancel-record, 
+.record-in-progress .cancel-record {
+	display: inline-block;
+}
+
+.to-record .start-record, 
+.record-in-progress .start-record {
+	display: none;
+}
+
+.downloading-finished .record-result {
+	display: inline-block;
+}
+
+.stat-output-header {
+	margin: 0px;
+	padding: 4px 0px;
+	min-height: 20px;
+}
+
+.stat-output-header > * {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.stat-output-header h2 {
+	float: left;
+	font-size: 18px;
+	margin: 0px;
+	padding: 0px;
+	color: #444;
+}
+
+.stat-output-header:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.stat-output-status {
+	float: right;
+}
+
+.stat-output-status > * {
+	display: inline-block;
+	margin: auto 0px;
+	line-height: 14px;
+}
+
+.stat-output-status > img {
+	cursor: pointer;
+}
+
+.idle-spinner {
+	display: inline-block;
+}
+
+.progress-spinner{
+	display: none;
+}
+
+.status-indicator {
+	vertical-align: text-top;
+	font-size: 13px;
+	font-family: sans-serif;
+}
+
+.upload-file {
+	margin-top: 6px;
+	display: none;
+}
+
+.incompatible-process {
+	font-style: italic;
+	color: #aaa;
+}
+
+.recording-file-actions {
+	display: inline-block;
+}
+
+.recording-hint-text {
+	display: none;
+}
+
+.incompatible-browser .recording-file-actions{
+	display: none;
+}
+
+.incompatible-browser .recording-hint-text {
+	display: inline-block;
+	font-style: italic;
+	color: #aaa;
+}
+
+
+/*~~~~~~~~~~~~~~~~~~~~ Recording Complete Alert ~~~~~~~~~~~~~~~~~~~~~*/
+.alert-recording-content{
+	margin: 5px;
+	padding: 5px;
+}
+
+.alert-recording-text {
+	width: 100%;
+	height: 100%;
+	color: #444;
+}
+
+.alert-recording-link a {
+	color: white;
+}
+
+.alert-recording-action {
+	margin: 5px;
+}
+
+.alert-recording-copy {
+	vertical-align: top;
+}
+
+.alert-recording-button {
+	float:right;
+	color: #444;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~ chosen workarounds ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*
+*   There's a bug in chosen lib's select replacement widget that does not scale
+*   the menu nor the trigger to the size of the longest select option.
+*   Workaround is to set explicit min-width's on the size of the widget.
+*/
+
+select[name = "sort-mode"] + .chzn-container-single {
+	min-width: 180px;
+}
+
+select[name = "exclusive-mode"] + .chzn-container-single {
+	min-width: 100px;
+}
+
+select[name = "categories"] + .chzn-container-single {
+	min-width: 80px;
+}
+

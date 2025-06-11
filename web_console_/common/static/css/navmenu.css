@@ -1,0 +1,228 @@
+/*
+ * Navmenu stuff, mostly hijacked from python.org
+ */
+
+.navmenu
+{
+	padding:0;
+	width: 9em;
+}
+
+.navmenu ul
+{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.navmenu a
+{
+	text-decoration: none;
+}
+
+.navmenu a:hover
+{
+	text-decoration: underline;
+	color: #16A5DD;
+}
+
+.navmenu img
+{
+	border: 0;
+	margin-top:-5px;
+	padding-right: 5px;
+	float: left;
+}
+
+.navmenu ul.level-one a
+{
+	display: block;
+	position: relative;
+	padding: 10px 0px 10px 10px;
+	color: #ffffff;
+	font-variant: small-caps;
+	height: 12px;
+	line-height: 12px;
+	background: #68c4eb;
+	background-image: -moz-linear-gradient( left, #1784c0, #68c4eb );
+	background-image: -ms-linear-gradient( left, #1784c0, #68c4eb );
+	background-image: -webkit-gradient( linear, left top, right top, from( #1784c0 ), to( #68c4eb ) );
+	background-image: -webkit-linear-gradient( left, #1784c0, #68c4eb );
+	background-image: -o-linear-gradient( left, #1784c0, #68c4eb );
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1784c0', endColorstr='#68c4eb', GradientType=0);
+	background-image: linear-gradient( 90deg, #1784c0, #68c4eb );
+}
+
+.navmenu ul.level-one a:hover
+{
+	background: #fdca7f;
+	background-image: -moz-linear-gradient( left, #ff8023, #fdca7f );
+	background-image: -ms-linear-gradient( left, #ff8023, #fdca7f );
+	background-image: -webkit-gradient( linear, left top, right top, from( #ff8023 ), to( #fdca7f ) );
+	background-image: -webkit-linear-gradient( left, #ff8023, #fdca7f );
+	background-image: -o-linear-gradient( left, #ff8023, #fdca7f );
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff8023', endColorstr='#fdca7f', GradientType=0);
+	background: linear-gradient( 90deg, #ff8023, #fdca7f );
+	color: #ffffff;
+}
+
+.navmenu ul.level-one a:hover .arrow {
+	background: #fdca7f;
+}
+
+
+/* counter work against IE for inserting extra space after display block */
+.level-one li > a:first-child
+{
+	margin-bottom:4px;
+}
+
+.navmenu .current
+{
+	font-weight: bold;
+}
+
+.navmenu .not-current
+{
+	font-weight: normal;
+}
+
+.navmenu ul.level-two
+{
+	margin-top: 10px;
+}
+
+.navmenu ul.level-two li:first-child a
+{
+	border-top:0;
+	padding-top: 0;
+}
+
+.navmenu ul.level-two a
+{
+	background-image: none;
+	background-color: transparent;
+	display: block;
+	border: 0;
+	border-bottom: 1px solid #65BFEF;
+	margin-left: 1em;
+	margin-right: 0.75em;
+	color: #104D8C;
+	padding: 4px 0px 5px 12px;
+	font-variant: normal;
+	clear: both;
+	white-space: nowrap;
+}
+
+.navmenu ul.level-two a:link, .navmenu ul.level-two a:visited
+{
+	color: #104D8C;
+}
+
+.navmenu ul.level-two a:hover
+{
+	color: #FF8000;
+	background-image: none;
+	background-color:transparent;
+}
+
+.navmenu ul.level-one .user-feedback-button
+{
+	display: inline-block;
+	background: transparent;
+	border-top: 1.5px solid #68c4eb;
+	border-bottom: 1.5px solid #68c4eb;
+	border-radius: 0 2px 2px 0;
+}
+
+.navmenu ul.level-one .user-feedback-button:hover
+{
+	background: transparent;
+	border-top: 1.5px solid #FF8000;
+	border-bottom: 1.5px solid #FF8000;
+}
+
+.navmenu ul.level-one .user-feedback-button .arrow
+{
+	background: transparent;
+	border-right: 1.5px solid #68c4eb;
+}
+
+.navmenu ul.level-one .user-feedback-button:hover .arrow
+{
+	background: transparent;
+	border-right: 1.5px solid #FF8000;
+}
+
+.navmenu ul.level-one .user-feedback-button span
+{
+	opacity: 0;
+	position: absolute;
+	left: -40px;
+	top: 0;
+	color: #000;
+	text-shadow: none;
+	padding: 10px 10px 10px 15px;
+	z-index: 1;
+}
+
+.navmenu ul.level-one .user-feedback-button img
+{
+	position: relative;
+	z-index: 2;
+}
+
+.top-level
+{
+	margin-bottom: 6px;
+	margin-right: 10px;
+	position: relative;
+}
+
+.arrow {
+	position: absolute;
+	top: 0px;
+	right: -5px;
+	width: 10px;
+	height: 50%;
+	margin: 0;
+	border: none;
+	padding: 0;
+	z-index: -1;
+
+	-webkit-transform: skewX( 30deg );
+	-moz-transform: skewX( 30deg );
+	-ms-transform: skewX( 30deg );
+	-o-transform: skewX( 30deg );
+	transform: skewX( 30deg );
+
+	background: #68c4eb;
+}
+
+.arrow + .arrow {
+	top: 50%;
+
+	-webkit-transform: skewX( -30deg );
+	-moz-transform: skewX( -30deg );
+	-ms-transform: skewX( -30deg );
+	-o-transform: skewX( -30deg );
+	transform: skewX( -30deg );
+}
+
+.level-one .feedback-list-item
+{
+	position: fixed;
+	bottom: 10px;
+}
+
+@media (max-height: 680px)
+{
+	.level-one .feedback-list-item
+	{
+		bottom: 0;
+		margin-bottom: 6px;
+		margin-right: 10px;
+		position: relative;
+	}
+}

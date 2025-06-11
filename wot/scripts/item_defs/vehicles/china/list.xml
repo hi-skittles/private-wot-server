@@ -5,7 +5,7 @@
     <description>	#china_vehicles:Ch01_Type59_descr	</description>
     <price>	7500	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	mediumTank enhancedTorsions3t_user mediumCaliberTankRammer_user wetCombatPack_class1_user aimingStabilizer_Mk1_user	</tags>
     <level>	8	</level>
   </Ch01_Type59>
@@ -15,7 +15,7 @@
     <description>	#china_vehicles:Ch02_Type62_descr	</description>
     <price>	4800	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	lightTank enhancedTorsions3t_user mediumCaliberTankRammer_user wetCombatPack_class1_user aimingStabilizer_Mk1_user	</tags>
     <level>	7	</level>
   </Ch02_Type62>
@@ -35,7 +35,7 @@
     <description>	#china_vehicles:Ch03_WZ-111_descr	</description>
     <price>	12250	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	heavyTank enhancedTorsions5t_user largeCaliberTankRammer_user wetCombatPack_class2_user aimingStabilizer_Mk2_user	</tags>
     <level>	8	</level>
   </Ch03_WZ-111>
@@ -193,7 +193,7 @@
     <userString>	#china_vehicles:Ch04_T34_1	</userString>
     <description>	#china_vehicles:Ch04_T34_1_descr	</description>
     <price>	1355000	</price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	mediumTank secret enhancedSuspension_Christie_user mediumCaliberTankRammer_user wetCombatPack_class1_user	</tags>
     <level>	7	</level>
   </Ch04_T34_1_training>

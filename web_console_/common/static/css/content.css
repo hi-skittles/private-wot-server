@@ -1,0 +1,540 @@
+
+.content .field,
+.content .colheader,
+.content .th
+{
+	font-weight: bold;
+}
+
+.content .code
+{
+	font-family: fixed;
+	font-size: 8pt;
+}
+
+.content .hotkey
+{
+	color: #DD0000;
+}
+
+.content .alert
+{
+	color: #FF0000;
+	font-weight: bold;
+}
+
+.content .thinpre
+{
+	margin: 0;
+	padding: 0;
+}
+
+.content .noborders
+{
+	border: none;
+}
+
+.content td, .content th
+{
+	padding: 5px 5px 2px 2px;
+	border:	1px solid #CCCCCC;
+}
+
+.content .heading, .content .subheading
+{
+	background-image: url(../images/bg_heading.jpg);
+	background-repeat: repeat-y;
+	background-color: #5FC8EF;
+	font-weight: bold;
+	font-size: 18px;
+	color: #ffffff;
+	text-align: left;
+}
+
+.content .numeric
+{
+	text-align: right;
+}
+
+.content .subheading
+{
+	font-size: 12px;
+}
+
+.content img
+{
+	border: 0;
+}
+
+#login_intro
+{
+	padding: 1em;
+	margin: 3em auto 0 auto;
+	width: 75%;
+	min-width: 600px;
+	color: black;
+	border: 1px solid #94D8E0;
+	font-size: medium;
+}
+
+#login_intro .heading
+{
+	position: relative;
+	margin: 0.25em 16px 0.25em 0px;
+	border: none;
+	padding: 10px;
+
+	background: linear-gradient( 90deg, rgb( 16, 77, 140 ), rgb( 104, 196, 235 ) );
+	color: white;
+
+	font-size: x-large;
+	font-weight: bold;
+	text-shadow: 0px 0px 3px #444;
+}
+
+#login_intro h2
+{
+	font-size: large;
+
+}
+
+#login_intro p
+{
+	margin-left: 2em;
+	margin-right: 2em;
+}
+
+.login-incorrect {
+	color: red;
+	margin-left: 7em;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+
+#bad_browser
+{
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+	text-align: center;
+	border:  1px solid #CC3333;
+	margin-top: 2em;
+	padding: 1em;
+	background-color:	#FFCCCC;
+	color: red;
+	font-weight: bold;
+	font-size: small;
+	display: none;
+}
+
+
+/* styles below added by Ronnie */
+.main
+{
+	padding: 10px 0px 0px 0px;
+	height: 100%;
+}
+
+/* styles for login */
+.login
+{
+	font-size:  0.8em;
+	color: #FAA61A;
+	font-weight:	bold;
+
+/*	float: right; */
+	padding-right: 30px;
+	padding-bottom: 4px;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+}
+
+.login a,
+.login a:visited,
+.login a:visited
+{
+	color: #95DAF4;
+}
+
+.login a:hover
+{
+	color: #FFFFFF;
+}
+
+.login input.text
+{
+	background-color: #EAF8FD;
+}
+
+.login .login-button
+{
+	font-family: sans-serif;
+	font-weight: bold;
+}
+
+.switch-user-dialog {
+	display: none;
+	position: absolute;
+	top: 40px;
+	left: 50%;
+	width: 600px;
+	min-height: 50px;
+	z-index: 999;
+	opacity: 1.0;
+	margin-left: -300px;
+
+	border: 1px solid #aaa;
+	padding: 10px;
+
+	background: rgba( 255, 255, 255, 0.925 );
+	border-radius: 0px 0px 4px 4px;
+	box-shadow: 0px 5px 10px #888;
+}
+
+.switch-user-dialog .close-button {
+	float: right;
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 14pt;
+	color: grey;
+	position: absolute;
+	right: 8px;
+	top: 5px;
+}
+
+.switch-user-dialog .input-div {
+	text-align: center;
+}
+
+.switch-user-dialog .input-div .username-accept {
+	background-image: url( ../images/accept.png );
+	height: 16px;
+	width: 16px;
+	top: 24px;
+	margin-left: 41px;
+	position: relative;
+	margin-top: -16px;
+}
+
+.switch-user-dialog .input-div .invalid-input {
+	-webkit-filter: grayscale(100%);
+	filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 10+, Firefox on Android */
+	opacity: 0.4;
+}
+
+.switch-user-dialog #access-user-btn {
+	margin-bottom: 3px;
+}
+
+.switch-user-dialog .input-div .recent-users-list {
+	display: none;
+	position: absolute;
+	z-index: 999;
+}
+
+.switch-user-dialog .input-div .recent-users-list .footer {
+	text-align: left;
+	color: #ccc;
+}
+	
+.switch-user-dialog .input-div .dropdown-button {
+	position: relative;
+	top: -7px;
+	left: 387px;
+	display: inline-block;
+	cursor: pointer;
+	width: 22px;
+	height: 29px;
+	border-left: 1px solid #999;
+	background-color: #ddd;
+}
+
+.switch-user-dialog .input-div .dropdown-button span {
+	position: relative;
+	top: 7px;
+}
+
+.switch-user-dialog #users-input {
+	width: 65%;
+	height: 25px;
+	font-size: 12pt;
+	padding-left: 25px;
+	margin-left: -35px;
+}
+
+.switch-user-dialog .icon-plus-sign {
+	font-size: 12pt;
+	margin-right: 5px;
+}
+
+.switch-user-dialog .icon-minus-sign {
+	font-size: 12pt;
+	margin-right: 5px;
+}
+
+.switch-user-dialog .all-users-header {
+	margin: 11px 0 5px 5px;
+	cursor: pointer;
+}
+
+.switch-user-dialog .hover {
+	color: #666;
+}
+
+.switch-user-dialog .all-users-header hr {
+	display: inline-block;
+	width: 78%;
+	margin-left: 5px;
+	position: relative;
+	top: 3px;
+}
+
+.switch-user-dialog .all-users-list {
+	display: none;
+	border: 1px solid;
+	padding: 5px;
+	border-color: rgba(0,0,0,0.2);
+	border-radius: 0px 0px 4px 4px;
+	overflow: auto;
+}
+
+.switch-user-dialog .refresh-users-button {
+	padding: 2px;
+	float: right;
+	position: relative;
+	right: -3px;
+	top: 3px;
+	margin-bottom: -20px;
+	z-index: 999;
+}
+
+.switch-user-dialog .all-users-table {
+	width: 100%;
+	clear: both;
+}
+
+.switch-user-dialog .all-users-table .off-white {
+	background-color: #fafafa;
+}
+
+.switch-user-dialog .all-users-list .checkbox-div {
+	float: right;
+}
+
+.switch-user-dialog .all-users-list .checkbox-div input {
+	position: relative;
+	top: 2px;
+}
+
+.switch-users-dropdown {
+	height: 25px;
+	padding-top: 5px !important;
+	border: none !important;
+}
+
+.switch-users-dropdown:hover {
+	border: 1px solid #999999; 
+	background: #dadada url(../third_party/jquery-ui/css/images/ui-bg_glass_75_dadada_1x400.png) 50% 50% repeat-x; 
+	font-weight: normal; 
+	color: #212121;
+}
+
+.switch-users-dropdown div {
+	display: inline-block;
+	width: 25%;
+	vertical-align: middle;
+	text-align: left;
+}
+
+.switch-users-dropdown div:last-child {
+	display: inline-block;
+	width: 50%;
+	vertical-align: middle;
+}
+
+/*Special handling for Firefox, BUG: BWT-23834*/
+.contains-flash .switch-user-dialog {
+	background: rgb( 255, 255, 255 );
+	border-radius: 0px;
+}
+
+.switch-user-dialog h3 {
+	text-align: center;
+}
+
+.switch-user-dialog p {
+	width: 90%;
+	margin: 8px auto;
+}
+
+.switch-user-dialog-showing #main,
+.switch-user-dialog-showing #navigation {
+	opacity: 0.5;
+}
+
+.switch-user-dialog-showing .switch-user-dialog {
+	display: block;
+	opacity: 1.0;
+	-webkit-transition: all 0.2s linear;
+	-moz-transition: all 0.2s linear;
+	-ms-transition: all 0.2s linear;
+	-o-transition: all 0.2s linear;
+	transition: all 0.2s linear;
+}
+
+.serveruser {
+	visibility: hide;
+	position: absolute;
+    left: 25px;
+    bottom: 0px;
+    font-size: 17px;
+    font-variant: small-caps;
+    color: #fff;
+}
+
+.acting-as-other .serveruser {
+	visibility: visible;
+}
+
+.sortable a, .sortable a:visited, .sortable a:active
+{
+	color: #0000FF;
+}
+
+.sortable a:hover
+{
+	color: #FF8000;
+}
+
+.pyscript .heading
+{
+	background: none;
+	color: black;
+	font-weight: bold;
+	font-size: 1em;
+	border: none;
+}
+
+.user-feedback-dialog
+{
+	display: none;
+	position: absolute;
+	min-width: 300px;
+	min-height: 50px;
+	z-index: 999;
+	opacity: 1.0;
+
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translateX(-50%) translateY(-50%);
+	-moz-transform: translateX(-50%) translateY(-50%);
+	-ms-transform: translateX(-50%) translateY(-50%);
+	transform: translateX(-50%) translateY(-50%);
+
+	margin: 0;
+	border: 1px solid #aaa;
+	padding: 10px;
+
+	background: rgba( 255, 255, 255, 0.925 );
+	border-radius: 0px 0px 4px 4px;
+	box-shadow: 0px 5px 10px #888;
+}
+
+.user-feedback-dialog h3
+{
+	text-align: center;
+}
+
+
+/*Special handling for Firefox, BUG: BWT-23834*/
+.contains-flash .user-feedback-dialog
+{
+	background: rgb( 255, 255, 255 );
+	border-radius: 0px;
+}
+
+.user-feedback-dialog form
+{
+	display: none;
+}
+
+.user-feedback-dialog-showing #main,
+.user-feedback-dialog-showing #navigation
+{
+	opacity: 0.5;
+}
+
+.user-feedback-dialog-showing .user-feedback-dialog
+{
+	display: inline-block;
+	opacity: 1.0;
+	-webkit-transition: all 0.2s linear;
+	-moz-transition: all 0.2s linear;
+	-ms-transition: all 0.2s linear;
+	-o-transition: all 0.2s linear;
+	transition: all 0.2s linear;
+}
+
+.user-feedback-dialog tr > td:first-child
+{
+	text-align: right;
+	font-weight: bold;
+}
+
+.user-feedback-dialog tr > td:last-child
+{
+	padding-bottom: 2px;
+}
+
+.user-feedback-dialog textarea
+{
+	height: 150px;
+}
+
+.user-feedback-dialog input,
+.user-feedback-dialog textarea
+{
+	border-style: inset;
+	border-width: 2px;
+	width: 500px;
+}
+
+.user-feedback-dialog .result-text
+{
+	display: inline-block;
+	float: left;
+}
+
+.user-feedback-dialog .result-text p:before
+{
+	content: "\f046";
+	font-family: FontAwesome;
+	font-size: 18px;
+	padding-right: 6px;
+}
+
+.user-feedback-dialog .actions-bar-right
+{
+	display: inline-block;
+	float: right;
+	-webkit-margin-before: 1em;
+}
+
+.user-feedback-error div:before
+{
+	content: "\f071";
+	font-family: FontAwesome;
+	font-size: 18px;
+	padding-right: 5px;
+}
+
+.user-feedback-error
+{
+	display: block;
+	padding-top: 3px;
+	padding-bottom: 5px;
+	color: #DD0000;
+}
+

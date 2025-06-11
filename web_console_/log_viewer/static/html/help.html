@@ -1,0 +1,307 @@
+<section id="webconsole-logs-module">
+
+    <h1>Logs Help</h1>
+
+	<p>The <b>Logs</b> module is BigWorld's interface to Server log viewing and
+	querying. The core functionality of the Logs module is provided by the embedded
+	<b>LogViewer</b> Javascript application.</p>
+
+	<p>LogViewer can be used to perform static searches through log data, as well
+	as provide live views of log activity. Summaries of per-user log size and
+	other information can also be generated.</p>
+
+	<h2>Displaying output</h2>
+
+	<p>If you just want to start using the tools and see some server output,
+	click the <b>Live Output</b> link in the left-hand side navigation menu
+	(assuming you are currently running a server). The output from the
+	server will be continuously updated in the log window.</p>
+
+	<p>Alternatively, the <b>Fetch</b> button may be used to statically retrieve
+	logs in a page-by-page fashion.</p>
+
+	<h2>Searching</h2>
+
+	<p>The <b>Search</b> page provides a set of filters with which users can
+	apply to restrict the number and format of log results displayed.
+	Filter sets can also be saved and restored to repeat common searches at
+	a later time.</p>
+
+	<p>Users also have the option of saving a set of filters as their personal
+	default display, which will be shown every time that the default view of LogViewer
+	is accessed.</p>
+
+	<p>There is a limit to the number of log lines that may be retrieved in a single
+	Fetch query. If the number of matching log lines exceeds this amount, the query
+	results are truncated and a link displayed for fetching the next page of results.
+	</p>
+
+    <p>Log lines in the query result that contain metadata will be displayed with
+    a "+" icon in front of the log line. You can click to expand that log line to 
+    view the contained metadata, and click the "-" icon to collapse it. For 
+    information on filtering by metadata keys/values see the Log Filters section.</p>
+
+	<h3>Log Filters</h3>
+
+	<p>The <b>Add Filter</b> menu at the top of the page allows the user to add
+	from a set of pre-defined filters to narrow the set of log lines returned by
+	either a static Fetch or Live Output query.</p>
+
+	<p>The following filters are available:</p>
+
+	<table class="alternate">
+	<thead>
+        <tr>
+            <th>Filter</th>
+            <th>Description</th>
+        </tr>
+	</thead>
+	<tbody>
+	<tr>
+	    <td>App ID</td>
+        <td>Incremental counter assigned by some of the server
+        "manager" components to the processes they manage (<i>e.g.</i>,
+        <code>cellapp01</code>, <code>baseapp02</code>, etc...). Note that if an
+        app ID is given, log lines from processes that do not have an app ID
+        (e.g. CellAppMgr, BaseAppMgr) will still be included in the results.
+        </td>
+    </tr>
+
+    	<tr>
+	    <td>Category</td>
+        <td>
+            <p>The category of the log message.</p>
+        </td>
+    </tr>
+
+    	<tr>
+	    <td>Context Lines</td>
+        <td>
+            <p>The number of non-matching log lines that should be included around
+            each matching line, similar to the operation of the unix expression
+            '<code>grep -C</code>'. When this filter applies, chunks of contiguous
+            context are separated by line containing the characters
+            '<code>--</code>'.
+            </p>
+            <p>This filter is not supported if MongoDB is used as the backend 
+            storage.</p>
+        </td>
+    </tr>
+
+	<tr>
+        <td class="oddRow1stCol">Log Text</td>
+        <td class="oddRow">
+            <p>
+                Text to match against the log message itself. Matching text may be
+                given as either an exact string, or as an
+                <a href="http://linux.die.net/man/7/regex" target="_blank">extended
+                POSIX regular expression</a> (alternatively, on unix systems, see
+                docs for '<code>man 7 regex</code>').
+            </p>
+        </td>
+    </tr>
+
+	<tr>
+        <td class="oddRow1stCol">Machine Name</td>
+        <td class="oddRow">
+            <p>Log results can be displayed for all machines, or for a
+            single machine.</p>
+
+            <p>Currently, it is not possible to filter based on a substring of the
+            hostname or a netmask.</p>
+
+            <p>Note that only machines that have sent at least one log message will
+            appear in the filter list; not all machines running <code>bwmachined</code>
+            will necessarily appear.</p>
+        </td>
+	</tr>
+
+	<tr>
+        <td class="oddRow1stCol">Message Source</td>
+        <td class="oddRow">
+            <p>The programming language from which the log message was originally
+            logged.</p>
+        </td>
+	</tr>
+
+    <tr>
+        <td class="oddRow1stCol">Metadata Key/Value</td>
+        <td class="oddRow">
+            <p>Key and/or value to match against metadata associated with the log 
+            message.</p>
+            <p>Use the <b>exists</b> or <b>does not exist</b> options to retrieve log messages 
+            that contain or do not  contain the specified Metadata Key.</p>
+            <p>Use the <b>is</b> or <b>is not</b> options, and specify a <b>Value</b>, to retrieve 
+            log messages where the specified Metadata Key equals or does not
+            equal the specified Value.</p>
+            <p>This filter is only available when MongoDB is used as the backend 
+            storage.</p>
+        </td>
+	</tr>
+
+	<tr>
+        <td class="oddRow1stCol">Output Columns</td>
+        <td class="oddRow">
+            <p>Rather than filtering which log lines are return, the output columns
+            filter determines which columns of information are displayed in the
+            returned output.</p>
+        </td>
+	</tr>
+
+    <tr>
+        <td class="oddRow1stCol">Process ID</td>
+        <td class="oddRow">
+            <p>Standard UNIX PID assigned by the operating system.</p>
+        </td>
+    </tr>
+
+	<tr>
+	    <td class="oddRow1stCol">Process Type</td>
+        <td class="oddRow">
+            <p>
+                Only log lines from the shown process types will be
+                displayed. While the textbox has focus, the list of
+                processes available for selection will be narrowed by the text typed.
+                Selection of multiple process types at once can be performed by
+                Ctrl-clicking menu items in sequence. Selected process types can
+                be unselected by clicking the cross icon, or pressing Backspace
+                while the textbox has focus.
+            </p>
+        </td>
+	</tr>
+
+	<tr>
+	    <td>Server User</td>
+        <td>Log results are displayed for only one user at a time.
+        As with the list of machines, only users who have sent at least one log
+        message will appear in this list.
+        </td>
+    </tr>
+
+	<tr>
+	    <td>Severity</td>
+        <td>
+            <p>Log levels to be displayed.</p>
+        </td>
+    </tr>
+
+
+	<tr>
+        <td class="oddRow1stCol">Time Interval</td>
+        <td class="oddRow">
+            <p>
+                Time range over which the logs will be searched. All times
+                are in BigWorld Server time. In addition to the given event times,
+                the start-point of the time interval can also be given as a specific
+                date/time by either copy/pasting a specific time (such as
+                copy/pasting the date/time from an existing log entry), or using the
+                embedded datepicker that appears when the specific time input control
+                has focus.
+            </p>
+            <p>
+                Please note that specific times must follow the exact datetime
+                format that is seen in the log output (<i>e.g.</i>,
+                <code style="white-space: nowrap">"Mon 09 Oct 2006 17:18:11.217"</code>
+                &ndash; the milliseconds at the end are optional,
+                everything else is mandatory).
+            </p>
+            <p>
+                The end-point of the time interval to be searched is always given
+                as relative to the start time.
+            </p>
+            <p>
+                Note that matching log lines are always displayed in forwards
+                chronological order, regardless of the chronological order of the
+                start- and end-points of the query. However, when results span
+                several pages, the ordering of the pages returned is determined
+                by the direction of the search:
+                <ul>
+                    <li>
+                        When the end-point of the time interval is
+                        <b>forwards</b>, <b>either side</b>, or <b>to present</b>,
+                        then result pages are returned in chronological order.
+                    </li>
+                    <li>
+                        When the end-point of the time interval is <b>backwards</b>
+                        or <b>to beginning</b>, then result pages are returned in
+                        <em>reverse</em> order (most recent result page first).
+                    </li>
+                </ul>
+            </p>
+            <p>
+                If the time interval filter is not present, incompletely filled out,
+                or contains invalid parameters, log lines are returned from the last
+                server startup to present.
+            </p>
+        </td>
+    </tr>
+
+	</tbody>
+	</table>
+
+	<h3>Query modes</h3>
+
+	<p>
+	    The <b>Log Viewer</b> module supports running queries in either
+        <b>static</b> or <b>live</b> mode. A static query (triggered with the
+        <b>Fetch</b> button) will not update with new results that might become
+        available after its execution. Live queries continuously update as new
+        entries are written to the logs, much like calling
+		<code style="white-space: nowrap">tail -f</code> on a log file.
+    </p>
+    <p>
+        The values of the <b>Time Interval</b> filter are ignored in
+		live output mode &ndash; when live mode is activated, the most recent 20
+		lines of output matching the current filters are immediately displayed,
+		and then new results are displayed as they are written to the logs.
+    </p>
+
+	<h3>Loading and Saving Queries</h3>
+	<p>
+	    Collections of filters may be saved using the
+	    <b>Save Query</b> button, which saves the current state of filters to
+	    a user-defined name for later recollection via the <b>Load Query</b> menu.
+	    Note that loading a query merely reloads the filter state of the query, but
+	    does not execute it right away. Saved queries that are no longer of use may
+	    be deleted by clicking the cross at the right side of the Load Query menu.
+	</p>
+	<p>
+	    Fetching a query also modifies the browser history state, such that the
+	    browser's regular Back and Forwards functionality may be used to move
+	    backwards and forwards through query history, and fetched queries may be
+	    bookmarked or linked to others using standard browser URL bookmarking and
+	    linking.
+	</p>
+
+	<h3>Conserving screen real estate</h3>
+
+	<p>The Filters panel can be <i>rolled-up</i> by clicking the
+	<b>up arrow</b> icon in the top right corner &ndash; this is especially
+	useful on smaller displays.</p>
+
+	<h2>Usage page</h2>
+
+	<p>The <b>Usage</b> page provides an overview of the size and
+	period of each user's log.</p>
+
+	<p>Clicking a particular username takes you to a page displaying detailed
+	statistics on each segment of that user's log.</p>
+
+	<h2>See also</h2>
+
+	<p>The <code>bigworld/tools/server/message_logger</code> folder contains
+	(amongst other things) a collection of utilities that allow you to work
+	with message logs stored on a locally-accessible file system in a similar
+	manner to standard UNIX shell utilities.</p>
+
+	<p>The following are currently provided:</p>
+	<ul>
+		<li><code>mlcat.py</code></li>
+		<li><code>mlls.py</code></li>
+		<li><code>mltar.py</code></li>
+		<li><code>mlrm.py</code></li>
+	</ul>
+
+	<p>Refer to the <code>--help</code> output for details on each utility.</p>
+
+</section>

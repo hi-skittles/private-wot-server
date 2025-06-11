@@ -1,0 +1,158 @@
+
+#outputContainerActions
+{
+	text-align: right;
+	padding: 5px;
+}
+
+#resultPane
+{
+	border: 1px solid #AAAAAA;
+	padding: 0px 5px;
+	overflow: auto;
+	height: 5em;
+}
+
+#outputPane
+{
+	border: 1px solid #AAAAAA;
+	padding: 0px 5px;
+	font-family: Courier, monospace;
+	overflow: auto;
+	/*width: 100%;*/
+}
+
+#outputPane span
+{
+	white-space: pre;
+}
+
+#interfaceContainer
+{
+	width: 100%;
+	overflow: auto;
+	/*border: 1px solid #AAAAAA;*/
+	margin: 0px;
+	height: 5cm;
+}
+
+
+#scriptTitlePane
+{
+	float: left;
+/*	overflow: auto; */
+	height: 100%;
+	text-align: left;
+	/*border: 1px solid #AAAAAA;*/
+}
+
+#scriptParamPane
+{
+	margin-top: 5px;
+	text-align: right;
+}
+
+#argCell
+{
+	border:		0;
+}
+
+#argTable
+{
+	border:		0;
+}
+
+#scriptExecutePane
+{
+	margin-top: 5px;
+}
+
+table.selection_library {
+	width: 100%;
+	border-top: none;
+}
+
+.scriptInactive
+{
+	cursor: pointer;
+	background-color: white;
+}
+
+.scriptInactive:hover
+{
+	background-color: yellow;
+}
+
+.scriptActive
+{
+	background-color: lightgreen;
+}
+
+.content td
+{
+	padding: 2px 5px;
+}
+
+input.submitButton
+{
+	font-family: 	sans-serif;
+	font-weight: 	bold;
+}
+
+span.param
+{
+	padding: 5px;
+	margin: 10px;
+	/*border: 1px solid #990011;*/
+}
+
+div.param input
+{
+	/*max-width:*/
+}
+
+div.desc
+{
+	padding: 5px;
+	font-size: small;
+	float: left;
+	display: inline;
+}
+
+div.logsection
+{
+	border: 1px solid black;
+	padding: 5px;
+	margin: 10px;
+	background-color: #CCCCCC;
+}
+
+div.logsection h1
+{
+	/*padding-top: 5px;*/
+	margin-top: 5px;
+	font-size: 1em;
+	font-family: Verdana, Arial;
+}
+
+span.success
+{
+	color: green;
+}
+
+span.success-novals
+{
+	color: purple;
+}
+
+span.fail
+{
+	color: red;
+	font-weight: bold;
+}
+
+span.error
+{
+	color: red;
+}
+

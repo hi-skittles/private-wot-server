@@ -1,0 +1,56 @@
+#main_content a {color:#1F76BD;}
+
+h1.console {
+	font-size: 1em;
+	color: #4B4545;
+	text-align: left;
+}
+
+.console_textbox {
+	font-family: Monaco, "lucida console", Courier;
+	border: 1px solid #999999;
+	padding: 2px 4px;
+	margin-top: .3em;
+}
+
+.console_textbox:focus {
+	background-color: #FFFEE3;
+}
+
+
+
+#interpreter_area {
+	display: block;
+	border: 1px solid #999999;
+	background-color: #f6f0f0;
+	margin-top: .3em;
+	overflow: auto;
+}
+
+#interpreter_output {
+	display: inline;
+	font-family: Monaco, "lucida console", Courier;
+}
+
+#interpreter_output span {
+	white-space: -moz-pre-wrap; /* Mozilla */
+	white-space: -o-pre-wrap; /* Opera 7 */
+	white-space: pre-wrap; /* CSS 2.1 */
+	white-space: pre-line; /* CSS 3 (and 2.1 as well, actually) */
+	word-wrap: break-word; /* IE */
+	wrap-option: emergency; /* CSS 3 */
+}
+
+#interpreter_block_text {
+	height: 200px;
+	width: 500px;
+	font-family: Monaco, "lucida console", Courier;
+	border: 1px solid #999999;
+}
+
+
+.console_code { color: blue; }
+.console_data { color: black; }
+.console_error { color: red; }
+.console_banner { color: green; }
+.invisible { display: none; }

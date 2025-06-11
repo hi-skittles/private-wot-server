@@ -1,0 +1,523 @@
+
+/*  colour picker  */
+
+table#colourpicker {
+    display: none;
+    position: absolute;
+    z-index: 9999;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border: 1px solid grey;
+    background: #fff;
+}
+
+table#colourpicker tr {
+    vertical-align: middle;
+}
+table#colourpicker td {
+    border: 1px solid grey;
+    height: 15px;
+    width: 15px;
+    padding: 2px;
+    text-align: center;
+    vertical-align: middle;
+    /*font-size: 1px;*/
+    cursor: pointer;
+}
+
+/*  space viewer  */
+
+.sv-container-container {
+    position: absolute;
+    /*width: 100%;*/
+    /*height: 100%;*/
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+}
+
+/* Container for all sv elements */
+.sv-container {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    border-top: 2px solid #ff8000;
+    border-left: 1px solid #555;
+    border-right: 1px solid #555;
+    border-bottom: 1px solid #555;
+	overflow: hidden;
+}
+
+.sv-canvas {
+    background: url(../images/diagonal_lines.png) repeat;
+    /*background: #f8f8f8;*/
+    margin: 0;
+    padding: 0;
+    border: none;
+	cursor: auto;
+}
+
+.dragging-vertical .sv-canvas {
+	cursor: e-resize;
+}
+
+.dragging-horizontal .sv-canvas {
+	cursor: n-resize;
+}
+
+.over-cell-menu .sv-canvas {
+	cursor: pointer;
+}
+
+/* Container for content above canvas */
+.sv-header {
+    /*background-color: #5FC8EF;*/
+    display: block;
+    width: 100%;
+    height: auto;
+    min-height: 22px;
+
+    margin: 0px;
+    border: none;
+    border-bottom: 1px solid #777;
+    padding: 4px 0px;
+}
+
+.sv-space-title {
+    float: left;
+    /*clear: right;*/
+    margin: auto 0px;
+    padding-left: 6px;
+}
+
+.sv-button-container {
+    float: right;
+    /*clear: left;*/
+    margin: auto 0px;
+    padding-right: 4px;
+    font-weight: normal;
+}
+
+.sv-header, .sv-button-container:after, .sv-space-title:after {
+	display: table;
+	clear: both;
+	content: "";
+}
+
+.sv-button-container * {
+    display: inline-block;
+    height: 22px;
+}
+
+.sv-header button, input[type="button"] {
+    color: #444;
+    font-size: 13px;
+    padding: 2px 8px;
+}
+
+/* zoom control. overlaid on map in NW corner */
+.sv-zoom-control {
+    position: absolute;
+    display: block;
+    left: 10px;
+    top: 40px;
+    width: auto;
+    height: auto;
+    z-index: 1;
+}
+
+/* zoom in | zoom out | fit to bounds  */
+.sv-zoom-control a {
+    display: block;
+    text-align: center;
+    padding: 8px 10px;
+    font-size: 20px;
+    font-family: monospace;
+    font-weight: bold;
+    color: #111;
+    opacity: 0.9;
+    filter:alpha(opacity=90);
+    cursor: pointer;
+}
+
+.sv-minimap {
+	display: none;
+    position: absolute;
+    right: 10px;
+    bottom: 60px;
+    width: 140px;
+    height: 140px;
+    z-index: 9;
+    background: #446;
+}
+
+.sv-minimap-container {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	width: 120px;
+	height: 120px;
+}
+
+.sv-minimap canvas {
+	opacity: 0.85;
+    filter:alpha(opacity=85);
+}
+
+.sv-minimap canvas:hover {
+	opacity: 1;
+    filter:alpha(opacity=100);
+}
+
+/* common look for information overlays on canvas */
+.sv-zoom-control, .sv-status-info, .sv-minimap, .sv-debug {
+    background: rgba( 255, 255, 255, 0.65 );
+    border: 1px solid #444;
+
+    -o-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+
+    -o-box-shadow: 4px 4px 8px 0px #444;
+    -moz-box-shadow: 4px 4px 8px 0px #444;
+    -webkit-box-shadow: 4px 4px 8px 0px #444;
+    box-shadow: 4px 4px 8px 0px #444;
+}
+.sv-zoom-control:hover, .sv-status-info:hover, .sv-debug:hover {
+    background: rgba( 255, 255, 255, 1 );
+}
+
+.sv-popup-menu {
+    position: absolute;
+    -webkit-transform: translate3d(0,0,0);
+    z-index: 999;
+}
+
+.sv-popup-menu-list {
+    display: block;
+	min-width: 100px;
+	padding-right: 10px;
+
+	-webkit-border-radius: 5px 5px 5px 5px;
+	-moz-border-radius: 5px 5px 5px 5px;
+	-ms-border-radius: 5px 5px 5px 5px;
+	-o-border-radius: 5px 5px 5px 5px;
+	border-radius: 5px 5px 5px 5px;
+}
+
+/* url is # in menu list which will be treated as visited*/
+.sv-popup-menu-list a:active,
+.sv-popup-menu-list a:visited {
+    color: inherit;
+}
+
+.sv-popup-menu-list li {
+	position: relative;
+	left: 5px;
+}
+
+li.popup-menu-title {
+	font-weight: bold;
+	color: gray;
+	left: 0px;
+}
+
+.cell-retirable li.retire-cell {
+	display: inline-block;
+}
+
+.cell-retirable li.cancel-retire {
+	display: none;
+}
+
+.cell-retiring li.retire-cell {
+	display: none;
+}
+
+.cell-retiring li.cancel-retire {
+	display: inline-block;
+}
+
+.not-enough-cellapps li.split-cell {
+	color: gray;
+}
+
+li.non-splittable-tip {
+	display: none;
+}
+
+.not-enough-cellapps li.non-splittable-tip {
+	display: inline-block;
+	color: gray;
+	font-style: italic;
+	padding-top: 0px;
+}
+
+/* don't apply list effect on these items*/
+li.popup-menu-title:hover,
+li.non-splittable-tip:hover,
+.not-enough-cellapps li.split-cell:hover {
+	cursor: inherit;
+	color: gray;
+	background: inherit;
+}
+
+.sv-tooltip {
+    position: absolute;
+	text-align: center;
+	-webkit-transform: translate3d(0,0,0);
+    z-index: 999;
+}
+
+.sv-tooltip-content {
+    z-index: 998;
+    padding: 4px 6px;
+    text-align: center;
+    background: rgba( 255, 255, 204, 1 );
+    margin: -1px;
+    border: 1px solid #111;
+
+    -o-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+
+	-o-box-shadow: 0px 2px 6px 2px #555;
+	-moz-box-shadow: 0px 2px 6px 2px #555;
+	-webkit-box-shadow: 0px 2px 6px 2px #555;
+	box-shadow: 0px 2px 6px 2px #555;
+}
+
+.sv-tooltip-tip-container {
+	margin: 0 auto;
+	width: 40px;
+	height: 16px;
+	position: relative;
+	overflow: hidden;
+}
+
+.sv-tooltip-tip {
+	width: 15px;
+	height: 15px;
+	padding: 1px;
+
+    z-index: 999;
+	margin: -9px auto 0;
+
+	-moz-transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	-o-transform: rotate(45deg);
+	transform: rotate(45deg);
+
+    border: 1px solid #111;
+    background: rgba( 255, 255, 204, 1 );
+
+	-o-box-shadow: 3px 3px 4px 0px #444;
+	-moz-box-shadow: 3px 3px 4px 0px #444;
+	-webkit-box-shadow: 3px 3px 4px 0px #444;
+	box-shadow: 3px 3px 4px 0px #444;
+
+}
+
+/* information inset, overlaid on SE cormer of map */
+.sv-status-info {
+    position: absolute;
+    display: block;
+    right: 10px;
+    bottom: 10px;
+    width: auto;
+    height: auto;
+    padding: 4px 10px;
+    text-align: right;
+    z-index: 1;
+}
+
+.sv-status-info * {
+    display: inline;
+    opacity: 1.0;
+    filter:alpha(opacity=100);
+    color: #111;
+    font-size: 11px;
+    text-align: right;
+}
+
+/* initially hidden; shown as needed. */
+.sv-coords {
+    display: none;
+}
+.sv.bounds {
+    display: block;
+}
+
+.sv-fade-animation {
+	-webkit-transition: all 0.1s linear;
+	-moz-transition: all 0.1s linear;
+	-o-transition: all 0.1s linear;
+	transition: all 0.1s linear;
+}
+
+/*  spaceviewer settings singleton */
+#sv-config-panel, #load-balance-panel {
+    display: none;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    bottom: -3px; /* #sv-header 2px top border + 1px bottom border, not included by jquery */
+    width: 214px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#sv-config-panel table {
+	border: none;
+    border-collapse: collapse;
+    border-spacing: 2px;
+    font-size: 0.8em;
+    font-family: sans-serif;
+    width: 100%;
+}
+
+#sv-config-panel tr {
+    background: #EAF8FD;
+    vertical-align: middle;
+}
+
+#sv-config-panel tr:hover {
+    background: #eee;
+    vertical-align: middle;
+}
+
+#sv-config-panel th {
+    background: #fff;
+}
+
+#sv-config-panel td {
+    text-align: center;
+    min-width: 18px;
+    white-space: nowrap;
+}
+#sv-config-panel tr td:last-child {
+    text-align: left;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+}
+
+#sv-config-panel input {
+	cursor: pointer;
+}
+#sv-config-panel abbr {
+	display: block;
+	padding: 4px;
+	border: none;
+	text-decoration: none;
+}
+
+.sv-config-colour-selector, .sv-entity {
+    width: 10px;
+    height: 10px;
+    border: 1px solid #888;
+    margin: auto auto;
+}
+.sv-config-colour-selector:hover {
+    width: 12px;
+    height: 12px;
+    cursor: pointer;
+}
+
+.sv-entity {
+	border-radius: 5px;
+}
+
+.sv-entity-icon {
+	max-width: 18px;
+	max-height: 20px;
+}
+
+/* Load balance panel singleton */
+#load-balance-panel {
+	display: none;
+	background-color: #fff;
+}
+
+.load-balance-title {
+	font-weight: bold;
+	padding: 3px 10px;
+}
+
+.production-mode label {
+	color: gray;
+}
+
+.load-balance-settings {
+	background: #EAF8FD;
+	padding: 10px;
+	border-top: 1px solid #CCCCCC;
+}
+
+.load-balance-settings:last-child {
+	border-bottom: 1px solid #CCCCCC;
+}
+
+.load-balance-settings .setting-title {
+	padding-bottom: 3px;
+}
+
+.load-balance-settings .radio-buttons:after {
+	content: "";
+	clear: both;
+	display: block;
+}
+
+.load-balance-button:before {
+	font-family: WebConsoleFont;
+	content: "g";
+	font-size: 13px;
+	padding-right: 5px;
+}
+
+.setting-button:before {
+	font-family: WebConsoleFont;
+	content: "h";
+	font-size: 13px;
+	padding-right: 5px;
+}
+
+.load-balance-settings .disable-button {
+	float: left;
+}
+
+.load-balance-settings .enable-button {
+	float: right;;
+	padding-right: 20px;
+}
+
+/**
+*   Div for determining styles for various UI elements, both DOM and canvas,
+*   usually hidden for production use, but nevertheless useful for debugging
+*   styling issues.
+*/
+.sv-debug {
+    /*display: none;  *//* set to 'none' for production */
+    display: block;     /* set to 'block' for debugging/devel */
+    position: absolute;
+    left: 10px;
+    bottom: 30px;
+
+    width: auto;
+    height: auto;
+    max-width: 275px;
+    overflow: hidden;
+}
+.sv-debug > div, strong {
+    display: block;
+    padding: 3px 10px;
+    margin: 4px;
+    text-align: left;
+}
+

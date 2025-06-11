@@ -1,0 +1,23 @@
+This library is from Google. The project home page is:
+https://code.google.com/p/trace-viewer/
+
+These are two steps to get this library work in our WebConsole:
+1. Generate the trace-viewer.css and trace-viewer.js from source package
+2. Apply Patches from BigWorldTech to the result of step 1 to make them work 
+   properly in our WebConsole
+
+Please refer to below sections for more detailed information.
+
+**** Generate the trace-viewer.css and trace-viewer.js from source package *****
+1. Download the source from the project home page, the latest src code has
+   deleted the standalone build functionality, so checkout version 1329 instead
+2. run trace_viewer/build/generate_standalone_timeline_view.py --js=trace-viewer.js --css=trace-viewer.css
+
+
+********************* Apply Patches from BigWorldTech *************************
+Search the existing trace-viewer.css and trace-viewer.js code in our code
+repository with the keyword BigWorldTech to find out what modifications we have
+made to the originally generated result. These modifications are expected to be
+merged into your newly generated result if these issues still hold. 
+
+You are also expected to add comments like this when new modifications are added.

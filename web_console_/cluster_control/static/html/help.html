@@ -1,0 +1,171 @@
+<section id="webconsole-cluster-module">
+
+    <h1>Cluster Help</h1>
+
+	<p>The <b>Cluster</b> module provides a simple interface to most of
+	the functionality provided by the command-line server tools, such as
+	<code>control_cluster.py</code>, <code>bot_op.py</code>,
+	and so on.</p>
+
+	<p>It allows users to perform common tasks associated with running servers,
+	such as:</p>
+
+	<ul>
+		<li>Starting and stopping the server</li>
+		<li>Inspecting the status of machines and server processes as they are
+		running</li>
+		<li>Determining which other users are running servers on the same
+		machines as you</li>
+	</ul>
+
+    <h2>Managing servers</h2>
+
+	<p>The <b>Cluster</b> module's home page is the <b>Processes</b> page.</p>
+
+	<p>When the server is running, the page displays information about the
+	server processes, and provides links to start more processes,
+	restart or stop the server, save the server layout for future startups,
+	and view server logs.  When the server is not running, a button to
+	start it is displayed.</p>
+
+	<p>Each process also has an associated actions menu, which is accessed by
+	either opening the dropdown menu in the <b>Actions</b> column,
+	or right-clicking a process row.
+	This is a context-sensitive list of capabilities for each process, similar
+	to the right-click context menu that a standalone
+	application would display for a particular item or object.</p>
+
+	<p>For most server processes, the actions are simply stopping, killing
+	and restarting the process, and viewing the logs for it. CellApps and
+	BaseApps have two additional links to connect to the process's interactive
+	Python server and to reload Python modules related to entities and custom
+	data types for the selected process.</p>
+
+	<p>This is the ideal place for customers or third parties to provide their
+	own capabilities and extensions. Starting points for implementing
+	extra capabilities are:</p>
+
+	<ul>
+		<li><code>bigworld/tools/server/web_console/</code></li>
+		<li>The <code>Exposed</code> class in
+		<code>bigworld/tools/server/pycommon/cluster.py</code></li>
+	</ul>
+
+    <h3>Starting the server</h3>
+
+	<p>Following the <b>Start the server</b> link from the <b>Manage
+	Servers</b> page causes <b>WebConsole</b> to display the server's
+	environment settings, and provides options as to which machines the server
+	components will be started on.</p>
+
+	<p>The <b>Server Environment</b> table at the top of the page displays
+	information about the user you will be starting the server as. In
+	particular, it displays the BigWorld environment settings that will be
+	provided to each server process at startup (<code>MF_ROOT</code> and
+	<code>BW_RES_PATH</code>). These values are read from the file
+	<code>~/.bwmachined.conf</code> in the user's home directory, and if an
+	inconsistency in these values is detected between the various machines
+	being used to start processes, an error will be raised.</p>
+
+	<p>The <b>Start</b> table provides different ways to select which machines
+	will be used to run the server processes. The simplest method is starting
+	all processes on a single machine. Alternatively, users can select to start
+	the processes on a particular group of machines. Machine groupings are
+	defined in the file <code>/etc/bwmachined.conf</code>. The group menu also
+	includes an option to start server processes on all machines in the
+	cluster.</p>
+
+    <p>Users can also opt to start server processes on machines as specified
+    in a pre-defined layout. At present, these layouts can only be generated
+    by saving the layout of a running server, using the <b>Save this server
+    layout</b> link in the <b>Processes</b> page.</p>
+
+	<p>If you would like the ability to hand-craft these layouts, please see
+	the <code>save</code> and <code>load</code> commands supported by
+	<code>control_cluster.py</code>, and examine the XML file format supported
+	by those commands.</p>
+
+	<p>As the server starts up, a table will be displayed indicating how many
+	processes of each type are <b>dead</b> (i.e. process isn't running),
+	<b>running</b> (process exists but hasn't registered with bwmachined yet)
+	and <b>registered</b> (running and registered with bwmachined).  If at any
+	point bwmachined fails to reply with info about a particular process, that
+	process's counters will be replaced with question marks (?) until bwmachined
+	replies with proper information.</p>
+
+    <h3>Restarting The Server</h3>
+
+    <p>Restarting the server via the <b>WebConsole</b> behaves identically to
+    <code>`cluster_control.py restart`</code>, i.e. it will try to
+    restart the server in the currently running layout, however if the current
+    layout is missing any basic server processes (e.g. all CellApps have died
+    for some reason), they will be automatically included in the layout before
+    restarting.</p>
+
+    <h2>Browsing users</h2>
+
+	<p>The <b>Users</b> page displays lists of both active (running at
+	least one process that registers with <code>bwmachined</code>) and inactive
+	(not running any processes that register with <code>bwmachined</code>)
+	users.  Clicking a user takes you to the <b>Processes</b> page for
+	that user, which is a handy way to administer servers under UID's other
+	than your own.</p>
+
+    <h2>Browsing machines</h2>
+
+	<p>The <b>Machines</b> page displays information about all machines on
+	the network that are currently running <code>bwmachined</code>. Various
+	runtime and hardware diagnostics are displayed for each machine.
+	Clicking a machine brings a list of all processes running on it (under any
+	UID).</p>
+
+    <h2>Database Management</h2>
+    <p>
+        The <b>Databases</b> page exposes the following database functions:
+        <ul>
+            <li>
+                <b>Consolidate Secondary Databases</b> - runs the
+                <code>consolidate_dbs</code> tool, which flushes any game data from
+                secondary databases to DBApp.
+            </li>
+            <li>
+                <b>Clear Secondary Databases</b> - discards game data from
+                secondary databases. Equivalent to
+                <code>consolidate_dbs --clear</code>.
+            </li>
+            <li>
+                <b>Clear Autoloaded Entities</b> - runs the
+                <code>clear_auto_load</code> tool, used to clear the autoload
+                flag from entities.
+            </li>
+            <li>
+                <b>Synchronise Entity Definitions</b> - runs the <code>sync_db</code>
+                tool, which synchronises the current entity definitions (entity .def
+                files) to the MySQL database used by DBApp.
+            </li>
+        </ul>
+        Note: database management tools can only be used while the Server
+        is not running.
+    </p>
+    <p>
+        See the Server Operations Guide for further details on the function
+        of each these tools.
+    </p>
+
+    <h2>See also</h2>
+
+	<p>Most or all of the functionality provided by the <b>Cluster</b>
+	module is also provided by the <code>control_cluster.py</code> shell
+	utility.  It also provides a number of other commands that are not
+	supported by the <b>WebConsole</b> interface.</p>
+
+	<p>For a complete list of available commands, use the <code>--help</code>
+	switch.</p>
+
+    <h2>Caveats</h2>
+
+	<p>None of the Bots functionality provided by <code>bot_op.py</code> has
+	been integrated into the web interface. All management of bots must still
+	be done via the console.</p>
+
+</section>

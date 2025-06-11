@@ -1,0 +1,37 @@
+{
+    "admin":
+    {
+        "view"     : [ false, false ],
+        "modify"   : [ false, false ]
+    },
+
+    "view_own":
+    {
+        "view"     : [ true, false ],
+        "modify"   : [ false, false ]
+    },
+
+    "modify_own":
+    {
+        "view"     : [ true, false ],
+        "modify"   : [ true, false ]
+    },
+
+    "view_all":
+    {
+        "view"     : [ true, true ],
+        "modify"   : [ false, false ]
+    },
+
+    "modify_own_view_all":
+    {
+        "view"     : [ true, true ],
+        "modify"   : [ true, false ]
+    },
+
+    "modify_all":
+    {
+        "view"     : [ true, true ],
+        "modify"   : [ true, true ]
+    }
+}

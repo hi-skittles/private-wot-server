@@ -5,7 +5,7 @@
     <description>	#usa_vehicles:T14_descr	</description>
     <price>	1500	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	heavyTank mediumCaliberTankRammer_user wetCombatPack_class1_user enhancedVertical_springs_class2_user	</tags>
     <level>	5	</level>
   </T14>
@@ -82,7 +82,7 @@
     <userString>	#usa_vehicles:T23	</userString>
     <description>	#usa_vehicles:T23_descr	</description>
     <price>	2103000	</price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	mediumTank secret aimingStabilizer_Mk1_user mediumCaliberTankRammer_user wetCombatPack_class1_user enhancedTorsions3t_user	</tags>
     <level>	8	</level>
   </T23>
@@ -390,7 +390,7 @@
     <description>	#usa_vehicles:T23E3_descr	</description>
     <price>	7000	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	mediumTank aimingStabilizer_Mk1_user mediumCaliberTankRammer_user wetCombatPack_class1_user enhancedTorsions3t_user	</tags>
     <level>	7	</level>
   </T23E3>
@@ -401,7 +401,7 @@
     <shortUserString>	#usa_vehicles:A78_M4_Improved_short	</shortUserString>
     <price>	1750	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	mediumTank mediumCaliberTankRammer_user wetCombatPack_class1_user enhancedHorizontal_springs_class2_user HD	</tags>
     <level>	5	</level>
   </A78_M4_Improved>
@@ -490,7 +490,7 @@
     <description>	#usa_vehicles:M60_descr	</description>
     <price>	22500	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	mediumTank special aimingStabilizer_Mk1_user mediumCaliberTankRammer_user wetCombatPack_class1_user patton	</tags>
     <level>	10	</level>
   </M60>
@@ -561,7 +561,7 @@
     <description>	#usa_vehicles:MTLS-1G14_descr	</description>
     <price>	1250	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	lightTank enhancedVertical_springs_user	</tags>
     <level>	3	</level>
   </MTLS-1G14>
@@ -602,7 +602,7 @@
     <shortUserString>	#usa_vehicles:T1_E6_short	</shortUserString>
     <price>	750	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	lightTank	</tags>
     <level>	2	</level>
   </T1_E6>
@@ -613,7 +613,7 @@
     <shortUserString>	#usa_vehicles:T95_E2_short	</shortUserString>
     <price>	7500	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	mediumTank special aimingStabilizer_Mk1_user mediumCaliberTankRammer_user wetCombatPack_class1_user	</tags>
     <level>	8	</level>
   </T95_E2>
@@ -623,7 +623,7 @@
     <description>	#usa_vehicles:Sexton_I_descr	</description>
     <price>	1250	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	SPG mediumSPG secret mediumCaliberHowitzerRammer_user wetCombatPack_class1_user enhancedVertical_springs_class2_user	</tags>
     <level>	3	</level>
   </Sexton_I>
@@ -633,7 +633,7 @@
     <description>	#usa_vehicles:M4A3E8_Sherman_descr	</description>
     <shortUserString>	#usa_vehicles:M4A3E8_Sherman_short	</shortUserString>
     <price>	930500	</price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	mediumTank secret aimingStabilizer_Mk1_user mediumCaliberTankRammer_user wetCombatPack_class1_user enhancedHorizontal_springs_class2_user	</tags>
     <level>	6	</level>
   </M4A3E8_Sherman_training>
@@ -644,7 +644,7 @@
     <shortUserString>	#usa_vehicles:T7_Combat_Car_short	</shortUserString>
     <price>	750	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	lightTank	</tags>
     <level>	2	</level>
   </T7_Combat_Car>
@@ -654,7 +654,7 @@
     <description>	#usa_vehicles:T95_E6_descr	</description>
     <price>	22500	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	mediumTank secret special aimingStabilizer_Mk1_user largeCaliberTankRammer_user wetCombatPack_class1_user enhancedTorsions3t_user	</tags>
     <level>	10	</level>
   </T95_E6>
@@ -665,7 +665,7 @@
     <shortUserString>	#usa_vehicles:A104_M4A3E8A_short	</shortUserString>
     <price>	3750	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	mediumTank aimingStabilizer_Mk1_user mediumCaliberTankRammer_user wetCombatPack_class1_user enhancedHorizontal_springs_class2_user HD	</tags>
     <level>	6	</level>
   </A104_M4A3E8A>
@@ -676,7 +676,7 @@
     <shortUserString>	#usa_vehicles:A101_M56_short	</shortUserString>
     <price>	5150	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	AT-SPG lightAT-SPG enhancedTorsions1t_user mediumCaliberTankRammer_user wetCombatPack_class1_user HD	</tags>
     <level>	7	</level>
   </A101_M56>

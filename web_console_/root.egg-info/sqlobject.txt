@@ -1,0 +1,2 @@
+db_module=root.model
+history_dir=$base/root/sqlobject-history

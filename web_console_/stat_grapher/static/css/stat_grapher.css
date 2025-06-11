@@ -1,0 +1,173 @@
+.legend
+{
+	font-size: 0.8em;
+}
+
+.legend th
+{
+	border-color: #5FC8EF;
+}
+
+.legend td
+{
+	padding: 		2px;
+	border-color: 	#5FC8EF;
+}
+
+.legend .value
+{
+	font-family: monospace;
+}
+
+.legend table
+{
+	width: 99%;
+}
+
+.content .legend .selected
+{
+	background-color:	#95DAF4;
+}
+
+.legend .enabled
+{
+	background-color:	#EAF8FD;
+}
+
+/* StatGrapher */
+.nologdbs
+{
+	color:			red;
+	font-weight: 	bold;
+}
+
+#graphtable
+{
+	margin: 0;
+	border: none;
+	padding: 0;
+	height: 100%;
+	width: 100%;
+	overflow: auto;
+}
+
+#flashCell
+{
+	margin: 0;
+	border: none;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+}
+
+#legendCell
+{
+	border: 0;
+	display: none;
+	height: 100%;
+	overflow: auto;
+}
+
+#flashDiv
+{
+	height:100%;
+	width:100%;
+	/*overflow:hidden;*/
+	/*border: 1px solid green;*/
+}
+
+#legendDiv
+{
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	padding: 2px;
+}
+
+.legendTable
+{
+	border-collapse: collapse;
+	margin-top: 1em;
+}
+
+
+/*  colour picker  */
+
+table#colourpicker {
+    display: none;
+    position: absolute;
+    z-index: 9999;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border: 1px solid grey;
+    background: #fff;
+}
+
+table#colourpicker tr {
+    vertical-align: middle;
+}
+
+table#colourpicker td {
+    border: 1px solid grey;
+    height: 15px;
+    width: 15px;
+    padding: 2px;
+    text-align: center;
+    vertical-align: middle;
+    /*font-size: 1px;*/
+    cursor: pointer;
+}
+
+
+/* Preferences */
+
+.preferencesErrorDialog
+{
+	color: red;
+	border: 2px solid;
+	padding: 8px;
+	background-color: #FFFFFF;
+}
+
+
+.preferencesInfoDialog
+{
+	display: block;
+	margin: auto;
+	border: 2px solid;
+	padding: 8px;
+	width: 410px;
+
+	overflow: visible;
+	z-index: 999;
+	color: #394E74;
+
+	background-color: #FFFFFF;
+}
+
+
+.preferencesInfoDialog table
+{
+	border: none;
+}
+
+
+.preferencesInfoDialog td,
+.preferencesInfoDialog th
+{
+	border: none;
+}
+
+
+.errorContent
+{
+	margin-bottom: 10px;
+}
+
+
+.errorHeader
+{
+	font-weight: bold;
+}
+
+/* stat_grapher.css */

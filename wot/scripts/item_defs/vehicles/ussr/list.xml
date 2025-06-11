@@ -324,7 +324,7 @@
     <description>	#ussr_vehicles:T_50_2_descr	</description>
     <shortUserString>	#ussr_vehicles:T_50_2_short	</shortUserString>
     <price>	725000	</price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	lightTank secret scout mediumCaliberTankRammer_user wetCombatPack_class1_user enhancedTorsions1t_user	</tags>
     <level>	5	</level>
   </T_50_2>
@@ -477,7 +477,7 @@
     <shortUserString>	#ussr_vehicles:Object_907_short	</shortUserString>
     <price>	22500	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	mediumTank special enhancedTorsions3t_user mediumCaliberTankRammer_user wetCombatPack_class1_user aimingStabilizer_Mk1_user	</tags>
     <level>	10	</level>
   </Object_907>
@@ -572,7 +572,7 @@
     <shortUserString>	#ussr_vehicles:KV-220_test_short	</shortUserString>
     <price>	1500	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	heavyTank enhancedTorsions5t_user mediumCaliberTankRammer_user wetCombatPack_class2_user disabledInRoaming	</tags>
     <level>	5	</level>
   </KV-220>
@@ -604,7 +604,7 @@
     <id>	204	</id>
     <userString>	#ussr_vehicles:BT-SV	</userString>
     <description>	#ussr_vehicles:BT-SV_descr	</description>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <price>	1000	  <gold></gold>
     </price>
     <tags>	lightTank enhancedSuspension_Christie_user	</tags>
@@ -623,7 +623,7 @@
     <id>	206	</id>
     <userString>	#ussr_vehicles:M3_Stuart_LL	</userString>
     <description>	#ussr_vehicles:M3_Stuart_LL_descr	</description>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <price>	850	  <gold></gold>
     </price>
     <tags>	lightTank lendLeaseVehicle	</tags>
@@ -633,7 +633,7 @@
     <id>	207	</id>
     <userString>	#ussr_vehicles:A-32	</userString>
     <description>	#ussr_vehicles:A-32_descr	</description>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <price>	2500	  <gold></gold>
     </price>
     <tags>	mediumTank enhancedSuspension_Christie_user mediumCaliberTankRammer_user wetCombatPack_class1_user	</tags>
@@ -643,7 +643,7 @@
     <id>	208	</id>
     <userString>	#ussr_vehicles:KV-5	</userString>
     <description>	#ussr_vehicles:KV-5_descr	</description>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <price>	7500	  <gold></gold>
     </price>
     <tags>	heavyTank antifragmentationLining_superheavy_user enhancedTorsions5t_user largeCaliberTankRammer_user wetCombatPack_class2_user aimingStabilizer_Mk2_user	</tags>
@@ -673,7 +673,7 @@
     <description>	#ussr_vehicles:KV-220_descr	</description>
     <price>	1500	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	heavyTank enhancedTorsions5t_user mediumCaliberTankRammer_user wetCombatPack_class2_user	</tags>
     <level>	5	</level>
   </KV-220_action>
@@ -683,7 +683,7 @@
     <description>	#ussr_vehicles:SU76I_descr	</description>
     <price>	1000	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	AT-SPG mediumAT-SPG mediumCaliberTankRammer_user wetCombatPack_class1_user enhancedTorsions3t_user grousers_user	</tags>
     <level>	3	</level>
   </SU76I>
@@ -694,7 +694,7 @@
     <shortUserString>	#ussr_vehicles:Tetrarch_LL_short	</shortUserString>
     <price>	750	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	lightTank lendLeaseVehicle	</tags>
     <level>	2	</level>
   </Tetrarch_LL>
@@ -722,7 +722,7 @@
     <userString>	#ussr_vehicles:T-34-85	</userString>
     <description>	#ussr_vehicles:T-34-85_descr	</description>
     <price>	5000	</price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	mediumTank secret enhancedSuspension_Christie_user mediumCaliberTankRammer_user wetCombatPack_class1_user	</tags>
     <level>	6	</level>
   </T-34-85_training>
@@ -732,7 +732,7 @@
     <description>	#ussr_vehicles:LTP_descr	</description>
     <price>	850	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	lightTank wetCombatPack_class1_user enhancedTorsions1t_user	</tags>
     <level>	3	</level>
   </LTP>
@@ -742,7 +742,7 @@
     <description>	#ussr_vehicles:T44_122_descr	</description>
     <price>	5	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	mediumTank secret enhancedTorsions3t_user largeCaliberTankRammer_user wetCombatPack_class1_user	</tags>
     <level>	7	</level>
   </T44_122>
@@ -752,7 +752,7 @@
     <description>	#ussr_vehicles:T44_85_descr	</description>
     <price>	7200	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	mediumTank enhancedTorsions3t_user mediumCaliberTankRammer_user aimingStabilizer_Mk1_user wetCombatPack_class1_user secret	</tags>
     <level>	7	</level>
   </T44_85>
@@ -762,7 +762,7 @@
     <description>	#ussr_vehicles:R108_T34_85M_descr	</description>
     <price>	3750	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	mediumTank enhancedSuspension_Christie_user mediumCaliberTankRammer_user wetCombatPack_class1_user HD	</tags>
     <level>	6	</level>
   </R108_T34_85M>
@@ -783,7 +783,7 @@
     <description>	#ussr_vehicles:R111_ISU130_descr	</description>
     <price>	5	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	AT-SPG secret sinai heavyAT-SPG enhancedTorsions5t_user largeCaliberTankRammer_user wetCombatPack_class2_user HD	</tags>
     <level>	8	</level>
   </R111_ISU130>
@@ -794,7 +794,7 @@
     <shortUserString>	#ussr_vehicles:R113_Object_730_short	</shortUserString>
     <price>	12000	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	heavyTank sinai enhancedTorsions5t_user largeCaliberTankRammer_user wetCombatPack_class2_user aimingStabilizer_Mk2_user HD	</tags>
     <level>	8	</level>
   </R113_Object_730>
@@ -804,7 +804,7 @@
     <description>	#ussr_vehicles:R71_IS_2B_descr	</description>
     <price>	5250	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	heavyTank sinai enhancedTorsions5t_user largeCaliberTankRammer_user wetCombatPack_class2_user HD	</tags>
     <level>	7	</level>
   </R71_IS_2B>
@@ -815,7 +815,7 @@
     <shortUserString>	#ussr_vehicles:R117_T34_85_Rudy_short	</shortUserString>
     <price>	3550	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	mediumTank enhancedSuspension_Christie_user mediumCaliberTankRammer_user wetCombatPack_class1_user HD dog	</tags>
     <level>	6	</level>
   </R117_T34_85_Rudy>
@@ -825,7 +825,7 @@
     <description>	#ussr_vehicles:R116_ISU122C_Berlin_descr	</description>
     <price>	4750	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	AT-SPG sinai heavyAT-SPG enhancedTorsions5t_user largeCaliberTankRammer_user wetCombatPack_class2_user HD	</tags>
     <level>	7	</level>
   </R116_ISU122C_Berlin>
@@ -836,7 +836,7 @@
     <shortUserString>	#ussr_vehicles:R112_T54_45_short	</shortUserString>
     <price>	8750	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	mediumTank enhancedTorsions3t_user mediumCaliberTankRammer_user wetCombatPack_class1_user aimingStabilizer_Mk1_user HD	</tags>
     <level>	8	</level>
   </R112_T54_45>
@@ -847,7 +847,7 @@
     <shortUserString>	#ussr_vehicles:R114_Object_244_short	</shortUserString>
     <price>	100	  <gold></gold>
     </price>
-    <notInShop>	true	</notInShop>
+    <notInShop>	false	</notInShop>
     <tags>	heavyTank secret enhancedTorsions5t_user mediumCaliberTankRammer_user wetCombatPack_class2_user HD	</tags>
     <level>	6	</level>
   </R114_Object_244>

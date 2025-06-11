@@ -1,0 +1,74 @@
+
+/* a click on a table row sends client to spaceviewer detail page */
+.dataTable tr[row-id] {
+    cursor: pointer;
+}
+
+.dataTable tr[row-id] td:nth-of-type(2):empty:after {
+    color: #ddd;
+    font-style: italic;
+    content: "(no geometry)";
+}
+
+.sorting_disabled {
+	cursor: inherit !important;
+}
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~ embedded spaceviewer styles ~~~~~~~~~~~~~~~~~~~~~~~*/
+
+#embedded-spaceviewer-template {
+    display: none;
+    width: 300px;
+    height: 300px;
+
+    -o-box-shadow: 0px 6px 12px 0px #888;
+    -moz-box-shadow: 0px 6px 12px 0px #888;
+    -webkit-box-shadow: 0px 6px 12px 0px #888;
+    box-shadow: 0px 6px 12px 0px #888;
+}
+
+
+/*	overridden styles from spaceviewer.css */
+.sv-container {
+    border: 1px solid #444;
+    width: 50%;
+    float: left;
+    height: 300px;
+}
+
+.sv-zoom-control {
+    left: 10px;
+    top: 10px;
+}
+
+.sv-zoom-control a {
+    font-size: 14px;
+    padding: 6px 7px;
+}
+
+.content td, th { border: 1px solid #ddd; }
+
+.space-detail-info-pane {
+    float: left;
+    margin-left: 10px;
+}
+
+.space-detail-info-pane * {
+    color: #444;
+}
+
+.space-detail-info-pane h2 {
+    font-size: 13pt;
+    line-height: 14pt;
+    font-weight: normal;
+    margin: auto auto;
+}
+
+table.dataTable td.sv-space-detail {
+    padding: 15px;
+}
+
+
+/* show_spaces.css */
+

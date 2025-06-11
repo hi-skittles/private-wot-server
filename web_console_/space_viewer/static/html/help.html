@@ -1,0 +1,423 @@
+<section id="webconsole-spaces-module">
+
+    <h1>Spaces Help</h1>
+
+    <p>
+    The <b>Spaces</b> module provides information about BigWorld Server spaces and
+    entities.
+    </p>
+
+    <p>
+    The default <b>Spaces</b> page presents a tabular list of all active Spaces
+    in the current server user's Server instance, along with summary statistics for
+    the number of cells per Space and aggregate CPU load of the CellApps hosting
+    that Space. Per-space information is periodically refreshed.
+    </p>
+
+    <p>
+    Clicking on a Space row, or following the "View" link, opens that Space with
+    the embedded HTML Canvas-based <b>SpaceViewer</b> Javascript application, which
+    shows a to-scale 2D overhead view of a Space within the spatial context of that
+    Space's mapped geometry.
+    </p>
+
+    <p>
+    The key information SpaceViewer can provide for a Space is:
+    <ul>
+        <li>Its currently-loaded Geometry Mapping, an overhead 2D projection of
+        which is used as a background image (see <a href="#space_background_images">
+        Space Background Images</a>)</li>
+        <li>The bounds, number of CellApps, and total entities handled by the Space</li>
+        <li>The current Partitions of the Space</li>
+        <li>The aggregate load and aggression for each Partition of the Space</li>
+        <li>The resultant Cells of the Space as determined by those Partitions</li>
+        <li>The ID, load and IP address for the CellApp for each Cell</li>
+        <li>The Entity Bounds levels for all Cells</li>
+        <li>The currently loaded Chunk Bounds for a selected Cell</li>
+        <li>The Real and Ghost Entities for a selected Cell</li>
+    </ul>
+    </p>
+
+    <p>
+    The display of most of these elements can be configured through the Settings
+    panel.
+    </p>
+
+    <h2>User Interface</h2>
+
+    <img src="/sv/static/images/screenshot_ui_annotated.jpg" style="border: 1px solid #eee" />
+
+    <h3>Main UI elements</h3>
+    <style>
+    li b:after {
+        content: ':';
+    }
+    </style>
+    <p>
+    <ul>
+        <li>
+            <b>Title bar</b> Displays the Space ID ("appID") together with the
+            "name" of the Space as defined by the res path of the space geometry mapping.
+        </li>
+        <li>
+            <b>Zoom control</b> On clicking, '+' zooms in one level, '-' zooms
+            out one level, and '=' zooms to the space geometry bounds.
+        </li>
+        <li>
+            <b>Settings panel</b> Allows adding/removing most elements
+            of the display and changing element colour(s).
+        </li>
+       
+        <li>
+            <b>Load Balancing panel</b> Contains options for server load 
+            balancing and manual load balancing. See 
+            <a href="#LoadBalancing">Load Balancing</a>.
+        </li>
+ 
+        <li>
+            <b>Cell label</b> Displays: 1) The Cell ID (appID), 2) The IP address
+            of the CellApp handling the Cell, 3) The current CPU load of the
+            Cell. Additional lines may be added to indicate the "retiring" and
+            "overloaded" states.
+        </li>
+        <li>
+            <b>Entity bound levels</b> Shows the 5 entity bound levels for each
+            Cell.
+        </li>
+        <li>
+            <b>Partition</b> Shows the current server load-based partitioning
+            of the Space.
+        </li>
+        <li>
+            <b>Partition label</b> The first value shows the aggregate load of the
+            Cells beneath the Partition; the second value shows partition aggression.
+        </li>
+        <li>
+            <b>Selected cell</b> The currently selected Cell is indicated by a
+            semi-transparent black border and a border effect on the Cell label,
+            and (optionally) by the inclusion of Real Entities and the loaded
+            Chunk boundary..
+        </li>
+        <li>
+            <b>Chunk boundary</b> The loaded chunk boundaries of the currently
+            selected cell. Each rectangle represents a loaded Chunk.
+        </li>
+        <li>
+            <b>Entities</b> The Real and Ghosted Entities for the selected Cell,
+            coloured by Entity type, as determined by the Entity .def file.
+            Ghosted Entities (that is, Entities that exist on surrounding cells but
+            are still accessible in the AoI of the real entities) are desaturated
+            and more transparent relative to Real Entities.
+        </li>
+        <li>
+            <b>Status inset</b> Shows 1) the worldspace position of the mouse when
+            hovering over the view, the worldspace bounds of the current view
+            when not hovering, 2) the number of CellApps devoted to the current
+            Space versus the total number of CellApps for the server, and 3) the
+            total number of Real and Ghosted Entities that reside within the
+            coordinate space of the currently selected cell.
+        </li>
+        <li>
+            <b>Scale indicator</b> An indication as to the current zoom level of
+            the space window.
+        </li>
+    </ul>
+    </p>
+
+
+    <h3>Key Bindings</h3>
+
+    <style>
+    #keybinds {
+        border: 1px solid #aaa;
+        border-collapse: collapse;
+        border-spacing: none;
+    }
+    #keybinds tr {
+        vertical-align: middle;
+    }
+    #keybinds td, th {
+        padding-left: 0.75em;
+        padding-right: 0.75em;
+        height: 2.5em;
+        text-align: center;
+    }
+    #keybinds th["rowspan"] {
+        height: auto;
+    }
+    #keybinds thead th {
+        padding: 0.25em;
+    }
+    #keybinds tr td:first-of-type {
+        font-family: monospace;
+    }
+    #keybinds tr td:last-child {
+        text-align: left;
+    }
+    #keybinds .zooming, .panning, .display {
+        border-top: 1px solid #aaa;
+        vertical-align: middle;
+    }
+    #keybinds .zooming {
+        background: #E6F3F9;
+    }
+    #keybinds .panning {
+        background: #F9F6E6;
+    }
+    #keybinds .display {
+        background: #EAF9E6;
+    }
+    #keybinds tr {
+        background: transparent;
+    }
+    #keybinds tbody th {
+        background: rgba( 0, 0, 0, 0. );
+    }
+    </style>
+    <table id="keybinds">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Key</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+    <!-- zooming -->
+    <tbody class="zooming">
+        <tr>
+            <th rowspan="5">Zooming</th>
+            <td>&lt;space&gt;</td>
+            <td>Zoom to Space bounds</td>
+        </tr>
+        <tr>
+            <td>v</td>
+            <td>Zoom to fill viewport</td>
+        </tr>
+        <tr>
+            <td>/</td>
+            <td>Zoom to selected cell bounds</td>
+        </tr>
+        <tr>
+            <td>+/=</td>
+            <td>Zoom in</td>
+        </tr>
+        <tr>
+            <td>-</td>
+            <td>Zoom out</td>
+        </tr>
+    </tbody>
+
+    <!-- panning -->
+    <tbody class="panning">
+        <tr>
+            <th rowspan="4">Panning</th>
+            <td>&larr;</td>
+            <td>Pan viewport left</td>
+        </tr>
+        <tr>
+            <td>&uarr;</td>
+            <td>Pan viewport up</td>
+        </tr>
+        <tr>
+            <td>&rarr;</td>
+            <td>Pan viewport right</td>
+        </tr>
+        <tr>
+            <td>&darr;</td>
+            <td>Pan viewport down</td>
+        </tr>
+    </tbody>
+
+    <!-- display -->
+    <tbody class="display">
+        <tr>
+            <th rowspan="12">Display</th>
+            <td>.</td>
+            <td>Select next Cell</td>
+        </tr>
+        <tr>
+            <td>&lt;shift&gt; .</td>
+            <td>Select and zoom to next Cell</td>
+        </tr>
+        <tr>
+            <td>,</td>
+            <td>Select previous Cell</td>
+        </tr>
+        <tr>
+            <td>&lt;shift&gt; ,</td>
+            <td>Select and zoom to previous Cell</td>
+        </tr>
+        <tr>
+            <td>b</td>
+            <td>Toggle show/hide Entity Bound Levels</td>
+        </tr>
+        <tr>
+            <td>c</td>
+            <td>Toggle show/hide Cell labels</td>
+        </tr>
+        <tr>
+            <td>e</td>
+            <td>Toggle show/hide Real Entities</td>
+        </tr>
+        <tr>
+            <td>g</td>
+            <td>Toggle show/hide Ghost Entities</td>
+        </tr>
+        <tr>
+            <td>k</td>
+            <td>Toggle show/hide Chunk Bounds</td>
+        </tr>
+        <tr>
+            <td>l</td>
+            <td>Toggle show/hide Cell relative load tint</td>
+        </tr>
+        <tr>
+            <td>&lt;shift&gt; l</td>
+            <td>Toggle show/hide Cell absolute load tint</td>
+        </tr>
+        <tr>
+            <td>p</td>
+            <td>Toggle show/hide Partitions</td>
+        </tr>
+    </tbody>
+    </table>
+
+
+    <h2>Basic operation</h2>
+
+    <p>
+    The initial view present the seleced Space, its Partitions and Cells,
+    together with the Real and Ghosted Entities for the default selected Cell.
+    From this point, the main operations are zooming, panning, selecting cells,
+    and adding/removing additional elements to the display.
+    </p>
+
+    <h3>Zooming</h3>
+
+    <p>Zooming can be achieved by:
+    <ul>
+      <li>Mousewheel scrolling up or down.</li>
+      <li>Double clicking or double-tapping in the drawn area.</li>
+      <li>Clicking the '+' or '-' of the zoom control.</li>
+      <li>Pressing any of the <a href="#keybinds">bound keys</a> for zooming.</li>
+      <li>
+          The <a href="https://en.wikipedia.org/wiki/Multi-touch#Multi-touch_gestures">
+          "pinch open" and "pinch close" gestures</a> on a multi-touch-capable device.
+      </li>
+    </ul>
+    </p>
+
+    <h3>Panning</h3>
+
+    <p>Panning can be achieved by:
+    <ul>
+      <li>Clicking and dragging the mouse within the draw area.</li>
+      <li>Pressing any of the <a href="#keybinds">bound keys</a> for panning</li>
+      <li>
+          The <a href="https://en.wikipedia.org/wiki/Multi-touch#Multi-touch_gestures">
+          "pan" gesture</a> on a multi-touch-capable device.
+      </li>
+    </ul>
+    </p>
+
+    <h3>Selecting</h3>
+
+    <p>In order to avoid unnecessary server overhead, most of the information exposed
+    by SpaceViewer is shown within the context of a single selected Cell. This
+    includes Real and Ghosted Entities, and Chunk bounds.
+    </p>
+    <p>Selecting cells can be achieved by:
+    <ul>
+      <li>Clicking within the bounds of a Cell</li>
+      <li>Cycling through the Cells using <a href="#keybinds">bound keys</a></li>
+      <li>Tapping within the bounds of a Cell on a touch-capable device</li>
+    </ul>
+    </p>
+
+    <h3>Space Background Images</h3>
+    <p>
+    Background images for spaces are not currently auto-generated; they must be
+    manually generated from World Editor, using the 'Create Space Image' wizard
+    (File &rarr; Create Space Image &rarr; Create Multi-level map).
+    </p>
+    <p>
+    Note that service of both space background images and entity icons requires
+    at least 1 ServiceApp running, and for the HTTPResTreeService to be enabled.
+    See the section "HTTPResTreeService" in the Server Web Integration Guide
+    for further information on web services.
+    </p>
+
+    <h3>Custom Entity Icons</h3>
+    <p>
+    SpaceViewer can also use custom icon images to represent entity types.
+    SpaceViewer expects these images to be located in the 'res'-directory-relative
+    path:
+
+    <pre>[RES_PATH]/scripts/server_data/space_viewer_images/</pre>
+
+    The image file names themselves should exactly match the entity type name,
+    plus a '.png' extension, e.g. the icon for an entity type 'Avatar' will be
+    requested as:
+
+    <pre>[RES_PATH]/scripts/server_data/space_viewer_images/Avatar.png</pre>
+
+    For best results, the images should be kept small (&le; 128px per dimension),
+    on a transparent background, and tightly cropped.
+    </p>
+
+    <h2><a id="LoadBalancing">Load Balancing</a></h2>
+    
+    <h3>
+        Load Balancing Options</h3>
+    <p>
+    The following options are available on the Load Balancing panel when the server is not in production mode.<ul>
+        <li><b>Server Load Balancing</b> When enabled, the server automatically shifts cell boundaries to balance cell load.</li>
+        <li><b>Server Cell Creation/Retiring</b> When enabled, the server automatically controls whether a cell should be created or
+        retired based on CellApp load.</li>
+        <li><b>Manual Load Balancing</b> Enables the
+        manual load balancing options described in the following section.</li>
+    </ul>
+	</p>
+
+    <h3>Manual Load Balancing</h3>
+    
+    <p>
+        <para>During debugging it can be useful to manually partition a space. For example, if you are testing a new entity, you may want to test its behaviour near cell boundaries.</para></p>
+    <p>
+        <para>To enable manual load balancing in SpaceViewer, set <strong>Manual Load Balancing</strong> to Enabled on the Load Balancing panel.</para></p>
+    <p>Load balancing can also be performed via watchers. For more 
+    information, see &quot;Manual Partitioning Options&quot; in the Debugging, Profiling and Benchmarking Guide.</p>
+
+
+<p><strong>To change a cell boundary</strong></p>
+    <p>Select the partition line of the cell and drag it to change the cell boundary. 
+If Server Load Balancing is enabled the line will automatically move to maintain an even load.</p>
+
+    <p>
+        <strong>To split a cell</strong></p>
+    <p>
+        Right-click the cell and select <code>Split this cell</code> from the context menu. 
+The cell will be split in two (a new cell will be created). If Server Load Balancing is enabled, the original cell will automatically offload some of its entities to the new cell. 
+If <strong>Server Load Balancing </strong>is disabled, you won't see the new cell (it will have no entities and zero size).</p>
+    
+<p>If there are no CellApps available to host the new cell, the <strong>Split</strong> option will be disabled.  
+Note, each cell within a space must run on a separate CellApp. One CellApp can host multiple cells provided that 
+the cells are on different spaces.
+</p>      
+
+<p>
+    <strong>To retire a cell</strong></p>
+    <p>
+        Right-click the cell and select <code>Retire this cell</code> from the context menu. If Server Load Lalancing is enabled, the server will offload entities from this cell onto adjacent cells.
+        Retirement will not complete if Server Load Balancing is disabled, and there are entities on the cell.
+        
+</p>
+    <p>
+        You can cancel an in-progress retirement operation by right-clicking the cell and selecting <code>Cancel retiring this cell</code> from the context menu.
+</p>
+	
+</section>
+
+   
+   

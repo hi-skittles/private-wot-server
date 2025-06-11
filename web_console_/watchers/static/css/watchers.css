@@ -1,0 +1,35 @@
+
+#output_pane:empty {
+	display: none;
+}
+
+#output_pane th.heading {
+	border: none;
+}
+
+.watcher-list-container {
+	display: inline-block;
+	margin-bottom: 12px;
+}
+
+table.watcher {
+	border: none;
+	width: 100%;
+}
+
+.advancedMenu select {
+	margin: 0px;
+}
+
+.read-only-value {
+	color: #888;
+	/*color: inherit;*/
+}
+
+/*
+.read-only-value:after {
+	content: "(read only)";
+	color: #aaa;
+	float: right;
+}
+*/

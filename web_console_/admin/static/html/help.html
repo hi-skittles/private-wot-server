@@ -1,0 +1,136 @@
+<section id="webconsole-admin-module">
+	<h1>Admin Help</h1>
+	
+	<p>The <b>Admin</b> module allows you to manage the WebConsole user
+	accounts and their permissions.</p>
+	
+	<p>Using this module you can: 
+	<ul>
+		<li>Add a new WebConsole user.</li>
+		<li>Edit an existing WebConsole user.</li>
+		<li>Delete a WebConsole user.</li>
+		<li>Flush user mappings in bwmachined processes.</li>
+		<li>Perform self profiling</li>
+	</ul></p>
+
+	
+	<h2>Add a new WebConsole user</h2>
+
+	<p>WebConsole now supports to create two different kinds of users: password
+	based users and LDAP based users. However, WebConsole can only support one
+	kind at the same time. With the default settings of WebConsole, users are
+	password based. To support LDAP based WebConsole accounts, you need to
+	change some WebConsole configuration. Please refer to
+	<i>Server Operations Guide</i> for more details on configuring WebConsole to
+	support LDAP based users.</p>
+
+	<h3>Add a new password based WebConsole user</h3>
+	<p>With default WebConsole settings, users are password based. To add a
+	new user, click on the "Add User" menu item on the left hand side of the
+	page. You will then be presented with a form to input these user
+	information:</p>
+	<ul>
+		<li>Username: the user name for the new user, with which the new user
+		will log in.</li>
+
+		<li>Password: the password with which the new user will log in.</li>
+
+		<li>Confirm Password: the password from the previous field, retyped to
+		ensure no mistake was made on entry.</li>
+
+		<li>Server User: The Linux user this account will be associated with.
+		This will be the Linux user that the BigWorld server processes will be
+		run as. If you are uncertain of this field, please talk to your system
+		administrator to find out what your Linux user account is.</li>
+
+		<li>Group: The user group for the new user. The group assigned
+		determines what level of access that user will have to viewing and
+		modifying their own server as well as others' servers. Groups
+		permissions and access control features are discussed in further detail
+		in the <i>Server Operations Guide</i>.</li>
+	</ul>
+
+	<p>Once all the user information has been entered, simply click the
+	<b>Add User</b> button. Error message will be displayed if there is any
+	error during the backend creation process. Upon success, you will be
+	returned to the main user listing, which will include the new user.</p>
+
+	<h3>Add a new LDAP based WebConsole user</h3>
+
+	<p>When authentication by LDAP has been enabled and LDAP server setting
+	has been configured in WebConsole configration file, you can create LDAP
+	based WebConsole users. To add a new LDAP based user, click on the
+	"Add User" menu item on the left hand side of the page. You will then be
+	presented with a form to input user information:</p>
+
+	<ul>
+		<li>Username: the user name for the new user, with which the new user
+		will log in.</li>
+
+		<li>Group: The user group for the new user. The group assigned
+		determines what level of access that user will have to viewing and
+		modifying their own server as well as others' servers. Groups
+		permissions and access control features are discussed in further detail
+		in the <i>Server Operations Guide</i>.</li>
+	</ul>
+	
+	<p>Compared with adding a password based user, password and server user
+	information are not required to input now. When creating this user,
+	WebConsole will search the server user of this user from LDAP server by the
+	attribute defined by WebConsole configuration item
+	<b>identity.soldapprovider.serverUserNameAttr</b>. For the password,
+	WebConsole will only use the password that user inputs when logging in and
+	authenticate that password against LDAP, so WebConsole does not need to
+	store it locally.</p>
+
+	<p>Once the user name has been entered and group has been selected, simply
+	click the Add User button. Then WebConosle will search the user information
+	from LDAP server and create this user. Error message will be displayed if
+	there is any error during this process. If the user is created
+	successfully, you will be returned to the main user listing, which will
+	include the new user.</p>
+
+	<h2>Edit an existing WebConsole user</h2>
+
+	<p>Edit an existing user is similar to create a new one.</p>
+
+	<p>To edit an existing WebConsole user, go the the <b>Users</b> page and
+	select <b>Edit</b> from the Action drop down menu of that user.</p>
+
+
+	<h2>Delete a WebConsole user</h2>
+
+	<p>To delete a WebConsole user, go the the <b>Users</b> page and select
+	<b>Delete</b> from the Action drop down menu of that user.</p>
+	
+	<p>Note that the default admin account is not allowed to delete.</p>
+
+	<h2>Flush user mappings in bwmachined processes</h2>
+
+	<p>The Flush Users page provides the ability for WebConsole	to force all
+	BWMachined instances in the network to forget their current	cached user
+	list. This feature is useful and sometimes necessary when adding users to
+	a network information system such as LDAP which are sometimes used as
+	account management systems.</p>
+	
+	<p>If you are having problems detecting a newly added user in your network,
+	or are seeing an old user appear in your cluster display, flushing the user
+	mapping will quite often help resolve the issue.</p>
+
+	<p>To flush user mappings, go to the <b>Flush Users</b> page and click the
+	<b>Yes</b> button.</p>
+
+	<h2>Perform self profiling</h2>
+
+	<p>Perform self profiling and dump the results to a JSON file.</p>
+
+	<p>To perform self profiling, go to the <b>Self Profiling</b> page, 
+	specify the number of seconds to profile for, then click
+	<b>Start Profiling</b>. <b>Note: </b>The recommended
+	profiling duration is ten seconds or less. Entering a large figure will 
+	result in the creation of large dump files (roughly 10 to 25 MB per second). 
+	Chrome (currently the only supported browser) can take more than 30 minutes 
+	to load dump files larger than 100MB and may crash when loading dump files 
+	larger than 400MB.</p>
+
+</section>

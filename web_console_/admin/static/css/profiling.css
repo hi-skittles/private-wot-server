@@ -1,0 +1,119 @@
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Table ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.profiling-status-table tr td:first-child {
+	width: 1%;
+	white-space: nowrap;
+}
+
+.profiling-status-table td {
+	word-break: break-word;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Buttons ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+
+button {
+	height: 26px;
+	vertical-align: baseline;
+}
+
+
+/* "Cancel Profiling" */
+.cancel-button:before {
+	/* "icon-cancel" */
+	font-family: FontAwesome;
+	content: '\f00d';
+}
+
+
+/* "Start Profilng" */
+.start-button:before {
+	/* "icon-play" */
+	font-family: FontAwesome;
+	content: '\f04b';
+}
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Actions Bar ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.actions-bar {
+	display: block;
+	position: relative;
+	border: 1px solid #aaa;
+	padding: 0px 3px;
+
+	background: #fafafa;
+	min-height: 38px;
+
+	background: -webkit-linear-gradient( 65deg, #e0e0e0, #fafafa );
+	background: -moz-linear-gradient( 65deg, #e0e0e0, #fafafa );
+	background: -ms-linear-gradient( 65deg, #e0e0e0, #fafafa );
+	background: -o-linear-gradient( 65deg, #e0e0e0, #fafafa );
+	background: linear-gradient( 65deg, #e0e0e0, #fafafa );
+}
+
+.actions-bar > * {
+	margin: 6px 3px;
+	float: right;
+}
+
+.actions-bar:after {
+	display: table;
+	clear: both;
+	content: "";
+}
+
+.actions-dock-left {
+	float: left;
+}
+
+.actions-dock-right {
+	float: right;
+}
+
+.actions-dock-left:after, .actions-dock-right:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Usage ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.usage-error {
+	padding: 0px 3px;
+	margin: 6px 3px;
+}
+
+.programlisting {
+	border: 1px solid rgb(153, 153, 153);
+	background-color: rgb(251, 251, 251);
+	padding: 5px;
+	margin-left: 25px;
+	margin-right: 25px;
+	margin-bottom: 0px;
+}
+
+.dump-time-size-warning {
+	padding-top: 10px;
+	display: none;
+}
+
+.dump-time-size-warning .warning-text-style {
+	color: red;
+	font-weight: bold;
+}
+
+.dump-time-input-error {
+	padding-top: 10px;
+	color: red;
+	display: none;
+}
+
+.dump-time-text-error {
+	color: red;
+}
+
+.dump-actions{
+	padding-top: 10px;
+}

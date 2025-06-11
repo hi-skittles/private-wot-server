@@ -1,0 +1,135 @@
+
+<section id="webconsole-graphs-module">
+
+    <h1>Graphs Help</h1>
+    <p>
+        The <b>Graphs</b> module is a set of tools for the
+        graphical display of live and historical server statistics, collected
+        by the StatLogger process.</p>
+        
+        <p>The StatLogger process is responsible for logging user-configurable
+        collections of server metrics over time to either (or both) relational and
+        Carbon-based metric databases. For further information, see the <b>"StatLogger"</b>
+        chapter of the <b>Server Operations Guide</b>.
+   
+    </p>
+    <blockquote>
+        <p>
+            This version of the Graphs module is intended as a developer preview to
+            demonstrate the use of Graphite/Carbon as an eventual replacement for the existing
+            StatLogger relational database and existing <a href="/statg">Graphs module</a>.
+        </p>
+        <p>
+            Accordingly, some features of the original Graphs module are not
+            included in this version.
+        </p>
+    </blockquote>
+
+    <h2>Viewing Graphs</h2>
+    <p>
+        BigWorld server metrics can be visualised from the perspective of process type (via the <a href="by_process">Processes</a> page) or machine
+        (via the <a href="by_machine">Machines</a> page). These views present
+        an overview of all machines and processes. You can narrow these views down to specific machines, processes, or machine/process
+        groups by following the links in the chart titles.
+    </p>
+
+    <h3>Toolbar</h3>
+    <p>
+        You can use the toolbar above the graph display to change the view.</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Button</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><img src="static/html/images/sg_icon_calendar_26.png" height="20" width="20"/></td>
+              <td>Opens a calendar which lets you choose an end date and time for the graphing period (by default the current time is used). Use the drop-down menu beside this button to select the period of time to graph (the default is five minutes). 
+              </td>
+            </tr>
+            
+            <tr>
+              <td><img src="static/html/images/sg_icon_end_26.png" height="20" width="20"/></td>
+              <td>Switches between live and historical mode.</td>
+            </tr>
+            <tr>
+              <td><img src="static/html/images/sg_icon_gaps_26.png" height="20" width="20"/></td>
+              <td>Shows or hides gaps in the data. Gaps indicate periods
+              for which no data has been logged by StatLogger.</td>
+             </tr>
+            <tr>
+              <td><img src="static/html/images/sg_icon_yaxis_26.png" height="20" width="20"/></td>
+              <td>Toggles the display of the Y axis.</td>
+            </tr>
+            <tr>
+              <td><img src="static/html/images/sg_icon_pivot_26.png" height="20" width="20"/></td>
+              <td>Toggles statistics mode. In this mode metrics are grouped by statistic, instead of by machine or process. 
+              </td>
+            </tr>
+            <tr>
+              <td><img src="static/html/images/sg_icon_legend_26.png" height="20" width="20"/></td>
+              <td>Toggles the display of the graph legend pane.</td>
+            </tr>
+          </tbody>
+        </table>
+
+    <h3>Graph Display</h3>
+
+    <p>One or more graphs are displayed in this area. All graphs
+    displayed are synchronised to the same time and display the
+    same time range.</p>
+
+    <p>If the number of subjects for graphing exceeds the maximum number of
+    graphs, graph series are consolidated into groups alphabetically. When
+    grouped, graph titles take the form "&lt;first-member-in-group&gt; -
+    &lt;last-member-in-group&gt;". Specific graphs within a group may be
+    "drilled into" by clicking the graph title.
+    </p>
+
+    <p>You can drill back up to previous graph view states by
+    clicking the breadcrumb links to the left of the toolbar.</p>
+
+    <h3>Setting the Graphing Period</h3>
+    <p>
+        To specify the graphing period, do any of the following:
+        <ul>
+            <li>Click the <img src="static/html/images/sg_icon_calendar_13.png" height="13" width="13"/> button and specify an end date and time for the graphing period. Use the drop-down menu beside this button to select the period of time to graph.</li>
+            <li>Hold down <b>Shift</b> and drag across the graph to select a specific time period.</li>
+            <li>Pan left (backwards in time) or right (forwards in time) by dragging any of the displayed graphs left or right.</li>
+            <li>Hold down <b>Shift</b> and use the mouse scroll wheel to zoom in (increasing the graphing period) or out (decreasing the graphing period).</li>
+        </ul>
+    </p>
+
+    <h3>Live Mode</h3>
+    <p>
+        You can snap the current graphing period to the current time by
+        clicking the <b>Live mode</b> <img src="static/html/images/sg_icon_end_13.png" height="13" width="13"/> button.
+    </p>
+    <p> Live mode will poll for new data no more often than the current
+        point resolution. For example, data viewed at two second resolution will be polled
+        once every two seconds.
+    </p>
+    
+    <p>
+        <b>Note:</b> Any manual panning action while in live mode turns live mode off.
+    </p>
+    
+
+    <h3>The Legend</h3>
+    <p>
+        Display of the legend pane is off by default, and can be toggled via the
+        <b>Legend</b> <img src="static/html/images/sg_icon_legend_13.png" height="13" width="13"/> button.
+        When shown, the legend pane displays the names and values of the graph 
+        currently under the mouse pointer.
+    </p>
+    <p>
+        <b>Note:</b> The colours of metrics are as defined in the StatLogger
+        preferences file ("preferences.xml"). For more information on this file,
+        see <b>"Process Statistic Configuration"</b> in the <b>Server Operations
+        Guide</b>.
+    </p>
+
+</section>

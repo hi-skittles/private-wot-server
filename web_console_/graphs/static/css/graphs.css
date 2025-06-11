@@ -1,0 +1,525 @@
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Page UI ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.actions-bar {
+	display: block;
+	position: relative;
+	border: 1px solid #aaa;
+	padding: 0px 3px;
+
+	background: #fafafa;
+	min-height: 38px;
+
+	background: -webkit-linear-gradient( 65deg, #e0e0e0, #fafafa );
+	background: -moz-linear-gradient( 65deg, #e0e0e0, #fafafa );
+	background: -ms-linear-gradient( 65deg, #e0e0e0, #fafafa );
+	background: -o-linear-gradient( 65deg, #e0e0e0, #fafafa );
+	background: linear-gradient( 65deg, #e0e0e0, #fafafa );
+}
+
+.actions-bar > * {
+	margin: 6px 3px;
+	float: right;
+}
+
+.actions-bar:after {
+	display: table;
+	clear: both;
+	content: "";
+}
+
+.after-actions-bar {
+	position: relative;
+	text-align: center;
+}
+
+.after-actions-bar > * {
+	display: inline-block;
+	position: relative;
+	top: -26px;
+}
+
+.status-bar {
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+	height: 28px;
+	border: 1px solid #aaa;
+	background: #fafafa;
+	background: -webkit-linear-gradient( 65deg, #e0e0e0, #fafafa );
+	background: -moz-linear-gradient( 65deg, #e0e0e0, #fafafa );
+	background: -ms-linear-gradient( 65deg, #e0e0e0, #fafafa );
+	background: -o-linear-gradient( 65deg, #e0e0e0, #fafafa );
+	background: linear-gradient( 65deg, #e0e0e0, #fafafa );
+}
+
+select + .chzn-container {
+	min-width: 80px;
+}
+
+.alert-notification-container {
+	top: auto;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+	width: auto;
+}
+
+.chart-progress-container {
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	left: 53px;
+	right: 50px;
+}
+
+.chart-progress {
+	background: rgba( 0, 0, 0, 0.35 );
+}
+
+.view-range {
+	position: relative;
+	top: -26px;
+	text-align: center;
+	color: #444;
+}
+
+h2 + .view-range {
+	position: absolute;
+	top: 0px;
+	right: 10px;
+	line-height: 31px;
+}
+
+.actions-bar .view-range {
+	top: auto;
+	line-height: 26px;
+	padding-right: 2px;
+}
+
+.value-tooltip{
+	position: absolute;
+	z-index: 2;
+	opacity: 0.95;
+	
+	-o-border-radius: 0px 4px 4px 4px;
+    -moz-border-radius: 0px 4px 4px 4px;
+    -webkit-border-radius: 0px 4px 4px 4px;
+    border-radius: 0px 4px 4px 4px;
+	
+	-o-box-shadow: 0px 2px 4px #444;
+    -moz-box-shadow: 0px 2px 4px #444;
+    -webkit-box-shadow: 0px 2px 4px #444;
+    box-shadow: 0px 2px 4px #444;
+	
+	border: 1px solid #111;
+	background: #444;
+	color: #fff;
+	padding: 5px;
+	
+	white-space: nowrap;
+}
+
+.select-line {
+	display: none;
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	width: 1px;
+	pointer-events: none;
+	z-index: 2;
+	background: rgba( 0, 0, 0, 0.35 );
+}
+
+.specific-time {
+	min-width: 160px;
+	border: none;
+	padding: 5px;
+	font-family: inherit;
+	font-size: 13px;
+	line-height: 16px;
+	background-color: inherit;
+	cursor: default;
+	text-align: right;
+}
+
+.date-picker-shown .specific-time {
+	border: 1px solid #888;
+	border-radius: 3px;
+	background-color: #fff;
+}
+
+.datepicker-button-pane {
+	border-top: 1px solid #aaaaaa;
+}
+
+.datepicker-button-pane button {
+	margin: 6px;
+}
+
+.datepicker-button-pane .cancel-button {
+	float: left;
+	
+}
+
+.datepicker-button-pane .go-button {
+	font-weight: bold;
+	float: right;
+	min-width: 60px; 
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Page UI controls ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.legend-control:before {
+	content: "b";
+	font-family: WebConsoleFont;
+	font-size: 13px;
+}
+
+.toggle-statistic-view:before {
+	content: "a";
+	font-family: WebConsoleFont;
+	font-size: 13px;
+}
+
+.toggle-y-axis:before {
+	content: "e";
+	font-family: WebConsoleFont;
+	font-size: 13px;
+}
+
+.smoothing-control:before {
+	content: "c";
+	font-family: WebConsoleFont;
+	font-size: 13px;
+}
+
+.live-mode-control:before {
+	content: "d";
+	font-family: WebConsoleFont;
+	font-size: 13px;
+}
+
+.calendar-button:before {
+	content: "f";
+	font-family: WebConsoleFont;
+	font-size: 13px;
+}
+
+.custom-time-range .time-range-control,
+.custom-time-range .time-range-control + .chzn-container {
+	display: none;
+}
+
+.custom-zoom-control,
+.custom-zoom-control + .chzn-container {
+	display: none;
+}
+
+.custom-time-range .custom-zoom-control,
+.custom-time-range .custom-zoom-control + .chzn-container {
+	display: block;
+}
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~ Chart layout & styles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.charts-container {
+	position: absolute;
+	/*top: 40px;*/
+	top: 70px;
+	right: 0px;
+	/*bottom: 38px;*/
+	bottom: 0px;
+	left: 0px;
+	overflow-y: auto;
+
+	padding-top: 15px;
+}
+
+.showing-legend .charts-container {
+	right: 210px;
+}
+
+.chart-container:empty {
+	border: 1px dashed #eee;
+	background: #fafafa;
+	border-radius: 4px;
+}
+
+.chart-container:empty:after {
+	display: inherit;
+	margin-top: 20px;
+	content: "(No data available for " attr(data-chart-title) ")";
+	color: #888;
+	text-align: center;
+}
+
+.fetch-in-progress .chart-container:empty:after {
+	content: "(Awaiting data for " attr(data-chart-title) ")";
+}
+
+.flex-vertically {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-direction: normal;
+	-moz-box-direction: normal;
+	-webkit-box-orient: vertical;
+	-moz-box-orient: vertical;
+	-webkit-flex-direction: column;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	-webkit-flex-wrap: nowrap;
+	-ms-flex-wrap: nowrap;
+	flex-wrap: nowrap;
+	-webkit-box-pack: start;
+	-moz-box-pack: start;
+	-webkit-justify-content: flex-start;
+	-ms-flex-pack: start;
+	justify-content: flex-start;
+	-webkit-align-content: stretch;
+	-ms-flex-line-pack: stretch;
+	align-content: stretch;
+	-webkit-box-align: stretch;
+	-moz-box-align: stretch;
+	-webkit-align-items: stretch;
+	-ms-flex-align: stretch;
+	align-items: stretch;
+	/*
+	-webkit-flex-wrap: wrap;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	*/
+}
+
+/*.flex-vertically > * {
+
+	-webkit-flex: auto;
+	-ms-flex: auto;
+	flex: auto;
+	min-height: calc(100% / 3);
+}*/
+
+@media (min-width: 1024px)
+{
+
+}
+
+.chart-container {
+	min-width: 250px;
+	min-height: 100px;
+	background: #fafafa;
+	border-radius: 2px;
+	border: 1px solid #aaa;
+}
+
+.chart-container + .chart-container {
+	margin-top: 1em;
+}
+
+.charts-container.flex-vertically .chart-container {
+	-webkit-box-ordinal-group: 1;
+	-moz-box-ordinal-group: 1;
+	-webkit-order: 0;
+	-ms-flex-order: 0;
+	order: 0;
+	-webkit-box-flex: 1;
+	-moz-box-flex: 1;
+	-webkit-flex: 1 1;
+	-ms-flex: 1 1;
+	flex: 1 1;
+	-webkit-align-self: auto;
+	-ms-flex-item-align: auto;
+	align-self: auto;
+}
+
+.chart-container > div {
+	width: 100% !important;
+}
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ breadcrumbs ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.statgrapher-container .actions-bar .breadcrumbs {
+	float: left;
+	padding: 0;
+}
+
+.breadcrumbs li {
+	display: inline-block;
+}
+
+.breadcrumbs li + li:before {
+	font-family: FontAwesome;
+	content: "\f105"; /*icon-angle-right*/
+	vertical-align: text-bottom;
+	padding: 0px 3px;
+}
+
+.breadcrumbs a {
+	line-height: 26px;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ graph legend ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+#chart-legend {
+	display: none;
+	position: absolute;
+	top: 84px;
+	right: 0px;
+	width: 200px;
+	z-index: 10;
+
+	font-size: 11px;
+	overflow-y: auto;
+}
+
+#chart-legend:empty:after {
+	content: "Hover over a chart to see its legend and current values";
+}
+
+#chart-legend > div {
+	display: table;
+	width: 100%;
+}
+
+#chart-legend .series {
+	display: table-row;
+}
+
+#chart-legend .series:nth-child( odd ) {
+	background: #f2f2f2;
+}
+
+#chart-legend .series > * {
+	display: table-cell;
+	padding: 2px 2px;
+}
+
+#chart-legend .series label {
+	max-width: 110px;
+	text-overflow: ellipsis;
+}
+
+#chart-legend .series > *:last-child {
+	text-align: right;
+	white-space: nowrap;
+}
+
+.dygraph-legend > span,
+#chart-legend > span {
+	display: block;
+}
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~ graph legend UI states ~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+/**
+*   Class `.showing-legend` indicates that the legend is being displayed.
+*
+*   Class `.by-statistic-view` indicates 1 chart per statistic view (vs 1 chart per
+*   process or machine group).
+*
+*   Class `.showing-selected-charts` indicates that a subset of drawn charts are
+*   "selected"; selected charts will have a `data-selected` attribute.
+*/
+.showing-selected-charts .chart-container {
+	opacity: 0.5;
+}
+
+.by-statistic-view.showing-selected-charts .chart-container {
+	/*display: none;*/
+}
+
+.showing-selected-charts .chart-container[data-selected] {
+	opacity: 1.0;
+	border: 1px solid #444;
+	border-color: #aaa;
+	box-shadow: 0px 0px 8px rgba( 0, 0, 100, 0.35 );
+}
+
+/**
+*   The presence of attribute `data-highlighted-series` indicates that one of the
+*   series in the legend is currently (temporarily) highlighted. The value of
+*   attribute will be the series name (label), and the `.is-highlighted` class
+*   on a `.series` will indicated it is highlighted.
+*
+*   When a certain chart is has a selected series in it (ie: it is true for
+*   .chart-container[data-selected]), other .series that are in that chart have
+*   the class `.is-in-chart`.
+*/
+#chart-legend[data-highlighted-series] .series:not( .is-in-chart ) {
+	opacity: 0.25;
+	/*background: #fff;*/
+}
+
+#chart-legend[data-highlighted-series]:hover .series:not( .is-in-chart ) {
+	opacity: 1.0;
+}
+
+#chart-legend[data-highlighted-series] .series.is-highlighted {
+	opacity: 1.0;
+	font-weight: bold;
+	text-decoration: underline;
+	/*background: #e0e0e0;*/
+}
+
+#chart-legend .series.is-in-chart {
+	opacity: 1.0;
+	font-weight: bold;
+	background: #f2f2f2;
+}
+
+#chart-legend .series:hover {
+	background: #ccc;
+}
+
+.showing-legend.showing-selected-charts #chart-legend[data-highlighted-series] .series:not( .is-in-chart ) {
+	/*display: none;*/
+}
+
+.showing-legend.showing-selected-charts #chart-legend .series {
+	/*display: block;*/
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ graph title ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.chart-container .dygraph-title {
+	display: inline-block;
+	margin: auto;
+	padding: 2px 5px;
+	border-radius: 2px;
+	border: 1px solid transparent;
+	text-align: left;
+	cursor: pointer;
+	color: #105293;
+	text-decoration: underline;
+}
+
+.chart-container:not( :only-of-type ) .dygraph-title:hover {
+	color: #f80;
+	text-decoration: underline;
+}
+
+.chart-container:only-of-type .dygraph-title {
+	text-decoration: none;
+	cursor: auto;
+}
+
+.by-statistic-view .chart-container .dygraph-title {
+	color: #105293;
+	text-decoration: none;
+	cursor: auto;
+}
+
+.by-statistic-view .chart-container .dygraph-title:hover {
+	color: #105293;
+	text-decoration: none;
+	cursor: auto;
+}
+

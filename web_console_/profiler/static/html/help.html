@@ -1,0 +1,82 @@
+<section id="webconsole-profiler-module">
+	<h1>Profiler Help</h1>
+	
+	<p>The <b>Profiler</b> module allows you to view live statistics for server
+	processes. It provides profiling functions similar to the command-line
+	utility <code>control_cluster.py profile</code>.</p>
+	
+	<p>Using this module you can: 
+	<ul>
+		<li>Display live statistics for server processes.</li>
+		<li>Record profile data to a JSON file.</li>
+		<li>Upload and view recorded profile data. </li>
+	</ul></p>
+
+	
+	<h2>The Processes Page</h2>
+	<p>When the server is running, the Processes page displays information about
+	server processes.</p>
+	
+	<p>To see live statistics for a process, click the <b>Live View</b> link
+	next to the process name. </p>
+	
+	<p>If profiling is not in progress, click the <b>Start</b> button to start
+	displaying statistics. </p>
+	
+	<p>While profiling is in progress you can:
+	<ul>
+		<li>Change profiling options.</li>
+		<li>Record live profiling information to a JSON file. </li>
+	</ul>
+	</p>
+	
+	<p>The following profiling options are available:
+	<ul>
+		<li>Sort order: sort functions by name, by number of calls, by time
+		spent in that function, or hierarchically.</li>
+		<li>Inclusive/exclusive timing: specify whether the timing
+		information for each function includes or excludes time spent in other
+		functions called by that function.</li>
+		<li>Language: show all function calls, C++ calls only, or Python
+		calls only.</li>
+	</ul>
+	</p>
+	
+	<p>To record profiling information:
+	<ol>
+	<li>Click the <b>Record</b> button.</li>
+	<li>Enter the number of ticks you want to record and click <b>Go</b>.</li>
+	</ol>
+	</p>
+
+	<p>WebConsole will try to download the recording file via serviceapps
+	of current server user to <b>Recordings</b> when the
+	recording is finished. WebConsole will first try the serviceapps runing
+	on the machine that the profiled process is running on, and then try the
+	serviceapp on other machines when the first step failed. If the
+	downloading was successful, a link will be provied to view the content
+	graphically. If the downloading was unsuccessful, you can maually upload
+	the recording on <b>Recordings</b> page.</p>
+	
+	<p>You can specify the recording saving path by adding an option 
+	<code>profilerJsonDumpDirectory</code> to bw.xml. This is useful when there
+	is no serviceapp running on the machine on which the process being profiled
+	is running. You can specify a shared directory that serviceapps on other
+	machines can access, then WebConsole can still successfully download the
+	recording even if there is no serviceapp running on the same machine.</p>
+	
+	<p>To cancel a ongoing recording, click the <b>Stop Recording</b> button.
+	This will stop the profile as well.</p>
+	
+	<p>To stop profiling, click the <b>Stop</b> button.</p>
+	
+	<h2>View Recorded Profile JSON Files</h2>
+	
+	<p>From the <b>Recordings</b> page, you can upload profile JSON files
+	(created by recording profiles) to Web Console and view their content
+	graphically.</p>
+	
+	<p>You can delete the Web Console copy of the uploaded JSON file by clicking
+	the <b>Delete</b> link.</p>
+
+</section>

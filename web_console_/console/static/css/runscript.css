@@ -1,0 +1,222 @@
+#outputContainer
+{
+	margin: 10px 0px 0px 0px;
+	width: 99%;
+}
+
+#outputContainerActions
+{
+	text-align: right;
+	padding: 5px;
+}
+
+#resultPane
+{
+	border: 1px solid #AAAAAA;
+	/*margin: 0px 5px;*/
+	padding: 0px 5px;
+	/*font-family: Courier, monospace;*/
+	overflow: auto;
+	height: 5em;
+	/*width: 100%;*/
+}
+
+#outputPane
+{
+	border: 1px solid #AAAAAA;
+	padding: 0px 5px;
+	font-family: Courier, monospace;
+	overflow: auto;
+	/*width: 100%;*/
+}
+
+#outputPane span
+{
+	white-space: pre;
+}
+
+#interfaceContainer
+{
+	width: 100%;
+	overflow: auto;
+	/*border: 1px solid #AAAAAA;*/
+	margin: 0px;
+	height: 5cm;
+}
+
+
+/* 
+#scriptPane
+{
+	margin: 0px;
+	height: 100%;
+	overflow: auto;
+	float: left;
+}
+*/
+#scriptSelect
+{
+	float: left;
+	padding: 1px 3px 1px 3px;
+	/*border: 2px solid #FF0000;*/
+}
+
+#scriptInfoPane
+{
+	float: left;
+	text-align: left;
+	margin-left: 10px;
+	/* border: 1px solid #1111AA; */
+}
+
+
+#scriptTitlePane
+{
+	float: left;
+/*	overflow: auto; */
+	height: 100%;
+	text-align: left;
+	/*border: 1px solid #AAAAAA;*/
+}
+
+#scriptParamPane
+{
+	margin-top: 5px;
+	text-align: right;
+/*
+	margin-top: 5px;
+	margin-left: 5px;
+	margin-right: 5px;
+	border: 1px solid #AAAAAA;
+*/
+}
+
+#scriptExecutePane
+{
+	margin-top: 5px;
+	/*
+	margin-top: 10px;
+	margin-left: 5px;
+	margin-bottom: 5px;
+	border: 1px solid #11FA1B;
+	*/
+}
+
+/*
+#settingsPane
+{
+	margin: 0;
+	height: 100%;
+	width: 89%;
+	border: 1px solid #AAAAAA;
+	float: left;
+}
+*/
+
+
+/*
+#infoPane
+{
+	margin-top: 5px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+*/
+
+#scriptLibrary
+{
+	width: 99%;
+	border: 2px;
+}
+
+
+.scriptInactive
+{
+	cursor: pointer;
+	background-color: white;
+}
+
+.scriptInactive:hover
+{
+	background-color: yellow;
+}
+
+.scriptActive
+{
+	background-color: lightgreen;
+}
+
+.content td
+{
+	padding: 2px 5px;
+}
+
+input.submitButton
+{
+	font-family: 	sans-serif; 
+	font-weight: 	bold; 
+}
+
+span.param
+{
+	padding: 5px;
+	margin: 10px;
+	/*border: 1px solid #990011;*/
+}
+
+div.param input
+{
+	/*max-width:*/
+}
+
+div.desc
+{
+	padding: 5px;
+	font-size: small;
+	float: left;
+	display: inline;
+}
+
+div.logsection
+{
+	border: 1px solid black;
+	padding: 5px;
+	margin: 10px;
+	background-color: #CCCCCC;
+}
+
+div.logsection h1
+{
+	/*padding-top: 5px;*/
+	margin-top: 5px;
+	font-size: 1em;
+	font-family: Verdana, Arial;
+}
+
+option.info
+{
+	font-size: 0.8em;
+	color: #AAAAAA;
+}
+
+span.success
+{
+	color: green;
+}
+
+span.success-novals
+{
+	color: purple;
+}
+
+span.fail
+{
+	color: red;
+	font-weight: bold;
+}
+
+span.error
+{
+	color: red;
+}
+

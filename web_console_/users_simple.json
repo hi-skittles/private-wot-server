@@ -1,0 +1,25 @@
+{
+    "root":
+    {
+        "view"     : [ true, true ],
+        "modify"   : [ true, true ],
+    },
+
+    "qa":
+    {
+        "view"     : [ true, false ],
+        "modify"   : [ true, false ],
+    },
+
+    "client_devel":
+    {
+        "view"     : [ true, true ],
+        "modify"   : [ true, false ]
+    },
+
+    "server_devel":
+    {
+        "view"     : [ true, true ],
+        "modify"   : [ true, true ]
+    }
+}

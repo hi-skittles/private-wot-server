@@ -1,0 +1,77 @@
+/*
+ * This stylesheet is used by the watcher/filters and commands/ pages.
+ * It is primarily used to dictact the look of the selection boxes and the
+ * contents that are produced from the selections.
+ */
+
+/*
+ * This is the main table for displaying the selection list and selected
+ * results.
+ */
+
+body {
+	overflow-x: auto;
+}
+
+
+/*
+ * This class is used to override the default blue outlines used in the
+ * tables in WebConsole. It is needed when inserting tables within a page
+ * purely for layout reasons.
+ */
+table.blank
+{
+	border: 0;
+}
+
+td.blank
+{
+	border: 0;
+}
+
+
+/*
+ * The main select list
+ */
+select.primary_select
+{
+	float: left;
+	padding: 1px 2px 1px 2px;
+	/*border: 2px solid #FF0000;*/
+}
+
+/*
+ * The text contained within the main selection list
+ */
+option.primary_option
+{
+	font-size: 9pt;
+}
+
+/*
+ * The text contained within the main selection list
+ */
+option.primary_option_special
+{
+	font-size: 0.8em;
+	color: #000000;
+}
+
+/*
+ * A title within the saved filter list
+ */
+option.primary_option_title
+{
+	font-size: 0.8em;
+	color: #666666;
+}
+
+/*
+ * The div that will be modified when a selection is made.
+ */
+div.floating_info_pane
+{
+	float: left;
+	text-align: left;
+	margin-left: 10px;
+}

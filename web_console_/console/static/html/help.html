@@ -1,0 +1,38 @@
+<section id="webconsole-consoles-module">
+
+    <h1>Consoles Help</h1>
+
+	<p>The <b>Consoles</b> module provides the ability to access Python
+	functionality (and even exposed C++ methods) from <b>WebConsole</b>
+	without needing to connect to a linux machine and use developer / systems
+	operator oriented tools.</p>
+
+
+	<h2>Python console</h2>
+	<p>The <b>Python Console</b> page provides a simple web interface to the
+	Python telnet port of BaseApps, CellApps, ServiceApps and DBApp. Using
+	the Python console, users can interactively call script commands on a
+	server process, or inspect the state of the server.</p>
+
+	<p>Previously, developers would have to use <code>`control_cluster.py
+	pyconsole`</code>, or run telnet from the command line to access this
+	functionality.</p>
+
+	<h3>Usage</h3>
+	<p>Opening the <b>Python Console</b> page presents the user with a list
+	of active server components owned by the current user that have an exposed
+	Python console.</p>
+
+	<p>Each process has a <b>Connect</b> link which links to a terminal
+	like page that is connected to the associated server component. The
+	console page can also be accessed via the <b>Cluster</b> module's
+	<b>Processes</b> page, and in the process <b>Action</b>
+	drop-down list box selecting <b>Console</b> entry.</p>
+
+	<p>The Python console page is designed to be similar to an interactive
+	command line python console that most python developers should have
+	encountered. Please note that accessing another user while connected to a
+	Python console will cause a redirect to the Consoles list as the new 
+	user.</p>
+
+</section>

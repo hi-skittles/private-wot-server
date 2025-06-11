@@ -1,0 +1,146 @@
+<section id="webconsole-watchers-module">
+
+    <h1>Watchers Help</h1>
+
+	<p>The <b>Watchers</b> module provides access to information about a running
+	server provided by the Watcher system.</p>
+
+    <h2>Watchers</h2>
+
+	<p>Watcher values are internal parameters of a running BigWorld server
+	process that are explicitly exposed via the Watcher interface. Basically,
+	watcher values allow users and applications to inspect their internal
+	state.</p>
+
+	<p>For further details on watchers, see the <b>Server Programming
+	Guide</b>, chapter <b>The Watcher Interface</b>.</p>
+
+
+    <h2>Tree View</h2>
+
+	<p>Watcher values are organised hierarchically into a tree structure. You
+	can browse to the root of a process's watcher tree by clicking its name.
+	There are links to this view from the <b>Cluster</b> module. The
+	two places where these links are available are:</p>
+
+	<ul>
+		<li>The Process list on the <b>Processes</b> page</li>
+		<li>The Process list of a particular machine</li>
+	</ul>
+
+	<p>When browsing watcher values, each page displays the values and
+	subdirectories for a particular Watcher directory. Some watcher values are
+	readable and writeable, and some are read-only (information about the write
+	permissions is not currently part of the network protocol that the Python
+	tools use to connect to the server processes).</p>
+
+	<p>The <b>Advanced Options</b> check box at the bottom of the watcher
+	values page will reveal the <b>Actions</b> menu for each watcher if it
+	is selected. A writeable watcher value can be modified by selecting
+	the <b>Edit</b> menu item in the <b>Actions</b> menu of the watcher and
+	entering a new value on the ensuing page. Doing this for values with
+	read-only access will have no effect.</p>
+
+
+    <h2>Filtered View</h2>
+
+	<p>Filtered views give an alternate view of watcher values.</p>
+
+	<p>A filtered view allows for the easy creation and viewing of tables of
+	watcher values. Instead of only looking at a single watcher path as in
+	<a href="#tree_view">Tree View</a>, the filtered view allows viewing of multiple
+	watcher paths at once.</p>
+
+	<p>To enable viewing multiple watcher paths, a special notation using
+	asterisks <i>'*'</i> to replace directories in a watcher path is used.
+	For example, a standard watcher path might consist of a value such as
+	<code style="background-color: #dad4ff;">entities/1933/properties</code>, to view the attributes of Entity
+	1933. Using the filtered view we can specify a watcher path of
+	<code style="background-color: #dad4ff;">entities/*/*</code> to view the same attribute list for all
+	entities.</p>
+
+	<p>When specifying the processes on which to operate using the watcher
+	filters, the same notation as is used by <code>control_cluster.py</code>
+	may be used, i.e.:</p>
+
+	<ul>
+		<li>Exact process name, e.g. 'cellapp01', 'cellappmgr', 'bots:bwdev13:4351'</li>
+		<li>All processes of a type, e.g. 'cellapps', 'baseapps', 'bots'</li>
+		<li>Single process of a type, e.g. 'cellapp'</li>
+		<li>Non-zero-padded numbering, e.g. 'cellapp1'</li>
+		<li>All processes, 'all'</li>
+	</ul>
+
+	<p>When selecting a single process of a type, if there is more than one
+	running, the process will be chosen randomly from the available set.</p>
+
+	<p>The advantage of the non-zero-padded numbering method is that it allows
+	shell expansions such as 'cellapp{1..5}' or 'baseapp{1,5,7}'. Please see
+	the 'Brace Expansion' section of the Advanced Bash Scripting Guide for
+	details.</p>
+
+	<p>A large number of pre-configured filters have been implemented which
+	should hopefully cover most of the interesting default data views on
+	a BigWorld server.</p>
+
+	<h3>Viewing a saved filter</h3>
+	<p>To view a previously saved filter, select it from the Watcher Filters
+	list.</p>
+
+	<h3>Saving a filter</h3>
+	<p>While BigWorld provides a large set of default filters, there may be
+	the need to create custom filters based on the Entity types or newly
+	exposed watcher values of your game. In order to facilitate this, it is
+	possible to create custom user filters.</p>
+
+	<p>To save a custom user filter, populate both the <b>Processes</b> and
+	<b>Path</b> edit fields with the desired values and click the
+	<b>Save As...</b> button. You will then be prompted for the name of the
+	new filter.</p>
+
+	<p>The new user filter will be saved and appear at the bottom of the
+	currently displayed list of Watcher Filters</p>
+
+	<h3>Deleting a filter</h3>
+	<p>It is only possible to delete custom user filters. Any pre-configured
+	filters are not able to be deleted and will have the <b>Delete</b> button
+	greyed out when selected.</p>
+
+	<p>In order to delete a custom user filter, simply select the filter from
+	the Watcher Filters list, then select the <b>Delete</b> button. You will
+	be asked to confirm your deletion. The Watcher Filters list will then be
+	refreshed to reflect the deleted custom watcher filter.</p>
+
+	<h3>Exporting filter data as CSV</h3>
+	<p>It may be desirable to save the results of a Watcher Filter to
+	an external location to enable reporting at a later point. This is
+	enabled using the <b>Export</b> button. Simply select a watcher
+	filter and then click <b>Export</b>. You will then be prompted to
+	save the CSV file with a default filename containing the name of
+	the watcher filter, along with a date and time.</p>
+
+	<p>While the file is a CSV format, the delimiter being used is a TAB
+	character rather than a comma ',' as indicated by the filetype.</p>
+
+    <h2>Watcher Collections</h2>
+
+	<p>A <b>Watcher Collection</b> allows for the creation and viewing of
+	custom set a watchers.</p>
+
+	<p>This view is somewhat like <a href="#filtered_view">Filtered View</a> but
+	allows a completely custom set of watchers.</p>
+
+	<h3>Creating a new collection</h3>
+	<p>To create a new collection, click <u>New watcher collection</u>. Next,
+	enter the name of the collection. This collection will now appear in the
+	set of collections. Watcher paths need to be added to the collection before
+	it is available for viewing (see
+	<a href="#adding_to_a_collection">Adding to a collection</a>).</p>
+
+	<h3>Adding to a collection</h3>
+	<p>To add a watcher path to a collection, find the desired value in
+	<a href="#tree_view">Tree View</a>, check the <b>Advanced Options</b> check box
+	and choose the desired collection from
+	<i>Add to collection...</i> in the <b>Actions</b> menu.</p>
+
+</section>

@@ -1,0 +1,100 @@
+para {
+    display: block;
+    margin: 1em 0em;
+    line-height: 15px;
+}
+
+listitem {
+    display: list-item;
+    margin-left: 2em;
+}
+
+listitem > para {
+    margin: 0;
+}
+
+informaltable {
+    display: table;
+    border-collapse: collapse;
+}
+
+informaltable tgroup {
+    display: table-row-group;
+}
+
+informaltable tgroup row:first-of-type {
+    border-bottom: 1px solid #eee;
+    font-weight: bold;
+}
+
+informaltable row {
+    display: table-row;
+}
+
+
+informaltable row entry {
+    display: table-cell;
+    padding: 2px 10px;
+}
+
+footnote {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    vertical-align: super;
+}
+
+footnote:after {
+    content: "\f05a"; /* "icon-info-sign" */
+    font-family: FontAwesome;
+    font-size: smaller;
+    cursor: help;
+}
+
+footnote:hover > para {
+    display: inline-block;
+}
+
+footnote > para {
+    position: absolute;
+    display: none;
+    top: 100%;
+    min-width: 300px;
+    margin: 0;
+    border: 1px solid #ccc;
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: #fafafa;
+}
+
+footnote > para:before {
+    content: "\f05a"; /* "icon-info-sign" */
+    font-family: FontAwesome;
+    margin-right: 3px;
+    font-size: normal;
+}
+
+emphasis {
+    font-weight: bold;
+}
+
+note {
+    position: relative;
+}
+
+note > para {
+    margin: 0;
+    padding: 10px;
+    padding-left: 30px;
+    background: #eee;
+    border-radius: 4px;
+}
+
+note > para:before {
+    position: absolute;
+    left: 8px;
+    content: "\f05a";
+    font-family: FontAwesome;
+    font-size: 18px;
+    top: 11px;
+}

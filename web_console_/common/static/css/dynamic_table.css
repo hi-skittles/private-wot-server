@@ -1,0 +1,235 @@
+
+
+/*~~~~~~~~~~~ CSS hacks to block/workaround default bigworld CSS ~~~~~~~~~~~~~~~~*/
+
+/* deal with borders */
+.dataTables_wrapper table { border-top: none; }
+.dataTables_wrapper table.dataTable:not( [id] ) { border-bottom: none; }
+
+.dataTables_wrapper td a {
+    color: inherit;
+    text-decoration: inherit;
+}
+.dataTables_wrapper td a:visited {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+.dataTables_wrapper td a:hover {
+    color: #ff8000;
+    text-decoration: underline;
+}
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ table title ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.dynamic-table-header
+{
+    /* make table title look like rest of web console */
+    background-image: url(/static/images/bg_heading.jpg);
+    background-repeat: repeat-y;
+    background-color: #5fc8ef;
+    padding: 3px;
+    padding-left: 0px;
+    /*height: 19px;*/
+
+    border-top: 2px solid #ff8000;
+    border-right: 2px solid #16a5dd;
+    border-left: 2px solid #16a5dd;
+    /*border-bottom: 4px solid #16a5dd;*/
+}
+
+.dynamic-table-header h2 {
+    display: inline;
+    font-weight: bold;
+    font-size: 18px;
+    color: #fff;
+}
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~ table search/filter control ~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.dataTables_filter {
+    float: none;
+    position: absolute;
+    top: 4px;
+    right: 30px;
+}
+
+.dataTables_filter input[type="text"] {
+    border-radius: 3px;
+    border: 1px solid #aaa;
+    width: 150px;
+}
+
+.dataTables_filter input[type="text"]:hover {
+    border: 1px dotted #aaa;
+    -o-box-shadow: 0px 0px 4px 2px #16a5dd;
+    -moz-box-shadow: 0px 0px 4px 2px #16a5dd;
+    -webkit-box-shadow: 0px 0px 4px 2px #16a5dd;
+    box-shadow: 0px 0px 4px 2px #16a5dd;
+}
+
+.dataTables_filter .icon-remove {
+    display: none;
+    color: #ddd;
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    z-index: 999;
+    cursor: pointer;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ table settings ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.dataTables_wrapper .user-settings {
+    display: none;
+    /*float: right;*/
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    color: #fff;
+    text-shadow: 0px 0px 3px #444;
+}
+
+.dataTables_wrapper .user-settings:hover {
+    cursor: pointer;
+    text-shadow: 0px 0px 5px #000;
+}
+
+.dataTables_wrapper .user-settings:before {
+    font-family: FontAwesome;
+    font-size: 18px;
+    content: "\f0ad"; /* "icon-wrench" */
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~ table column headings ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+table.dataTable thead th.sorting_asc, table.dataTable thead th.sorting_desc {
+    /*background-color: rgba( 176, 228, 248, 0.7 );*/
+}
+
+table.dataTable thead tr {
+    background-color: #fafafa;
+    /*background-color: rgba( 176, 228, 248, 0.35 );*/
+}
+
+table.dataTable thead th {
+    border-bottom: 1px solid #aaa;
+    border-top: 1px solid #aaa;
+    padding: 3px 10px;
+    text-align: left;
+}
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ table data rows ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*
+table.dataTable tr, table.dataTable td {
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+*/
+table.dataTable tr.even { background-color: #fff; }
+table.dataTable tr.odd  { background-color: #f2f4f6; }
+
+table.dataTable tr.even td.sorting_1 { background-color: rgba( 208, 239, 251, 0.2 ); }
+table.dataTable tr.odd td.sorting_1  { background-color: rgba( 176, 228, 248, 0.2 ); }
+/*table.dataTable tr.even td.sorting_1 { background-color: transparent; }*/
+/*table.dataTable tr.odd td.sorting_1  { background-color: transparent; }*/
+
+table.dataTable tr.even:hover { background-color: rgba( 105, 206, 252, 0.2 ); }
+table.dataTable tr.odd:hover  { background-color: rgba( 105, 206, 252, 0.2 ); }
+
+/*table.dataTable tr.even:hover { cursor: pointer; }*/
+/*table.dataTable tr.odd:hover { cursor: pointer; }*/
+/*table.dataTable tr.even:hover a { color: orange; }*/
+/*table.dataTable tr.odd:hover a { color: orange; }*/
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ table footer ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.dynamic-table-footer {
+    /*margin-top: 2px;*/
+    margin-bottom: 2em;
+}
+
+.dynamic-table-footer:after {
+    content: "";
+    clear: both;
+}
+
+/* table pagination controls */
+.paginate_disabled_previous, .paginate_enabled_previous, .paginate_disabled_next, .paginate_enabled_next {
+    /*height: 15px;*/
+}
+
+.paginate_disabled_previous, .paginate_disabled_next {
+    display: none;
+    /*color: #eee !important;*/
+}
+
+.dataTables_info {
+    margin-top: 5px;
+}
+
+
+/*~~~~~~ right click menu ~~~~~~*/
+.context-menu {
+    position: absolute;
+    margin: 0;
+    padding: 0px;
+    background: #fff;
+    opacity: 0.95;
+    border: 1px solid #888;
+    border-radius: 4px;
+
+    -o-box-shadow: 0px 2px 8px 1px #444;
+    -moz-box-shadow: 0px 2px 8px 1px #444;
+    -webkit-box-shadow: 0px 2px 8px 1px #444;
+    box-shadow: 0px 2px 8px 1px #444;
+}
+
+
+.context-menu a, .context-menu h3 {
+    color: #111;
+
+    display: block;
+    margin: 0;
+    /*margin-bottom: 4px;*/
+    padding: 4px 10px;
+    text-decoration: none;
+    /*font-weight: bolder;*/
+    /*font-variant: small-caps;*/
+
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+}
+
+.context-menu h3 {
+    color: #aaa;
+    font-size: 13px;
+    padding: 2px 10px;
+    margin-bottom: 2px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    font-weight: normal;
+}
+
+.context-menu a:hover {
+    cursor: pointer;
+    color: #fff;
+    background: rgb( 20, 115, 188 );
+
+    border-top: 1px solid #444;
+    border-bottom: 1px solid #444;
+}
+
+/*~~~~~~ live update button ~~~~~~*/
+
+.live-update-button  {
+	float: right;
+	padding: 2px;
+}
+
+/* dynamic_table.css */

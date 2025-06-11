@@ -1,0 +1,44 @@
+{
+    "root":
+    {
+        "cluster_control" : [ true , true ],
+        "db_tools"        : [ true , true ],
+        "watcher_get"     : [ true , true ],
+        "watcher_set"     : [ true , true ],
+        "pyconsole"       : [ true , true ],
+        "logs_get"        : [ true , true ],
+        "commands"        : [ true , true ],
+        "user_create"     : [ true , true ],
+        "user_edit"       : [ true , true ],
+        "user_delete"     : [ true , true ]
+    },
+
+    "admin":
+    {
+        "user_create"     : [ false, true ],
+        "user_edit"       : [ false, true ],
+        "user_delete"     : [ false, true ]
+    },
+
+    "user":
+    {
+        "cluster_control" : [ true , false ],
+        "db_tools"        : [ true , false ],
+        "watcher_get"     : [ true , false ],
+        "watcher_set"     : [ true , false ],
+        "pyconsole"       : [ true , false ],
+        "logs_get"        : [ true , true ],
+        "commands"        : [ true , false ]
+    },
+
+    "developer":
+    {
+        "cluster_control" : [ true , false ],
+        "db_tools"        : [ false, false ],
+        "watcher_get"     : [ true , true ],
+        "watcher_set"     : [ true , true ],
+        "pyconsole"       : [ true , true ],
+        "logs_get"        : [ false , true ],
+        "commands"        : [ true , true ]
+    }
+}

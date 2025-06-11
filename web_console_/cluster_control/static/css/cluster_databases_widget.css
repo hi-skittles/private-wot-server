@@ -1,0 +1,65 @@
+
+.cluster-databases-widget {
+	-webkit-transition-property: opacity;
+	-moz-transition-property: opacity;
+	-o-transition-property: opacity;
+	transition-property: opacity;
+}
+
+.cluster-databases-widget .output {
+	border-top: 1px solid #ddd;
+	font-family: monospace;
+	font-size: 10.5px;
+	white-space: pre;
+	padding: 0px 5px;
+}
+
+.cluster-databases-widget .output div:first-child {
+	padding-top: 5px;
+}
+
+.cluster-databases-widget .output div:last-child {
+	padding-bottom: 5px;
+}
+
+.cluster-databases-widget .output div:hover {
+	background: #fafafa;
+}
+
+.cluster-databases-widget .dynamic-table-header {
+	border-left: none;
+	border-right: none;
+}
+
+
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ initial state ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+/* show '.select-machine' form */
+.cluster-databases-widget form.select-machine {
+	/*display: none;*/
+	display: block;
+	border-top: 1px solid #aaa;
+	padding: 8px;
+}
+
+/* hide 'cancel' button */
+.cluster-databases-widget .cluster-control-actions button[action = "cancel"] {
+	display: none;
+}
+
+.cluster-databases-widget .output:empty {
+	display: none;
+}
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~ state: running-process ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.cluster-databases-widget.running-process .cluster-control-actions button {
+	opacity: 0.5;
+	cursor: wait;
+}
+
+.cluster-databases-widget.running-process form.select-machine {
+	display: none;
+}
+

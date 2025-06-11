@@ -1,0 +1,183 @@
+
+/* click on process td sends to watcher page */
+.dataTables_wrapper td.proc a, .dataTables_wrapper td.machine a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+.dataTables_wrapper td a:hover {
+    color: #ff8000;
+    text-decoration: underline;
+}
+
+.users-actions {
+    background: #fafafa;
+    border-top: 1px solid #aaa;
+    border-bottom: none;
+    padding: 6px;
+	text-align: right; 
+}
+
+.users-actions a {
+	height: 17px;
+	color: #000;
+}
+
+.users-actions a span {
+	position: relative;
+	bottom: 6px;
+}
+
+.users-actions a img {
+	position: relative;
+	bottom: 2px;
+	right: 3px;
+}
+
+.cluster-control-actions {
+    background: #fafafa;
+    border-top: 1px solid #aaa;
+    border-bottom: none;
+    padding: 6px;
+}
+
+.cluster-control-actions:empty {
+    display: none;
+}
+
+/* clearfix for floated 'a' children */
+.cluster-control-actions:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.cluster-control-actions a {
+    float: left;
+    margin-right: 6px;
+    color: #444 !important;
+}
+
+.cluster-control-actions a:hover {
+    color: #ff8000 !important;
+}
+
+/* separate anchor 'a' from its icon 'i' */
+.cluster-control-actions a:before {
+    padding-right: 5px;
+}
+
+/* "Start more processes" */
+.cluster-control-actions a[href = "start"]:before {
+    /* "icon-off" */
+    font-family: FontAwesome;
+    content: '\f011';
+}
+
+/* "Start more processes" */
+.cluster-control-actions a[href = "startproc"]:before {
+    /* "icon-sitemap" */
+    font-family: FontAwesome;
+    content: '\f0e8';
+}
+
+/* "Restart the server" */
+.cluster-control-actions a[href = "restart"]:before
+{
+    /* "icon-refresh" */
+    font-family: FontAwesome;
+    content: '\f021';
+}
+
+/* "Stop the server" */
+.cluster-control-actions a[href = "stop"]:before {
+    /* "icon-stop" */
+    font-family: FontAwesome;
+    content: '\f04d';
+}
+
+.cluster-control-actions a[href = "kill"]:before {
+    /* "icon-bolt" */
+    font-family: FontAwesome;
+    content: '\f0e7';
+}
+
+
+/* "Save this server layout" */
+.cluster-control-actions a[href ^= "saveLayout"]:before {
+    /* "icon-save" */
+    font-family: FontAwesome;
+    content: '\f0c7';
+}
+
+.process-actions {
+    padding: 0px 10px;
+}
+
+.process-actions a {
+    padding: 2px 5px;
+    text-decoration: none;
+    color: #444 !important;
+    font-size: 13px;
+}
+
+.nested-menu a {
+    display: block;
+}
+
+.nested-menu a:after {
+    content: attr( title );
+    margin-left: 5px;
+}
+
+.nested-menu {
+    display: none;
+    cursor: pointer;
+    z-index: 999;
+}
+
+.nested-menu-opener {
+    float: right;
+    cursor: pointer;
+}
+
+.nested-menu-opener:hover {
+    color: #ff8000 !important;
+}
+
+.context-menu a * {
+    cursor: pointer;
+}
+
+.context-menu i {
+    padding-left: 0px;
+    padding-right: 5px;
+}
+
+.context-menu a:first-child {
+    margin-top: 5px;
+}
+
+.context-menu a:last-child {
+    margin-bottom: 5px;
+}
+
+.process-actions a.dangerous {
+    color: #a44 !important;
+}
+
+.process-actions a:hover {
+    color: #ff8000 !important;
+    background-color: #ccc;
+    border-radius: 3px;
+}
+
+.process-actions a.dangerous:hover {
+    color: #f44 !important;
+}
+
+table.dataTable tr.even td.sorting_2, table.dataTable tr.odd td.sorting_2 {
+    background-color: transparent;
+}
+
+/* control_cluster.css */

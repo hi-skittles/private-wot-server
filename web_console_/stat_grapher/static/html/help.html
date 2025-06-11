@@ -1,0 +1,225 @@
+
+<section id="webconsole-graphs-module">
+
+    <h1>Graphs Help</h1>
+
+    <p>
+    The <b>Graphs</b> module comprises a collection of visualisation tools for the
+    graphical display of server statistics that are collected over time using the
+    StatLogger process. For further details on StatLogger, see the document
+    <b>Server Operations Guide</b>, section <b>Admin Tools</b>,
+    <b>Logger Daemons</b>.
+    </p>
+
+    <p>With this module, you can view any machine and process statistics
+    present in a StatLogger log database as they are collected.</p>
+
+    <p>Its visual display preferences are customisable on an individual basis
+    by a <b>WebConsole</b> user. Statistics can be highlighted, drawn with a
+    range of different colours, and/or shown or hidden on demand.
+    </p>
+
+    <h2>StatLogger log databases</h2>
+
+    <p>The StatLogger process logs statistical data to possibly
+    many log databases. A log database contains a user-configured set of
+    statistics over a time range. For more information on log databases, see
+    the document <b>Server Operations Guide</b>, section <b>Admin Tools</b>,
+    section <b>Logger Daemons</b>, <b>StatLogger</b>, <b>Database</b>.</p>
+
+    <p>The Graphs module can be used to display statistics from any log database
+    shown by in the Graphs &gt; <b>Users</b> table.
+    For any log database, you can select <b>Action</b> drop-down list box's
+    <b>View Machine Graphs</b> or <b>View Machine Graphs</b> items &ndash;
+    these views are described in the next section.</p>
+
+    <h2>Choosing graphs</h2>
+    <p>
+        The following graphs are available:
+        <ul>
+          <li>
+            <b>Processes</b> (Process View) - Shows statistics
+              collected from BigWorld processes that you are running for the most
+              recently updated log database. Note that the processes graphed
+              will be those owned by the <i>Server User</i> associated with the current
+              WebConsole account.</li>
+            <li>
+                <b>Machines</b> (Machine View) - Shows statistics
+          collected from machines that are running for the most recently updated
+          log database.</li>
+            <li>
+                <b>Users</b> - Lists users who have BigWorld processes
+          that have had their statistics collected into the most recently updated
+          log database. </li>
+            <li>
+                <b>Archive</b> - Lists log databases &ndash; you can view
+          machine statistics, or view user lists for statistics collected from
+          BigWorld processes.</li>
+        </ul>
+    </p>
+
+    <h2>Basic operation</h2>
+
+    <p>One or more graphs are displayed in the graph display in the middle of
+    the window. Above the graph display, there is a toolbar for performing
+    various view transformations such as zooming in and out. Below the
+    graph display is a reading of the current view's time range. This current
+    time describes the time corresponding to the right edge of each of the
+    graphs. Below the graphs is the
+    <a href="#the_velocity_scroller">Velocity Scroller</a>, which is a
+    velocity-based control that allows the user to conveniently scroll
+    back and forth through time.</p>
+
+    <h3>The Graph display</h3>
+
+    <p>One or more graphs are displayed in this middle area. All graphs
+    displayed are synchronised to the same time, thus they each display the
+    same time range.</p>
+
+    <p>Graphs can also have the vertical axis displayed for any of its
+    statistics that are highlighted. See below in the section <a href="#highlighting_statistics">Highlighting Statistics</a> on how to
+    highlight a statistic using the <a href="#the_legend">Legend</a>. The scale
+    of the vertical axis is governed by the <code>maxAt</code> element of the
+    statistic definition in the StatLogger preferences file &ndash; for details,
+    see the document <b>Server Operations Guide</b>, section <b>Admin Tools</b>,
+    <b>Logger Daemons</b>, <b>StatLogger</b>, <b>Configuration</b>,
+    <b>Process Statistic Configuration</b>.</p>
+
+    <p>If the number of subjects for graphing exceeds the maximum number of
+    graphs, then generally the graph subjects are consolidated through
+    averaging into a single graph until all the subjects are represented in the
+    maximum number of graphs. Graph subjects that are consolidated in this way
+    have a counter in the graph title representing the number of subjects thus
+    consolidated. For example, in the <b>Process View</b>, the graph title
+    text "Summary for 15 CellApps" indicates that there are 15 <b>CellApp</b>
+    processes being represented in that particular graph.</p>
+
+    <p>Such consolidated graphs can be <i>drilled</i> down into, by
+    double-clicking on the appropriate graph. This has the effect of their
+    component graph subjects being separated into individual graphs, up to the
+    maximum number of graphs. Component graph subjects can be sub-consolidated
+    if the number of graph subjects exceeds maximum number of graphs, in which
+    case a further application of <i>drilling</i> down can be employed.</p>
+
+    <p>Drilling back up to the previous graph view state is achieved by
+    clicking the up-arrow toolbar button.</p>
+
+    <p>Graphs can be selected &ndash; in this case, statistics and their values
+    in the statistic rows in the <a href="#the_legend">Legend</a> reflect those
+    of the currently selected graph. The graph title background changes to
+    indicate the currently selected graph. Only one graph can be selected at a
+    time.</p>
+
+    <h3>Panning</h3>
+
+    <p>Panning can be achieved by any of the following methods:</p>
+    <ul>
+        <li>dragging left or right on any of the displayed graphs</li>
+        <li>dragging the <a href="#the_velocity_scroller">Velocity Scroller</a> to
+      the left or to the right</li>
+    </ul>
+
+    <h3>View range</h3>
+
+    <p>The current zoom (or <i>view range</i>) can be changed by selecting a
+    predefined range from the <b>View range</b> drop-down list box. From
+    this box, users can select ranges between 1 minute to 4 years. There
+    is also a special item (<b>all</b>) that changes the view range so that
+    the entire current log can fit into the view.</p>
+
+    <p>Changing the view range is focused around the right edge of the graphs.
+    When changing the view range, the right edge remains fixed at the same
+    time, while the left edge extends forwards or backwards, depending on the
+    change.</p>
+
+    <h3>Snapping to log end</h3>
+
+    <p>The current view range can be snapped to the end of the current log by
+    using the <b>Snap To End</b> button. This will align the
+    right edge of the current view range to the end of the current log range,
+    and in a live database (<i>i.e.</i>, a database currently being logged to by
+    StatLogger), it will actively continue to follow the end of the log as it
+    is updated.</p>
+
+    <p>
+        <i>Snap to end</i> is also automatically activated if the user moves to the end
+    of the log (by panning the graph window or by using the
+    <a href="#the_velocity_scroller">Velocity Scroller</a>), and
+    is automatically deactivated if the graph is moved off the end of the log.</p>
+
+    <h3>The Velocity Scroller</h3>
+
+    <p>Below the graph display is a scroller that can
+    be used for panning quickly. By dragging its slider to the left or the
+    right, the graphs will be scrolled either to the past or toward the future,
+    respectively. The speed can be controlled by dragging the slider further
+    away from the equilibrium position. Releasing the slider stops the
+    scrolling and returns the slider to its equilibrium position.</p>
+
+    <h3>The Legend</h3>
+
+    <p>The legend can be toggled via the <b>Legend</b> button,
+    located at the top right of the graph display. The legend appears
+    to the right of the graph display, and shows the colours and
+    their corresponding statistic names and values pertinent to the currently
+    selected graph.</p>
+
+    <h4>Statistic numerical values</h4>
+
+    <p>The numerical values of all shown statistics are displayed in the
+    legend. The time that corresponds to these values are the right edge of
+    the selected graph. By panning backwards and forwards in time, statistic
+    values for the entire log range can be viewed in this way.</p>
+
+    <h4>Highlighting Statistics</h4>
+
+    <p>Clicking on a statistic's name in the legend will highlight both the
+    drawn statistic graph and the row in the legend, or remove the highlighting
+    if that statistic was already highlighted.</p>
+
+    <h4>Changing the colour of a statistic</h4>
+
+    <p>Clicking on the colour box next to the statistic name brings up a colour
+    palette for you to choose a new colour. Changing this colour is specific
+    only to the user logged into <b>WebConsole</b>; changing it
+    does not affect other users.</p>
+
+    <p>
+        <b>Note</b>: The default colours are defined in the StatLogger
+    preferences file. Refer to the <i>Server Operations Guide</i> for more
+    details on how to edit the preferences file. In addition to the default
+    colour, the default show state is also customisable. Statistics that are
+    not shown by default can be shown by activating them in the
+    <a href="#statistics_preferences">Statistics Preferences</a> dialog.
+    </p>
+
+    <h4>Statistics preferences</h4>
+
+    <p>You can control which statistics are shown through this dialog. It is
+    activated by clicking on the <b>Preferences...</b> link. You must have a
+    graph selected, and changes apply to that graph's type. A graph's type
+    depends on which view you are using: in machine view, all graphs are of
+    Machine type, and in process view, each graph's type is the process type,
+    such as <i>CellApp</i> or <i>BaseApp</i>. Thus changing a machine graph's
+    preferences applies to all other machine graphs, and changing a process
+    type's graph preferences changes all other graphs of that process type.</p>
+
+    <p>Changing the graph preferences will only affect the user logged into the
+    BigWorld <b>WebConsole</b>; changing it does not affect other users.</p>
+
+    <p>The dialog consists of two lists of statistics, one for disabled
+    statistics that are not displayed, and the current set of enabled
+    statistics that are displayed. You can move the statistics from one list to
+    another by selecting them (you can select multiple statistics by holding
+    down the <code>Ctrl</code> key and clicking on each statistic), and
+    pressing the appropriate transfer buttons located between the two lists.
+    You can also change the order in which they appear in the legend by
+    selecting statistics and using the sort up and sort down buttons on the
+    right side of the enabled statistics list.</p>
+
+    <p>When you are satisfied with the enabled statistic list, press the
+    <b>Save</b> button for the changes to take effect. Pressing the
+    <b>Cancel</b> button cancels the operation, closing the dialog without any
+    changes in the enabled statistic list.</p>
+
+</section>

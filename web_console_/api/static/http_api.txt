@@ -1,0 +1,1534 @@
+# HTTP API v1.0
+
+[markdown syntax]: http://www.crypti.cc/markdown-here/livedemo.html
+[markdown source]: https://github.com/adam-p/markdown-here/
+[contact us]: mailto:support@bigworldtech.com?subject=HTTP+API
+[asynchronous task]: #async_task
+[Process]: #process_object
+[Machine]: #machine_object
+[User]: #user_object
+[Space]: #space_object
+[space BSP]: #space_bsp
+[Watcher]: #watcher_object
+[Watcher data type]: #watcher_data_type
+[JSON specification]: http://en.wikipedia.org/wiki/Json
+[HTTP Basic]: http://en.wikipedia.org/wiki/Basic_access_authentication
+
+
+## General information ##
+
+This document describes the first revision of the HTTP-exposed application
+programming interface (API) for monitoring and controlling the BigWorld Server.
+The functionality exposed by this API is a superset of what can be achieved through
+the WebConsole web interface, and as such, may be useful for anyone seeking to
+implement or enhance new or existing WebConsole functionality, or more generally
+for those wishing to remotely monitor, test, or control the BigWorld server.
+
+This document assumes a working knowledge of HTTP/REST, CGI parameters, JSON, and
+a working familiarity with the BigWorld Server and its concepts.
+
+Please note: the information and methods described in this document are likely
+to change in subsequent releases, due to this being the first released revision
+of this API.
+
+
+### Common HTTP response codes
+
+In general, HTTP status code 200 is returned on successful execution of all
+exposed methods in WebConsole. When called with an `Accept: application/json`
+header, Python exceptions raised by exposed methods are converted to HTTP
+response codes. The following HTTP status codes are common to all HTTP methods:
+
+Status code | Status text                       | Description
+---         | ---                               | ---
+403         | Forbidden                         | Returned when supplied authentication credentials are invalid or authorisation permissions are insufficient for the resource requested.
+455         | Method Not Valid in This State    | Returned when the BigWorld server is in a state whereby it cannot fulfil the given request.
+500         | Internal Server Error             | Returned for uncaught Python exceptions and programming errors.
+501         | Not Implemented                   | Corresponds to NotImplementedError in Python, intended for demarcating partial or incomplete implementations of features.
+
+This list may be expanded in the future.
+
+### HTTP methods
+
+This API makes no distinction between HTTP GET and POST parameters.
+
+### Data types
+
+This reference documentation disambiguates between integers and floating
+point number types, even though the [JSON specification] does not. This is purely
+for adding an additional level of detail for API users.
+
+Property names that begin with an underscore ('_') are intended for internal use
+and are likely to be changed or removed without notice in subsequent releases.
+Please [contact us] if you would like to see specific methods or information added
+to the API.
+
+For arguments described as "boolean" in API methods, boolean false should be
+given as `""` (empty string) or `"0"`, and boolean true given as `"1"`.
+
+### Known Issues
+
+* Exposed methods that perform redirects (`HttpRedirect` exception class in cherrypy)
+currently return HTTP 3XX response codes, which may cause user-agents to invoke
+error-oriented callbacks, despite the action method having been executed
+successfully in WebConsole. A future revision will address this issue.
+
+
+## Authentication
+
+Authentication with WebConsole is performed using the [HTTP Basic] standard. Note
+that in HTTP Basic Auth, usernames and passwords are effectively sent in the clear
+(merely base64 encoded).
+
+Successful authentication returns a `session_id` cookie, which can optionally
+be returned as a `Set-Cookie` header in subsequent requests instead of the HTTP
+basic header.
+
+
+## Common Object Types
+
+These objects are returned from multiple HTTP methods.
+
+
+<a id="user_object"></a>
+### User
+
+This object represents a BigWorld Server User, which corresponds to a single Unix
+user ID (uid) in a BigWorld Cluster. Note that not all of these properties may
+be initialised by certain method calls.
+
+Property            | Type      | Description
+---                 | ---       | ---
+uid                 | integer   | Unix user ID
+name                | string    | Unix username, e.g. `"wc_user"`
+fullname            | string    | User's full name from Unix user database, e.g. `"WebConsole User"`
+home                | string    | Unix home directory path, e.g. `"/home/wc_user"`
+mfroot              | string    | BigWorld Server binary path, or `""` if the user does not have a Server running.
+bwrespath           | string    | Concatenated "res" (resource) path for the currently running server, or `""` if the user does not have a Server running.
+coredumps           | array     | Array of coredumps on disk for the user; see the coredumps method. This property is `null` if the user does not have a Server running.
+numEntities         | integer   | The value of the watcher path `baseappmgr/numEntities` for this user, or `null` if the user does not have a Server running.
+numProxies          | integer   | The value of the watcher path `baseappmgr/numProxies` for this user, or `null` if the user does not have a Server running.
+totalBots           | integer   | The total number of bots being run by this user, or `null` if no bots processes are running.
+isActive            | boolean   | True if the user has a running server.
+
+Example:
+
+```
+{
+    "load": null,
+    "numEntities": null,
+    "uid": 1087,
+    "name": "wc_user",
+    "fullname": "WebConsole User",
+    "home": "/home/wc_user",
+    "numProxies": null,
+    "coredumps": [],
+    "mfroot": "",
+    "bwrespath": "",
+    "totalBots": null,
+    "isActive": true
+}
+```
+
+<a id="process_object"></a>
+### Process
+
+This object comprises information about a BigWorld Server process.
+
+Property            | Type      | Description
+---                 | ---       | ---
+load                | float     | Process CPU load (relative).
+username            | string    | Process owner.
+uid                 | integer   | Process user ID.
+mem                 | float     | Process memory usage (relative).
+component           | string    | Component name, e.g. `"LoginIntInterface"`.
+pid                 | integer   | Process ID.
+isStoppable         | boolean   | Whether process is a StoppableProcess,
+generatesLogs       | boolean   | Whether the process generates `message_logger` logs.
+hasPythonConsole    | boolean   | Whether process supports direct Python console access.
+label               | string    | Nominal process identifier, e.g. `"loginapp01"`.
+id                  | integer   | Process appID.
+interfaceVersion    | integer   | `bwmachined` protocol version.
+isSingletonProcess  | boolean   | True if multiple instances of this process type can be started.
+isRetirable         | boolean   | Whether this process can be retired.
+name                | string    | Process type name, e.g.`"loginapp"`.
+mercuryPort         | integer   | Port number used by the Mercury network layer.
+machine             | object    | A [Machine] object.
+version             | array     | BigWorld release version as a 3-element array of 3 integers: major version, minor version, patch number, e.g. `[2, 4, 0]`.
+type                | string    | Process component type name, e.g. `"LoginApp"`.
+
+Example:
+
+```
+{
+    "load": 0.0,
+    "username": "wc_user",
+    "uid": 1087,
+    "mem": 0.011764705882352941,
+    "component": "CellAppInterface",
+    "pid": 8821,
+    "isStoppable": true,
+    "generatesLogs": true,
+    "hasPythonConsole": true,
+    "label": "cellapp10",
+    "id": 10,
+    "interfaceVersion": 1,
+    "isSingletonProcess": false,
+    "isRetirable": true,
+    "name": "cellapp",
+    "mercuryPort": 46649,
+    "_port": null,
+    "machine": {
+        "processes": [
+            "cellapp",
+            "cellapp",
+            "loginapp",
+            "loginapp",
+            "serviceapp",
+            "cellapp",
+            "cellapp",
+            "message_logger",
+            "cellapp",
+            "cellappmgr",
+            "baseappmgr",
+            "dbapp",
+            "cellapp",
+            "cellapp",
+            "baseapp",
+            "cellapp",
+            "cellappmgr",
+            "baseappmgr",
+            "dbapp",
+            "baseapp",
+            "serviceapp",
+            "cellapp"
+        ],
+        "name": "bw_server_host",
+        "tags": {},
+        "mem": 0.18431372549019609,
+        "ip": "10.40.1.102",
+        "interfaces": {
+            "sit0": {
+                "packIn": 0,
+                "bitsIn": 0,
+                "name": "sit0",
+                "packOut": 0,
+                "bitsOut": 0
+            },
+            "eth1": {
+                "packIn": 0,
+                "bitsIn": 0,
+                "name": "eth1",
+                "packOut": 0,
+                "bitsOut": 0
+            },
+            "eth0": {
+                "packIn": 401,
+                "bitsIn": 238056,
+                "name": "eth0",
+                "packOut": 335,
+                "bitsOut": 648928
+            }
+        },
+        "machinedVersion": 45,
+        "loads": [
+            0.0078431372549019607,
+            0.0,
+            0.0,
+            0.0078431372549019607,
+            0.058823529411764705,
+            0.019607843137254902,
+            0.058823529411764705,
+            0.0078431372549019607
+        ],
+        "processor": 2992
+    },
+    "version": [
+        2,
+        4,
+        0
+    ],
+    "type": "CellApp"
+}
+```
+
+
+<a id="machine_object"></a>
+### Machine
+
+The object encapsulates information about a physical machine in a BigWorld cluster.
+Depending on the HTTP method called, not all of the below properties
+may necessarily be present in every Machine instance.
+
+Property            | Type      | Description
+---                 | ---       | ---
+processes           | array     | Array of (string) process types running on the machine.
+name                | string    | Machine hostname.
+tags                | object    | Dictionary of bwmachined tag names to tag values.
+mem                 | float     | Aggregate BigWorld server process RAM usage (relative).
+ip                  | string    | Machine IP address.
+interfaces          | object    | Dictionary of Unix interface name (e.g. `"eth0"`) to an object of network traffic statistics (see example below).
+machinedVersion     | integer   | `bwmachined` protocol version, e.g. 45.
+loads               | array     | Array of per-process (relative) aggregate CPU load.
+processor           | integer   | CPU processer speed in MHz.
+
+Example:
+
+```
+{
+    "processes": [
+        "cellapp",
+        "cellapp",
+        "loginapp",
+        "loginapp",
+        "serviceapp",
+        "cellapp",
+        "cellapp",
+        "message_logger",
+        "cellapp",
+        "cellappmgr",
+        "baseappmgr",
+        "dbapp",
+        "cellapp",
+        "cellapp",
+        "baseapp",
+        "cellapp",
+        "cellappmgr",
+        "baseappmgr",
+        "dbapp",
+        "baseapp",
+        "serviceapp",
+        "cellapp"
+    ],
+    "name": "bw_server_host",
+    "tags": {},
+    "mem": 0.18431372549019609,
+    "ip": "10.40.1.102",
+    "interfaces": {
+        "sit0": {
+            "packIn": 0,
+            "bitsIn": 0,
+            "name": "sit0",
+            "packOut": 0,
+            "bitsOut": 0
+        },
+        "eth1": {
+            "packIn": 0,
+            "bitsIn": 0,
+            "name": "eth1",
+            "packOut": 0,
+            "bitsOut": 0
+        },
+        "eth0": {
+            "packIn": 284,
+            "bitsIn": 155496,
+            "name": "eth0",
+            "packOut": 256,
+            "bitsOut": 550648
+        }
+    },
+    "machinedVersion": 45,
+    "loads": [
+        0.019607843137254902,
+        0.0,
+        0.0,
+        0.0,
+        0.027450980392156862,
+        0.0078431372549019607,
+        0.078431372549019607,
+        0.0078431372549019607
+    ],
+    "processor": 2992
+}
+```
+
+
+<a id="watcher_object"></a>
+### Watcher
+
+Represents a BigWorld Watcher data object.
+
+Property            | Type      | Description
+---                 | ---       | ---
+path                | string    | Watcher path, e.g. `"/version/string"`.
+name                | string    | Final path fragment of the `path` property, e.g. `"string"`.
+value               | any       | Value of the watcher path, or `"<DIR>"` if the path requested corresponds to a Watcher directory.
+mode                | integer   | Indicates the type of watcher: `1` read only, `2` read-write, `3` is a directory, `4` is a callable function.
+type                | integer   | The [Watcher data type] of `value`.
+children            | array     | Array of child Watcher data objects. Only present if the requested path corresponds to a Watcher directory.
+
+
+<a id="watcher_data_type"></a>
+Watcher data types:
+
+The Watcher protocol uses a set of integer values to specify the data types of
+returned Watcher values. These values come from the file `watcher_constants.py`
+in the Server tools package.
+
+Type ID | Type name
+---     | ---
+0       | Unknown data type
+1       | Signed integer
+2       | Unsigned integer
+3       | Floating point number
+4       | Boolean
+5       | String
+6       | Tuple
+
+Examples:
+```
+{
+    "name": "version",
+    "value": "<DIR>",
+    "mode": 3,
+    "path": "version",
+    "type": 5,
+    "children": [
+        {
+            "name": "major",
+            "value": "2",
+            "mode": 1,
+            "path": "version/major",
+            "type": 5
+        },
+        {
+            "name": "minor",
+            "value": "4",
+            "mode": 1,
+            "path": "version/minor",
+            "type": 5
+        },
+        {
+            "name": "patch",
+            "value": "0",
+            "mode": 1,
+            "path": "version/patch",
+            "type": 5
+        },
+        {
+            "name": "string",
+            "value": "2.4.0",
+            "mode": 1,
+            "path": "version/string",
+            "type": 5
+        }
+    ]
+}
+```
+
+
+<a id="space_object"></a>
+### Space
+
+Represents a BigWorld Server Space.
+
+Property            | Type      | Description
+---                 | ---       | ---
+id                  | integer   | Space ID.
+name                | string    | Space display name.
+rootPartition       | float     | World-space location of the root partition of the Space BSP.
+geometry            | string    | Name of geometry loaded. Multiple loaded geometries will be concatenated with colons.
+numCells            | integer   | Number of Cells in this Space.
+numRetiringCells    | integer   | Number of Cells in this Space that are flagged as "retiring". See also `/cc/retireApp`.
+loadAvg             | float     | Average aggregate load for the Entities of this Space.
+loadMin             | float     | Minimum aggregate load for the Entities of this Space.
+loadMax             | float     | Maximum aggregate load for the Entities of this Space.
+areaNotLoaded       | float     | Proportion of space geometry that has not yet been loaded.
+
+Example:
+
+```
+{
+    "name": "highlands",
+    "rootPartition": 0.0,
+    "geometry": "spaces/highlands",
+    "numCells": 1,
+    "numRetiringCells": 0,
+    "loadAvg": 0.029425781220197678,
+    "loadMin": 0.031819477677345276,
+    "loadMax": 0.031819477677345276,
+    "areaNotLoaded": 0.0,
+    "id": 2
+}
+```
+
+
+<a id="space_bsp"></a>
+### Space BSP
+
+Encapsulates a Binary Spline Partition (BSP) that describes the current load-balancing
+partitioning of a Space into Cells. The BSP tree consists of separate Cell and
+Partition objects, where Cell objects correspond to the leaves of the BSP tree.
+
+
+Partition object:
+
+Property            | Type      | Description
+---                 | ---       | ---
+isHorizontal        | boolean   | True if this partition aligns with the "x" axis.
+position            | float     | World-space location of this partition.
+aggression          | float     | Relative propensity of this Partition to move under load.
+load                | float     | Aggregate load of the nodes below this node in the BSP tree.
+left                | object    | A Partition or Cell object, corresponding to the left child of this Partition.
+right               | object    | A Partition or Cell object, corresponding to the right child of this Partition.
+
+
+Cell object:
+
+Property            | Type      | Description
+---                 | ---       | ---
+addr                | string    | IP address of the underlying CellApp for this Cell.
+port                | integer   | Network port to which the underlying CellApp is listening.
+appID               | integer   | The appID of the underlying CellApp for this Cell.
+chunkBounds         | object    | A Rectangle object, in world-space coordinates.
+entityBoundLevels   | array     | A 5-element array of world-space Rectangle objects.
+isOverloaded        | boolean   | True if the Server has flagged this Cell as overloaded.
+isRetiring          | boolean   | True if this Cell has been instructed to retire.
+load                | float     | CPU load incurred by the Entities of this Space.
+realEntities        | array     | Array of 4-element arrays. Each 4-element array corresponds to a real entity and has values: x-coordinate (float), z-coordinate (float), entity type ID (integer), entity ID (integer).
+ghostEntities       | array     | Array of 4-element arrays. Each 4-element array corresponds to a ghost entity and has values: x-coordinate (float), z-coordinate (float), entity type ID (integer), entity ID (integer).
+
+
+Rectangle object:
+
+Property            | Type      | Description
+---                 | ---       | ---
+minX                | float     | Min X coordinate.
+minY                | float     | Min Y coordinate.
+maxX                | float     | Max X coordinate.
+maxY                | float     | Max Y coordinate.
+
+
+<a id="async_task"></a>
+## Asynchronous Tasks
+
+A number of WebConsole methods are non-blocking and require time to execute on the
+server. These methods return an AsyncTask identifier, which can be polled for
+progress or completion.
+
+### AsyncTask object
+
+Represents an ongoing, asynchronously executing task.
+
+Property            | Type      | Description
+---                 | ---       | ---
+id                  | integer   | An unsigned integer asynchronous task ID.
+
+
+### /poll - Retrieve the status of an asynchronous task
+
+Argument        | Description
+---             | ---
+id              | An AsyncTask ID (unsigned integer).
+
+Returns:
+
+Property            | Type      | Description
+---                 | ---       | ---
+status              | string    | One of `"updated"` or `"nochange"`.
+updates             | array     | Only present when `status` is `"updated"`. A variable length array of update tuples. Each update tuple has 2 elements whose contents vary depending on the method that was originally called.
+
+
+### /terminate - Terminate an asynchronous task
+
+This method is safe to call, even if the task has already finished.
+
+Argument        | Description
+---             | ---
+id              | An AsyncTask ID (unsigned integer).
+
+Returns: No useful return value.
+
+
+## Server Control
+
+### /cc/doStart - Start the server
+
+Argument        | Description
+---             | ---
+user            | BigWorld server user
+mode            | Specifies the mode of server startup. One of `"single"`, `"group"`, `"layout"`
+machine         | Machine name to use when `mode` is `"single"`
+group           | An existing named group to use when `mode` is `"group"`. Can be omitted, in which case behaviour is identical to the command `control_cluster.py start all`
+layout          | An existing named layout to use when mode is `"layout"`
+restrict        | Whether to use `bwmachined` tags (boolean)
+
+Returns:
+
+Property            | Type      | Description
+---                 | ---       | ---
+layout              | array     | Array of processes that have been started. The elements of the list are, in order: machine name, process type, process ID, status.
+pnames              | array     | Set of running process types.
+user                | object    | A [User] object.
+action              | string    | The action that was just performed (i.e. "start").
+id                  | integer   | An [asynchronous task] ID.
+
+Example:
+
+    curl -u wc_user:wc_passwd -H "Accept: application/json" "http://wc_host:8080/cc/doStart?user=wc_user&mode=single&machine=bw_server_host"
+
+returns:
+```
+{
+    "layout": [
+        [
+            "bw_server_host",
+            "cellappmgr",
+            8186,
+            "running"
+        ],
+        [
+            "bw_server_host",
+            "baseappmgr",
+            8187,
+            "running"
+        ],
+        [
+            "bw_server_host",
+            "dbapp",
+            8188,
+            "running"
+        ],
+        [
+            "bw_server_host",
+            "baseapp",
+            8189,
+            "running"
+        ],
+        [
+            "bw_server_host",
+            "serviceapp",
+            8190,
+            "running"
+        ],
+        [
+            "bw_server_host",
+            "cellapp",
+            8191,
+            "running"
+        ],
+        [
+            "bw_server_host",
+            "loginapp",
+            8192,
+            "running"
+        ]
+    ],
+    "pnames": [
+        "cellappmgr",
+        "baseappmgr",
+        "dbapp",
+        "loginapp",
+        "cellapp",
+        "baseapp",
+        "serviceapp"
+    ],
+    "user": {
+        "load": null,
+        "numEntities": null,
+        "mfroot": "",
+        "uid": 1087,
+        "numProxies": null,
+        "coredumps": [],
+        "bwrespath": "",
+        "home": "/home/wc_user",
+        "totalBots": null,
+        "fullname": "WebConsole User",
+        "name": "wc_user"
+    },
+    "action": "start",
+    "id": 6
+}
+```
+
+
+### /cc/stop - Stop the server
+
+Argument        | Description
+---             | ---
+user            | BigWorld server user name (optional). Defaults to current WC user.
+
+Returns:
+
+Property            | Type      | Description
+---                 | ---       | ---
+layout              | array     | An array of current server processes (that will be stopped).
+pnames              | array     | An array of unique (string) server process names (that will be stopped).
+user                | object    | A [User] object.
+id                  | integer   | An [asynchronous task] ID.
+action              | string    | The current action, "stop".
+
+Example:
+
+    curl -v -u wc_user:wc_passwd -H "Accept: application/json" "http://wc_host:8080/cc/stop"
+
+returns:
+```
+{
+    "layout": [
+        [
+            "bw_server_host",
+            "loginapp",
+            12161,
+            "registered"
+        ],
+        [
+            "bw_server_host",
+            "baseapp",
+            12165,
+            "registered"
+        ],
+        [
+            "bw_server_host",
+            "serviceapp",
+            12166,
+            "registered"
+        ],
+        [
+            "bw_server_host",
+            "cellapp",
+            12162,
+            "registered"
+        ],
+        [
+            "bw_server_host",
+            "cellapp",
+            12163,
+            "registered"
+        ],
+        [
+            "bw_server_host",
+            "cellapp",
+            12164,
+            "registered"
+        ],
+        [
+            "bw_server_host2",
+            "cellapp",
+            4121,
+            "registered"
+        ],
+        [
+            "bw_server_host2",
+            "cellapp",
+            4119,
+            "registered"
+        ],
+        [
+            "bw_server_host2",
+            "cellapp",
+            4120,
+            "registered"
+        ],
+        [
+            "bw_server_host",
+            "baseappmgr",
+            12159,
+            "registered"
+        ],
+        [
+            "bw_server_host",
+            "cellappmgr",
+            12158,
+            "registered"
+        ],
+        [
+            "bw_server_host",
+            "dbapp",
+            12160,
+            "registered"
+        ]
+    ],
+    "pnames": [
+        "cellappmgr",
+        "baseappmgr",
+        "dbapp",
+        "loginapp",
+        "cellapp",
+        "baseapp",
+        "serviceapp"
+    ],
+    "user": {
+        "load": null,
+        "numEntities": null,
+        "mfroot": "/home/wc_user/bigworld_root",
+        "uid": 1087,
+        "numProxies": null,
+        "coredumps": [],
+        "bwrespath": "/home/wc_user/bigworld_root/fantasydemo/res:/home/wc_user/bigworld_root/bigworld/res",
+        "home": "/home/wc_user",
+        "totalBots": null,
+        "fullname": "WebConsole User",
+        "name": "wc_user"
+    },
+    "action": "stop",
+    "id": 0
+}
+```
+
+
+### /cc/restart - Restart the server
+
+Argument        | Description
+---             | ---
+user            | BigWorld server user name (optional). Defaults to current WC user.
+
+Returns the same JSON as for `/cc/doStart`, except that the returned `action`
+property is "restart".
+
+
+### /cc/startproc - Start individual server processes
+
+Starts one or more instances of a particular server process type.
+
+Argument        | Description
+---             | ---
+user            | Server username (string).
+pname           | Server process type name (string). e.g. "cellapp".
+machine         | Destination machine hostname (string).
+count           | Number of processes to start (integer).
+
+Returns:
+
+No return value.
+
+> Note: This method currently unconditionally returns a HTTP redirect (302 Found).
+
+
+### /cc/stopproc - Stop individual server processes.
+
+Argument        | Description
+---             | ---
+machine         | Machine hostname (string).
+pid             | Process ID (integer).
+
+Returns:
+
+No return value.
+
+> Note: This method currently unconditionally returns a HTTP redirect (302 Found).
+
+
+### /cc/retireApp - Retire a server process
+
+Request a server process to gracefully hand off its load and then exit.
+
+Argument        | Description
+---             | ---
+machine         | Machine hostname (string).
+pid             | Process ID (integer).
+
+Returns:
+
+No return value.
+
+> Note: This method currently unconditionally returns a HTTP redirect (302 Found).
+
+
+### /cc/killproc - Send a signal to a server process
+
+Argument        | Description
+---             | ---
+machine         | Machine hostname (string).
+pid             | Process ID (integer).
+signal          | Posix signal number (integer).
+
+Returns:
+
+No return value.
+
+> Note: This method currently unconditionally returns a HTTP redirect (302 Found).
+
+
+### /cc/usersFlush - Flush user mappings
+
+Force machines to flush their tags and user mappings. Equivalent to the command
+`control_cluster.py flush`.
+
+No arguments; No useful return value.
+
+
+## Server Status
+
+### /cc/getProcs - get process info
+
+Also callable as `/cc/api/procs`.
+
+Argument        | Description
+---             | ---
+user            | BigWorld Server username (optional). Defaults to current WC user.
+machine         | Machine hostname (optional).
+
+
+Returns:
+
+Property            | Type      | Description
+---                 | ---       | ---
+user                | object    | A [User] object.
+procs               | array     | An array of [Process] objects.
+isServerRunning     | boolean   | True if the server is currently running.
+machine             | object    | A [Machine] object. Only present if a `machine` argument was given.
+layoutErrors        | array     | An array of (string) server layout errors. Not present if a `machine` argument was given.
+missingProcessTypes | string    | An array of process type names that are part of the core BigWorld server but are currently not running. Not present if a `machine` argument was given.
+
+Example:
+
+    curl -v -u wc_user:wc_passwd -H "Accept: application/json" "http://wc_host:8080/cc/getProcs"
+
+
+### /cc/getMachines - get cluster machine info
+
+Returns all machines in the cluster that have a running `bwmachined`.
+Also callable as `/cc/api/machines`.
+
+Argument        | Description
+---             | ---
+tags            | Whether to include `bwmachined` "tag" info for each machine (optional; boolean).
+
+Returns:
+
+Property            | Type      | Description
+---                 | ---       | ---
+ms                  | array     | An array of [Machine] objects.
+
+Example:
+
+    curl -v -u wc_user:wc_passwd -H "Accept: application/json" "http://wc_host:8080/cc/getMachines"
+
+
+### /cc/getUsers - get BigWorld server user info
+
+Also callable as `/cc/api/users`.
+
+Argument        | Description
+---             | ---
+inactive        | Whether to include users who are not currently running servers (boolean).
+
+
+Returns:
+
+Property            | Type      | Description
+---                 | ---       | ---
+users               | array     | An array of [User] objects.
+
+
+Example:
+
+    curl -v -u wc_user:wc_passwd -H "Accept: application/json" "http://wc_host:8080/cc/getUsers?inactive=1"
+
+
+### /cc/coredumps - Retrieve coredump info for a user
+
+Argument        | Description
+---             | ---
+user            | BigWorld server user.
+
+
+Returns:
+
+Property            | Type      | Description
+---                 | ---       | ---
+coredumps           | array     | An array of 3-element array tuples. Tuple values are, in order: core file location relative to the Server binary directory, an `assert` message, timestamp.
+user                | object    | A [User] object.
+
+Example:
+
+    curl -u wc_user:wc_passwd -H "Accept: application/json" "http://wc_host:8080/cc/coredumps?user=wc_user"
+
+
+
+### /cc/layouts - Retrieve all saved server layouts for the current server
+
+No arguments.
+
+
+Returns:
+
+Property            | Type      | Description
+---                 | ---       | ---
+pnames              | array     | Array of process type names in display order.
+layouts             | array     | Array of layout objects. Layout objects map process type name to process type count for that layout.
+
+Example:
+
+    curl -u wc_user:wc_passwd -H "Accept: application/json" "http://wc_host:8080/cc/layouts"
+
+## Watchers
+
+
+### /watchers/filtered/get_filtered_tree - Get Watcher values for a BigWorld Server
+
+Argument        | Description
+---             | ---
+processes       | Name of a BigWorld process type, e.g. `"baseappmgr"`, or `"any"` to indicate all server processes. Can also be given as the name of a process type plus `"s"` to retrieve the given watcher values of *all* instances of that process type, e.g. `"cellapps"`.
+path            | A Watcher path, which may contain wildcards (`*`), e.g. `"/spaces/*/geometry"`.
+
+
+Returns:
+
+Property            | Type      | Description
+---                 | ---       | ---
+status              | boolean   | True if the filtered query was successful.
+path                | string    | Returned value of the input `path` argument.
+processes           | string    | Returned value of the input `processes` argument.
+tree                | object    | A tree object of query results, see below. In case of error (i.e. `status` is `false`), this property will contain the error message.
+
+
+Tree object:
+
+Property            | Type      | Description
+---                 | ---       | ---
+subPaths            | array     | Array of string sub-paths of the requested `path` after splitting on wildcards (`"*"`).
+values              | object    | Object containing watcher values keyed by process names. Watcher values are represented as a 2-element array of watcher value, [watcher data type] and may be nested if the query path contains wildcards.
+
+
+Examples:
+
+Find the Python console port for all cellapps:
+
+    curl -v -u wc_user:wc_passwd -H "Accept: application/json" "http://wc_host:8080/watchers/filtered/get_filtered_tree?processes=cellapps&path=pythonServerPort"
+
+returns:
+```
+{
+    "status": true,
+    "processes": "cellapps",
+    "tree": {
+        "subPaths": [
+            "pythonServerPort"
+        ],
+        "values": {
+            "cellapp13": [
+                "46886",
+                5
+            ],
+            "cellapp11": [
+                "35090",
+                5
+            ],
+            "cellapp10": [
+                "49063",
+                5
+            ],
+            "cellapp01": [
+                "38331",
+                5
+            ],
+            "cellapp14": [
+                "54312",
+                5
+            ],
+            "cellapp08": [
+                "49934",
+                5
+            ],
+            "cellapp09": [
+                "44893",
+                5
+            ]
+        }
+    },
+    "path": "pythonServerPort"
+}
+```
+
+Retrieve the loaded geometry of all currently active spaces:
+
+    curl -v -u wc_user:wc_passwd -H "Accept: application/json" "http://wc_host:8080/watchers/filtered/get_filtered_tree?processes=cellappmgr&path=spaces/*/geometry"
+
+returns:
+```
+{
+    "status": true,
+    "processes": "cellappmgr",
+    "tree": {
+        "subPaths": [
+            "spaces",
+            "geometry"
+        ],
+        "values": {
+            "cellappmgr": {
+                "3": [
+                    "spaces/arctic",
+                    5
+                ],
+                "2": [
+                    "spaces/highlands",
+                    5
+                ],
+                "5": [
+                    "spaces/minspec",
+                    5
+                ],
+                "4": [
+                    "spaces/desert",
+                    5
+                ],
+                "6": [
+                    "spaces/urban",
+                    5
+                ]
+            }
+        }
+    },
+    "path": "spaces/*/geometry"
+}
+```
+
+
+### /watchers/tree/show - Get watcher values for a specific process
+
+Argument        | Description
+---             | ---
+machine         | Machine hostname (string) or IP.
+pid             | Process ID (integer).
+path            | Watcher path (string).
+
+Returns:
+
+Property            | Type      | Description
+---                 | ---       | ---
+machine             | object    | A [Machine] object.
+process             | object    | A [Process] object.
+watcherData         | object    | A [Watcher] object.
+
+
+Examples:
+
+Retrieve server uptime (a scalar watcher value):
+
+    curl -v -u wc_user:wc_passwd -H "Accept: application/json" "http://wc_host:8080/watchers/tree/show?machine=bw_server_host&pid=8186&path=uptime"
+
+returns:
+```
+{
+    "name": "uptime",
+    "value": "5 days 20 hours 25 minutes 10 seconds ",
+    "mode": 1,
+    "path": "uptime",
+    "type": 5
+}
+```
+
+Retrieve server version information (a watcher directory):
+
+    curl -v -u wc_user:wc_passwd -H "Accept: application/json" "http://wc_host:8080/watchers/tree/show?machine=bw_server_host&pid=8186&path=version"
+
+returns:
+```
+{
+    "name": "version",
+    "value": "<DIR>",
+    "mode": 3,
+    "path": "version",
+    "type": 5,
+    "children": [
+        {
+            "name": "major",
+            "value": "2",
+            "mode": 1,
+            "path": "version/major",
+            "type": 5
+        },
+        {
+            "name": "minor",
+            "value": "4",
+            "mode": 1,
+            "path": "version/minor",
+            "type": 5
+        },
+        {
+            "name": "patch",
+            "value": "0",
+            "mode": 1,
+            "path": "version/patch",
+            "type": 5
+        },
+        {
+            "name": "string",
+            "value": "2.4.0",
+            "mode": 1,
+            "path": "version/string",
+            "type": 5
+        }
+    ]
+}
+```
+
+
+### /watchers/tree/edit - Set a Watcher value
+
+Argument        | Description
+---             | ---
+machine         | Machine hostname (string) or IP.
+pid             | Process ID (integer).
+path            | Watcher path (string).
+dataType        | A [Watcher data type] (integer).
+newval          | The value to set.
+
+Returns:
+
+No return value.
+
+Examples:
+
+Stop the `HTTPResTreeService` service:
+
+    curl -v -u wc_user:wc_passwd -H "Accept: application/json" "http://wc_host:8080/watchers/tree/edit?machine=bw_server_host;pid=8190;path=services/HTTPResTreeService/running;newval=False"
+
+> Note: this method currently returns a HTTP 302 return code on success or failure.
+
+
+## Logs
+
+### /logs/search - Prepare to query BigWorld Server logs
+
+Returns a collection of information pertinent to constructing log queries.
+
+Arguments: none.
+
+Returns:
+
+Property            | Type      | Description
+---                 | ---       | ---
+users               | array     | Array of (string) server usernames.
+hostnames           | array     | Array of (string) machine hostnames and/or IPs.
+components          | array     | Array of (string) component names.
+serverTimezone      | integer   | Server timezone offset from UTC in seconds.
+severities          | array     | Array of (string) log severity level names.
+output_columns      | array     | Array of (string) query column names.
+default_columns     | array     | Array of column names used in the UI, a subset of `output_columns`.
+categories          | array     | Array of (string) existing category names.
+message_sources     | array     | Array of (string) log message source code type.
+mlstatus            | boolean   | True if the current WebConsole user has a `message_logger` process running.
+defaultQuery        | string    | An URL-encoded string of the current WebConsole user's default query.
+
+Example:
+
+    curl -u wc_user:wc_passwd -H "Accept: application/json" "http://wc_host:8080/log/search"
+
+
+### /logs/fetchAsync - Query BigWorld Server logs
+
+Builds and executes an asynchronous query against the message_logger logs.
+Returns the ID of the [asynchronous task] executing the query. Note that time
+values taken and returned are always in the BigWorld Server's timezone.
+
+All arguments are optional. A query with no arguments corresponds to the time
+range since last server startup to present for the current WebConsole user.
+
+Argument        | Description
+---             | ---
+limit           | Maximum number of log lines to retrieve in a non-live query (integer; optional, default `10000`).
+live            | Whether this query should continuously follow (tail) logs as they are generated (boolean; default `false`). Causes the `limit` argument to be ignored.
+context         | Number of log lines to include around matching lines (integer; default `0`).
+show            | Column names to include in output (multiple; string).
+queryTime       | Start time range (string). May be one of `"server startup"`, `"now"`, `"beginning of logs"`, or a (float) timestamp in seconds in the server's timezone.
+period          | End time range relative to the `queryTime` argument. May be one of `"forwards"`, `"backwards"`, `"to beginning"`, `"to present"`, or `"either side"`.
+periodUnit      | Unit of time, e.g. `"hours"`. Only applicable when `period` is forwards, backwards or either side.
+periodValue     | Number of `periodUnit`'s (integer).
+startAddr       | A log line index specifying the query start range. Overrides the `queryTime` argument (string).
+endAddr         | A log line index specifying the query end range. Overrides `period`* arguments (string).
+host            | Machine hostname (string).
+serveruser      | BigWorld server username (string; defaults to the current WebConsole user).
+pid             | A Process ID (integer).
+appid           | An app ID (integer). Note that components that do not have app IDs are not filtered out by this predicate.
+procs           | Component names (string; multiple), e.g. `"CellAppMgr"`.
+source          | The source code from which a log line was generated (string; multiple; default value: `"C++"`, `"Python"`).
+category        | Logging category name(s) (string; multiple; defaults to all categories).
+severity        | Log level name(s) (string; multiple; defaults to all severities).
+message         | Text to match in a log line. This can be either an arbitrary string or an extended POSIX regular expression depending on the value of the `regex` argument.
+casesens        | Whether `message` should match case-sensitively (boolean; default `true`).
+regex           | True if `message` is an extended POSIX regular expression (boolean; default `false`).
+metadata_key    | Metadata Key (string).
+metadata_value  | Metadata value (string).
+metadata_condition | Query condition for `metadata_key` and 'metadata_value' arguments. May be one of `"exist"`, `"not_exist"`, `"is"`, `"is_not"`.
+negate_procs    | Logically inverts the matching of `proc` arguments (boolean; default `false`).
+negate_severity | Logically inverts the matching of `severity` arguments (boolean; default `false`).
+negate_category | Logically inverts the matching of `category` arguments (boolean; default `false`).
+negate_source   | Logically inverts the matching of `source` arguments (boolean; default `false`).
+negate_host     | Logically inverts the matching of the `host` argument (boolean; default `false`).
+negate_serveruser | Logically inverts the matching of the `serveruser` argument (boolean; default `false`).
+negate_pid      | Logically inverts the matching of the `pid` argument (boolean; default `false`).
+negate_appid    | Logically inverts the matching of the `appid` argument (boolean; default `false`).
+negate_message  | Logically inverts the matching of the `message` argument (boolean; default `false`).
+
+Returns:
+
+Property            | Type      | Description
+---                 | ---       | ---
+id                  | integer   | An [asynchronous task] ID.
+
+Examples
+
+Issue LogViewer query:
+
+    curl -v -u wc_user:wc_passwd -H "Accept: application/json" "http://wc_host:8080/log/fetchAsync?negate_category=&category=Config&category=Network&negate_procs=&procs=CellAppMgr&procs=CellApp&serveruser=wc_user&negate_severity=&severity=DEBUG&severity=INFO&limit=10"
+
+returns:
+```
+{
+    "id": 14
+}
+```
+
+then, to retrieve log lines for that query:
+
+    curl -v -u wc_user:wc_passwd -H "Accept: application/json" "http://wc_host:8080/poll?id=14"
+
+returns:
+```
+{
+    "status": "updated",
+    "updates": [
+        [
+            "results",
+            {
+                "lines": [
+                    "Wed 27 Mar 2013 15:33:03.212  bw_server_host    CellAppMgr C++    INFO     [Config] ---- CellAppMgr Version: 2.4.0. Config: Hybrid64. Built: 16:29:55 Feb 26 2013. UID: 1087. PID: 8186 ----\n",
+                    "Wed 27 Mar 2013 15:33:03.213  bw_server_host    CellAppMgr C++    INFO     [Config] Server bw_server_host: Intel(R) Xeon(R) CPU           X5472  @ 3.00GHz x8 with 16438456kB RAM\n",
+                    "Wed 27 Mar 2013 15:33:03.214  bw_server_host    CellAppMgr C++    INFO     [Config] Resource path (1 of 2): /home/wc_user/bigworld_root/fantasydemo/res\n",
+                    "Wed 27 Mar 2013 15:33:03.215  bw_server_host    CellAppMgr C++    INFO     [Config] Resource path (2 of 2): /home/wc_user/bigworld_root/bigworld/res\n",
+                    "Wed 27 Mar 2013 15:33:03.218  bw_server_host    CellAppMgr C++    INFO     [Config] Configuration options (from server/bw.xml):\n",
+                    "Wed 27 Mar 2013 15:33:03.218  bw_server_host    CellAppMgr C++    INFO     [Config]   gameUpdateHertz                    = 10\n",
+                    "Wed 27 Mar 2013 15:33:03.219  bw_server_host    CellAppMgr C++    INFO     [Config]   personality                        = FantasyDemo (default: BWPersonality)\n",
+                    "Wed 27 Mar 2013 15:33:03.220  bw_server_host    CellAppMgr C++    INFO     [Config]   production                         = false (default: true)\n",
+                    "Wed 27 Mar 2013 15:33:03.222  bw_server_host    CellAppMgr C++    INFO     [Config]   timeSyncPeriod                     = 60\n",
+                    "Wed 27 Mar 2013 15:33:03.222  bw_server_host    CellAppMgr C++    INFO     [Config]   useDefaultSpace                    = false\n"
+                ],
+                "reverse": false
+            }
+        ],
+        [
+            "progress",
+            [
+                [
+                    "2013-03-04-14:57:51",
+                    221103,
+                    1
+                ],
+                1080,
+                12464,
+                12464
+            ]
+        ]
+    ]
+}
+```
+
+
+## Spaces
+
+### /sv/api/spaces - Retrieve space information
+
+Argument        | Description
+---             | ---
+limit           | Max number of spaces to return in this request (integer).
+index           | Index of the first space in the return list, sorted by Space ID (integer).
+
+Returns:
+
+Property            | Type      | Description
+---                 | ---       | ---
+spaceList           | array     | Array of [Space] objects, sorted by space ID.
+
+Example:
+
+    curl -u wc_user:wc_passwd -H "Accept: application/json" "http://wc_host:8080/sv/api/spaces"
+
+
+### /sv/get_space - Retrieve space entity information
+
+Argument        | Description
+---             | ---
+space           | Space ID (integer).
+cell            | Cell ID within the given Space (optional; integer). This value corresponds to the appID property of the underlying CellApp process.
+
+Returns:
+
+Property            | Type      | Description
+---                 | ---       | ---
+spaceBounds         | array     | 6-element array describing the geometric limits of the Space. Order of the elements are: minX, minY, minZ, maxX, maxY, maxZ.
+mappings            | array     | Array of 3-element geometry mappings, one per loaded geometry mapping. The values of each geometry array are: mapping ID, 4x4 transform matrix (quaternion), geometry name.
+gridResolution      | integer   | World length of a chunk edge in the given Space.
+selectedCell        | integer   | ID of the Cell for which Real Entities have been returned.
+stats               | object    | See "stats object" below.
+root                | object    | A [space BSP] object.
+
+stats object:
+
+Property            | Type      | Description
+---                 | ---       | ---
+minLoad             | float     | Minimum CPU load of the Space.
+avgLoad             | float     | Average CPU load of the Space.
+maxLoad             | float     | Maximum CPU load of the Space.
+cellapps            | integer   | Total number of CellApps.
+cells               | integer   | Number of Cells in this Space.
+
+
+### /sv/get_entity_types
+
+Argument        | Description
+---             | ---
+space           | Space ID (integer).
+
+Returns:
+
+An object which maps (integer) entity type IDs to entity type names (string).
+
+
+## Commands
+
+### /commands/getscripts - Retrieve list of available command scripts
+
+Argument        | Description
+---             | ---
+type            | The type of commands to retrieve (string). Valid types are: `"watcher"` and `"db"`.
+category        | The category of commands to retrieve (string), or `""` for all categories.
+
+
+Returns:
+
+Property            | Type      | Description
+---                 | ---       | ---
+scripts             | array     | Array of script objects, see below.
+
+Script object:
+
+Property            | Type      | Description
+---                 | ---       | ---
+id                  | string    | Canonical script/command ID.
+title               | string    | Command title.
+
+Example:
+
+    curl -v -u wc_user:wc_passwd -H "Accept: application/json" "http://wc_host:8080/commands/getscripts?type=watcher&category="
+
+returns:
+```
+{
+    "scripts": [
+        {
+            "id": "watcher:cellapp:any:command/entitiesOfType",
+            "title": "entitiesOfType"
+        },
+        {
+            "id": "watcher:cellapp:any:command/hasEntity",
+            "title": "hasEntity"
+        },
+        {
+            "id": "watcher:cellapp:any:command/onlinePlayers",
+            "title": "onlinePlayers"
+        },
+        {
+            "id": "watcher:cellapp:any:command/retireCellApp",
+            "title": "retireCellApp"
+        },
+        {
+            "id": "watcher:cellapp:any:command/teleportEntity",
+            "title": "teleportEntity"
+        },
+        {
+            "id": "watcher:baseapp:any:command/addGuards",
+            "title": "addGuards"
+        },
+        {
+            "id": "watcher:baseapp:any:command/removeGuards",
+            "title": "removeGuards"
+        },
+        {
+            "id": "watcher:baseapp:any:command/retireBaseApp",
+            "title": "retireBaseApp"
+        },
+        {
+            "id": "watcher:baseapp:any:command/systemMessage",
+            "title": "systemMessage"
+        },
+        {
+            "id": "watcher:baseapp:any:command/xmppBroadcast",
+            "title": "xmppBroadcast"
+        }
+    ]
+}
+```
+
+
+### /commands/scriptinfo - Retrieve information on how to run a command script
+
+Argument        | Description
+---             | ---
+id              | Command ID (string).
+
+
+Returns:
+
+Property            | Type      | Description
+---                 | ---       | ---
+title               | string    | Nominal title of script command, e.g. "addGuards".
+procType            | string    | Process type(s) to which the command applies, e.g. "baseapp".
+args                | array     | Array of 2-element arrays. Each 2-element arrays corresponds to a command argument, and has values: argument description (string), [Watcher data type] of argument (integer).
+
+
+### /commands/executescript - Execute a command script
+
+Argument        | Description
+---             | ---
+id              | Command identifier (string).
+args            | Array of 2-element arrays. Each element corresponds to a command arguments of form: argument value (any type), [Watcher data type] of argument (integer).
+runType         | The method by which the command will be run (string; optional). Valid values are `"all"`, `"any"`.
+
+Returns:
+
+Property            | Type      | Description
+---                 | ---       | ---
+output              | object    | A "script results" object, see below.
+
+
+Script results object
+
+Property            | Type      | Description
+---                 | ---       | ---
+result              | array     | Array of (string) result lines, one for each process that ran the script.
+output              | array     | Array of (string) output from contacted processes, one for each process as above.
+errors              | array     | Array of any (string) errors resulting from the script.
+
+
+## Python Console
+
+### /console/process_request - Remotely execute Python code
+
+Using this method requires a Python console port number, which is obtainable
+via the watcher variable `pythonServerPort` of applicable process types.
+
+Argument        | Description
+---             | ---
+line            | Python code (string).
+host            | Hostname of target machine (string).
+port            | Python console port of target machine (integer).
+
+
+Returns:
+
+Property            | Type      | Description
+---                 | ---       | ---
+output              | string    | Server response to passed Python code.
+
+
+### /console/process_multiline_request - Remotely execute Python code
+
+Identical to `/console/process_request`, but expects a multi-line block of Python
+code.
+
+Argument        | Description
+---             | ---
+block           | Python code (string).
+host            | Hostname of target machine (string).
+port            | Python console port of target machine (integer).
+
+
+Returns:
+
+Property            | Type      | Description
+---                 | ---       | ---
+output              | string    | Server response to pass Python code.
+
