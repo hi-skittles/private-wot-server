@@ -1,0 +1,682 @@
+<pzii.xml>
+  <crew>
+    <commander>	gunner	</commander>
+    <driver></driver>
+    <loader>	radioman	</loader>
+  </crew>
+  <speedLimits>
+    <forward>	40	</forward>
+    <backward>	15	</backward>
+  </speedLimits>
+  <repairCost>	4.58	</repairCost>
+  <crewXpFactor>	1.0	</crewXpFactor>
+  <effects>
+    <collision></collision>
+    <damagedStateGroup>	small	</damagedStateGroup>
+  </effects>
+  <camouflage>
+    <priceFactor>	0.4	</priceFactor>
+    <tiling>	1 1 0 0	</tiling>
+    <exclusionMask>	vehicles/german/G06_PzII/PzII_CM.dds	</exclusionMask>
+  </camouflage>
+  <emblems>
+    <default>	germany_cross	</default>
+    <lodDist>	MEDIUM	</lodDist>
+    <alpha>	0.88	</alpha>
+  </emblems>
+  <horns>
+    <priceFactor>	1	</priceFactor>
+    <distanceFactor>	1	</distanceFactor>
+    <volumeFactor>	1	</volumeFactor>
+  </horns>
+  <hull>
+    <models>
+      <undamaged>	vehicles/german/G06_PzII/normal/lod0/Hull.model	</undamaged>
+      <destroyed>	vehicles/german/G06_PzII/crash/lod0/Hull.model	</destroyed>
+      <exploded>	vehicles/german/G06_PzII/crash/lod0/Hull.model	</exploded>
+    </models>
+    <swinging>
+      <lodDist>	FAR	</lodDist>
+      <pitchParams>	0.28 34.00 0.34 1.00 0.05 0.30	</pitchParams>
+      <rollParams>	1.00 0.28 34.00 0.34 1.00 0.05 0.30	</rollParams>
+      <sensitivityToImpulse>	0.74	</sensitivityToImpulse>
+    </swinging>
+    <exhaust>
+      <pixie>	gas_small	</pixie>
+      <nodes>	HP_Track_Exhaus_1	</nodes>
+    </exhaust>
+    <turretPositions>
+      <turret>	-0.145808 0.713245 0.421037	</turret>
+    </turretPositions>
+    <hitTester>
+      <collisionModel>	vehicles/german/G06_PzII/collision/Hull.model	</collisionModel>
+    </hitTester>
+    <armor>
+      <armor_1>	35	</armor_1>
+      <armor_2>	30	</armor_2>
+      <armor_3>	20	</armor_3>
+      <armor_4>	15	</armor_4>
+      <armor_5>	20	</armor_5>
+      <armor_6>	20	</armor_6>
+      <armor_7>	20	</armor_7>
+      <armor_8>	15	</armor_8>
+      <armor_9>	15	</armor_9>
+      <armor_10>	10	</armor_10>
+      <armor_11>	0	</armor_11>
+      <armor_12>	55	</armor_12>
+      <armor_13>	5	</armor_13>
+      <armor_14>	20	</armor_14>
+    </armor>
+    <primaryArmor>	armor_2 armor_3 armor_4	</primaryArmor>
+    <weight>	4600	</weight>
+    <maxHealth>	116	</maxHealth>
+    <ammoBayHealth>
+      <maxHealth>	80	</maxHealth>
+      <maxRegenHealth>	55	</maxRegenHealth>
+      <repairCost>	1.0	</repairCost>
+    </ammoBayHealth>
+    <emblemSlots>
+      <clan>
+        <rayStart>	-0.605445 0.565581 1.63671	</rayStart>
+        <rayEnd>	-0.605445 0.565581 1.47671	</rayEnd>
+        <rayUp>	0.000000 1 0.000000	</rayUp>
+        <size>	0.22	</size>
+        <hideIfDamaged>	true	</hideIfDamaged>
+      </clan>
+      <inscription>
+        <rayStart>	-0.166458 0.405914 2.24886	</rayStart>
+        <rayEnd>	-0.166458 0.0262605 2.12292	</rayEnd>
+        <rayUp>	0.000000 0.000000 -1	</rayUp>
+        <size>	0.54	</size>
+        <hideIfDamaged>	false	</hideIfDamaged>
+      </inscription>
+    </emblemSlots>
+  </hull>
+  <chassis>
+    <PzII_ketten_Ausf_A>
+      <userString>	#germany_vehicles:PzII_ketten_Ausf_A	</userString>
+      <shortUserString>	#germany_vehicles:PzII_ketten_Ausf_A_short	</shortUserString>
+      <tags></tags>
+      <level>	1	</level>
+      <price>	300.0	</price>
+      <unlocks>
+        <chassis>	PzII_ketten_Ausf_B	  <cost>	100	</cost>
+        </chassis>
+      </unlocks>
+      <models>
+        <undamaged>	vehicles/german/G06_PzII/normal/lod0/Chassis.model	</undamaged>
+        <destroyed>	vehicles/german/G06_PzII/crash/lod0/Chassis.model	</destroyed>
+        <exploded>	vehicles/german/G06_PzII/crash/lod0/Chassis.model	</exploded>
+      </models>
+      <traces>
+        <lodDist>	FAR	</lodDist>
+        <bufferPrefs>	smallTank	</bufferPrefs>
+        <textureSet>	germany_01	</textureSet>
+        <size>	0.4 0.32	</size>
+      </traces>
+      <tracks>
+        <lodDist>	MEDIUM_TRACK	</lodDist>
+        <leftMaterial>	track_mat_L_skinned	</leftMaterial>
+        <rightMaterial>	track_mat_R_skinned	</rightMaterial>
+        <textureScale>	-1.165	</textureScale>
+      </tracks>
+      <wheels>
+        <lodDist>	MEDIUM	</lodDist>
+        <group>
+          <isLeft>	true	</isLeft>
+          <template>	W_L	</template>
+          <radius>	0.291	</radius>
+          <startIndex>	0	</startIndex>
+          <count>	5	</count>
+        </group>
+        <group>
+          <isLeft>	false	</isLeft>
+          <template>	W_R	</template>
+          <radius>	0.291	</radius>
+          <startIndex>	0	</startIndex>
+          <count>	5	</count>
+        </group>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	true	</isLeading>
+          <name>	WD_L0	</name>
+          <radius>	0.4	</radius>
+        </wheel>
+        <group>
+          <isLeft>	true	</isLeft>
+          <template>	WD_L	</template>
+          <radius>	0.119	</radius>
+          <startIndex>	1	</startIndex>
+          <count>	4	</count>
+        </group>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	true	</isLeading>
+          <name>	WD_L5	</name>
+          <radius>	0.33	</radius>
+        </wheel>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	true	</isLeading>
+          <name>	WD_R0	</name>
+          <radius>	0.4	</radius>
+        </wheel>
+        <group>
+          <isLeft>	false	</isLeft>
+          <template>	WD_R	</template>
+          <radius>	0.119	</radius>
+          <startIndex>	1	</startIndex>
+          <count>	4	</count>
+        </group>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	true	</isLeading>
+          <name>	WD_R5	</name>
+          <radius>	0.33	</radius>
+        </wheel>
+      </wheels>
+      <drivingWheels>	WD_L0 WD_L5	</drivingWheels>
+      <effects>
+        <lodDist>	MEDIUM	</lodDist>
+        <dust>	smallTankDust	</dust>
+        <mud>	smallTankMud	</mud>
+      </effects>
+      <soundPC>	/vehicles/tanks_pc/treads/treads_1	</soundPC>
+      <soundNPC>	/vehicles/tanks_npc/treads/treads_1	</soundNPC>
+      <hullPosition>	0.000000 0.7806 -0.0802	</hullPosition>
+      <hitTester>
+        <collisionModel>	vehicles/german/G06_PzII/collision/Chassis.model	</collisionModel>
+      </hitTester>
+      <armor>
+        <leftTrack>	10	</leftTrack>
+        <rightTrack>	10	</rightTrack>
+      </armor>
+      <topRightCarryingPoint>	0.96551 1.25623	</topRightCarryingPoint>
+      <maxClimbAngle>	25	</maxClimbAngle>
+      <navmeshGirth>	6.0	</navmeshGirth>
+      <weight>	2800	</weight>
+      <maxLoad>	9500	</maxLoad>
+      <terrainResistance>	1.1 1.7 2.9	</terrainResistance>
+      <brakeForce>	35500	</brakeForce>
+      <rotationIsAroundCenter>	false	</rotationIsAroundCenter>
+      <rotationSpeed>	35	</rotationSpeed>
+      <shotDispersionFactors>
+        <vehicleMovement>	0.31	</vehicleMovement>
+        <vehicleRotation>	0.31	</vehicleRotation>
+      </shotDispersionFactors>
+      <bulkHealthFactor>	3.0	</bulkHealthFactor>
+      <maxHealth>	50	</maxHealth>
+      <maxRegenHealth>	40	</maxRegenHealth>
+      <repairCost>	1.0	</repairCost>
+      <AODecals>
+        <decal>
+          <transform>
+            <row0>	3.171730 0.000000 0.000000	</row0>
+            <row1>	0.000000 1.170900 0.000000	</row1>
+            <row2>	0.000000 0.000000 4.773670	</row2>
+            <row3>	0.000000 0.000000 0.000000	</row3>
+          </transform>
+        </decal>
+      </AODecals>
+    </PzII_ketten_Ausf_A>
+    <PzII_ketten_Ausf_B>
+      <userString>	#germany_vehicles:PzII_ketten_Ausf_B	</userString>
+      <shortUserString>	#germany_vehicles:PzII_ketten_Ausf_B_short	</shortUserString>
+      <tags></tags>
+      <level>	2	</level>
+      <price>	600.0	</price>
+      <models>
+        <undamaged>	vehicles/german/G06_PzII/normal/lod0/Chassis.model	</undamaged>
+        <destroyed>	vehicles/german/G06_PzII/crash/lod0/Chassis.model	</destroyed>
+        <exploded>	vehicles/german/G06_PzII/crash/lod0/Chassis.model	</exploded>
+      </models>
+      <traces>
+        <lodDist>	FAR	</lodDist>
+        <bufferPrefs>	smallTank	</bufferPrefs>
+        <textureSet>	germany_01	</textureSet>
+        <size>	0.4 0.32	</size>
+      </traces>
+      <tracks>
+        <lodDist>	MEDIUM_TRACK	</lodDist>
+        <leftMaterial>	track_mat_L_skinned	</leftMaterial>
+        <rightMaterial>	track_mat_R_skinned	</rightMaterial>
+        <textureScale>	-1.165	</textureScale>
+      </tracks>
+      <wheels>
+        <lodDist>	MEDIUM	</lodDist>
+        <group>
+          <isLeft>	true	</isLeft>
+          <template>	W_L	</template>
+          <radius>	0.291	</radius>
+          <startIndex>	0	</startIndex>
+          <count>	5	</count>
+        </group>
+        <group>
+          <isLeft>	false	</isLeft>
+          <template>	W_R	</template>
+          <radius>	0.291	</radius>
+          <startIndex>	0	</startIndex>
+          <count>	5	</count>
+        </group>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	true	</isLeading>
+          <name>	WD_L0	</name>
+          <radius>	0.4	</radius>
+        </wheel>
+        <group>
+          <isLeft>	true	</isLeft>
+          <template>	WD_L	</template>
+          <radius>	0.119	</radius>
+          <startIndex>	1	</startIndex>
+          <count>	4	</count>
+        </group>
+        <wheel>
+          <isLeft>	true	</isLeft>
+          <isLeading>	true	</isLeading>
+          <name>	WD_L5	</name>
+          <radius>	0.33	</radius>
+        </wheel>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	true	</isLeading>
+          <name>	WD_R0	</name>
+          <radius>	0.4	</radius>
+        </wheel>
+        <group>
+          <isLeft>	false	</isLeft>
+          <template>	WD_R	</template>
+          <radius>	0.119	</radius>
+          <startIndex>	1	</startIndex>
+          <count>	4	</count>
+        </group>
+        <wheel>
+          <isLeft>	false	</isLeft>
+          <isLeading>	true	</isLeading>
+          <name>	WD_R5	</name>
+          <radius>	0.33	</radius>
+        </wheel>
+      </wheels>
+      <drivingWheels>	WD_L0 WD_L5	</drivingWheels>
+      <effects>
+        <lodDist>	MEDIUM	</lodDist>
+        <dust>	smallTankDust	</dust>
+        <mud>	smallTankMud	</mud>
+      </effects>
+      <soundPC>	/vehicles/tanks_pc/treads/treads_1	</soundPC>
+      <soundNPC>	/vehicles/tanks_npc/treads/treads_1	</soundNPC>
+      <hullPosition>	0.000000 0.7806 -0.0802	</hullPosition>
+      <hitTester>
+        <collisionModel>	vehicles/german/G06_PzII/collision/Chassis.model	</collisionModel>
+      </hitTester>
+      <armor>
+        <leftTrack>	15	</leftTrack>
+        <rightTrack>	15	</rightTrack>
+      </armor>
+      <topRightCarryingPoint>	0.96551 1.25623	</topRightCarryingPoint>
+      <maxClimbAngle>	25	</maxClimbAngle>
+      <navmeshGirth>	6.0	</navmeshGirth>
+      <weight>	2900	</weight>
+      <maxLoad>	10800	</maxLoad>
+      <terrainResistance>	1.1 1.4 2.3	</terrainResistance>
+      <brakeForce>	35500	</brakeForce>
+      <rotationIsAroundCenter>	false	</rotationIsAroundCenter>
+      <rotationSpeed>	40	</rotationSpeed>
+      <shotDispersionFactors>
+        <vehicleMovement>	0.28	</vehicleMovement>
+        <vehicleRotation>	0.28	</vehicleRotation>
+      </shotDispersionFactors>
+      <bulkHealthFactor>	3.0	</bulkHealthFactor>
+      <maxHealth>	60	</maxHealth>
+      <maxRegenHealth>	45	</maxRegenHealth>
+      <repairCost>	1.0	</repairCost>
+      <AODecals>
+        <decal>
+          <transform>
+            <row0>	3.171230 0.000000 0.000000	</row0>
+            <row1>	0.000000 1.170900 0.000000	</row1>
+            <row2>	0.000000 0.000000 4.773670	</row2>
+            <row3>	0.000000 0.000000 0.000000	</row3>
+          </transform>
+        </decal>
+      </AODecals>
+    </PzII_ketten_Ausf_B>
+  </chassis>
+  <turrets0>
+    <PzII_Standartturm>
+      <userString>	#germany_vehicles:PzII_Standartturm	</userString>
+      <shortUserString>	#germany_vehicles:PzII_Standartturm_short	</shortUserString>
+      <tags>	cannotDetach	</tags>
+      <level>	2	</level>
+      <price>	640.0	</price>
+      <models>
+        <undamaged>	vehicles/german/G06_PzII/normal/lod0/Turret_01.model	</undamaged>
+        <destroyed>	vehicles/german/G06_PzII/crash/lod0/Turret_01.model	</destroyed>
+        <exploded>	vehicles/german/G06_PzII/crash/lod0/Turret_01.model	</exploded>
+      </models>
+      <hitTester>
+        <collisionModel>	vehicles/german/G06_PzII/collision/Turret_01.model	</collisionModel>
+      </hitTester>
+      <gunPosition>	-0.263988 0.255616 0.621694	</gunPosition>
+      <armor>
+        <armor_1>	30	</armor_1>
+        <armor_2>	15	</armor_2>
+        <armor_3>	15	</armor_3>
+        <armor_4>	15	</armor_4>
+        <armor_5>	13	</armor_5>
+        <armor_6>	10	</armor_6>
+        <armor_7>	10	</armor_7>
+        <armor_8>	0	</armor_8>
+        <armor_9>	15	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+        </armor_9>
+        <armor_10>	10	</armor_10>
+      </armor>
+      <primaryArmor>	armor_1 armor_3 armor_4	</primaryArmor>
+      <weight>	950	</weight>
+      <maxHealth>	29	</maxHealth>
+      <rotationSpeed>	39	</rotationSpeed>
+      <turretRotatorHealth>
+        <maxHealth>	60	</maxHealth>
+        <maxRegenHealth>	30	</maxRegenHealth>
+        <repairCost>	1.0	</repairCost>
+      </turretRotatorHealth>
+      <circularVisionRadius>	290	</circularVisionRadius>
+      <surveyingDeviceHealth>
+        <maxHealth>	40	</maxHealth>
+        <maxRegenHealth>	20	</maxRegenHealth>
+        <repairCost>	2.0	</repairCost>
+      </surveyingDeviceHealth>
+      <guns>
+        <_20mm_KwK_30>	shared	  <maxAmmo>	260	</maxAmmo>
+          <shotDispersionRadius>	0.59	</shotDispersionRadius>
+          <reloadTime>	4.3	</reloadTime>
+          <shotDispersionFactors>
+            <turretRotation>	0.1	</turretRotation>
+            <afterShot>	1.4	</afterShot>
+            <whileGunDamaged>	2.0	</whileGunDamaged>
+          </shotDispersionFactors>
+          <unlocks>
+            <gun>	_20mm_KwK_38_L55	  <cost>	35	</cost>
+            </gun>
+          </unlocks>
+          <models>
+            <undamaged>	vehicles/german/G06_PzII/normal/lod0/Gun_02.model	</undamaged>
+            <destroyed>	vehicles/german/G06_PzII/crash/lod0/Gun_02.model	</destroyed>
+            <exploded>	vehicles/german/G06_PzII/crash/lod0/Gun_02.model	</exploded>
+          </models>
+          <hitTester>
+            <collisionModel>	vehicles/german/G06_PzII/collision/Gun_02.model	</collisionModel>
+          </hitTester>
+          <armor>
+            <armor_1>	20	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_1>
+            <armor_2>	15	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_2>
+            <gun>	10	</gun>
+          </armor>
+          <aimingTime>	1.7	</aimingTime>
+          <camouflage>
+            <tiling>	0.43 0.43 0.000000 0.000000	</tiling>
+          </camouflage>
+        </_20mm_KwK_30>
+        <_20mm_KwK_38_L55>	shared	  <maxAmmo>	260	</maxAmmo>
+          <reloadTime>	4.3	</reloadTime>
+          <aimingTime>	1.6	</aimingTime>
+          <shotDispersionFactors>
+            <turretRotation>	0.1	</turretRotation>
+            <afterShot>	1.3	</afterShot>
+            <whileGunDamaged>	2.0	</whileGunDamaged>
+          </shotDispersionFactors>
+          <unlocks>
+            <turret>	PzII_Luchsturm	  <cost>	320	</cost>
+            </turret>
+            <gun>	_20mm_Flak_38_L112	  <cost>	160	</cost>
+            </gun>
+            <vehicle>	Pz_II_AusfG	  <cost>	1680	</cost>
+            </vehicle>
+          </unlocks>
+          <models>
+            <undamaged>	vehicles/german/G06_PzII/normal/lod0/Gun_02.model	</undamaged>
+            <destroyed>	vehicles/german/G06_PzII/crash/lod0/Gun_02.model	</destroyed>
+            <exploded>	vehicles/german/G06_PzII/crash/lod0/Gun_02.model	</exploded>
+          </models>
+          <hitTester>
+            <collisionModel>	vehicles/german/G06_PzII/collision/Gun_02.model	</collisionModel>
+          </hitTester>
+          <armor>
+            <armor_1>	20	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_1>
+            <armor_2>	15	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_2>
+            <gun>	10	</gun>
+          </armor>
+          <shotDispersionRadius>	0.57	</shotDispersionRadius>
+          <camouflage>
+            <tiling>	0.595 0.595 0.000000 0.000000	</tiling>
+          </camouflage>
+        </_20mm_KwK_38_L55>
+        <_20mm_Flak_38_L112>	shared	  <maxAmmo>	260	</maxAmmo>
+          <shotDispersionFactors>
+            <turretRotation>	0.1	</turretRotation>
+            <afterShot>	1.3	</afterShot>
+            <whileGunDamaged>	2.0	</whileGunDamaged>
+          </shotDispersionFactors>
+          <models>
+            <undamaged>	vehicles/german/G06_PzII/normal/lod0/Gun_05.model	</undamaged>
+            <destroyed>	vehicles/german/G06_PzII/crash/lod0/Gun_05.model	</destroyed>
+            <exploded>	vehicles/german/G06_PzII/crash/lod0/Gun_05.model	</exploded>
+          </models>
+          <hitTester>
+            <collisionModel>	vehicles/german/G06_PzII/collision/Gun_05.model	</collisionModel>
+          </hitTester>
+          <armor>
+            <armor_1>	20	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_1>
+            <armor_2>	15	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_2>
+            <gun>	10	</gun>
+          </armor>
+          <shotDispersionRadius>	0.45	</shotDispersionRadius>
+          <reloadTime>	4.3	</reloadTime>
+          <camouflage>
+            <tiling>	0.37 0.37 0.000000 0.000000	</tiling>
+          </camouflage>
+        </_20mm_Flak_38_L112>
+      </guns>
+      <emblemSlots>
+        <player>
+          <rayStart>	-0.82336 0.343374 0.289814	</rayStart>
+          <rayEnd>	-0.454641 0.192838 0.252598	</rayEnd>
+          <rayUp>	0.000000 1 0.000000	</rayUp>
+          <size>	0.28	</size>
+          <hideIfDamaged>	true	</hideIfDamaged>
+        </player>
+      </emblemSlots>
+      <camouflage>
+        <exclusionMask>	vehicles/german/G06_PzII/PzII_CM.dds	</exclusionMask>
+      </camouflage>
+      <showEmblemsOnGun>	false	</showEmblemsOnGun>
+      <physicsShape>	1.000 0.000 1.000 0.000 0.481 0.255 0.500 0.807 0.356 0.500 0.282 0.500 0.142 0.742 0.139	</physicsShape>
+      <turretRotatorSoundManual>	/turret/turret/turret_manual_traverse/turret_manual_traverse_800-1999	</turretRotatorSoundManual>
+      <turretRotatorSoundGear></turretRotatorSoundGear>
+    </PzII_Standartturm>
+    <PzII_Luchsturm>
+      <userString>	#germany_vehicles:PzII_Luchsturm	</userString>
+      <shortUserString>	#germany_vehicles:PzII_Luchsturm_short	</shortUserString>
+      <tags>	cannotDetach	</tags>
+      <level>	3	</level>
+      <price>	1700	</price>
+      <models>
+        <undamaged>	vehicles/german/G06_PzII/normal/lod0/Turret_02.model	</undamaged>
+        <destroyed>	vehicles/german/G06_PzII/crash/lod0/Turret_02.model	</destroyed>
+        <exploded>	vehicles/german/G06_PzII/crash/lod0/Turret_02.model	</exploded>
+      </models>
+      <hitTester>
+        <collisionModel>	vehicles/german/G06_PzII/collision/Turret_02.model	</collisionModel>
+      </hitTester>
+      <gunPosition>	-0.263988 0.255616 0.621694	</gunPosition>
+      <armor>
+        <armor_1>	30	</armor_1>
+        <armor_2>	20	</armor_2>
+        <armor_3>	20	</armor_3>
+        <armor_4>	20	</armor_4>
+        <armor_5>	18	</armor_5>
+        <armor_6>	15	</armor_6>
+        <armor_7>	30	</armor_7>
+        <armor_8>	10	</armor_8>
+        <armor_9>	10	</armor_9>
+        <armor_10>	0	</armor_10>
+        <armor_11>	15	</armor_11>
+      </armor>
+      <primaryArmor>	armor_1 armor_3 armor_4	</primaryArmor>
+      <weight>	950	</weight>
+      <maxHealth>	54	</maxHealth>
+      <rotationSpeed>	44	</rotationSpeed>
+      <turretRotatorHealth>
+        <maxHealth>	60	</maxHealth>
+        <maxRegenHealth>	30	</maxRegenHealth>
+        <repairCost>	1.0	</repairCost>
+      </turretRotatorHealth>
+      <circularVisionRadius>	320	</circularVisionRadius>
+      <surveyingDeviceHealth>
+        <maxHealth>	40	</maxHealth>
+        <maxRegenHealth>	20	</maxRegenHealth>
+        <repairCost>	2.0	</repairCost>
+      </surveyingDeviceHealth>
+      <guns>
+        <_20mm_KwK_30>	shared	  <maxAmmo>	320	</maxAmmo>
+          <shotDispersionRadius>	0.59	</shotDispersionRadius>
+          <reloadTime>	3.9	</reloadTime>
+          <models>
+            <undamaged>	vehicles/german/G06_PzII/normal/lod0/Gun_10.model	</undamaged>
+            <destroyed>	vehicles/german/G06_PzII/crash/lod0/Gun_10.model	</destroyed>
+            <exploded>	vehicles/german/G06_PzII/crash/lod0/Gun_10.model	</exploded>
+          </models>
+          <hitTester>
+            <collisionModel>	vehicles/german/G06_PzII/collision/Gun_10.model	</collisionModel>
+          </hitTester>
+          <armor>
+            <armor_1>	20	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_1>
+            <armor_2>	15	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_2>
+            <gun>	10	</gun>
+          </armor>
+          <shotDispersionFactors>
+            <turretRotation>	0.08	</turretRotation>
+            <afterShot>	1.4	</afterShot>
+            <whileGunDamaged>	2.0	</whileGunDamaged>
+          </shotDispersionFactors>
+          <aimingTime>	1.7	</aimingTime>
+          <camouflage>
+            <tiling>	0.88 0.88 0.000000 0.000000	</tiling>
+          </camouflage>
+        </_20mm_KwK_30>
+        <_20mm_KwK_38_L55>	shared	  <maxAmmo>	320	</maxAmmo>
+          <reloadTime>	3.9	</reloadTime>
+          <aimingTime>	1.6	</aimingTime>
+          <models>
+            <undamaged>	vehicles/german/G06_PzII/normal/lod0/Gun_10.model	</undamaged>
+            <destroyed>	vehicles/german/G06_PzII/crash/lod0/Gun_10.model	</destroyed>
+            <exploded>	vehicles/german/G06_PzII/crash/lod0/Gun_10.model	</exploded>
+          </models>
+          <hitTester>
+            <collisionModel>	vehicles/german/G06_PzII/collision/Gun_10.model	</collisionModel>
+          </hitTester>
+          <armor>
+            <armor_1>	20	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_1>
+            <armor_2>	15	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_2>
+            <gun>	10	</gun>
+          </armor>
+          <shotDispersionFactors>
+            <turretRotation>	0.08	</turretRotation>
+            <afterShot>	1.3	</afterShot>
+            <whileGunDamaged>	2.0	</whileGunDamaged>
+          </shotDispersionFactors>
+          <shotDispersionRadius>	0.57	</shotDispersionRadius>
+          <camouflage>
+            <tiling>	0.325 0.325 0.000000 0.000000	</tiling>
+          </camouflage>
+        </_20mm_KwK_38_L55>
+        <_20mm_Flak_38_L112>	shared	  <maxAmmo>	320	</maxAmmo>
+          <models>
+            <undamaged>	vehicles/german/G06_PzII/normal/lod0/Gun_07.model	</undamaged>
+            <destroyed>	vehicles/german/G06_PzII/crash/lod0/Gun_07.model	</destroyed>
+            <exploded>	vehicles/german/G06_PzII/crash/lod0/Gun_07.model	</exploded>
+          </models>
+          <hitTester>
+            <collisionModel>	vehicles/german/G06_PzII/collision/Gun_07.model	</collisionModel>
+          </hitTester>
+          <armor>
+            <armor_1>	20	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_1>
+            <armor_2>	15	  <vehicleDamageFactor>	0.0	</vehicleDamageFactor>
+            </armor_2>
+            <gun>	10	</gun>
+          </armor>
+          <reloadTime>	3.9	</reloadTime>
+          <shotDispersionFactors>
+            <turretRotation>	0.08	</turretRotation>
+            <afterShot>	1.3	</afterShot>
+            <whileGunDamaged>	2.0	</whileGunDamaged>
+          </shotDispersionFactors>
+          <shotDispersionRadius>	0.45	</shotDispersionRadius>
+          <camouflage>
+            <tiling>	0.895 0.895 0.000000 0.000000	</tiling>
+          </camouflage>
+        </_20mm_Flak_38_L112>
+      </guns>
+      <emblemSlots>
+        <player>
+          <rayStart>	-0.818019 0.352136 0.307295	</rayStart>
+          <rayEnd>	-0.449299 0.2016 0.270079	</rayEnd>
+          <rayUp>	0.000000 1 0.000000	</rayUp>
+          <size>	0.3	</size>
+          <hideIfDamaged>	true	</hideIfDamaged>
+        </player>
+      </emblemSlots>
+      <showEmblemsOnGun>	false	</showEmblemsOnGun>
+      <physicsShape>	1.000 0.000 1.000 0.000 0.516 0.196 0.500 0.807 0.356 0.500 0.282 0.500 0.142 0.742 0.139	</physicsShape>
+      <turretRotatorSoundManual>	/turret/turret/turret_manual_traverse/turret_manual_traverse_800-1999	</turretRotatorSoundManual>
+      <camouflage>
+        <tiling>	0.895 0.895 0.000000 0.000000	</tiling>
+      </camouflage>
+      <turretRotatorSoundGear></turretRotatorSoundGear>
+    </PzII_Luchsturm>
+  </turrets0>
+  <engines>
+    <Maybach_HL57TR>	shared	  <unlocks>
+        <engine>	Maybach_HL62TR	  <cost>	145	</cost>
+        </engine>
+      </unlocks>
+    </Maybach_HL57TR>
+    <Maybach_HL62TR>	shared	  <unlocks>
+        <engine>	Maybach_HL62TRM	  <cost>	180	</cost>
+        </engine>
+      </unlocks>
+    </Maybach_HL62TR>
+    <Maybach_HL62TRM>	shared	  <unlocks>
+        <vehicle>	PzIII_A	  <cost>	1500	</cost>
+        </vehicle>
+      </unlocks>
+    </Maybach_HL62TRM>
+  </engines>
+  <fuelTanks>
+    <Small>	shared	</Small>
+  </fuelTanks>
+  <radios>
+    <FuG2>	shared	  <unlocks>
+        <radio>	FuG7	  <cost>	1360.0	</cost>
+        </radio>
+      </unlocks>
+    </FuG2>
+    <FuG7>	shared	  <unlocks>
+        <radio>	FuG_Spr.1	  <cost>	3600.0	</cost>
+        </radio>
+      </unlocks>
+    </FuG7>
+    <FuG_Spr.1>	shared	</FuG_Spr.1>
+  </radios>
+</pzii.xml>

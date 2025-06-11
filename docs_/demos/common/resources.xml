@@ -1,0 +1,6 @@
+<resources.xml>
+	<system>	
+		<loadingScreen>	</loadingScreen>		
+		<loadingScreenGUI>	</loadingScreenGUI>
+	</system>
+</resources.xml>

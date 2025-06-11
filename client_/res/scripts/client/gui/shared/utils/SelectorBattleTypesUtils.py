@@ -1,0 +1,14 @@
+# Python bytecode 2.7 (decompiled from Python 2.7)
+# Embedded file name: scripts/client/gui/shared/utils/SelectorBattleTypesUtils.py
+# Compiled at: 2014-04-04 04:15:00
+from account_helpers.AccountSettings import AccountSettings, KNOWN_SELECTOR_BATTLES
+
+def setBattleTypeAsKnown(bType):
+    selectorKnownBattles = set(AccountSettings.getSettings(KNOWN_SELECTOR_BATTLES))
+    selectorKnownBattles.add(bType)
+    AccountSettings.setSettings(KNOWN_SELECTOR_BATTLES, selectorKnownBattles)
+
+
+def isKnownBattleType(bType):
+    selectorKnownBattles = set(AccountSettings.getSettings(KNOWN_SELECTOR_BATTLES))
+    return bType in selectorKnownBattles

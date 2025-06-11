@@ -1,0 +1,7 @@
+<resources.xml>
+	<gui>						
+		<cursorsDefinitions>	gui/mouse_cursors.xml	</cursorsDefinitions>
+		<!-- Points to the mouse cursor definitions file. Refer 
+		to the Client Programming Guide for more details. -->
+	</gui>
+</resources.xml>

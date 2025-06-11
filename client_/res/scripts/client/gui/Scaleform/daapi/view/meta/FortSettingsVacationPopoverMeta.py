@@ -1,0 +1,15 @@
+# Python bytecode 2.7 (decompiled from Python 2.7)
+# Embedded file name: scripts/client/gui/Scaleform/daapi/view/meta/FortSettingsVacationPopoverMeta.py
+# Compiled at: 2014-06-27 11:15:39
+from gui.Scaleform.framework.entities.DAAPIModule import DAAPIModule
+
+class FortSettingsVacationPopoverMeta(DAAPIModule):
+
+    def onApply(self, data):
+        self._printOverrideError('onApply')
+
+    def as_setTextsS(self, data):
+        return self.flashObject.as_setTexts(data) if self._isDAAPIInited() else None
+
+    def as_setDataS(self, data):
+        return self.flashObject.as_setData(data) if self._isDAAPIInited() else None

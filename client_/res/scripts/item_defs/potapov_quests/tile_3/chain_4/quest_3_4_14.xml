@@ -1,0 +1,72 @@
+<quest_3_4_14.xml>
+  <quests>
+    <potapovQuest>
+      <enabled>	true	</enabled>
+      <id>	quest_3_4_14_main	</id>
+      <serverOnly>	true	</serverOnly>
+      <conditions>
+        <preBattle>
+          <battle>
+            <unit>
+              <isSquad>	true	</isSquad>
+            </unit>
+          </battle>
+        </preBattle>
+        <postBattle>
+          <and>
+            <win></win>
+            <unit>
+              <and>
+                <results>
+                  <key>	percentFromTotalTeamDamage	</key>
+                  <greaterOrEqual>	50	</greaterOrEqual>
+                </results>
+                <unitVehicleDescr>
+                  <classes>	AT-SPG	</classes>
+                </unitVehicleDescr>
+              </and>
+            </unit>
+          </and>
+        </postBattle>
+      </conditions>
+      <bonus>
+        <premium>	1	</premium>
+        <freeXP>	2000	</freeXP>
+      </bonus>
+    </potapovQuest>
+    <potapovQuest>
+      <enabled>	true	</enabled>
+      <id>	quest_3_4_14_add	</id>
+      <serverOnly>	true	</serverOnly>
+      <conditions>
+        <preBattle>
+          <battle>
+            <unit>
+              <isSquad>	true	</isSquad>
+            </unit>
+          </battle>
+        </preBattle>
+        <postBattle>
+          <and>
+            <win></win>
+            <unit>
+              <and>
+                <results>
+                  <key>	percentFromTotalTeamDamage	</key>
+                  <greaterOrEqual>	50	</greaterOrEqual>
+                </results>
+                <unitVehicleDescr>
+                  <classes>	AT-SPG	</classes>
+                </unitVehicleDescr>
+                <aliveCnt>	2	</aliveCnt>
+              </and>
+            </unit>
+          </and>
+        </postBattle>
+      </conditions>
+      <bonus>
+        <premium>	1	</premium>
+      </bonus>
+    </potapovQuest>
+  </quests>
+</quest_3_4_14.xml>

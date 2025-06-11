@@ -1,0 +1,188 @@
+<list.xml>
+  <Chi_Ni>
+    <id>	1	</id>
+    <userString>	#japan_vehicles:Chi_Ni	</userString>
+    <description>	#japan_vehicles:Chi_Ni_descr	</description>
+    <shortUserString>	#japan_vehicles:Chi_Ni_short	</shortUserString>
+    <price>	3900	</price>
+    <tags>	mediumTank	</tags>
+    <level>	2	</level>
+  </Chi_Ni>
+  <NC27>
+    <id>	2	</id>
+    <userString>	#japan_vehicles:NC27	</userString>
+    <shortUserString>	#japan_vehicles:NC27_short	</shortUserString>
+    <description>	#japan_vehicles:NC27_descr	</description>
+    <price>	0	</price>
+    <tags>	lightTank	</tags>
+    <level>	1	</level>
+  </NC27>
+  <Ha_Go>
+    <id>	3	</id>
+    <userString>	#japan_vehicles:Ha_Go	</userString>
+    <description>	#japan_vehicles:Ha_Go_descr	</description>
+    <shortUserString>	#japan_vehicles:Ha_Go_short	</shortUserString>
+    <price>	3000	</price>
+    <tags>	lightTank	</tags>
+    <level>	2	</level>
+  </Ha_Go>
+  <Chi_Ri>
+    <id>	4	</id>
+    <userString>	#japan_vehicles:Chi_Ri	</userString>
+    <description>	#japan_vehicles:Chi_Ri_descr	</description>
+    <shortUserString>	#japan_vehicles:Chi_Ri_short	</shortUserString>
+    <price>	1440000	</price>
+    <tags>	mediumTank enhancedSprings_class2_user mediumCaliberTankRammer_user wetCombatPack_class1_user	</tags>
+    <level>	7	</level>
+  </Chi_Ri>
+  <Chi_Nu>
+    <id>	5	</id>
+    <userString>	#japan_vehicles:Chi_Nu	</userString>
+    <shortUserString>	#japan_vehicles:Chi_Nu_short	</shortUserString>
+    <description>	#japan_vehicles:Chi_Nu_descr	</description>
+    <price>	410000	</price>
+    <tags>	mediumTank enhancedSprings_class2_user mediumCaliberTankRammer_user wetCombatPack_class1_user	</tags>
+    <level>	5	</level>
+  </Chi_Nu>
+  <Chi_He>
+    <id>	6	</id>
+    <userString>	#japan_vehicles:Chi_He	</userString>
+    <shortUserString>	#japan_vehicles:Chi_He_short	</shortUserString>
+    <description>	#japan_vehicles:Chi_He_descr	</description>
+    <price>	136000	</price>
+    <tags>	mediumTank enhancedSprings_user mediumCaliberTankRammer_user wetCombatPack_class1_user	</tags>
+    <level>	4	</level>
+  </Chi_He>
+  <Chi_To>
+    <id>	7	</id>
+    <userString>	#japan_vehicles:Chi_To	</userString>
+    <shortUserString>	#japan_vehicles:Chi_To_short	</shortUserString>
+    <description>	#japan_vehicles:Chi_To_descr	</description>
+    <price>	940000	</price>
+    <tags>	mediumTank enhancedSprings_class2_user mediumCaliberTankRammer_user wetCombatPack_class1_user	</tags>
+    <level>	6	</level>
+  </Chi_To>
+  <Chi_Ha>
+    <id>	8	</id>
+    <userString>	#japan_vehicles:Chi_Ha	</userString>
+    <description>	#japan_vehicles:Chi_Ha_descr	</description>
+    <shortUserString>	#japan_vehicles:Chi_Ha_short	</shortUserString>
+    <price>	45000	</price>
+    <tags>	mediumTank wetCombatPack_class1_user	</tags>
+    <level>	3	</level>
+  </Chi_Ha>
+  <Ke_Ni>
+    <id>	9	</id>
+    <userString>	#japan_vehicles:Ke_Ni	</userString>
+    <shortUserString>	#japan_vehicles:Ke_Ni_short	</shortUserString>
+    <description>	#japan_vehicles:Ke_Ni_descr	</description>
+    <price>	43500	</price>
+    <tags>	lightTank enhancedSprings_user wetCombatPack_class1_user	</tags>
+    <level>	3	</level>
+  </Ke_Ni>
+  <STA_1>
+    <id>	10	</id>
+    <userString>	#japan_vehicles:STA_1	</userString>
+    <description>	#japan_vehicles:STA_1_descr	</description>
+    <shortUserString>	#japan_vehicles:STA_1_short	</shortUserString>
+    <price>	2550000	</price>
+    <tags>	mediumTank enhancedTorsions3t_user mediumCaliberTankRammer_user wetCombatPack_class1_user aimingStabilizer_Mk1_user	</tags>
+    <level>	8	</level>
+  </STA_1>
+  <Ke_Ho>
+    <id>	11	</id>
+    <userString>	#japan_vehicles:Ke_Ho	</userString>
+    <shortUserString>	#japan_vehicles:Ke_Ho_short	</shortUserString>
+    <description>	#japan_vehicles:Ke_Ho_descr	</description>
+    <price>	140000	</price>
+    <tags>	lightTank enhancedSprings_user mediumCaliberTankRammer_user wetCombatPack_class1_user	</tags>
+    <level>	4	</level>
+  </Ke_Ho>
+  <Te_Ke>
+    <id>	12	</id>
+    <userString>	#japan_vehicles:Te_Ke	</userString>
+    <description>	#japan_vehicles:Te_Ke_descr	</description>
+    <shortUserString>	#japan_vehicles:Te_Ke_short	</shortUserString>
+    <price>	750	  <gold></gold>
+    </price>
+    <notInShop>	true	</notInShop>
+    <tags>	lightTank HD	</tags>
+    <level>	2	</level>
+  </Te_Ke>
+  <Type_61>
+    <id>	13	</id>
+    <userString>	#japan_vehicles:Type_61	</userString>
+    <description>	#japan_vehicles:Type_61_descr	</description>
+    <shortUserString>	#japan_vehicles:Type_61_short	</shortUserString>
+    <price>	3600000	</price>
+    <tags>	mediumTank enhancedTorsions3t_user mediumCaliberTankRammer_user wetCombatPack_class1_user aimingStabilizer_Mk1_user	</tags>
+    <level>	9	</level>
+  </Type_61>
+  <ST_B1>
+    <id>	14	</id>
+    <userString>	#japan_vehicles:ST_B1	</userString>
+    <description>	#japan_vehicles:ST_B1_descr	</description>
+    <shortUserString>	#japan_vehicles:ST_B1_short	</shortUserString>
+    <price>	6100000	</price>
+    <tags>	mediumTank enhancedTorsions3t_user mediumCaliberTankRammer_user wetCombatPack_class1_user aimingStabilizer_Mk1_user	</tags>
+    <level>	10	</level>
+  </ST_B1>
+  <Chi_Nu_Kai>
+    <id>	201	</id>
+    <userString>	#japan_vehicles:Chi_Nu_Kai	</userString>
+    <shortUserString>	#japan_vehicles:Chi_Nu_Kai_short	</shortUserString>
+    <description>	#japan_vehicles:Chi_Nu_Kai_descr	</description>
+    <price>	1500	  <gold></gold>
+    </price>
+    <tags>	mediumTank mediumCaliberTankRammer_user wetCombatPack_class1_user	</tags>
+    <level>	5	</level>
+  </Chi_Nu_Kai>
+  <Ke_Ni_B>
+    <id>	202	</id>
+    <userString>	#japan_vehicles:Ke_Ni_B	</userString>
+    <shortUserString>	#japan_vehicles:Ke_Ni_B_short	</shortUserString>
+    <description>	#japan_vehicles:Ke_Ni_B_descr	</description>
+    <price>	1000	  <gold></gold>
+    </price>
+    <notInShop>	true	</notInShop>
+    <tags>	lightTank secret enhancedSuspension_Christie_user wetCombatPack_class1_user	</tags>
+    <level>	3	</level>
+  </Ke_Ni_B>
+  <J18_STA_2_3>
+    <id>	203	</id>
+    <userString>	#japan_vehicles:STA_2_3	</userString>
+    <description>	#japan_vehicles:STA_2_3_descr	</description>
+    <shortUserString>	#japan_vehicles:STA_2_3_short	</shortUserString>
+    <price>	7400	  <gold></gold>
+    </price>
+    <tags>	mediumTank enhancedTorsions3t_user mediumCaliberTankRammer_user wetCombatPack_class1_user aimingStabilizer_Mk1_user HD	</tags>
+    <level>	8	</level>
+  </J18_STA_2_3>
+  <STA_1_IGR>
+    <id>	151	</id>
+    <userString>	#igr_vehicles:STA_1_IGR	</userString>
+    <description>	#igr_vehicles:STA_1_IGR_descr	</description>
+    <shortUserString>	#igr_vehicles:STA_1_IGR_short	</shortUserString>
+    <price>	1	</price>
+    <tags>	mediumTank enhancedTorsions3t_user mediumCaliberTankRammer_user wetCombatPack_class1_user aimingStabilizer_Mk1_user premiumIGR secret	</tags>
+    <level>	8	</level>
+  </STA_1_IGR>
+  <Chi_Ri_IGR>
+    <id>	152	</id>
+    <userString>	#igr_vehicles:Chi_Ri_IGR	</userString>
+    <description>	#igr_vehicles:Chi_Ri_IGR_descr	</description>
+    <shortUserString>	#igr_vehicles:Chi_Ri_IGR_short	</shortUserString>
+    <price>	1	</price>
+    <tags>	mediumTank enhancedSprings_class2_user mediumCaliberTankRammer_user wetCombatPack_class1_user premiumIGR secret	</tags>
+    <level>	7	</level>
+  </Chi_Ri_IGR>
+  <ST_B1_IGR>
+    <id>	153	</id>
+    <userString>	#igr_vehicles:ST_B1_IGR	</userString>
+    <description>	#igr_vehicles:ST_B1_IGR_descr	</description>
+    <shortUserString>	#igr_vehicles:ST_B1_IGR_short	</shortUserString>
+    <price>	1	</price>
+    <tags>	mediumTank enhancedTorsions3t_user mediumCaliberTankRammer_user wetCombatPack_class1_user aimingStabilizer_Mk1_user premiumIGR secret	</tags>
+    <level>	10	</level>
+  </ST_B1_IGR>
+</list.xml>

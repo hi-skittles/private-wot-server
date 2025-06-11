@@ -1,0 +1,120 @@
+<chassis_effects.xml>
+  <decals>
+    <bufferPrefs>
+      <smallTank>
+        <lifeTime>	6	</lifeTime>
+        <trianglesCount>	10000	</trianglesCount>
+      </smallTank>
+      <mediumTank>
+        <lifeTime>	7	</lifeTime>
+        <trianglesCount>	10000	</trianglesCount>
+      </mediumTank>
+      <largeTank>
+        <lifeTime>	8	</lifeTime>
+        <trianglesCount>	10000	</trianglesCount>
+      </largeTank>
+    </bufferPrefs>
+    <textureSets>
+      <ussr_01>
+        <default>	maps/fx/ussr01_ground.dds	</default>
+        <snow>	maps/fx/ussr01_snow.dds	</snow>
+        <sand>	maps/fx/ussr01_sand.dds	</sand>
+        <stone>	maps/fx/trace_stone.dds	</stone>
+        <bump>	maps/fx/ussr01_NM.dds	</bump>
+      </ussr_01>
+      <ussr_02>
+        <default>	maps/fx/ussr02_ground.dds	</default>
+        <snow>	maps/fx/ussr02_snow.dds	</snow>
+        <sand>	maps/fx/ussr02_sand.dds	</sand>
+        <stone>	maps/fx/trace_stone.dds	</stone>
+        <bump>	maps/fx/ussr02_NM.dds	</bump>
+      </ussr_02>
+      <germany_01>
+        <default>	maps/fx/german01_ground.dds	</default>
+        <snow>	maps/fx/german01_snow.dds	</snow>
+        <sand>	maps/fx/german01_sand.dds	</sand>
+        <stone>	maps/fx/trace_stone.dds	</stone>
+        <bump>	maps/fx/german01_NM.dds	</bump>
+      </germany_01>
+      <germany_02>
+        <default>	maps/fx/german02_ground.dds	</default>
+        <snow>	maps/fx/german02_snow.dds	</snow>
+        <sand>	maps/fx/german02_sand.dds	</sand>
+        <stone>	maps/fx/trace_stone.dds	</stone>
+        <bump>	maps/fx/german02_NM.dds	</bump>
+      </germany_02>
+      <usa_01>
+        <default>	maps/fx/usa01_ground.dds	</default>
+        <snow>	maps/fx/usa01_snow.dds	</snow>
+        <sand>	maps/fx/usa01_sand.dds	</sand>
+        <stone>	maps/fx/trace_stone.dds	</stone>
+        <bump>	maps/fx/usa01_NM.dds	</bump>
+      </usa_01>
+      <usa_02>
+        <default>	maps/fx/usa02_ground.dds	</default>
+        <snow>	maps/fx/usa02_snow.dds	</snow>
+        <sand>	maps/fx/usa02_sand.dds	</sand>
+        <stone>	maps/fx/trace_stone.dds	</stone>
+        <bump>	maps/fx/usa02_NM.dds	</bump>
+      </usa_02>
+      <usa_03>
+        <default>	maps/fx/usa03_ground_l.dds; maps/fx/usa03_ground.dds	</default>
+        <snow>	maps/fx/usa03_snow_l.dds; maps/fx/usa03_snow.dds	</snow>
+        <sand>	maps/fx/usa03_sand_l.dds; maps/fx/usa03_sand.dds	</sand>
+        <stone>	maps/fx/trace_stone.dds	</stone>
+        <bump>	maps/fx/usa03_NM_l.dds; maps/fx/usa03_NM.dds	</bump>
+      </usa_03>
+      <usa_T95>
+        <default>	maps/fx/usaT95_ground.dds	</default>
+        <snow>	maps/fx/usaT95_snow.dds	</snow>
+        <sand>	maps/fx/usaT95_sand.dds	</sand>
+        <stone>	maps/fx/trace_stone.dds	</stone>
+        <bump>	maps/fx/usaT95_NM.dds	</bump>
+      </usa_T95>
+    </textureSets>
+  </decals>
+  <particles>
+    <smallTankDust>
+      <ground>	particles/Tank/ground_dust_small.xml	</ground>
+      <snow>	particles/Tank/snow_dust_small.xml	</snow>
+      <sand>	particles/Tank/sand_dust_small.xml	</sand>
+      <stone>	particles/Tank/stone_dust_small.xml	</stone>
+      <default>	particles/Tank/ground_dust_small.xml	</default>
+    </smallTankDust>
+    <smallTankMud>
+      <ground>	particles/Tank/ground_trail_small_l.xml | particles/Tank/ground_trail_small_r.xml | particles/Tank/ground_trail_small_l_front.xml | particles/Tank/ground_trail_small_r_front.xml	</ground>
+      <snow>	particles/Tank/snow_trail_small_l.xml | particles/Tank/snow_trail_small_r.xml | particles/Tank/snow_trail_small_l_front.xml | particles/Tank/snow_trail_small_r_front.xml	</snow>
+      <sand>	particles/Tank/sand_trail_small_l.xml | particles/Tank/sand_trail_small_r.xml | particles/Tank/sand_trail_small_l_front.xml | particles/Tank/sand_trail_small_r_front.xml	</sand>
+      <stone>	particles/Tank/stone_trail_small_l.xml | particles/Tank/stone_trail_small_r.xml | particles/Tank/stone_trail_small_l_front.xml | particles/Tank/stone_trail_small_r_front.xml	</stone>
+      <water>	particles/Tank/water_trail_small_l.xml | particles/Tank/water_trail_small_r.xml | particles/Tank/water_trail_small_l_front.xml | particles/Tank/water_trail_small_r_front.xml	</water>
+    </smallTankMud>
+    <mediumTankDust>
+      <ground>	particles/Tank/ground_dust_medium.xml	</ground>
+      <snow>	particles/Tank/snow_dust_medium.xml	</snow>
+      <sand>	particles/Tank/sand_dust_medium.xml	</sand>
+      <stone>	particles/Tank/stone_dust_medium.xml	</stone>
+      <default>	particles/Tank/ground_dust_medium.xml	</default>
+    </mediumTankDust>
+    <mediumTankMud>
+      <ground>	particles/Tank/ground_trail_medium_l.xml | particles/Tank/ground_trail_medium_r.xml | particles/Tank/ground_trail_medium_l_front.xml | particles/Tank/ground_trail_medium_r_front.xml	</ground>
+      <snow>	particles/Tank/snow_trail_medium_l.xml | particles/Tank/snow_trail_medium_r.xml | particles/Tank/snow_trail_medium_l_front.xml | particles/Tank/snow_trail_medium_r_front.xml	</snow>
+      <sand>	particles/Tank/sand_trail_medium_l.xml | particles/Tank/sand_trail_medium_r.xml | particles/Tank/sand_trail_medium_l_front.xml | particles/Tank/sand_trail_medium_r_front.xml	</sand>
+      <stone>	particles/Tank/stone_trail_medium_l.xml | particles/Tank/stone_trail_medium_r.xml | particles/Tank/stone_trail_medium_l_front.xml | particles/Tank/stone_trail_medium_r_front.xml	</stone>
+      <water>	particles/Tank/water_trail_medium_l.xml | particles/Tank/water_trail_medium_r.xml | particles/Tank/water_trail_medium_l_front.xml | particles/Tank/water_trail_medium_r_front.xml	</water>
+    </mediumTankMud>
+    <largeTankDust>
+      <ground>	particles/Tank/ground_dust_large.xml	</ground>
+      <snow>	particles/Tank/snow_dust_large.xml	</snow>
+      <sand>	particles/Tank/sand_dust_large.xml	</sand>
+      <stone>	particles/Tank/stone_dust_large.xml	</stone>
+      <default>	particles/Tank/ground_dust_large.xml	</default>
+    </largeTankDust>
+    <largeTankMud>
+      <ground>	particles/Tank/ground_trail_large_l.xml | particles/Tank/ground_trail_large_r.xml | particles/Tank/ground_trail_large_l_front.xml | particles/Tank/ground_trail_large_r_front.xml	</ground>
+      <snow>	particles/Tank/snow_trail_large_l.xml | particles/Tank/snow_trail_large_r.xml | particles/Tank/snow_trail_large_l_front.xml | particles/Tank/snow_trail_large_r_front.xml	</snow>
+      <sand>	particles/Tank/sand_trail_large_l.xml | particles/Tank/sand_trail_large_r.xml | particles/Tank/sand_trail_large_l_front.xml | particles/Tank/sand_trail_large_r_front.xml	</sand>
+      <stone>	particles/Tank/stone_trail_large_l.xml | particles/Tank/stone_trail_large_r.xml | particles/Tank/stone_trail_large_l_front.xml | particles/Tank/stone_trail_large_r_front.xml	</stone>
+      <water>	particles/Tank/water_trail_large_l.xml | particles/Tank/water_trail_large_r.xml | particles/Tank/water_trail_large_l_front.xml | particles/Tank/water_trail_large_r_front.xml	</water>
+    </largeTankMud>
+  </particles>
+</chassis_effects.xml>

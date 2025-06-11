@@ -1,0 +1,71 @@
+<quest_3_2_13.xml>
+  <quests>
+    <potapovQuest>
+      <enabled>	true	</enabled>
+      <id>	quest_3_2_13_main	</id>
+      <serverOnly>	true	</serverOnly>
+      <conditions>
+        <preBattle>
+          <battle>
+            <unit>
+              <isSquad>	true	</isSquad>
+            </unit>
+          </battle>
+        </preBattle>
+        <postBattle>
+          <and>
+            <unit>
+              <and>
+                <unitVehicleKills>
+                  <limittedTime>	300	</limittedTime>
+                  <greaterOrEqual>	3	</greaterOrEqual>
+                </unitVehicleKills>
+                <unitVehicleDescr>
+                  <classes>	heavyTank	</classes>
+                </unitVehicleDescr>
+              </and>
+            </unit>
+          </and>
+        </postBattle>
+      </conditions>
+      <bonus>
+        <premium>	1	</premium>
+        <freeXP>	2000	</freeXP>
+      </bonus>
+    </potapovQuest>
+    <potapovQuest>
+      <enabled>	true	</enabled>
+      <id>	quest_3_2_13_add	</id>
+      <serverOnly>	true	</serverOnly>
+      <conditions>
+        <preBattle>
+          <battle>
+            <unit>
+              <isSquad>	true	</isSquad>
+            </unit>
+          </battle>
+        </preBattle>
+        <postBattle>
+          <and>
+            <unit>
+              <and>
+                <unitVehicleKills>
+                  <limittedTime>	300	</limittedTime>
+                  <greaterOrEqual>	3	</greaterOrEqual>
+                </unitVehicleKills>
+                <unitVehicleDescr>
+                  <classes>	heavyTank	</classes>
+                </unitVehicleDescr>
+              </and>
+            </unit>
+            <isAlive></isAlive>
+            <win></win>
+          </and>
+        </postBattle>
+      </conditions>
+      <bonus>
+        <premium>	1	</premium>
+      </bonus>
+    </potapovQuest>
+  </quests>
+</quest_3_2_13.xml>
