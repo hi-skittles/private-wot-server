@@ -58,9 +58,9 @@ class Root( controllers.RootController ):
 		# This doesn't actually prevent people from accessing these pages, it
 		# just prevents links to these pages being shown in the nav menu
 		isAdmin = lambda: "admin" in cherrypy.request.identity.groups
-
+		
 		import web_console.database_admin.controllers
-		self.dba = web_console.database_admin.controllers.SQLViewer(
+		self.cc = web_console.database_admin.controllers.DBAIndex(
 			parent = self,
 			name = "Database",
 			path = "dba",

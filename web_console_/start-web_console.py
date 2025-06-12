@@ -56,13 +56,11 @@ def main( configFile, syncDb = False ):
 	turbogears.update_config( configfile = configFile,
 		modulename = "root.config" )
 
-	print "config %s" % configFile
 	import os
 	try:
-		pass
-		# user_config_file = os.getenv("HOME") + '/.bw_web_console.cfg'
-		# turbogears.update_config( user_config_file )
-		# print "configuration updated from %s" % user_config_file
+		user_config_file = os.getenv("HOME") + '/.bw_web_console.cfg'
+		turbogears.update_config( user_config_file )
+		print "configuration updated from %s" % user_config_file
 	except TypeError, t:
 		# thrown if HOME not set
 		pass
@@ -82,7 +80,7 @@ def main( configFile, syncDb = False ):
 			sys.exit( 1 )
 	else:
 		import root.controllers
-
+		
 	from web_console.common.authorisation import Permission
 	Permission.initRights()
 
@@ -98,21 +96,21 @@ def main( configFile, syncDb = False ):
 	# Make sure database schemas are up-to-date
 	import web_console.common.model
 	web_console.common.model.DictSQLObject.verifySchemas()
-
+	
 	# Exit now that database has been synced
 	if syncDb:
 		log.info( "Database synced, exiting" )
 		sys.exit( 0 )
 
 	setupLoggers()
-
+	
 	from turbogears import config
 	from web_console.common.ldap_util import LdapUtil
 
 	# check and validate LDAP configuration
 	if LdapUtil.isAuthByLdapEnabled():
 		log.info( "Authentication by LDAP is enabled" )
-
+		
 		# validate the file permission
 		if  config.get( "server.environment" ) == "production" \
 				and util.isFileReadableByOthers( configFile ):
@@ -253,12 +251,12 @@ if __name__ == "__main__":
 	except ImportError, e:
 		print "ERROR: Unable to import TurboGears module (%s)" % str(e)
 		sys.exit( 1 )
-
+	
 	if options.syncdb and not options.foreground:
-
+		
 		print "Error: --syncdb is incompatible with the --daemon option."
 		sys.exit( 1 )
-
+		
 	elif options.foreground:
 
 		# Redirect stdout/stderr if necessary
