@@ -2,7 +2,6 @@ import zlib, os, cPickle, base64, time, pprint, functools
 from itertools import cycle
 
 import mysql.connector
-
 import AccountCommands
 from bwdebug import INFO_MSG, WARNING_MSG
 import bwdebug
