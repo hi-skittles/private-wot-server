@@ -413,7 +413,7 @@ def setAndFillLayouts(proxy, requestID, *args):
 		cdata['stats']['gold'] = s_data['stats']['gold']
 		
 		proxy.client.update(cPickle.dumps(cdata))
-		proxy.client.onCmdResponse(requestID, AccountCommands.RES_SUCCESS, '')
+		proxy.client.onCmdResponseExt(requestID, AccountCommands.RES_SUCCESS, '', {})
 		proxy.writeToDB()
 		yield async(InventoryHandler.set_inventory, cbname='callback')(proxy.normalizedName, i_data, [ITEM_TYPE_INDICES['vehicle']])
 		yield async(StatsHandler.update_stats, cbname='callback')(proxy.normalizedName, s_data, ['stats'])

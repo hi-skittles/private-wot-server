@@ -60,7 +60,7 @@ class Root( controllers.RootController ):
 		isAdmin = lambda: "admin" in cherrypy.request.identity.groups
 		
 		import web_console.database_admin.controllers
-		self.cc = web_console.database_admin.controllers.DBAIndex(
+		self.dba = web_console.database_admin.controllers.DBAIndex(
 			parent = self,
 			name = "Database",
 			path = "dba",
